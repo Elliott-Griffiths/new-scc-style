@@ -1,0 +1,101 @@
+#dform_container .success-panel,
+#dform_container .alert-panel,
+#dform_container .alert-panel--ineligible,
+#dform_container .info-panel,
+#dform_container .notice-panel,
+#dform_container .message-panel {
+  position: relative;
+  padding: var(--spacing-lg);
+  display: grid;
+  justify-items: start;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--c-greys-white);
+  border: solid 2px var(--c-core-brand-primary-darken);
+  border-left-width: 5px;
+  border-top-right-radius: 2.5rem;
+}
+
+#dform_container .notice-panel,
+#dform_container .message-panel {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+#dform_container .message-panel {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+#dform_container .success-panel {
+  border-color: var(--c-alerts-success);
+  background: var(--c-core-tints-success-tint-20);
+}
+
+#dform_container .alert-panel,
+#dform_container .alert-panel--ineligible {
+  border-color: var(--c-core-brand-accent-1-darken);
+  background: var(--c-core-tints-accent-1-tint-20);
+}
+
+#dform_container .info-panel {
+  border-color: var(--c-core-brand-primary-darken);
+  background: var(--c-core-tints-accent-2-tint-20);
+}
+
+#dform_container .success-panel:before,
+#dform_container .alert-panel:before,
+#dform_container .alert-panel--ineligible:before,
+#dform_container .info-panel:before {
+  align-self: start;
+  font-family: "icomoon";
+  font-size: var(--font-size-xxxxl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height);
+}
+
+#dform_container .success-panel:before {
+  content: "";
+  border-color: var(--c-alerts-success);
+}
+
+#dform_container .alert-panel:before,
+#dform_container .alert-panel--ineligible:before {
+  content: "\26A0";
+  color: var(--c-core-brand-accent-1-darken);
+}
+
+#dform_container .info-panel:before {
+  content: "\24D8";
+  color: var(--c-core-brand-primary-darken);
+}
+
+#dform_container .success-panel h3,
+#dform_container .alert-panel h3,
+#dform_container .alert-panel--ineligible h3,
+#dform_container .info-panel h3,
+#dform_container .success-panel p,
+#dform_container .alert-panel p,
+#dform_container .alert-panel--ineligible p,
+#dform_container .info-panel p {
+  grid-column: 2 / 3;
+}
+
+#dform_container .message-panel h3,
+#dform_container .success-panel h3,
+#dform_container .alert-panel h3,
+#dform_container .alert-panel--ineligible h3,
+#dform_container .info-panel h3,
+#dform_container .notice-panel h3,
+#dform_container .message-panel p,
+#dform_container .success-panel p,
+#dform_container .alert-panel p,
+#dform_container .alert-panel--ineligible p,
+#dform_container .info-panel p,
+#dform_container .notice-panel p {
+  margin: 0;
+  color: var(--c-core-brand-primary-darken);
+}

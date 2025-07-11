@@ -1,0 +1,200 @@
+h1,
+.header1,
+#dform_container h1,
+#dform_container .header1,
+h2,
+.header2,
+#dform_container h2,
+#dform_container .header2,
+h3,
+.header3,
+#dform_container h3,
+#dform_container .header3,
+h4,
+.header4,
+#dform_container h4,
+#dform_container .header4,
+h5,
+.header5,
+#dform_container h5,
+#dform_container .header5,
+h6,
+.header6,
+#dform_container h6,
+#dform_container .header6,
+#dform_container div .header2,
+#dform_container .make-header label,
+#dform_container .make-header fieldset.radiogroup > legend,
+#dform_container .make-header fieldset.checkboxgroup > legend {
+  font-family: var(--font-family);
+  color: var(--c-core-brand-primary-darken);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+  line-height: var(--line-height-heading);
+  font-weight: var(--font-weight-semibold);
+}
+
+h1,
+.header1,
+#dform_container h1,
+#dform_container .header1,
+#dform_container div .header2,
+#dform_container .make-header label,
+#dform_container .make-header fieldset.radiogroup > legend,
+#dform_container .make-header fieldset.checkboxgroup > legend {
+  font-size: var(--font-size-xxxxl);
+}
+h2,
+.header2,
+#dform_container h2,
+#dform_container .header2 {
+  font-size: var(--font-size-xxxl);
+}
+h3,
+.header3,
+#dform_container h3,
+#dform_container .header3 {
+  font-size: var(--font-size-xxl);
+  color: var(--c-brand-accents-teal);
+}
+h4,
+.header4,
+#dform_container h4,
+#dform_container .header4 {
+  font-size: var(--font-size-xl);
+}
+h5,
+.header5,
+#dform_container h5,
+#dform_container .header5 {
+  font-size: var(--font-size-lg);
+}
+h6,
+.header6,
+#dform_container h6,
+#dform_container .header6 {
+  font-size: var(--font-size-base);
+}
+
+p,
+#dform_container p,
+a,
+#dform_container a,
+ul,
+#dform_container ul,
+ol,
+#dform_container ol,
+li,
+#dform_container li,
+address {
+  margin: var(--spacing-sm) 0;
+  min-height: 1.5rem;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height);
+  color: var(--c-core-brand-body);
+  background-color: transparent;
+}
+
+a,
+#dform_container a {
+  color: var(--c-links-link);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+a:hover,
+#dform_container a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--c-core-brand-accent-1-darken);
+}
+
+a:focus,
+#dform_container a:focus {
+  outline: 2px solid var(--c-focus-links);
+  outline-offset: 2px;
+  color: var(--c-focus-links);
+}
+
+ul,
+#dform_container ul,
+ol,
+#dform_container ol {
+  padding-left: var(--spacing-lg);
+}
+
+ul ul,
+#dform_container ul ul,
+ul ol,
+#dform_container ul ol,
+ol ul,
+#dform_container ol ul,
+ol ol,
+#dform_container ol ol {
+  margin-block: var(--spacing-xxs);
+}
+
+li,
+#dform_container li {
+  margin: unset;
+  margin-block: var(--spacing-xxs);
+}
+
+#dform_container legend,
+#dform_container fieldset.area > legend,
+#dform_container fieldset.box > legend,
+#dform_container fieldset.searchwidget > legend {
+  margin: unset;
+  padding: unset;
+  font-family: var(--font-family);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-heading);
+  color: var(--c-brand-accents-teal);
+  background: transparent;
+}
+
+#dform_container label,
+#dform_container .radiogroup label,
+#dform_container .checkboxgroup label,
+#dform_container .dform_widget_type_checkbox label,
+#dform_container fieldset.radiogroup > legend,
+#dform_container fieldset.checkboxgroup > legend {
+  display: inline-block;
+  font-family: var(--font-family);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-body);
+  font-weight: var(--font-weight-normal);
+  color: var(--c-core-brand-primary-darken);
+  vertical-align: unset;
+  background: transparent;
+}
+
+#dform_container .radiogroup label,
+#dform_container .checkboxgroup label,
+#dform_container .dform_widget_type_checkbox label {
+  display: inline;
+  margin-bottom: unset;
+}
+
+#dform_container .helptext {
+  padding: unset;
+  margin: unset;
+  font-family: var(--font-family);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-normal);
+  font-style: unset;
+  color: var(--c-core-brand-body);
+}
+
+#dform_container .dform_validationMessage {
+  padding: unset;
+  font-family: var(--font-family);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-bold);
+  color: var(--c-alerts-danger);
+}

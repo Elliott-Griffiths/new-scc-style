@@ -1,0 +1,44 @@
+#dform_container .dform_info,
+#dform_container .dform_success,
+#dform_container .dform_warning,
+#dform_container .dform_error {
+  border: none;
+  border-radius: unset;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height);
+  color: var(--c-core-brand-body);
+  background-color: transparent;
+  color: var(--c-greys-white);
+  background: var(--c-brand-accents-teal);
+}
+
+#dform_container .dform_success {
+  background: var(--c-alerts-success);
+}
+
+#dform_container .dform_error {
+  background: var(--c-alerts-danger);
+}
+
+#dform_container .dform_info:before,
+#dform_container .dform_warning:before {
+  content: "\24D8";
+}
+
+#dform_container .dform_success:before {
+  content: "";
+}
+
+#dform_container .dform_error:before {
+  content: "\26A0";
+}
+
+#dform_container .dform_info:before,
+#dform_container .dform_warning:before,
+#dform_container .dform_success:before,
+#dform_container .dform_error:before {
+  font-size: var(--font-size-xxl);
+  margin-right: var(--spacing-sm);
+}

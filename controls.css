@@ -1,0 +1,135 @@
+#dform_controls {
+    margin-block: 0 2rem;
+  }
+  
+  #dform_controls > div.container {
+    width: 100%;
+    margin: 0;
+  }
+  
+  #dform_controls > div:nth-child(2) {
+    width: 100%;
+  }
+  
+  #dform_control_buttons {
+    float: unset;
+    margin-block: unset !important;
+    padding-block: 0.625rem !important;
+    clear: unset;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: var(--spacing-sm);
+  }
+  
+  #dform_control_buttons > ul,
+  #dform_control_buttons > ol {
+    margin: 0;
+    padding: 0;
+  }
+  
+  #dform_container #dform_controls a,
+  #dform_container #dform_files a {
+    border: none;
+  }
+  
+  #skip {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background: var(--c-greys-white);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  #skip > a {
+    font-family: Poppins;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 100%;
+    margin: 0;
+    padding: 1rem 2rem !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    color: var(--c-greys-white) !important;
+    background: var(--c-core-brand-primary-darken);
+    border: solid 2px var(--c-core-brand-primary-darken);
+    border-radius: 2.5rem !important;
+    transition: all 0.2s ease;
+    outline: none !important;
+  }
+  
+  #skip:focus-within {
+    height: 5.5rem;
+  }
+  
+  header.header.skip-focused {
+    margin-top: 5.5rem;
+  }
+  
+  #dform_control_buttons > ul {
+    margin-left: auto;
+  }
+  
+  #dform_container button.back-btn,
+  a#dform_save {
+    margin: unset !important;
+    padding: 0;
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+    min-width: fit-content;
+    width: fit-content;
+    max-width: fit-content;
+    min-height: fit-content;
+    height: fit-content;
+    max-height: fit-content;
+    border: none;
+    border-radius: 0;
+    background: none;
+    font-family: var(--font-family);
+    font-size: var(--font-size-sm);
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-body);
+    color: var(--c-links-link);
+  }
+  
+  #dform_container button.back-btn::before {
+    content: url('/icons/arrow-right-primary-darkened.svg');
+    transform: rotate(180deg);
+  }
+
+  #dform_container button.back-btn:hover,
+  #dform_container button.back-btn:focus {
+    border-radius: 0;
+    outline-offset: 4px;
+    box-shadow: none;
+  }
+
+  #dform_container button.back-btn > .back-btn--text {
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+  }
+  
+  #dform_controls > div.container > div:nth-child(1) {
+    display: none;
+  }
+  
+  #dform_controls > div.container > div.last.six {
+    width: 100%;
+  }
+  
+  #dform_container #dform_controls {
+    padding-block: unset !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    border-bottom: 1px solid var(--c-greys-slate);
+  }
