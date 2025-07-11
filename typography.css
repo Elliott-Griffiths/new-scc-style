@@ -179,22 +179,18 @@ li,
   margin-bottom: unset;
 }
 
-#dform_container .helptext {
+#dform_container .helptext,
+#dform_container .dform_validationMessage {
   padding: unset;
   margin: unset;
   font-family: var(--font-family);
   font-size: var(--font-size-lg);
-  line-height: var(--line-height);
+  line-height: var(--line-height-body);
   font-weight: var(--font-weight-normal);
   font-style: unset;
   color: var(--c-core-brand-body);
 }
 
 #dform_container .dform_validationMessage {
-  padding: unset;
-  font-family: var(--font-family);
-  font-size: var(--font-size-lg);
-  line-height: var(--line-height);
-  font-weight: var(--font-weight-bold);
   color: var(--c-alerts-danger);
 }

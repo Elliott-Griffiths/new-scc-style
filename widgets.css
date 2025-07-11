@@ -93,6 +93,10 @@ select option {
 }
 
 #dform_container .vertical fieldset.radiogroup {
+  line-height: var(--line-height);
+}
+
+#dform_container .vertical fieldset.radiogroup {
   flex-direction: column;
   gap: var(--spacing-sm);
 }
