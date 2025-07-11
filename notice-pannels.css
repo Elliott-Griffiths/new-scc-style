@@ -77,7 +77,7 @@
 #dform_container .info-panel:before {
   content: url(./icons/circle-info-primary-darkened.svg);
   color: var(--c-core-brand-primary-darken);
-  width: var(--font-size-xl);
+  width: var(--font-size-xxxxl);
   line-height: var(--line-height);
   transform: translateY(2px);
 }
