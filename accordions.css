@@ -56,11 +56,12 @@
     content: url(./icons/arrow-right-white.svg);
     width: var(--font-size-xxxxl);
     line-height: var(--line-height);
+    transform: rotate(90deg);
     transition: transform 0.2s ease-in-out;
   }
   
   #dform_container .accordion[open] .accordion-icon::after {
-    transform: rotate(180deg);
+    transform: rotate(270deg);
   }
   
   #dform_container details[open] .accordion-content {
