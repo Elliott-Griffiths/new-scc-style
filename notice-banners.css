@@ -1,4 +1,4 @@
-/* #dform_container .dform_info,
+#dform_container .dform_info,
 #dform_container .dform_success,
 #dform_container .dform_warning,
 #dform_container .dform_error {
@@ -45,58 +45,4 @@
 
 #dform_container .dform_error:before {
   content: url(./icons/triangle-exclamation-danger.svg);
-} */
-
-
-#dform_container .dform_info,
-#dform_container .dform_success,
-#dform_container .dform_warning,
-#dform_container .dform_error {
-  position: relative; /* Enable absolutely positioned icon */
-  border: none;
-  border-radius: unset;
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height);
-  background-color: transparent;
-  color: var(--c-greys-white);
-  background: var(--c-brand-accents-teal);
-  padding-left: calc(var(--font-size-xxxxl) + var(--spacing-sm) + 0.5rem); /* Space for icon */
-}
-
-#dform_container .dform_success {
-  background: var(--c-alerts-success);
-}
-
-#dform_container .dform_error {
-  background: var(--c-alerts-danger);
-}
-
-#dform_container .dform_success:before,
-#dform_container .dform_info:before,
-#dform_container .dform_warning:before,
-#dform_container .dform_error:before {
-  content: '';
-  position: absolute;
-  top: var(--spacing-sm);
-  left: var(--spacing-sm);
-  width: var(--font-size-xxxxl);
-  height: var(--font-size-xxxxl);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-#dform_container .dform_success:before {
-  background-image: url(./icons/circle-check-success.svg);
-}
-
-#dform_container .dform_info:before,
-#dform_container .dform_warning:before {
-  background-image: url(./icons/circle-info-primary-darkened.svg);
-}
-
-#dform_container .dform_error:before {
-  background-image: url(./icons/triangle-exclamation-danger.svg);
 }
