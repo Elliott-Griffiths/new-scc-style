@@ -58,18 +58,25 @@
 }
 
 #dform_container .success-panel:before {
-  content: "";
+  content: url(./icons/circle-check-success.svg);
+  width: var(--font-size-xl);
+  line-height: var(--line-height);
+  color: var(--c-core-brand-primary-darken);
   border-color: var(--c-alerts-success);
 }
 
 #dform_container .alert-panel:before,
 #dform_container .alert-panel--ineligible:before {
-  content: "\26A0";
+  content: url(./icons/triangle-exclamation-danger.svg);
+  width: var(--font-size-xl);
+  line-height: var(--line-height);
   color: var(--c-core-brand-accent-1-darken);
 }
 
 #dform_container .info-panel:before {
-  content: "\24D8";
+  content: url(./icons/circle-info-primary-darkened.svg);
+  width: var(--font-size-xl);
+  line-height: var(--line-height);
   color: var(--c-core-brand-primary-darken);
 }
 
