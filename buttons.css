@@ -57,21 +57,17 @@
   
   #dform_container button.link-btn.map-icon::before {
     content: url(./icons/location-white.svg);
-    /* display: inline-flex; */
     align-items: center;
     justify-content: center;
     height: var(--field-height-sm);
     width: var(--field-height-sm);
     margin-right: 1rem;
-    padding: 1rem;
-    font-size: var(--font-size-lg);
-    color: var(--c-greys-white);
+    padding: 0.4rem 0.6rem 0.4rem;
     background: var(--c-core-brand-primary-darken);
   }
   
   #dform_container button.link-btn.map-icon.disabled::before {
-    content: "\e921";
-    font-family: icomoon;
+    content: "";
     color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
     border: solid 0.1rem var(--c-core-brand-primary-darken);
@@ -100,18 +96,14 @@
   }
   
   #dform_container button.geo-btn.dform_widget_type_button::before {
-    content: url(./icons/location-white.svg);
+    content: "";
     grid-column: 1 / 2;
     grid-row: 1 / -1;
-    /* display: inline-flex; */
     align-items: center;
     justify-items: center;
     transform: translateY(-3px);
     height: var(--field-height-sm);
     width: var(--field-height-sm);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-lg);
-    color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
   }
   
