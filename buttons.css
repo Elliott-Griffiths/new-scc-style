@@ -101,7 +101,7 @@
   }
   
   #dform_container button.geo-btn.dform_widget_type_button::before {
-    content: "\e918";
+    content: url(./icons/location-white.svg);
     grid-column: 1 / 2;
     grid-row: 1 / -1;
     display: inline-flex;
