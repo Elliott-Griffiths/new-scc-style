@@ -38,3 +38,10 @@
   #dform_container .container .area .box {
     max-width: 47.6875rem;
   }
+
+  #dform_container .container .area .box.conditional > div {
+    padding-left: var(--spacing-md) !important;
+    border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal) !important;
+  }
+
+  
