@@ -53,10 +53,9 @@
   }
   
   #dform_container .accordion-icon::after {
-    content: "\e909";
-    font-family: "icomoon";
-    font-size: var(--font-size-base);
-    color: var(--c-greys-white);
+    content: "url(./icons/arrow-right-white.svg)";
+    width: var(--font-size-xxxxl);
+    line-height: var(--line-height);
     transition: transform 0.2s ease-in-out;
   }
   

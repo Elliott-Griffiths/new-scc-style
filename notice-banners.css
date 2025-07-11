@@ -28,7 +28,6 @@
   display: inline-block;
   margin-right: var(--spacing-sm);
   margin-bottom: var(--spacing-sm);
-  color: var(--c-greys-white);
   width: var(--font-size-xxxxl);
   line-height: var(--line-height);
   transform: translateY(8px);
