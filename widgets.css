@@ -181,9 +181,8 @@ select option {
 }
 
 #dform_container input[type="checkbox"]:checked::after {
-  font-family: "icomoon";
   display: flex;
-  content: "\e92f";
+  content: url(./icons/list-tick.svg);
   color: var(--c-greys-black);
   background: var(--c-greys-white);
   font-size: 2rem;
