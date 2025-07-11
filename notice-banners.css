@@ -2,6 +2,8 @@
 #dform_container .dform_success,
 #dform_container .dform_warning,
 #dform_container .dform_error {
+  display: flex;
+
   border: none;
   border-radius: unset;
   font-family: var(--font-family);
