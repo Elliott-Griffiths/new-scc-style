@@ -101,8 +101,10 @@
   }
   
   #dform_container button.back-btn::before {
-    content: url('./icons/arrow-right-primary-darkened.svg');
-    transform: rotate(180deg);
+    content: url(./icons/arrow-right-primary-darkened.svg);
+    transform: rotate(180deg) translateY(-2px);
+    width: var(--font-size-base);
+    line-height: var(--line-height);
   }
 
   #dform_container button.back-btn:hover,
