@@ -59,25 +59,27 @@
 
 #dform_container .success-panel:before {
   content: url(./icons/circle-check-success.svg);
-  width: var(--font-size-xl);
-  line-height: var(--line-height);
   color: var(--c-core-brand-primary-darken);
-  border-color: var(--c-alerts-success);
+  width: var(--font-size-xxxxl);
+  line-height: var(--line-height);
+  transform: translateY(2px);
 }
 
 #dform_container .alert-panel:before,
 #dform_container .alert-panel--ineligible:before {
   content: url(./icons/triangle-exclamation-danger.svg);
-  width: var(--font-size-xl);
-  line-height: var(--line-height);
   color: var(--c-core-brand-accent-1-darken);
+  width: var(--font-size-xxxxl);
+  line-height: var(--line-height);
+  transform: translateY(2px);
 }
 
 #dform_container .info-panel:before {
   content: url(./icons/circle-info-primary-darkened.svg);
+  color: var(--c-core-brand-primary-darken);
   width: var(--font-size-xl);
   line-height: var(--line-height);
-  color: var(--c-core-brand-primary-darken);
+  transform: translateY(2px);
 }
 
 #dform_container .success-panel h3,
