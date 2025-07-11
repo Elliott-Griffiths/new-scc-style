@@ -178,9 +178,14 @@ select option {
   height: var(--field-height-sm);
   transition: all 0.2s ease;
   box-shadow: inset 0 0 0 2px var(--c-greys-black);
+  accent-color: white;
 }
 
-#dform_container input[type="checkbox"]:checked::after {
+input[type="checkbox"]:checked {
+  accent-color: black;
+}
+
+/* #dform_container input[type="checkbox"]:checked::after {
   display: flex;
   content: url(./icons/list-tick.svg);
   color: var(--c-greys-black);
@@ -197,7 +202,7 @@ select option {
   justify-content: center;
   transition: all 0.2s ease;
   box-shadow: inset 0 0 0 2px var(--c-greys-black);
-}
+} */
 
 #dform_container fieldset.checkboxgroup > span,
 #dform_container .dform_widget_type_checkbox > div {
