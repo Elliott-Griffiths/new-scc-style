@@ -56,7 +56,7 @@
   /* --- FIND ON MAP --- */
   
   #dform_container button.link-btn.map-icon::before {
-    content: "\e921";
+    content: "";
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -64,10 +64,14 @@
     width: var(--field-height-sm);
     margin-right: 1rem;
     padding: 1rem;
-    font-family: icomoon;
     font-size: var(--font-size-lg);
     color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
+  }
+
+  #dform_container button.link-btn.map-icon::before::after {
+    content: url(./icons/location-white.svg);
+    width: var(--field-height-base);
   }
   
   #dform_container button.link-btn.map-icon.disabled::before {
@@ -112,7 +116,6 @@
     width: var(--field-height-sm);
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-lg);
-    font-family: icomoon;
     color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
   }
@@ -122,7 +125,7 @@
     color: var(--c-core-brand-body);
     display: block;
     font-family: var(--font-family);
-    font-weight: vasr(--font-weight-normal);
+    font-weight: var(--font-weight-normal);
     font-size: var(--font-size-base);
     line-height: var(--line-height-body);
     text-decoration: underline;
