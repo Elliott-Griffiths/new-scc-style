@@ -22,23 +22,27 @@
   background: var(--c-alerts-danger);
 }
 
+#dform_container .dform_success:before {
+  content: url(./icons/circle-check-success.svg);
+  margin-right: var(--spacing-sm);
+  width: var(--font-size-xxxxl);
+  line-height: var(--line-height);
+  transform: translateY(2px);
+}
+
 #dform_container .dform_info:before,
 #dform_container .dform_warning:before {
-  content: "\24D8";
-}
-
-#dform_container .dform_success:before {
-  content: "";
-}
-
-#dform_container .dform_error:before {
-  content: "\26A0";
-}
-
-#dform_container .dform_info:before,
-#dform_container .dform_warning:before,
-#dform_container .dform_success:before,
-#dform_container .dform_error:before {
-  font-size: var(--font-size-xxl);
+  content: url(./icons/circle-info-primary-darkened.svg);
   margin-right: var(--spacing-sm);
+  width: var(--font-size-xl);
+  line-height: var(--line-height);
+  transform: translateY(2px);
+}
+
+#dform_container .dform_error:before {
+  content: url(./icons/triangle-exclamation-danger.svg);
+  margin-right: var(--spacing-sm);
+  width: var(--font-size-xxxxl);
+  line-height: var(--line-height);
+  transform: translateY(2px);
 }
