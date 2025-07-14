@@ -252,9 +252,10 @@ input[type="checkbox"]:checked {
   padding-left: var(--spacing-xl) !important;
 }
 
-/* --- DATE --- */
+/* --- DATE / TIME --- */
 
-#dform_container .container-date {
+#dform_container .container-date,
+#dform_container .container-time {
   display: grid;
   grid-template-columns: repeat(3, max-content) 1fr;
   column-gap: var(--spacing-md);
@@ -265,33 +266,39 @@ input[type="checkbox"]:checked {
   grid-column: 1 / -1;
 }
 
-#dform_container .container-date input[type="text"] {
+#dform_container .container-date input[type="text"],
+#dform_container .container-time input[type="text"] {
   grid-column: 1 / -1;
   display: none;
 }
 
-#dform_container .container-date input[type="number"] {
+#dform_container .container-date input[type="number"],
+#dform_container .container-time input[type="number"] {
   text-align: center;
   -moz-appearance: textfield;
   -webkit-appearance: none;
   appearance: none;
   padding-right: 0.5rem !important;
 }
-
+/* 
 #dform_container .dob {
   margin-bottom: var(--spacing-sm);
-}
+} */
 
 #dform_container .date-dd,
-#dform_container .date-mm {
+#dform_container .date-mm,
+#dform_container .time-hour,
+#dform_container .time-minute {
   max-width: var(--field-width-max-2) !important;
 }
 
-#dform_container .date-yy {
+#dform_container .date-yy,
+#dform_container .time-ampm {
   max-width: var(--field-width-max-4) !important;
 }
 
-#dform_container div[data-type="html"] > div[data-type="date"] {
+#dform_container div[data-type="html"] > div[data-type="date"],
+#dform_container div[data-type="html"] > div[data-type="time"] {
   display: none !important;
 }
 
