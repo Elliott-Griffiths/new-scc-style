@@ -89,6 +89,10 @@
     text-decoration-line: none;
   }
   
+  #nav_home {
+    margin-right: auto !important;
+  }
+
   #nav_home:hover,
   #widget_Navigation > div > ul.menuList > li > a:hover,
   #menuButton:hover,
