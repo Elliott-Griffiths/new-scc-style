@@ -297,6 +297,10 @@ input[type="checkbox"]:checked {
   max-width: var(--field-width-max-4) !important;
 }
 
+#dform_container .time-ampm {
+  width: 200%;
+}
+
 #dform_container div[data-type="html"] > div[data-type="date"],
 #dform_container div[data-type="html"] > div[data-type="time"] {
   display: none !important;

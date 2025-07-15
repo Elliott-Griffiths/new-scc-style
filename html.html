@@ -1,3 +1,51 @@
+<!-- DATE -->
+<div data-type="text" id="dform_widget_date_passport_issued" data-name="txt_passport_issued" data-active="true" data-agentonly="false"
+  class="container date-field dform_widget dform_widget_field dform_widget_type_text dform_widget_txt_passport_issued dform_widget_">
+
+  <div>
+    <label for="dform_widget_txt_passport_issued" id="dform_widget_label_txt_passport_issued">
+      When was your passport issued?
+    </label>
+  </div>
+
+  <div class="container-date">
+    <div class="helptext" id="dform_widget_helptext_txt_passport_issued">For example, 27 03 2007</div>
+    <div class="dform_validationMessage">Enter the date your passport was issued</div>
+    <div>
+      <label for="dform_widget_num_passport_issued_dd" class="date-label">Day</label>
+      <input type="number" id="dform_widget_num_passport_issued_dd" name="num_passport_issued_dd" class="date-dd" required min="1" max="31" mainlength="1" maxlength="2">
+    </div>
+    <div>
+      <label for="dform_widget_num_passport_issued_mm" class="date-label">Month</label>
+      <input type="number" id="dform_widget_num_passport_issued_mm" name="num_passport_issued_mm" class="date-mm" required min="1" max="12" mainlength="1" maxlength="2">
+    </div>
+    <div>
+      <label for="dform_widget_num_passport_issued_yy" class="date-label">Year</label>
+      <input type="number" id="dform_widget_num_passport_issued_yy" name="num_passport_issued_yy" class="date-yy" required mainlength="4" maxlength="4">
+    </div>
+    <input id="dform_widget_txt_passport_issued" type="text" name="txt_passport_issued" required 
+      class="dform_persist"
+      aria-labelledby="dform_widget_label_txt_passport_issued dform_widget_helptext_txt_passport_issued" title="test">
+  </div>
+
+</div>
+
+<div data-type="date" data-name="dt_passport_issued" data-active="false" data-agentonly="false"
+  class="container dform_widget  dform_widget_field dform_widget_type_date dform_widget_dt_passport_issued dform_widget_ dform_hidden">
+  <div>
+    <label for="dform_widget_dt_passport_issued" id="dform_widget_label_dt_passport_issued">
+      Date passport was issued
+    </label>
+  </div>
+  <div>
+    <input id="dform_widget_dt_passport_issued" type="date" name="dt_passport_issued"
+      class="dform_persist"
+      aria-labelledby="dform_widget_label_dt_passport_issued dform_widget_helptext_dt_passport_issued"
+      data-mindate="-10Y" data-maxdate="0D" required >
+    </div>
+</div>
+
+<!-- TIME -->
 <div data-type="text" id="dform_widget_time_incident_occured" data-name="txt_incident_occured" data-active="true"
   data-agentonly="false"
   class="container time-field dform_widget dform_widget_field dform_widget_type_text dform_widget_txt_incident_occured dform_widget_">

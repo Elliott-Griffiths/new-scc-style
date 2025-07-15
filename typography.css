@@ -25,7 +25,9 @@ h6,
 #dform_container div .header2,
 #dform_container .make-header label,
 #dform_container .make-header fieldset.radiogroup > legend,
-#dform_container .make-header fieldset.checkboxgroup > legend {
+#dform_container .make-header fieldset.checkboxgroup > legend,
+#dform_container .date-field > div > label,
+#dform_container .time-field > div > label {
   font-family: var(--font-family);
   color: var(--c-core-brand-primary-darken);
   margin-top: var(--spacing-lg);
@@ -41,7 +43,9 @@ h1,
 #dform_container div .header2,
 #dform_container .make-header label,
 #dform_container .make-header fieldset.radiogroup > legend,
-#dform_container .make-header fieldset.checkboxgroup > legend {
+#dform_container .make-header fieldset.checkboxgroup > legend,
+#dform_container .date-field > div > label,
+#dform_container .time-field > div > label {
   font-size: var(--font-size-xxxxl);
 }
 h2,
