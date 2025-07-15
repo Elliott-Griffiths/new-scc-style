@@ -196,5 +196,9 @@ li,
 }
 
 #dform_container .dform_validationMessage {
+  font-weight: var(--font-weight-semibold);
+}
+
+#dform_container .dform_validationMessage {
   color: var(--c-alerts-danger);
 }
