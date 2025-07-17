@@ -38,7 +38,7 @@ h6,
 
 #dform_container .date-field > div > label,
 #dform_container .time-field > div > label {
-  margin-top: var(--spacing-sm);
+  margin-top: var(--spacing-xxs);
 }
 
 h1,
