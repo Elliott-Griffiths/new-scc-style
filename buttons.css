@@ -131,7 +131,7 @@
   }
   
   #dform_container button:focus,
-  #dform_save {
+  #dform_save:focus {
     border-radius: 1.5625rem;
     outline: 3px solid var(--c-focus-links) !important;
     outline-offset: 0 !important;

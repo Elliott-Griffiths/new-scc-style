@@ -108,3 +108,12 @@
   margin: 0;
   color: var(--c-core-brand-primary-darken);
 }
+
+#dform_container .confirmation-pannel {
+  padding: var(--spacing-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: var(--c-alerts-success);
+}

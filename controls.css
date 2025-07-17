@@ -100,6 +100,11 @@
     color: var(--c-links-link);
   }
   
+  #dform_control_buttons > ul {
+    display: flex;
+    align-items: center;
+  }
+
   #dform_container button.back-btn::before {
     content: url(./icons/arrow-right-primary-darkened.svg);
     transform: rotate(180deg) translateY(-2px);
