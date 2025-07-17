@@ -130,9 +130,10 @@
   
   #dform_container button:hover,
   #dform_container button:focus,
-  #dform_save {
-    color: var(--c-core-brand-primary-darken);
-    background: var(--c-greys-white);
+  #dform_save:hover,
+  #dform_save:focus {
+    background: var(--c-core-brand-primary-darken);
+    color: var(--c-greys-white);
     border-color: var(--c-core-brand-primary-darken);
   }
   
@@ -143,12 +144,18 @@
     outline-offset: 0 !important;
   }
   
+  #dform_container a.button:hover,
+  #dform_container a.button:focus {
+    color: var(--c-core-brand-primary-darken);
+    background: var(--c-greys-white);
+  }
+
   #dform_container a.link-btn:hover,
   #dform_container button:hover {
     color: var(--c-links-link);
     box-shadow: none;
   }
-  
+
   #dform_container a.link-btn:focus,
   #dform_container button.link-btn:focus {
     padding: 0;
