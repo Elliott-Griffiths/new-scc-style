@@ -109,7 +109,7 @@
   color: var(--c-core-brand-primary-darken);
 }
 
-#dform_container .confirmation-pannel {
+#dform_container .confirmation-panel {
   padding: var(--spacing-lg);
   display: flex;
   justify-content: center;
