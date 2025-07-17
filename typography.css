@@ -36,6 +36,11 @@ h6,
   font-weight: var(--font-weight-semibold);
 }
 
+#dform_container .date-field > div > label,
+#dform_container .time-field > div > label {
+  margin-top: var(--spacing-sm);
+}
+
 h1,
 .header1,
 #dform_container h1,

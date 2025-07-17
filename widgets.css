@@ -321,7 +321,7 @@ input[type="checkbox"]:checked {
 
 #dform_container .dform_fielderror {
   box-shadow: none;
-  border: solid 2px var(--c-alerts-danger);
+  border: solid 2px var(--c-alerts-danger) !important;
   outline: none;
 }
 
