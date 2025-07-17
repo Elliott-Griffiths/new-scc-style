@@ -13,7 +13,8 @@
   
   #dform_container button,
   #dform_container button.link-btn,
-  #dform_container a.link-btn {
+  #dform_container a.link-btn,
+  #dform_container a.button {
     font-family: var(--font-family);
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
@@ -53,6 +54,11 @@
     text-underline-offset: 0.25rem;
   }
   
+  #dform_container a.button {
+    background: var(--c-core-brand-primary-darken);
+    color: var(--c-greys-white);
+  }
+
   /* --- FIND ON MAP --- */
   
   #dform_container button.link-btn.map-icon::before {
