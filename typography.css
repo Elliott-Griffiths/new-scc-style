@@ -207,3 +207,28 @@ li,
 #dform_container .dform_validationMessage {
   color: var(--c-alerts-danger);
 }
+
+#dform_container .confirmation-pannel {
+  padding: var(--spacing-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: var(--c-alerts-success);
+}
+
+#dform_container .confirmation-pannel h1 {
+  font-size: var(--font-size-confirmation-header);
+  line-height: 70px;
+  color: var(--c-greys-white);
+}
+
+#dform_container .confirmation-pannel p {
+  font-size: var(--font-size-confirmation-text);
+  color: var(--c-greys-white);
+  
+}
+
+#dform_container .confirmation-pannel p.reference {
+  font-weight: 700;
+}

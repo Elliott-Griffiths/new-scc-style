@@ -75,7 +75,7 @@
   }
   
   #dform_container button.back-btn,
-  #dform_save {
+  #dform_control_buttons #dform_save {
     margin: unset !important;
     padding: 0;
     display: none;
