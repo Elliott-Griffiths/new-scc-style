@@ -1,0 +1,19 @@
+#dform_container .address-search {
+    margin-block: var(--spacing-xl) var(--spacing-sm);
+}
+
+#dform_container .address-search input[type="text"] {
+    width: 200px;
+}
+
+#dform_container .address-search-btn-container {
+    margin-block: var(--spacing-sm) var(--spacing-xl);
+}
+
+#dform_container .address-search-btn,
+#dform_container .address-search-btn:hover,
+#dform_container .address-search-btn:focus {
+    color: var(--c-greys-white);
+    background: var(--c-alerts-success);
+    border: solid 2px var(--c-alerts-success);
+}

@@ -1,3 +1,29 @@
+#dform_container input[type="file"] {
+  padding: 0 !important;
+  border: none;
+  height: 100%;
+}
+
+#dform_container input[type="file"].dform_fielderror {
+  border: none !important;
+}
+
+input[type="file"]::file-selector-button {
+  height: var(--field-height-sm);
+  border-radius: 5px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: solid 1px #3D3D3B;
+  margin-right: var(--spacing-md);
+}
+
+#dform_container input[type="file"].dform_fielderror::file-selector-button {
+  border: solid 2px var(--c-alerts-danger);
+}
+
+#dform_container .dform_widget_type_file br {
+  display: none;
+}
+
 /* #dform_container div[data-type="file"] > div:nth-child(2) {
     display: grid;
     grid-template-columns: 14.6rem auto;
