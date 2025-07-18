@@ -280,10 +280,6 @@ input[type="checkbox"]:checked {
   appearance: none;
   padding-right: 0.5rem !important;
 }
-/* 
-#dform_container .dob {
-  margin-bottom: var(--spacing-sm);
-} */
 
 #dform_container .date-dd,
 #dform_container .date-mm,
