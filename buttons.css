@@ -186,7 +186,9 @@
   #dform_container button.disabled:hover,
   #dform_container button[disabled]:hover,
   #dform_container button.disabled:focus,
-  #dform_container button[disabled]:focus {
+  #dform_container button[disabled]:focus,
+  #dform_container button.disabled.primary-btn:hover,
+  #dform_container button[disabled].primary-btn:focus {
     color: var(--c-core-brand-primary-darken);
     background: var(--c-greys-white);
     border-color: var(--c-core-brand-primary-darken);
