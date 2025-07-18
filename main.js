@@ -391,13 +391,13 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- HANDLE RE-SEARCH ADDRESS ------------------------------------------ \\
 
-  $(document).on("click", ".search-again-btn", function() {
+  $(document).on("click", ".search-again-btn", function () {
     const currentPageId = getCurrentPageId();
     const searchInput = document.querySelector(`#${currentPageId} input[data-customalias="postcode"]`);
     const searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
     const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
     const setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
-  
+
     if (resultsList && searchInput && searchButton) {
       hideShowMultipleElements([
         { name: searchInput.name, display: "show" },
@@ -405,7 +405,7 @@ function handleOnReadyEvent(_, kdf) {
         { name: resultsList.dataset.name, display: "hide" },
         { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
       ]);
-  
+
       searchInput.focus();
     }
   });
@@ -1469,6 +1469,9 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     action === "retrieve-location-from-coordinates"
   ) {
     let {
+      subProperty,
+      buildingName,
+      buildingNumber,
       property,
       streetName,
       city,
@@ -1509,12 +1512,33 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       return;
     }
 
+    const addressDataForDisplay = {
+      subProperty: subProperty ? formatTitleCase(subProperty) : '',
+      buildingName: buildingName ? formatTitleCase(buildingName) : '',
+      buildingNumber: buildingNumber ? formatTitleCase(buildingNumber) : '',
+      streetName: streetName ? formatTitleCase(streetName) : '',
+      locality: locality ? formatTitleCase(locality) : '',
+      city: city ? formatTitleCase(city) : '',
+      postcode: postcode ? postcode.toUpperCase() : ''
+    };
+
+    const fullAddressDisplay = buildAddressMarkup(addressDataForDisplay);
+    const selectedAddressContainer = document.querySelector(`#${getCurrentPageId()} .selected-address-container`);
+    if (selectedAddressContainer) {
+      selectedAddressContainer.innerHTML = fullAddressDisplay;
+    }
+
+    const enterAddressButton = document.querySelector(`#${getCurrentPageId()} .enter-address-btn`);
+    const setAddressButton = document.querySelector(`#${getCurrentPageId()} .set-address-btn`);
+
     property = formatTitleCase(property);
     streetName = formatTitleCase(streetName);
     fullAddress = `${formatTitleCase(property)} ${formatTitleCase(
       streetName
     )}, ${city}, ${postcode}`;
+    
     showHideInputFields([{ alias: "searchResult", display: false }]);
+    
     setValuesToInputFields([
       { alias: "property", value: property },
       { alias: "streetName", value: streetName },
@@ -1538,7 +1562,12 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       { alias: "areaContact", value: areaContact },
       { alias: "officerContact", value: officerContact },
     ]);
-    setSelectedAddress(fullAddress, "show");
+
+    hideShowMultipleElements([
+      { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
+      { name: enterAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
+      { name: selectedAddressContainer.id.replace('dform_widget_html_', ''), display: "show" },
+    ]);
   }
 
   if (action === "retrieve-vehicle-details") {
@@ -4695,3 +4724,74 @@ function buildRelatedServiceCards(servicesData, containerId) {
   }
 }
 
+/**
+ * Builds an HTML <address> markup string with Schema.org PostalAddress microdata.
+ * Lines are omitted if their corresponding address component is empty or null.
+ *
+ * @param {object} addressData - An object containing address components.
+ * @param {string} [addressData.subProperty] - (Optional) Sub-building information (e.g., flat number).
+ * @param {string} [addressData.buildingName] - (Optional) Name of the building (e.g., "Howden House").
+ * @param {string} [addressData.buildingNumber] - (Optional) Building number (e.g., "1").
+ * @param {string} [addressData.streetName] - (Optional) Street name (e.g., "Union St").
+ * @param {string} [addressData.locality] - (Optional) Dependent locality (e.g., "Sheffield City Centre").
+ * @param {string} [addressData.city] - (Optional) City or Post Town (e.g., "Sheffield").
+ * @param {string} [addressData.postcode] - (Optional) Postcode (e.g., "S1 2SH").
+ * @returns {string} The HTML string for the <address> element.
+ */
+function buildAddressMarkup(addressData) {
+  // Ensure addressData is an object to prevent errors if undefined/null is passed
+  addressData = addressData || {};
+
+  const addressLines = [];
+
+  // Process address components in a typical display order
+  // Note: itemprop values align with Schema.org PostalAddress properties
+
+  // Sub-property (e.g., Flat 1)
+  if (addressData.subProperty) {
+    addressLines.push(`<span itemprop="subProperty">${addressData.subProperty}</span>`);
+  }
+
+  // Building Name (often used for itemprop="name" for the overall property)
+  if (addressData.buildingName) {
+    addressLines.push(`<span itemprop="name">${addressData.buildingName}</span>`);
+  }
+
+  // Street Address (Building Number and Street Name often go together)
+  const streetAddressParts = [];
+  if (addressData.buildingNumber) {
+    streetAddressParts.push(addressData.buildingNumber);
+  }
+  if (addressData.streetName) {
+    streetAddressParts.push(addressData.streetName);
+  }
+  if (streetAddressParts.length > 0) {
+    addressLines.push(`<span itemprop="streetAddress">${streetAddressParts.join(' ')}</span>`);
+  }
+
+  // Locality (e.g., Sheffield City Centre - a more specific place within a city/town)
+  // Check to avoid duplicating if locality is the same as the main city
+  if (addressData.locality && addressData.locality !== addressData.city) {
+    addressLines.push(`<span itemprop="addressLocality">${addressData.locality}</span>`);
+  }
+
+  // City (Post Town) - also uses addressLocality in Schema.org
+  if (addressData.city) {
+    addressLines.push(`<span itemprop="addressLocality">${addressData.city}</span>`);
+  }
+
+  // Postal Code
+  if (addressData.postcode) {
+    addressLines.push(`<span itemprop="postalCode">${addressData.postcode}</span>`);
+  }
+
+  // Country (Assuming GB for UK context, adjust if needed)
+  addressLines.push(`<span itemprop="addressCountry">GB</span>`); // Always include country for completeness
+
+  // Join lines with <br> and wrap in <address> tags
+  return `
+    <address itemscope itemtype="http://schema.org/PostalAddress">
+      ${addressLines.join('<br>\n')}
+    </address>
+  `;
+}
