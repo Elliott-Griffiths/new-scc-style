@@ -389,41 +389,26 @@ function handleOnReadyEvent(_, kdf) {
     }
   });
 
-  // --- HANDLE ADDRESS LOOKUP --------------------------------------------- \\
+  // --- HANDLE RE-SEARCH ADDRESS ------------------------------------------ \\
 
-  // $(".search-results").on("change", (event) => {
-  //   if (event.target.value && !$(event.target).data("keyboardSelection")) {
-  //     const action =
-  //       addressSearchType[getCurrentPageId()] === "local"
-  //         ? "retrieve-local-address"
-  //         : "retrieve-national-address";
-  //     KDF.customdata(action, event.target.id, true, true, {
-  //       propertyId: event.target.value,
-  //     });
-  //   }
-  //   $(event.target).removeData("keyboardSelection");
-  // });
-
-  // $(".search-results").on("keydown", (event) => {
-  //   if (event.key === "Enter" || event.key === "Tab") {
-  //     if (event.target.value) {
-  //       const action =
-  //         addressSearchType[getCurrentPageId()] === "local"
-  //           ? "retrieve-local-address"
-  //           : "retrieve-national-address";
-  //       KDF.customdata(action, event.target.id, true, true, {
-  //         propertyId: event.target.value,
-  //       });
-  //       $(event.target).data("keyboardSelection", true);
-  //     }
-  //   }
-  // });
-
-  // $(".address-details").on("click", (event) => {
-  //   resetAddressSearch(false);
-  //   showAddressFields();
-  //   setRequiredStateByAlias("postcode", "not required");
-  // });
+  $(document).on("click", ".search-again-btn", function() {
+    const currentPageId = getCurrentPageId();
+    const searchInput = document.querySelector(`#${currentPageId} input[data-customalias="postcode"]`);
+    const searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
+    const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
+    const setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
+  
+    if (resultsList && searchInput && searchButton) {
+      hideShowMultipleElements([
+        { name: searchInput.name, display: "show" },
+        { name: searchButton.id.replace('dform_widget_button_', ''), display: "show" },
+        { name: resultsList.dataset.name, display: "hide" },
+        { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
+      ]);
+  
+      searchInput.focus();
+    }
+  });
 
   // --- HANDLE MANUAL ADDRESS ENTRY --------------------------------------- \\
 
@@ -1420,7 +1405,44 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       setValuesToInputFields([
         { alias: "searchResult", value: formattedSearchResult },
       ]);
-      showHideInputFields([{ alias: "searchResult", display: true }]);
+
+      const { propertySearchResult } = response.data;
+      const numberOfResults = propertySearchResult ? propertySearchResult.length : 0;
+      const currentPageId = getCurrentPageId();
+
+      const searchInput = document.querySelector(`#${currentPageId} input[data-customalias="postcode"]`);
+      const searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
+
+      const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
+      let resultsLabelId = null;
+      if (resultsList) {
+        const labelElement = resultsList.querySelector('label');
+        if (labelElement) {
+          resultsLabelId = labelElement.id;
+        }
+      }
+      const setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
+
+      const searchedPostcode = searchInput ? searchInput.value : '';
+
+      const resultsContent = `
+        ${numberOfResults} addresses found for <strong>${searchedPostcode}</strong>.
+        <button type="button" class="search-again-btn link-btn">Search again</button>
+      `;
+
+      if (resultsList && searchInput && searchButton) {
+        const searchStatusMessageElement = document.getElementById(resultsLabelId);
+        if (searchStatusMessageElement) {
+          searchStatusMessageElement.innerHTML = resultsContent;
+        }
+
+        hideShowMultipleElements([
+          { name: searchInput.name, display: "hide" },
+          { name: searchButton.id.replace('dform_widget_button_', ''), display: "hide" },
+          { name: resultsList.dataset.name, display: "show" },
+          { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "show" },
+        ]);
+      }
     } else {
       const currentPageId = getCurrentPageId();
       const postcodeInput = document.querySelector(

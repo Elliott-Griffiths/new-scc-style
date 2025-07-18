@@ -28,3 +28,10 @@
     width: var(--font-size-base);
     line-height: var(--line-height);
 } */
+
+#dform_container button.search-again-btn {
+    display: inline;
+    margin-left: var(--spacing-xs);
+    color: var(--c-links-link);
+    text-underline-offset: 0.25rem;
+}
