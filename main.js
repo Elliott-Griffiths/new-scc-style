@@ -1474,6 +1474,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       buildingNumber,
       property,
       streetName,
+      locality,
       city,
       postcode,
       fullAddress,
@@ -1536,7 +1537,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     fullAddress = `${formatTitleCase(property)} ${formatTitleCase(
       streetName
     )}, ${city}, ${postcode}`;
-    
+
     showHideInputFields([{ alias: "searchResult", display: false }]);
     
     setValuesToInputFields([
