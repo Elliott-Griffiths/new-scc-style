@@ -129,8 +129,8 @@
   #dform_container button:focus,
   #dform_container a.button:hover,
   #dform_container a.button:focus {
-    color: var(--c-core-brand-primary-darken);
-    background: var(--c-greys-white);
+    color: var(--c-greys-white);
+    background: var(--c-core-brand-primary-darken);
     border-color: var(--c-core-brand-primary-darken);
     box-shadow: none;
   }
