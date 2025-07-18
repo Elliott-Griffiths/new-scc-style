@@ -139,10 +139,10 @@
   #dform_control_buttons #dform_save:hover,
   #dform_container button.back-btn:focus, 
   #dform_control_buttons #dform_save:focus {
-    background: var(--c-core-brand-primary-darken);
-    color: var(--c-greys-white);
+    background: transparent;
+    color: var(--c-core-brand-primary-darken);
     border-color: none;
-    text-decoration-color: var(--c-core-brand-primary-darken) !important;
+    text-decoration-color: var(--c-core-brand-accent-1-darken);
     box-shadow: none;
   }
 
