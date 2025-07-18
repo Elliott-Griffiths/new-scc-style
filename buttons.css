@@ -66,10 +66,10 @@
     content: url(./icons/location-white.svg);
     align-items: center;
     justify-content: center;
-    height: var(--field-height-sm);
-    width: var(--field-height-sm);
+    height: var(--field-height-md);
+    width: var(--field-height-md);
     margin-right: 1rem;
-    padding: 0.4rem 0.6rem 0.4rem;
+    padding: 0.5rem 0.8rem;
     background: var(--c-core-brand-primary-darken);
   }
   
@@ -109,8 +109,8 @@
     align-items: center;
     justify-items: center;
     transform: translateY(-3px);
-    height: var(--field-height-sm);
-    width: var(--field-height-sm);
+    height: var(--field-height-md);
+    width: var(--field-height-md);
     background: var(--c-core-brand-primary-darken);
   }
   
@@ -131,18 +131,21 @@
   
   #dform_container button:hover,
   #dform_container button:focus,
+  #dform_container a.button:hover,
+  #dform_container a.button:focus {
+    color: var(--c-core-brand-primary-darken);
+    background: var(--c-greys-white);
+    border-color: var(--c-core-brand-primary-darken);
+    box-shadow: none;
+  }
+
   #dform_save:hover,
   #dform_save:focus {
     background: var(--c-greys-white);
     color: var(--c-core-brand-primary-darken);
-    border-color: var(--c-core-brand-primary-darken);
-    box-shadow: none;
-  }
-  
-  #dform_save:hover,
-  #dform_save:focus {
     border-color: none;
     text-decoration-color: var(--c-core-brand-primary-darken);
+    box-shadow: none;
   }
 
   #dform_container button:focus,
@@ -152,14 +155,6 @@
     outline-offset: 0 !important;
   }
   
-  #dform_container a.button:hover,
-  #dform_container a.button:focus {
-    color: var(--c-core-brand-primary-darken);
-    background: var(--c-greys-white);
-    border-color: var(--c-core-brand-primary-darken);
-    box-shadow: none;
-  }
-
   #dform_container a.link-btn:hover,
   #dform_container button:hover {
     color: var(--c-links-link);
@@ -186,13 +181,11 @@
   #dform_container button.disabled:hover,
   #dform_container button[disabled]:hover,
   #dform_container button.disabled:focus,
-  #dform_container button[disabled]:focus,
-  #dform_container button.disabled.primary-btn:hover,
-  #dform_container button[disabled].primary-btn:focus {
+  #dform_container button[disabled]:focus {
     color: var(--c-core-brand-primary-darken);
     background: var(--c-greys-white);
     border-color: var(--c-core-brand-primary-darken);
-    cursor: not-allowed;
+    cursor: not-allowed !important;
   }
   
   button[disabled] {
