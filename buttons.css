@@ -137,10 +137,10 @@
 
   #dform_save:hover,
   #dform_save:focus {
-    background: var(--c-greys-white);
-    color: var(--c-core-brand-primary-darken);
+    background: var(--c-core-brand-primary-darken);
+    color: var(--c-greys-white);
     border-color: none;
-    text-decoration-color: var(--c-core-brand-primary-darken);
+    text-decoration-color: var(--c-core-brand-primary-darken) !important;
     box-shadow: none;
   }
 
