@@ -1406,7 +1406,6 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
         { alias: "searchResult", value: formattedSearchResult },
       ]);
 
-      const { propertySearchResult } = response.data;
       const numberOfResults = propertySearchResult ? propertySearchResult.length : 0;
       const currentPageId = getCurrentPageId();
 
