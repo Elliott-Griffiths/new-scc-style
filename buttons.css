@@ -142,7 +142,7 @@
     background: transparent;
     color: var(--c-core-brand-primary-darken);
     border-color: none;
-    text-decoration-color: var(--c-core-brand-accent-1-darken);
+    text-decoration-color: var(--c-core-brand-accent-1-darken) !important;
     box-shadow: none;
   }
 

@@ -1,4 +1,4 @@
-#dform_container div[data-type="file"] > div:nth-child(2) {
+/* #dform_container div[data-type="file"] > div:nth-child(2) {
     display: grid;
     grid-template-columns: 14.6rem auto;
     align-items: center;
@@ -61,4 +61,4 @@
   #dform_container div[data-type="file"] > div:nth-child(2) br,
   #dform_container .dform_fileupload_progressbar {
     display: none;
-  }
+  } */
