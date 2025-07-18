@@ -3,6 +3,10 @@
   margin-block: var(--spacing-xl);
 }
 
+#dform_container .make-header {
+  margin-block: unset;
+}
+
 #dform_container input,
 #dform_container select,
 #dform_container textarea {
