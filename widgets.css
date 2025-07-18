@@ -1,6 +1,6 @@
 #dform_container .dform_widget_field,
 #dform_container .dform_widget_type_html {
-  margin-bottom: var(--spacing-lg);
+  margin-block: var(--spacing-xl);
 }
 
 #dform_container input,
