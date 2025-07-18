@@ -2423,10 +2423,11 @@ function validDate(id, day, month, year, activeField, baseMessage) {
  * @param {string} baseId - The base identifier for the current time block (e.g., 'incident_occured', 'now').
  */
 function handleTimeValidation(parentId, hour, minute, ampm, baseId) {
-  const baseMessage = $(`#${parentId}`).find('.dform_validationMessage').text(); // Get message from specific block
+  const txtFieldId = parentId.replace("_time_", "_txt_");
+  const timeMessage = getValidationMessageFromSession(txtFieldId);
 
   $(`#${parentId} .time-hour, #${parentId} .time-minute, #${parentId} .time-ampm`).removeClass('dform_fielderror');
-  $(`#${parentId}`).find('.dform_validationMessage').text(baseMessage).hide();
+  $(`#${parentId}`).find('.dform_validationMessage').text(timeMessage).hide();
 
   let hasError = false;
   let errorMsg = "";
@@ -2436,37 +2437,37 @@ function handleTimeValidation(parentId, hour, minute, ampm, baseId) {
   const errorConditions = [
     {
       condition: isNaN(hour) && isNaN(minute) && !ampm,
-      message: "Please enter the hour, minute, and select AM or PM.",
+      message: timeMessage,
       fields: timeFields
     },
     {
       condition: !isNaN(hour) && !isNaN(minute) && !ampm,
-      message: "Please select AM or PM.",
+      message: "The time you entered must include am or pm",
       fields: ['time-ampm']
     },
     {
       condition: !isNaN(hour) && isNaN(minute) && ampm,
-      message: "Please enter the minute.",
+      message: "The time you entered must include the minute",
       fields: ['time-minute']
     },
     {
       condition: isNaN(hour) && !isNaN(minute) && ampm,
-      message: "Please enter the hour.",
+      message: "The time you entered must include the hour",
       fields: ['time-hour']
     },
     {
       condition: !isNaN(hour) && isNaN(minute) && !ampm,
-      message: "Please enter the minute and select AM or PM.",
+      message: "The time you entered must include the minute and am or pm",
       fields: ['time-minute', 'time-ampm']
     },
     {
       condition: isNaN(hour) && !isNaN(minute) && !ampm,
-      message: "Please enter the hour and select AM or PM.",
+      message: "The time you entered must include am or pm",
       fields: ['time-hour', 'time-ampm']
     },
     {
       condition: isNaN(hour) && isNaN(minute) && ampm,
-      message: "Please enter the hour and minute.",
+      message: "The time you entered must include the hour and minute",
       fields: ['time-hour', 'time-minute']
     },
     {
@@ -2481,7 +2482,7 @@ function handleTimeValidation(parentId, hour, minute, ampm, baseId) {
     },
     {
       condition: (isNaN(hour) || isNaN(minute) || !ampm),
-      message: baseMessage,
+      message: timeMessage,
       fields: timeFields
     }
   ];
