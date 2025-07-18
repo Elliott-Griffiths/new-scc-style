@@ -756,38 +756,47 @@ function handleOnReadyEvent(_, kdf) {
   // --- HANDLE CUSTOM TIME ------------------------------------------------ \\
 
   $('.time-hour, .time-minute').on('input', function (e) {
-    const parentId = $(this).closest('.time-field').attr('id');
-    const nextFieldId = $(this).hasClass('time-hour') ?
-      parentId.replace("_hour", "_minute") :
-      parentId.replace("_minute", "_ampm");
+    const $parentTimeField = $(this).closest('.time-field');
+    const baseId = $parentTimeField.attr('id').replace('dform_widget_time_', ''); 
+    
+    let nextFieldId = null;
+    if ($(this).hasClass('time-hour')) {
+        nextFieldId = `dform_widget_num_${baseId}_minute`;
+    } else if ($(this).hasClass('time-minute')) {
+        nextFieldId = `dform_widget_sel_${baseId}_ampm`;
+    }
     inputTime(this.id, nextFieldId);
-  });
+});
 
-  $('.time-ampm').on('change blur', function () {
-    const parentId = $(this).closest('.time-field').attr('id');
-    const hourVal = $(`#d${parentId.replace("_ampm", "_hour")}`).val();
-    const minuteVal = $(`#d${parentId.replace("_ampm", "_minute")}`).val();
+$('.time-ampm').on('change blur', function () {
+    const $parentTimeField = $(this).closest('.time-field');
+    const baseId = $parentTimeField.attr('id').replace('dform_widget_time_', '');
+    
+    const hourVal = $(`#dform_widget_num_${baseId}_hour`).val();
+    const minuteVal = $(`#dform_widget_num_${baseId}_minute`).val();
     const ampm = $(this).val();
 
     const hour = (hourVal !== '' && hourVal !== null && hourVal !== undefined) ? parseInt(hourVal, 10) : NaN;
     const minute = (minuteVal !== '' && minuteVal !== null && minuteVal !== undefined) ? parseInt(minuteVal, 10) : NaN;
 
-    handleTimeValidation(parentId, hour, minute, ampm);
-  });
+    handleTimeValidation($parentTimeField.attr('id'), hour, minute, ampm, baseId);
+});
 
-  $('.time-field').on('focusout', function (e) {
+$('.time-field').on('focusout', function (e) {
     if (!$(this).has(e.relatedTarget).length && e.relatedTarget !== this) {
-      const parentId = $(this).attr('id');
-      const hourVal = $(`#${parentId.replace("_time_", "_num_")}_hour`).val();
-      const minuteVal = $(`#${parentId.replace("_time_", "_num_")}_minute`).val();
-      const ampm = $(`#${parentId.replace("_time_", "_sel_")}_ampm`).val();
+        const $parentTimeField = $(this);
+        const baseId = $parentTimeField.attr('id').replace('dform_widget_time_', '');
 
-      const hour = (hourVal !== '' && hourVal !== null && hourVal !== undefined) ? parseInt(hourVal, 10) : NaN;
-      const minute = (minuteVal !== '' && minuteVal !== null && minuteVal !== undefined) ? parseInt(minuteVal, 10) : NaN;
+        const hourVal = $(`#dform_widget_num_${baseId}_hour`).val();
+        const minuteVal = $(`#dform_widget_num_${baseId}_minute`).val();
+        const ampm = $(`#dform_widget_sel_${baseId}_ampm`).val();
 
-      handleTimeValidation(parentId, hour, minute, ampm);
+        const hour = (hourVal !== '' && hourVal !== null && hourVal !== undefined) ? parseInt(hourVal, 10) : NaN;
+        const minute = (minuteVal !== '' && minuteVal !== null && minuteVal !== undefined) ? parseInt(minuteVal, 10) : NaN;
+
+        handleTimeValidation($parentTimeField.attr('id'), hour, minute, ampm, baseId);
     }
-  });
+});
 
   // --- HANDLE KEYUP EVENTLISTENER FOR CHECK PROGRESS --------------------- \\
 
