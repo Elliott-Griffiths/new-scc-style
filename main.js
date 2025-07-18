@@ -2414,164 +2414,164 @@ function validDate(id, day, month, year, activeField, baseMessage) {
 
 // --- CUSTOM TIME FUNCTIONS ------------------------------------------------ \\
 
-/**
- * Handles the validation logic for the time input fields.
- * @param {string} parentId - The ID of the parent time-field container.
- * @param {number} hour - The hour value.
- * @param {number} minute - The minute value.
- * @param {string} ampm - The AM/PM value.
- * @param {string} baseId - The base identifier for the current time block (e.g., 'incident_occured', 'now').
- */
-function handleTimeValidation(parentId, hour, minute, ampm, baseId) {
-  const txtFieldId = parentId.replace("_time_", "_txt_");
-  const timeMessage = getValidationMessageFromSession(txtFieldId);
+        /**
+         * Handles the validation logic for the time input fields.
+         * @param {string} parentId - The ID of the parent time-field container.
+         * @param {number} hour - The hour value.
+         * @param {number} minute - The minute value.
+         * @param {string} ampm - The AM/PM value.
+         * @param {string} baseId - The base identifier for the current time block (e.g., 'incident_occured', 'now').
+         */
+        function handleTimeValidation(parentId, hour, minute, ampm, baseId) {
+          // Get the base message directly from the HTML element
+          const baseMessage = $(`#${parentId}`).find('.dform_validationMessage').text(); 
 
-  $(`#${parentId} .time-hour, #${parentId} .time-minute, #${parentId} .time-ampm`).removeClass('dform_fielderror');
-  $(`#${parentId}`).find('.dform_validationMessage').text(timeMessage).hide();
+          $(`#${parentId} .time-hour, #${parentId} .time-minute, #${parentId} .time-ampm`).removeClass('dform_fielderror');
+          $(`#${parentId}`).find('.dform_validationMessage').text(baseMessage).hide();
 
-  let hasError = false;
-  let errorMsg = "";
-  const errorFields = [];
-  const timeFields = ['time-hour', 'time-minute', 'time-ampm'];
+          let hasError = false;
+          let errorMsg = "";
+          const errorFields = [];
+          const timeFields = ['time-hour', 'time-minute', 'time-ampm'];
 
-  const errorConditions = [
-    {
-      condition: isNaN(hour) && isNaN(minute) && !ampm,
-      message: timeMessage,
-      fields: timeFields
-    },
-    {
-      condition: !isNaN(hour) && !isNaN(minute) && !ampm,
-      message: "The time you entered must include am or pm",
-      fields: ['time-ampm']
-    },
-    {
-      condition: !isNaN(hour) && isNaN(minute) && ampm,
-      message: "The time you entered must include the minute",
-      fields: ['time-minute']
-    },
-    {
-      condition: isNaN(hour) && !isNaN(minute) && ampm,
-      message: "The time you entered must include the hour",
-      fields: ['time-hour']
-    },
-    {
-      condition: !isNaN(hour) && isNaN(minute) && !ampm,
-      message: "The time you entered must include the minute and am or pm",
-      fields: ['time-minute', 'time-ampm']
-    },
-    {
-      condition: isNaN(hour) && !isNaN(minute) && !ampm,
-      message: "The time you entered must include am or pm",
-      fields: ['time-hour', 'time-ampm']
-    },
-    {
-      condition: isNaN(hour) && isNaN(minute) && ampm,
-      message: "The time you entered must include the hour and minute",
-      fields: ['time-hour', 'time-minute']
-    },
-    {
-      condition: hour > 12 || hour < 1,
-      message: "Hour must be between 1 and 12.",
-      fields: ['time-hour']
-    },
-    {
-      condition: minute > 59 || minute < 0,
-      message: "Minute must be between 00 and 59.",
-      fields: ['time-minute']
-    },
-    {
-      condition: (isNaN(hour) || isNaN(minute) || !ampm),
-      message: timeMessage,
-      fields: timeFields
-    }
-  ];
+          const errorConditions = [
+              {
+                  condition: isNaN(hour) && isNaN(minute) && !ampm,
+                  message: "Please enter the hour, minute, and select AM or PM.",
+                  fields: timeFields
+              },
+              {
+                  condition: !isNaN(hour) && !isNaN(minute) && !ampm,
+                  message: "The time you entered must include am or pm.",
+                  fields: ['time-ampm']
+              },
+              {
+                  condition: !isNaN(hour) && isNaN(minute) && ampm,
+                  message: "The time you entered must include the minute.",
+                  fields: ['time-minute']
+              },
+              {
+                  condition: isNaN(hour) && !isNaN(minute) && ampm,
+                  message: "The time you entered must include the hour.",
+                  fields: ['time-hour']
+              },
+              {
+                  condition: !isNaN(hour) && isNaN(minute) && !ampm,
+                  message: "The time you entered must include the minute and am or pm.",
+                  fields: ['time-minute', 'time-ampm']
+              },
+              {
+                  condition: isNaN(hour) && !isNaN(minute) && !ampm,
+                  message: "The time you entered must include the hour and am or pm.",
+                  fields: ['time-hour', 'time-ampm']
+              },
+              {
+                  condition: isNaN(hour) && isNaN(minute) && ampm,
+                  message: "The time you entered must include the hour and minute.",
+                  fields: ['time-hour', 'time-minute']
+              },
+              {
+                  condition: hour > 12 || hour < 1,
+                  message: "Hour must be between 1 and 12.",
+                  fields: ['time-hour']
+              },
+              {
+                  condition: minute > 59 || minute < 0,
+                  message: "Minute must be between 00 and 59.",
+                  fields: ['time-minute']
+              },
+              {
+                  condition: (isNaN(hour) || isNaN(minute) || !ampm),
+                  message: baseMessage,
+                  fields: timeFields
+              }
+          ];
 
-  for (const condition of errorConditions) {
-    if (condition.condition) {
-      hasError = true;
-      errorMsg = condition.message;
-      errorFields.push(...condition.fields);
-      break;
-    }
-  }
+          for (const condition of errorConditions) {
+              if (condition.condition) {
+                  hasError = true;
+                  errorMsg = condition.message;
+                  errorFields.push(...condition.fields);
+                  break;
+              }
+          }
 
-  if (hasError) {
-    errorFields.forEach(field => {
-      $(`#${parentId} .${field}`).addClass('dform_fielderror');
-    });
-    $(`#${parentId}`).find('.dform_validationMessage').text(errorMsg).show();
-    $(`#dform_widget_txt_${baseId}`).val('');
-    $(`#dform_widget_time_${baseId}[type="time"]`).val('');
+          if (hasError) {
+              errorFields.forEach(field => {
+                  $(`#${parentId} .${field}`).addClass('dform_fielderror');
+              });
+              $(`#${parentId}`).find('.dform_validationMessage').text(errorMsg).show();
+              $(`#dform_widget_txt_${baseId}`).val('');
+              $(`#dform_widget_time_${baseId}[type="time"]`).val('');
+              
+              $(`#display_formatted_ampm_${baseId}`).text('N/A');
+              $(`#display_formatted_24hr_${baseId}`).text('N/A');
+              return;
+          }
 
-    $(`#display_formatted_ampm_${baseId}`).text('N/A');
-    $(`#display_formatted_24hr_${baseId}`).text('N/A');
-    return;
-  }
+          if (hour !== null && !isNaN(hour) && minute !== null && !isNaN(minute) && ampm) {
+              const formattedAmpm = formatTimeInput(hour, minute, ampm);
+              const formatted24hr = formatTimeForSubmission(hour, minute, ampm);
 
-  if (hour !== null && !isNaN(hour) && minute !== null && !isNaN(minute) && ampm) {
-    const formattedAmpm = formatTimeInput(hour, minute, ampm);
-    const formatted24hr = formatTimeForSubmission(hour, minute, ampm);
+              $(`#dform_widget_txt_${baseId}`).val(formattedAmpm);
+              $(`#dform_widget_time_${baseId}[type="time"]`).val(formatted24hr);
 
-    $(`#dform_widget_txt_${baseId}`).val(formattedAmpm);
-    $(`#dform_widget_time_${baseId}[type="time"]`).val(formatted24hr);
+              $(`#display_formatted_ampm_${baseId}`).text(formattedAmpm);
+              $(`#display_formatted_24hr_${baseId}`).text(formatted24hr);
+          }
+          $(`#dform_widget_txt_${baseId}`).change();
+          $(`#dform_widget_time_${baseId}[type="time"]`).change();
+      }
 
-    $(`#display_formatted_ampm_${baseId}`).text(formattedAmpm);
-    $(`#display_formatted_24hr_${baseId}`).text(formatted24hr);
-  }
-  $(`#dform_widget_txt_${baseId}`).change();
-  $(`#dform_widget_time_${baseId}[type="time"]`).change();
-}
+      /**
+       * Handles auto-tabbing to the next input field when max length is reached.
+       * @param {string} id - The ID of the current input field.
+       * @param {string} nextID - The ID of the next input field to focus on.
+       */
+      function inputTime(id, nextID) {
+          const maxLength = $(`#${id}`).attr('maxlength');
+          let value = $(`#${id}`).val();
 
-/**
- * Handles auto-tabbing to the next input field when max length is reached.
- * @param {string} id - The ID of the current input field.
- * @param {string} nextID - The ID of the next input field to focus on.
- */
-function inputTime(id, nextID) {
-  const maxLength = $(`#${id}`).attr('maxlength');
-  let value = $(`#${id}`).val();
+          if (value.length >= maxLength) {
+              $(`#${id}`).val(value.substring(0, maxLength));
+              if (nextID) {
+                  $(`#${nextID}`).focus();
+              } else {
+                  $(`#${id}`).blur();
+              }
+          }
+      }
 
-  if (value.length >= maxLength) {
-    $(`#${id}`).val(value.substring(0, maxLength));
-    if (nextID) {
-      $(`#${nextID}`).focus();
-    } else {
-      $(`#${id}`).blur();
-    }
-  }
-}
+      /**
+       * Formats the time for display in the hidden text input (e.g., "9:15am").
+       * @param {number} hour - The hour (1-12).
+       * @param {number} minute - The minute (0-59).
+       * @param {string} ampm - "AM" or "PM".
+       * @returns {string} The formatted time string.
+       */
+      function formatTimeInput(hour, minute, ampm) {
+          const paddedMinute = minute.toString().padStart(2, '0');
+          return `${hour}:${paddedMinute}${ampm.toLowerCase()}`;
+      }
 
-/**
- * Formats the time for display in the hidden text input (e.g., "9:15am").
- * @param {number} hour - The hour (1-12).
- * @param {number} minute - The minute (0-59).
- * @param {string} ampm - "AM" or "PM".
- * @returns {string} The formatted time string.
- */
-function formatTimeInput(hour, minute, ampm) {
-  const paddedMinute = minute.toString().padStart(2, '0');
-  return `${hour}:${paddedMinute}${ampm.toLowerCase()}`;
-}
-
-/**
- * Formats the time for submission (24-hour format, e.g., "09:15" or "15:25").
- * @param {number} hour - The hour (1-12).
- * @param {number} minute - The minute (0-59).
- * @param {string} ampm - "AM" or "PM".
- * @returns {string} The formatted time string in 24-hour format.
- */
-function formatTimeForSubmission(hour, minute, ampm) {
-  let hours24 = hour;
-  if (ampm === 'PM' && hour !== 12) {
-    hours24 += 12;
-  } else if (ampm === 'AM' && hour === 12) {
-    hours24 = 0; // 12 AM is 00 in 24-hour format
-  }
-  const paddedHour = hours24.toString().padStart(2, '0');
-  const paddedMinute = minute.toString().padStart(2, '0');
-  return `${paddedHour}:${paddedMinute}`;
-}
+      /**
+       * Formats the time for submission (24-hour format, e.g., "09:15" or "15:25").
+       * @param {number} hour - The hour (1-12).
+       * @param {number} minute - The minute (0-59).
+       * @param {string} ampm - "AM" or "PM".
+       * @returns {string} The formatted time string in 24-hour format.
+       */
+      function formatTimeForSubmission(hour, minute, ampm) {
+          let hours24 = hour;
+          if (ampm === 'PM' && hour !== 12) {
+              hours24 += 12;
+          } else if (ampm === 'AM' && hour === 12) {
+              hours24 = 0; // 12 AM is 00 in 24-hour format
+          }
+          const paddedHour = hours24.toString().padStart(2, '0');
+          const paddedMinute = minute.toString().padStart(2, '0');
+          return `${paddedHour}:${paddedMinute}`;
+      }
 
 // --- PROGRESS BAR --------------------------------------------------------- \\
 
