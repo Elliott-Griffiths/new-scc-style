@@ -756,16 +756,17 @@ function handleOnReadyEvent(_, kdf) {
 // --- CUSTOM TIME FUNCTIONS ------------------------------------------------ \\
 
   $('.time-hour, .time-minute').on('input', function (e) {
+    const parentId = $(this).closest('.time-field').attr('id');
     const nextFieldId = $(this).hasClass('time-hour') ?
-      'dform_widget_num_incident_occured_minute' :
-      'dform_widget_sel_incident_occured_ampm';
+      parentId.replace("_hour", "_minute") :
+      parentId.replace("_minute", "_ampm");
     inputTime(this.id, nextFieldId);
   });
   
   $('.time-ampm').on('change blur', function () {
     const parentId = $(this).closest('.time-field').attr('id');
-    const hourVal = $('#dform_widget_num_incident_occured_hour').val();
-    const minuteVal = $('#dform_widget_num_incident_occured_minute').val();
+    const hourVal = $(`#d${parentId.replace("_ampm", "_hour")}`).val();
+    const minuteVal = $(`#d${parentId.replace("_ampm", "_minute")}`).val();
     const ampm = $(this).val();
   
     const hour = (hourVal !== '' && hourVal !== null && hourVal !== undefined) ? parseInt(hourVal, 10) : NaN;
@@ -777,9 +778,9 @@ function handleOnReadyEvent(_, kdf) {
   $('.time-field').on('focusout', function (e) {
     if (!$(this).has(e.relatedTarget).length && e.relatedTarget !== this) {
       const parentId = $(this).attr('id');
-      const hourVal = $('#dform_widget_num_incident_occured_hour').val();
-      const minuteVal = $('#dform_widget_num_incident_occured_minute').val();
-      const ampm = $('#dform_widget_sel_incident_occured_ampm').val();
+      const hourVal = $(`#${parentId.replace("_time_", "_num_")}_hour`).val();
+      const minuteVal = $(`#${parentId.replace("_time_", "_num_")}_minute`).val();
+      const ampm = $(`#${parentId.replace("_time_", "_sel_")}_ampm`).val();
   
       const hour = (hourVal !== '' && hourVal !== null && hourVal !== undefined) ? parseInt(hourVal, 10) : NaN;
       const minute = (minuteVal !== '' && minuteVal !== null && minuteVal !== undefined) ? parseInt(minuteVal, 10) : NaN;
@@ -788,11 +789,6 @@ function handleOnReadyEvent(_, kdf) {
     }
   });
   
-  // Add a listener to the native HTML5 time input to display its value
-  $('#dform_widget_time_incident_occured[type="time"]').on('input change', function () {
-    $('#display_formatted_24hr').text($(this).val());
-  });
-
   // --- HANDLE KEYUP EVENTLISTENER FOR CHECK PROGRESS --------------------- \\
 
   $("input, textarea").keyup(function () {
