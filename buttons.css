@@ -151,8 +151,10 @@
     outline-offset: 0 !important;
   }
   
-  #dform_container a.link-btn:hover {
+  #dform_container a.link-btn:hover,
+  #dform_container button.link-btn:hover {
     color: var(--c-links-link);
+    background: transparent;
     text-decoration-color: var(--c-core-brand-accent-1-darken);
     box-shadow: none;
   }
