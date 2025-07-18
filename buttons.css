@@ -81,11 +81,7 @@
     cursor: not-allowed;
     outline: none;
   }
-  
-  #dform_container button.link-btn.map-icon.disabled:hover::before {
-    color: var(--c-greys-white);
-  }
-  
+    
   /* --- FIND VIA GEO LOCATION --- */
   
   #dform_container button.geo-btn.dform_widget_type_button {
@@ -155,9 +151,9 @@
     outline-offset: 0 !important;
   }
   
-  #dform_container a.link-btn:hover,
-  #dform_container button:hover {
+  #dform_container a.link-btn:hover {
     color: var(--c-links-link);
+    text-decoration-color: var(--c-core-brand-accent-1-darken);
     box-shadow: none;
   }
 
@@ -190,4 +186,8 @@
   
   button[disabled] {
     cursor: not-allowed !important;
+  }
+
+  #dform_container button.link-btn.map-icon.disabled:hover::before {
+    color: var(--c-greys-white);
   }
