@@ -391,39 +391,39 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- HANDLE ADDRESS LOOKUP --------------------------------------------- \\
 
-  $(".search-results").on("change", (event) => {
-    if (event.target.value && !$(event.target).data("keyboardSelection")) {
-      const action =
-        addressSearchType[getCurrentPageId()] === "local"
-          ? "retrieve-local-address"
-          : "retrieve-national-address";
-      KDF.customdata(action, event.target.id, true, true, {
-        propertyId: event.target.value,
-      });
-    }
-    $(event.target).removeData("keyboardSelection");
-  });
+  // $(".search-results").on("change", (event) => {
+  //   if (event.target.value && !$(event.target).data("keyboardSelection")) {
+  //     const action =
+  //       addressSearchType[getCurrentPageId()] === "local"
+  //         ? "retrieve-local-address"
+  //         : "retrieve-national-address";
+  //     KDF.customdata(action, event.target.id, true, true, {
+  //       propertyId: event.target.value,
+  //     });
+  //   }
+  //   $(event.target).removeData("keyboardSelection");
+  // });
 
-  $(".search-results").on("keydown", (event) => {
-    if (event.key === "Enter" || event.key === "Tab") {
-      if (event.target.value) {
-        const action =
-          addressSearchType[getCurrentPageId()] === "local"
-            ? "retrieve-local-address"
-            : "retrieve-national-address";
-        KDF.customdata(action, event.target.id, true, true, {
-          propertyId: event.target.value,
-        });
-        $(event.target).data("keyboardSelection", true);
-      }
-    }
-  });
+  // $(".search-results").on("keydown", (event) => {
+  //   if (event.key === "Enter" || event.key === "Tab") {
+  //     if (event.target.value) {
+  //       const action =
+  //         addressSearchType[getCurrentPageId()] === "local"
+  //           ? "retrieve-local-address"
+  //           : "retrieve-national-address";
+  //       KDF.customdata(action, event.target.id, true, true, {
+  //         propertyId: event.target.value,
+  //       });
+  //       $(event.target).data("keyboardSelection", true);
+  //     }
+  //   }
+  // });
 
-  $(".address-details").on("click", (event) => {
-    resetAddressSearch(false);
-    showAddressFields();
-    setRequiredStateByAlias("postcode", "not required");
-  });
+  // $(".address-details").on("click", (event) => {
+  //   resetAddressSearch(false);
+  //   showAddressFields();
+  //   setRequiredStateByAlias("postcode", "not required");
+  // });
 
   // --- HANDLE MANUAL ADDRESS ENTRY --------------------------------------- \\
 
