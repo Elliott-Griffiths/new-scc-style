@@ -1,5 +1,5 @@
 #dform_container .address-search {
-    margin-block: var(--spacing-xl) var(--spacing-sm);
+    margin-block: var(--spacing-xl) var(--spacing-md);
 }
 
 #dform_container .address-search input[type="text"] {
@@ -7,13 +7,24 @@
 }
 
 #dform_container .address-search-btn-container {
-    margin-block: var(--spacing-sm) var(--spacing-xl);
+    margin-block: var(--spacing-md) var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
 }
 
-#dform_container .address-search-btn,
-#dform_container .address-search-btn:hover,
-#dform_container .address-search-btn:focus {
+#dform_container button.address-search-btn,
+#dform_container button.address-search-btn:hover,
+#dform_container button.address-search-btn:focus {
     color: var(--c-greys-white);
     background: var(--c-alerts-success);
     border: solid 2px var(--c-alerts-success);
 }
+
+/* #dform_container button.enter-address-btn::before {
+    content: url(./icons/circle-chevron-down-solid-teal.svg);
+    transform: rotate(90deg);
+    width: var(--font-size-base);
+    line-height: var(--line-height);
+} */
