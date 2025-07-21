@@ -4302,7 +4302,6 @@ function restorePlaceHolder(fieldName) {
 
 function hideShowMultipleElements(fields) {
   fields.map((field) => {
-    console.log(field);
     hideShowElement(field.name, field.display);
   });
 }
