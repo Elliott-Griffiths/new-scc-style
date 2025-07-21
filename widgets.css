@@ -1,6 +1,6 @@
 #dform_container .dform_widget_field,
 #dform_container .dform_widget_type_html {
-  margin-block: var(--spacing-xl);
+  margin-block: var(--spacing-lg);
 }
 
 #dform_container .make-header {

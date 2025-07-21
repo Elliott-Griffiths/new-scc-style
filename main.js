@@ -937,7 +937,6 @@ function handleOnReadyEvent(_, kdf) {
         isComplete = false;
         incompleteFields.push(field);
       }
-      console.log("incompleteFields", incompleteFields);
     });
 
     if (isComplete) {
@@ -1435,6 +1434,11 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
           searchStatusMessageElement.innerHTML = resultsContent;
         }
 
+        const selectElement = resultsList.querySelector('select');
+        if (selectElement) {
+          selectElement.style.display = 'block'; // Shows the element
+        }
+
         hideShowMultipleElements([
           { name: searchInput.name, display: "hide" },
           { name: searchButton.id.replace('dform_widget_button_', ''), display: "hide" },
@@ -1540,7 +1544,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     )}, ${city}, ${postcode}`;
 
     // showHideInputFields([{ alias: "searchResult", display: false }]);
-    
+
     setValuesToInputFields([
       { alias: "property", value: property },
       { alias: "streetName", value: streetName },
@@ -1565,7 +1569,13 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       { alias: "officerContact", value: officerContact },
     ]);
 
-    console.log(setAddressButton, enterAddressButton.id.replace('dform_widget_button_', ''), addressearchResults)
+    if (addressSearchResultsContainer) {
+      const selectElement = addressSearchResultsContainer.querySelector('select');
+      if (selectElement) {
+        selectElement.style.display = 'none'; // Hides the element
+      }
+    }
+
     hideShowMultipleElements([
       { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
       { name: enterAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
@@ -2300,7 +2310,6 @@ function checkDate(id, dd, mm, yy, element) {
     txtFieldId = id.replace("_date_", "_txt_");
   }
   const baseMessage = getValidationMessageFromSession(txtFieldId);
-  console.log('checkDate', baseMessage, id, txtFieldId)
 
   $(`#${id} .date-dd, #${id} .date-mm, #${id} .date-yy`).removeClass("dform_fielderror");
   $(`#${id}`).find(".dform_validationMessage").text(baseMessage).hide();
@@ -3492,7 +3501,6 @@ function do_KDF_mapReady_esriMap(map, positionLayer) {
 }
 
 function mapClick(evt) {
-  console.log("click", evt);
   KDF.setVal("txt_site_name", "");
   KDF.setVal("txt_site_code", "");
   KDF.setVal("txt_feature_name", "");
@@ -4307,7 +4315,6 @@ function hideShowMultipleElements(fields) {
 }
 
 function hideShowElement(name, display) {
-  console.log(name, display);
   if (name && (typeof display === "string" || typeof display === "boolean")) {
     if (typeof display === "string") {
       display = display.toLowerCase();
@@ -4651,12 +4658,10 @@ function addValidationMessageToSession(className) {
 }
 
 function getValidationMessageFromSession(id) {
-  console.log('getValidationMessageFromSession', id)
   const fieldElement = document.getElementById(id);
   if (fieldElement) {
     let validationMessages =
       JSON.parse(sessionStorage.getItem("validationMessages")) || {};
-    console.log(validationMessages[id])
     return validationMessages[id] || "Validation message not found";
   }
 }
