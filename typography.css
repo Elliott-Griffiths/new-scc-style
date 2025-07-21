@@ -97,13 +97,13 @@ ol,
 #dform_container ol,
 li,
 #dform_container li,
-address {
+#dform_container address {
   margin: var(--spacing-sm) 0;
   min-height: 1.5rem;
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-normal);
-  line-height: var(--line-height);
+  line-height: var(--line-height-body);
   color: var(--c-core-brand-body);
   background-color: transparent;
 }
@@ -150,6 +150,12 @@ li,
 #dform_container li {
   margin: unset;
   margin-block: var(--spacing-xxs);
+}
+
+#dform_container address {
+  display: flex;
+  flex-direction: column;
+  font-style: normal;
 }
 
 #dform_container legend,

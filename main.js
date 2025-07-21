@@ -1529,8 +1529,8 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       selectedAddressContainer.innerHTML = fullAddressDisplay;
     }
 
-    const enterAddressButton = document.querySelector(`#${getCurrentPageId()} .enter-address-btn`);
     const setAddressButton = document.querySelector(`#${getCurrentPageId()} .set-address-btn`);
+    const enterAddressButton = document.querySelector(`#${getCurrentPageId()} .enter-address-btn`);
 
     property = formatTitleCase(property);
     streetName = formatTitleCase(streetName);
