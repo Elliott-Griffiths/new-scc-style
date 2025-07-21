@@ -1529,6 +1529,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       selectedAddressContainer.innerHTML = fullAddressDisplay;
     }
 
+    const addressearchResults = document.querySelector(`#${getCurrentPageId()} .address-search-results`);
     const setAddressButton = document.querySelector(`#${getCurrentPageId()} .set-address-btn`);
     const enterAddressButton = document.querySelector(`#${getCurrentPageId()} .enter-address-btn`);
 
@@ -1538,7 +1539,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       streetName
     )}, ${city}, ${postcode}`;
 
-    showHideInputFields([{ alias: "searchResult", display: false }]);
+    // showHideInputFields([{ alias: "searchResult", display: false }]);
     
     setValuesToInputFields([
       { alias: "property", value: property },
@@ -1564,7 +1565,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       { alias: "officerContact", value: officerContact },
     ]);
 
-    console.log(setAddressButton, enterAddressButton, selectedAddressContainer)
+    console.log(setAddressButton, enterAddressButton.id.replace('dform_widget_button_', ''), addressearchResults)
     hideShowMultipleElements([
       { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
       { name: enterAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
@@ -4306,6 +4307,7 @@ function hideShowMultipleElements(fields) {
 }
 
 function hideShowElement(name, display) {
+  console.log(name, display);
   if (name && (typeof display === "string" || typeof display === "boolean")) {
     if (typeof display === "string") {
       display = display.toLowerCase();
