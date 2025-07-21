@@ -1564,6 +1564,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       { alias: "officerContact", value: officerContact },
     ]);
 
+    console.log(setAddressButton, enterAddressButton, selectedAddressContainer)
     hideShowMultipleElements([
       { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
       { name: enterAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
@@ -4725,6 +4726,8 @@ function buildRelatedServiceCards(servicesData, containerId) {
   }
 }
 
+// --- BUILD SELECTED ADDRESS ELEMENT --------------------------------------- \\
+
 /**
  * Builds an HTML <address> markup string with Schema.org PostalAddress microdata.
  * Lines are omitted if their corresponding address component is empty or null.
@@ -4787,12 +4790,12 @@ function buildAddressMarkup(addressData) {
   }
 
   // Country (Assuming GB for UK context, adjust if needed)
-  addressLines.push(`<span itemprop="addressCountry">GB</span>`); // Always include country for completeness
+  // addressLines.push(`<span itemprop="addressCountry">GB</span>`);
 
   // Join lines with <br> and wrap in <address> tags
   return `
     <address itemscope itemtype="http://schema.org/PostalAddress">
-      ${addressLines.join('<br>\n')}
+      ${addressLines.join('\n')}
     </address>
   `;
 }

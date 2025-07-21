@@ -152,12 +152,6 @@ li,
   margin-block: var(--spacing-xxs);
 }
 
-#dform_container address {
-  display: flex;
-  flex-direction: column;
-  font-style: normal;
-}
-
 #dform_container legend,
 #dform_container fieldset.area > legend,
 #dform_container fieldset.box > legend,
