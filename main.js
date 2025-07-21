@@ -398,16 +398,26 @@ function handleOnReadyEvent(_, kdf) {
     const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
     const setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
 
-    if (resultsList && searchInput && searchButton) {
+    const buttonContainer = document.querySelector(`#${getCurrentPageId()} .address-search-btn-container`);
+    if (buttonContainer) {
+      buttonContainer.style.display = 'flex'; // Shows the element
+    }
+    
+    const selectedAddressContainer = document.querySelector(`#${getCurrentPageId()} .selected-address-container`);
+
+    if (resultsList && searchInput && searchButton && selectedAddressContainer) {
       hideShowMultipleElements([
         { name: searchInput.name, display: "show" },
         { name: searchButton.id.replace('dform_widget_button_', ''), display: "show" },
         { name: resultsList.dataset.name, display: "hide" },
         { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
+        { name: selectedAddressContainer.id.replace('dform_widget_html_', ''), display: "hide" },
       ]);
 
       searchInput.focus();
     }
+    
+    resetAddressSearch();
   });
 
   // --- HANDLE MANUAL ADDRESS ENTRY --------------------------------------- \\
@@ -631,9 +641,22 @@ function handleOnReadyEvent(_, kdf) {
         );
         const isSearchResultVisible = $(`#${searchResult.id}`).is(":visible");
         if (isSearchResultVisible) {
-          document.querySelector(
-            `div[data-name="${searchResult.name}"] .dform_validationMessage`
-          ).style.display = "block";
+          if ($(`#${searchResult.id}`).val() !== '' || $(`#${searchResult.id}`).val() !== 'Please select...') {
+            const setAddressButton = document.querySelector(
+              `#${currentPageId} .set-address-btn`
+            );
+            if (setAddressButton) {
+              setAddressButton.click();
+            } else {
+              document.querySelector(
+              `div[data-name="${searchResult.name}"] .dform_validationMessage`
+            ).style.display = "block";
+            }
+          } else {
+            document.querySelector(
+              `div[data-name="${searchResult.name}"] .dform_validationMessage`
+            ).style.display = "block";
+          }
         } else {
           const postcode = document.querySelector(
             `#${currentPageId} input[data-customalias="postcode"]`
@@ -1438,7 +1461,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
         if (selectElement) {
           selectElement.style.display = 'block'; // Shows the element
         }
-
+        
         hideShowMultipleElements([
           { name: searchInput.name, display: "hide" },
           { name: searchButton.id.replace('dform_widget_button_', ''), display: "hide" },
@@ -1521,6 +1544,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       subProperty: subProperty ? formatTitleCase(subProperty) : '',
       buildingName: buildingName ? formatTitleCase(buildingName) : '',
       buildingNumber: buildingNumber ? formatTitleCase(buildingNumber) : '',
+      property: property ? formatTitleCase(property) : '',
       streetName: streetName ? formatTitleCase(streetName) : '',
       locality: locality ? formatTitleCase(locality) : '',
       city: city ? formatTitleCase(city) : '',
@@ -1535,7 +1559,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
 
     const addressearchResults = document.querySelector(`#${getCurrentPageId()} .address-search-results`);
     const setAddressButton = document.querySelector(`#${getCurrentPageId()} .set-address-btn`);
-    const enterAddressButton = document.querySelector(`#${getCurrentPageId()} .enter-address-btn`);
+    const buttonContainer = document.querySelector(`#${getCurrentPageId()} .address-search-btn-container`);
 
     property = formatTitleCase(property);
     streetName = formatTitleCase(streetName);
@@ -1569,16 +1593,19 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       { alias: "officerContact", value: officerContact },
     ]);
 
-    if (addressSearchResultsContainer) {
-      const selectElement = addressSearchResultsContainer.querySelector('select');
+    if (addressearchResults) {
+      const selectElement = addressearchResults.querySelector('select');
       if (selectElement) {
         selectElement.style.display = 'none'; // Hides the element
       }
     }
+    
+    if (buttonContainer) {
+      buttonContainer.style.display = 'none'; // Hides the element
+    }
 
     hideShowMultipleElements([
       { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
-      { name: enterAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
       { name: selectedAddressContainer.id.replace('dform_widget_html_', ''), display: "show" },
     ]);
   }
@@ -4766,6 +4793,10 @@ function buildAddressMarkup(addressData) {
   // Building Name (often used for itemprop="name" for the overall property)
   if (addressData.buildingName) {
     addressLines.push(`<span itemprop="name">${addressData.buildingName}</span>`);
+  }
+
+  if (addressData.property && (!addressData.subProperty && !addressData.buildingName && !addressData.buildingNumber)) {
+    addressLines.push(`<span itemprop="property">${addressData.property}</span>`);
   }
 
   // Street Address (Building Number and Street Name often go together)
