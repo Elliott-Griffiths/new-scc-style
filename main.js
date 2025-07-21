@@ -2090,32 +2090,32 @@ function setRequiredStateByAlias(alias, requiredState) {
 
 // --- SET SELECTED ADDRESS ------------------------------------------------- \\
 
-function setSelectedAddress(selectedAddress, action, targetPageId) {
-  targetPageId = targetPageId ? targetPageId : getCurrentPageId();
+// function setSelectedAddress(selectedAddress, action, targetPageId) {
+//   targetPageId = targetPageId ? targetPageId : getCurrentPageId();
 
-  // Get the selected-address-container element on the current page
-  const addressContainer = document.querySelector(
-    `#${targetPageId} .selected-address-container`
-  );
+//   // Get the selected-address-container element on the current page
+//   const addressContainer = document.querySelector(
+//     `#${targetPageId} .selected-address-container`
+//   );
 
-  if (addressContainer) {
-    // Obtain the data-name attribute of the addressContainer
-    const name = addressContainer.getAttribute("data-name");
+//   if (addressContainer) {
+//     // Obtain the data-name attribute of the addressContainer
+//     const name = addressContainer.getAttribute("data-name");
 
-    // Get the output element within the selected-address-container
-    const outputElement = addressContainer.querySelector(".selected-address");
+//     // Get the output element within the selected-address-container
+//     const outputElement = addressContainer.querySelector(".selected-address");
 
-    // Set the selected address as the content of the output element
-    outputElement.textContent = selectedAddress;
+//     // Set the selected address as the content of the output element
+//     outputElement.textContent = selectedAddress;
 
-    // Show or hides the data-name attribute of the addressContainer
-    if (action) {
-      KDF.showWidget(name);
-    } else {
-      KDF.hideWidget(name);
-    }
-  }
-}
+//     // Show or hides the data-name attribute of the addressContainer
+//     if (action) {
+//       KDF.showWidget(name);
+//     } else {
+//       KDF.hideWidget(name);
+//     }
+//   }
+// }
 
 // --- RESER ADDRESS FIELDS ------------------------------------------------- \\
 
@@ -2148,7 +2148,7 @@ function resetAddressSearch(hideFields = true) {
       { alias: "fullAddress", display: false },
     ]);
   }
-  setSelectedAddress("", false);
+  // setSelectedAddress("", false);
 }
 
 // --- SHOW ADDRESS FIELDS ------------------------------------------------- \\
@@ -2719,9 +2719,9 @@ function handleSetReporter(date, address) {
   }
 
   // Set and show address
-  if (!address.includes("undefined")) {
-    setSelectedAddress(address, "show", "dform_page_page_about_you");
-  }
+  // if (!address.includes("undefined")) {
+  //   setSelectedAddress(address, "show", "dform_page_page_about_you");
+  // }
 
   // Hide submit anonymously option and info
   $(".anonymous").hide();
@@ -3483,7 +3483,7 @@ function do_KDF_mapReady_esriMap(map, positionLayer) {
         addPoint(streetMapView, centerpoint, markerSymbol);
       });
 
-      setSelectedAddress(KDF.getVal("txt_site_name"), "show");
+      // setSelectedAddress(KDF.getVal("txt_site_name"), "show");
       $(".popup").text(KDF.getVal("txt_site_name"));
       setRequiredStateByAlias("postcode", "not required");
     }
@@ -3509,7 +3509,7 @@ function mapClick(evt) {
     { alias: "siteName", value: "" },
     { alias: "siteCode", value: "" },
   ]);
-  setSelectedAddress("", "hide");
+  // setSelectedAddress("", "hide");
 
   $(".esriPopup").hide();
   if (KDF.kdf().form.complete !== "Y" || KDF.kdf().viewmode === "U") {
@@ -3819,15 +3819,15 @@ function do_KDF_Custom_esriMap(action, response) {
             },
             { alias: "responsibility", value: "PWC" },
           ]);
-          setSelectedAddress(
-            store_layer_attr.background_attribute.sitename,
-            "show"
-          );
+          // setSelectedAddress(
+          //   store_layer_attr.background_attribute.sitename,
+          //   "show"
+          // );
           $(".popup").text(store_layer_attr.background_attribute.sitename);
           setRequiredStateByAlias("postcode", "not required");
           return;
         } else {
-          setSelectedAddress("", "hide");
+          // setSelectedAddress("", "hide");
           $(".popup").text("");
           setRequiredStateByAlias("postcode", "required");
           return;
@@ -3842,7 +3842,7 @@ function do_KDF_Custom_esriMap(action, response) {
         { alias: "uprn", value: parseFeature["usrn"] },
         { alias: "siteName", value: parseFeature["streetname"] },
       ]);
-      setSelectedAddress(parseFeature["streetname"], "show");
+      // setSelectedAddress(parseFeature["streetname"], "show");
       $(".popup").text(parseFeature["streetname"]);
       setRequiredStateByAlias("postcode", "not required");
     } else {
@@ -3907,7 +3907,7 @@ function do_KDF_Custom_esriMap(action, response) {
         // { alias: "easting", value: easting },
         // { alias: "northing", value: northing },
       ]);
-      setSelectedAddress(fullAddress, "show");
+      // setSelectedAddress(fullAddress, "show");
       $(".popup").text(streetName);
       setRequiredStateByAlias("postcode", "not required");
     }
@@ -4020,7 +4020,7 @@ function do_KDF_Custom_esriMap(action, response) {
     KDF.setVal("txt_location_ward_code", response.data.WardRef);
     KDF.setVal("txt_location_ward_name", response.data.WardName);
 
-    setSelectedAddress(response.data.address, "show");
+    // setSelectedAddress(response.data.address, "show");
     $(".popup").text(response.data.address);
     setRequiredStateByAlias("postcode", "not required");
     KDF.hideWidget("ahtm_map_location_error");
