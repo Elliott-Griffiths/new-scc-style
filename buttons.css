@@ -23,8 +23,8 @@
     padding: var(--spacing-xs) var(--spacing-md);
     text-decoration: none;
     cursor: pointer;
-    color: var(--c-core-brand-primary-darken);
-    background: var(--c-greys-white);
+    color: var(--c-greys-white);
+    background: var(--c-core-brand-primary-darken);
     border: solid 2px var(--c-core-brand-primary-darken);
     border-radius: 1.5625rem;
     min-width: 8.75rem;
@@ -35,6 +35,37 @@
     transition: all 0.2s ease;
   }
   
+  #dform_container button.success {
+    color: var(--c-greys-white);
+    background: var(--c-alerts-success);
+    border: solid 2px var(--c-alerts-success);
+  }
+  #dform_container button.danger {
+    color: var(--c-greys-white);
+    background: var(--c-alerts-danger);
+    border: solid 2px var(--c-alerts-danger);
+  }
+  #dform_container button.primary {
+    color: var(--c-greys-white);
+    background: var(--c-core-brand-primary-darken);
+    border: solid 2px var(--c-core-brand-primary-darken);
+  }
+  #dform_container button.secondary {
+    color: var(--c-core-brand-primary-darken);
+    background: var(--c-greys-white);
+    border: solid 2px var(--c-core-brand-primary-darken);
+  }
+  #dform_container button.teal {
+    color: var(--c-greys-white);
+    background: var(--c-brand-accents-teal);
+    border: solid 2px var(--c-brand-accents-teal);
+  }
+  #dform_container button.accent-2 {
+    color: var(--c-core-brand-primary-darken);
+    background: var(--c-core-brand-accent-2);
+    border: solid 2px var(--c-core-brand-accent-2);
+  }
+
   #dform_container a.link-btn,
   #dform_container button.link-btn {
     display: flex;
@@ -130,12 +161,28 @@
   #dform_container a.button:hover,
   #dform_container a.button:focus {
     color: var(--c-greys-white);
+    background: var(--c-brand-accents-teal);
+    border-color: var(--c-brand-accents-teal);
+    box-shadow: none;
+  }
+
+  #dform_container button.teal:hover,
+  #dform_container button.teal:focus {
+    color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
     border-color: var(--c-core-brand-primary-darken);
     box-shadow: none;
   }
 
-  #dform_container button.back-btn:hover, 
+  #dform_container button.secondary:hover,
+  #dform_container button.secondary:focus {
+    color: var(--c-brand-accents-teal);
+    background: var(--c-greys-white);;
+    border-color: var(--c-brand-accents-teal);
+    box-shadow: none;
+  }
+
+  /* #dform_container button.back-btn:hover, 
   #dform_control_buttons #dform_save:hover,
   #dform_container button.back-btn:focus, 
   #dform_control_buttons #dform_save:focus {
@@ -152,7 +199,7 @@
     border-radius: 1.5625rem;
     outline: 3px solid var(--c-focus-links) !important;
     outline-offset: 0 !important;
-  }
+  } */
   
   #dform_container a.link-btn:hover,
   #dform_container button.link-btn:hover {
@@ -168,31 +215,4 @@
     border-radius: 0;
     box-shadow: none;
     outline-offset: 4px !important;
-  }
-  
-  #dform_container button.primary-btn,
-  #dform_container button.primary-btn:hover {
-    color: var(--c-greys-white);
-    background: var(--c-alerts-success);
-    border-color: var(--c-alerts-success);
-  }
-  
-  #dform_container button.disabled,
-  #dform_container button[disabled],
-  #dform_container button.disabled:hover,
-  #dform_container button[disabled]:hover,
-  #dform_container button.disabled:focus,
-  #dform_container button[disabled]:focus {
-    /* color: var(--c-core-brand-primary-darken);
-    background: var(--c-greys-white);
-    border-color: var(--c-core-brand-primary-darken); */
-    cursor: not-allowed !important;
-  }
-
-  button[disabled] {
-    cursor: not-allowed !important;
-  }
-
-  #dform_container button.link-btn.map-icon.disabled:hover::before {
-    color: var(--c-greys-white);
   }
