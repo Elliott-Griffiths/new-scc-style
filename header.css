@@ -1,145 +1,151 @@
 .header,
-  .footer {
-    background: var(--c-core-brand-primary-darken);
-  }
-  
-  .header > .service-header-bar {
+.footer {
+  background: var(--c-core-brand-primary-darken);
+}
+
+.header>.service-header-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+}
+
+.header>.service-header-bar>div>a>img {
+  width: 4.375rem;
+}
+
+.header>.service-header-bar>span {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  line-height: var(--var-line-height);
+  color: var(--c-greys-white);
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+#HeaderAreaInSingleColumnNoNavigationTemplate {
+  background: var(--c-core-brand-primary);
+}
+
+#widget_Navigation>div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#widget_Navigation>div>.menuButton,
+#menuButton,
+#nav_logout>button {
+  margin: unset !important;
+  padding: unset !important;
+  background: unset;
+  border: unset;
+  margin: 0.25rem 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height);
+  color: var(--c-core-brand-body);
+  background-color: transparent;
+}
+
+#widget_Navigation>div>br {
+  display: none;
+}
+
+#nav_home {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+#widget_Navigation>div>.menuButton {
+  grid-area: 1 / 2 / 2 / 3;
+  margin: unset !important;
+  display: flex;
+}
+
+#widget_Navigation>div>ul.menuList {
+  grid-area: 2 / 1 / 3 / 2;
+  margin: 1.25rem 0 0;
+  padding: unset !important;
+  flex: 1;
+  display: none;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--spacing-xl);
+  list-style: none;
+}
+
+#widget_Navigation>div>ul.menuList>li {
+  margin-block: 0.75rem;
+}
+
+#nav_home,
+#widget_Navigation>div>ul.menuList>li>a,
+#menuButton,
+#nav_logout>button {
+  margin: unset !important;
+  color: var(--c-greys-white);
+  text-decoration-line: none;
+  text-underline-offset: 6px;
+}
+
+#nav_home {
+  margin-right: auto !important;
+}
+
+#nav_home:hover,
+#widget_Navigation>div>ul.menuList>li>a:hover,
+#menuButton:hover,
+#nav_logout>button:hover {
+  text-decoration-line: underline;
+  text-decoration-color: var(--c-greys-white);
+  text-underline-offset: 6px;
+}
+
+#nav_home:focus,
+#widget_Navigation>div>ul.menuList>li:focus-within,
+#widget_Navigation>div>ul.menuList>li:focus-within>a,
+#menuButton:focus,
+#nav_logout>button:focus {
+  color: var(--c-greys-black);
+  background: var(--c-focus-links) !important;
+  border: 1px solid var(--c-focus-links) !important;
+  outline: none !important;
+  text-decoration-line: underline;
+  text-underline-offset: 6px;
+}
+
+#nav_home:active,
+#widget_Navigation>div>ul.menuList>li>a:active,
+#menuButton:active,
+#nav_logout>button:active {
+  text-decoration-line: underline;
+  text-decoration-color: var(--c-core-brand-accent-1-darken);
+  text-underline-offset: 6px;
+}
+
+#services #nav_services {
+  text-decoration-line: underline;
+  text-decoration-color: var(--c-core-brand-accent-1-darken);
+  text-underline-offset: 6px;
+}
+
+@media screen and (min-width: 1000px) {
+  #widget_Navigation>div {
     display: flex;
-    align-items: center;
-    gap: var(--spacing-xl);
   }
-  
-  .header > .service-header-bar > div > a > img {
-    width: 4.375rem;
-  }
-  
-  .header > .service-header-bar > span {
-    font-family: var(--font-family);
-    font-weight: var(--font-weight-semibold);
-    font-size: var(--font-size-lg);
-    line-height: var(--var-line-height);
-    color: var(--c-greys-white);
-    font-style: normal;
-    letter-spacing: 0;
-  }
-  
-  #HeaderAreaInSingleColumnNoNavigationTemplate {
-    background: var(--c-core-brand-primary);
-  }
-  
-  #widget_Navigation > div {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  #widget_Navigation > div > .menuButton,
-  #menuButton,
-  #nav_logout > button {
-    margin: unset !important;
-    padding: unset !important;
-    background: unset;
-    border: unset;
-    margin: 0.25rem 0;
-    font-family: var(--font-family);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--line-height);
-    color: var(--c-core-brand-body);
-    background-color: transparent;
-  }
-  
-  #widget_Navigation > div > br {
+
+  #widget_Navigation>div>.menuButton {
     display: none;
   }
-  
-  #nav_home {
-    grid-area: 1 / 1 / 2 / 2;
-  }
-  
-  #widget_Navigation > div > .menuButton {
-    grid-area: 1 / 2 / 2 / 3;
-    margin: unset !important;
-    display: flex;
-  }
-  
-  #widget_Navigation > div > ul.menuList {
-    grid-area: 2 / 1 / 3 / 2;
-    margin: 1.25rem 0 0;
-    padding: unset !important;
-    flex: 1;
-    display: none;
-    justify-content: flex-end;
-    align-items: center;
-    gap: var(--spacing-xl);
-    list-style: none;
-  }
-  
-  #widget_Navigation > div > ul.menuList > li {
-    margin-block: 0.75rem;
-  }
-  
-  #nav_home,
-  #widget_Navigation > div > ul.menuList > li > a,
-  #menuButton,
-  #nav_logout > button {
-    margin: unset !important;
-    color: var(--c-greys-white);
-    text-decoration-line: none;
-    text-underline-offset: 6px;
-  }
-  
-  #nav_home {
-    margin-right: auto !important;
+
+  #widget_Navigation>div>ul.menuList {
+    margin: unset;
+    display: flex !important;
   }
 
-  #nav_home:hover,
-  #widget_Navigation > div > ul.menuList > li > a:hover,
-  #menuButton:hover,
-  #nav_logout > button:hover {
-    text-decoration-line: underline;
-    text-decoration-color: var(--c-greys-white);
-    text-underline-offset: 6px;
+  #widget_Navigation>div>ul.menuList>li {
+    margin: unset;
   }
-
-  #nav_home:focus,
-  #widget_Navigation > div > ul.menuList > li:focus-within,
-  #widget_Navigation > div > ul.menuList > li:focus-within > a,
-  #menuButton:focus,
-  #nav_logout > button:focus {
-    color: var(--c-greys-black);
-    background: var(--c-focus-links) !important;
-    border: 1px solid var(--c-focus-links) !important;
-    outline: none !important;
-    text-decoration-line: underline;
-    text-underline-offset: 6px;
-  }
-
-  #nav_home:active,
-  #widget_Navigation > div > ul.menuList > li > a:active,
-  #menuButton:active,
-  #nav_logout > button:active {
-    text-decoration-line: underline;
-    text-decoration-color: var(--c-core-brand-accent-1-darken);
-    text-underline-offset: 6px;
-   }
-  
-  @media screen and (min-width: 1000px) {
-    #widget_Navigation > div {
-      display: flex;
-    }
-  
-    #widget_Navigation > div > .menuButton {
-      display: none;
-    }
-  
-    #widget_Navigation > div > ul.menuList {
-      margin: unset;
-      display: flex !important;
-    }
-  
-    #widget_Navigation > div > ul.menuList > li {
-      margin: unset;
-    }
-  }
+}
