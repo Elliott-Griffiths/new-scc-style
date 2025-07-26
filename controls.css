@@ -21,6 +21,7 @@
     align-items: center;
     justify-content: space-between;
     padding-block: var(--spacing-sm);
+    border-bottom: 1px solid var(--c-greys-slate);
   }
   
   #dform_control_buttons > ul,
@@ -99,6 +100,11 @@
     line-height: var(--line-height-body);
     color: var(--c-links-link);
   }
+
+  #dform_container button.back-btn > .back-btn--text {
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+  }
   
   #dform_control_buttons > ul {
     display: flex;
@@ -112,16 +118,17 @@
     line-height: var(--line-height);
   }
 
-  #dform_container button.back-btn:hover,
+  #dform_container button.back-btn:hover > .back-btn--text,
+  #dform_container button.back-btn:focus > .back-btn--text {
+    background: transparent;
+    color: var(--c-brand-accents-teal);
+    text-decoration-thickness: 2px;
+  }
+ 
   #dform_container button.back-btn:focus {
     border-radius: 0;
     outline-offset: 4px;
     box-shadow: none;
-  }
-
-  #dform_container button.back-btn > .back-btn--text {
-    text-decoration: underline;
-    text-underline-offset: 0.25rem;
   }
   
   #dform_controls > div.container > div:nth-child(1) {
@@ -138,5 +145,5 @@
     flex-direction: column;
     align-items: flex-start;
     align-self: stretch;
-    border-bottom: 1px solid var(--c-greys-slate);
+    border-bottom: none;
   }
