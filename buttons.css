@@ -35,32 +35,32 @@
     transition: all 0.2s ease;
   }
   
-  #dform_container button.success {
+  #dform_container button.success-btn {
     color: var(--c-greys-white);
     background: var(--c-alerts-success);
     border: solid 2px var(--c-alerts-success);
   }
-  #dform_container button.danger {
+  #dform_container button.danger-btn  {
     color: var(--c-greys-white);
     background: var(--c-alerts-danger);
     border: solid 2px var(--c-alerts-danger);
   }
-  #dform_container button.primary {
+  #dform_container button.primary-btn  {
     color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
     border: solid 2px var(--c-core-brand-primary-darken);
   }
-  #dform_container button.secondary {
+  #dform_container button.secondary-btn  {
     color: var(--c-core-brand-primary-darken);
     background: var(--c-greys-white);
     border: solid 2px var(--c-core-brand-primary-darken);
   }
-  #dform_container button.teal {
+  #dform_container button.teal-btn  {
     color: var(--c-greys-white);
     background: var(--c-brand-accents-teal);
     border: solid 2px var(--c-brand-accents-teal);
   }
-  #dform_container button.accent-2 {
+  #dform_container button.accent-2-btn  {
     color: var(--c-core-brand-primary-darken);
     background: var(--c-core-brand-accent-2);
     border: solid 2px var(--c-core-brand-accent-2);
@@ -166,16 +166,16 @@
     box-shadow: none;
   }
 
-  #dform_container button.teal:hover,
-  #dform_container button.teal:focus {
+  #dform_container button.teal-btn :hover,
+  #dform_container button.teal-btn :focus {
     color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
     border-color: var(--c-core-brand-primary-darken);
     box-shadow: none;
   }
 
-  #dform_container button.secondary:hover,
-  #dform_container button.secondary:focus {
+  #dform_container button.secondary-btn :hover,
+  #dform_container button.secondary-btn :focus {
     color: var(--c-brand-accents-teal);
     background: var(--c-greys-white);;
     border-color: var(--c-brand-accents-teal);
