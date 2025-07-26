@@ -33,7 +33,7 @@
     --c-alerts-danger: #d4351c;
   
     /* Typography */
-    --font-family: "Poppins", sans-serif;
+    --font-family: "Poppins";
   
     /* Font Sizes - Using 16px as base for rem calculation */
     --font-size-xs: 0.875rem; /* 10.25rem */
