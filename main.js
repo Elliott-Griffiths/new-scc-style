@@ -4833,7 +4833,7 @@ function buildAddressMarkup(addressData) {
   // Join lines with <br> and wrap in <address> tags
   return `
     <address itemscope itemtype="http://schema.org/PostalAddress">
-      ${addressLines.join('\n')}
+      ${addressLines.join('')}
     </address>
   `;
 }

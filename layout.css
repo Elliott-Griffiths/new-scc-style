@@ -11,8 +11,9 @@
   #dform_container .dform_message,
   #FooterAreaInSingleColumnNoNavigationTemplate {
     margin: 0 auto;
-    width: clamp(var(--min-content-width), auto, var(--max-content-width));
-    padding: var(--spacing-sm) clamp(20px, 10vw, 146px) !important;
+    width: auto;
+    max-width: 87.5rem; /* 1400px - (126 * 2) = 1148px */
+    padding: var(--spacing-sm) clamp(20px, 10vw, 126px) !important;
   }
   
   #dform_pageholder {
@@ -20,7 +21,7 @@
   }
   
   #dform_container .dform_message {
-    padding: var(--spacing-lg) clamp(20px, 10vw, 146px) !important;
+    padding: var(--spacing-lg) clamp(20px, 10vw, 126px) !important;
   }
   
   .content {
