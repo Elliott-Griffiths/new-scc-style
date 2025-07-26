@@ -15,6 +15,7 @@
 :root {
     /* Colors */
     --c-core-brand-primary-darken: #13384a;
+    --c-core-brand-primary: #1B4A60;
     --c-brand-accents-teal: #00757f;
     --c-core-brand-accent-1-darken: #b45244;
     --c-core-tints-accent-1-tint-20: #fce6e3;

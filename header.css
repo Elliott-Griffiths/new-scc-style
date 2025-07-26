@@ -24,7 +24,7 @@
   }
   
   #HeaderAreaInSingleColumnNoNavigationTemplate {
-    background: var(--c-core-brand-primary-darken);
+    background: var(--c-core-brand-primary);
   }
   
   #widget_Navigation > div {
@@ -98,7 +98,7 @@
   #menuButton:hover,
   #nav_logout > button:hover {
     text-decoration-line: underline;
-    text-decoration-color: var(--c-core-brand-accent-1-darken);
+    text-decoration-color: var(--c-greys-white);
     text-underline-offset: 6px;
   }
   
