@@ -120,7 +120,7 @@
 
   #dform_container button.back-btn:hover > .back-btn--text,
   #dform_container button.back-btn:focus > .back-btn--text {
-    background: transparent;
+    background: transparent !important;
     color: var(--c-brand-accents-teal);
     text-decoration-thickness: 2px;
   }
