@@ -166,16 +166,16 @@
     box-shadow: none;
   }
 
-  #dform_container button.teal-btn :hover,
-  #dform_container button.teal-btn :focus {
+  #dform_container button.teal-btn:hover,
+  #dform_container button.teal-btn:focus {
     color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
     border-color: var(--c-core-brand-primary-darken);
     box-shadow: none;
   }
 
-  #dform_container button.secondary-btn :hover,
-  #dform_container button.secondary-btn :focus {
+  #dform_container button.secondary-btn:hover,
+  #dform_container button.secondary-btn:focus {
     color: var(--c-brand-accents-teal);
     background: var(--c-greys-white);;
     border-color: var(--c-brand-accents-teal);
