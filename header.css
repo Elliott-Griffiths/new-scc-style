@@ -106,7 +106,9 @@
   #widget_Navigation > div > ul.menuList > li > a:focus,
   #menuButton:focus,
   #nav_logout > button:focus {
-    background: var(--c-brand-accents-teal);
+    background: var(--c-focus-links) !important;
+    border: 1px solid var(--c-focus-links) !important;
+    outline: none !important;
   }
 
   #nav_home:active,
