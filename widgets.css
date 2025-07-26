@@ -194,6 +194,39 @@ input[type="checkbox"]:checked {
   accent-color: var(--c-core-brand-body);
 }
 
+input[type="checkbox"] {
+  -webkit-appearance: none; /* For WebKit browsers */
+  -moz-appearance: none; /* For Mozilla browsers */
+  appearance: none;
+  display: inline-block;
+  width: 16px; /* Adjust as needed */
+  height: 16px; /* Adjust as needed */
+  border: 1px solid #ccc; /* Initial border color */
+  vertical-align: middle;
+  cursor: pointer;
+  position: relative; /* Needed for absolute positioning of the custom checkmark */
+}
+
+/* Style the custom checkbox when checked */
+input[type="checkbox"]:checked {
+  background-color: white; /* White background when checked */
+  border-color: #ccc; /* Maintain or adjust border color */
+}
+
+/* Create the custom black checkmark */
+input[type="checkbox"]:checked::after {
+  content: '';
+  display: block;
+  width: 5px; /* Adjust checkmark size */
+  height: 10px; /* Adjust checkmark size */
+  border: solid black; /* Black color for the checkmark */
+  border-width: 0 2px 2px 0; /* Creates the checkmark shape */
+  transform: rotate(45deg); /* Rotates to form the checkmark */
+  position: absolute;
+  top: 1px; /* Adjust position */
+  left: 5px; /* Adjust position */
+}
+
 #dform_container fieldset.checkboxgroup > span,
 #dform_container .dform_widget_type_checkbox > div {
   display: grid;
