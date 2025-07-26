@@ -101,6 +101,22 @@
     text-decoration-color: var(--c-greys-white);
     text-underline-offset: 6px;
   }
+
+  #nav_home:focus,
+  #widget_Navigation > div > ul.menuList > li > a:focus,
+  #menuButton:focus,
+  #nav_logout > button:focus {
+    background: var(--c-brand-accents-teal);
+  }
+
+  #nav_home:active,
+  #widget_Navigation > div > ul.menuList > li > a:active,
+  #menuButton:active,
+  #nav_logout > button:active {
+    text-decoration-line: underline;
+    text-decoration-color: var(--c-core-brand-accent-1-darken);
+    text-underline-offset: 6px;
+  }
   
   @media screen and (min-width: 1000px) {
     #widget_Navigation > div {
