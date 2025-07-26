@@ -9,7 +9,9 @@
   #dform_controls,
   #dform_pageholder,
   #dform_container .dform_message,
-  #FooterAreaInSingleColumnNoNavigationTemplate {
+  #FooterAreaInSingleColumnNoNavigationTemplate,
+  
+  .contentInner {
     margin: 0 auto;
     width: auto;
     max-width: 87.5rem; /* 1400px - (126 * 2) = 1148px */
