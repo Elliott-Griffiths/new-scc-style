@@ -119,12 +119,10 @@
 #nav_home:active,
 #widget_Navigation>div>ul.menuList>li>a:active,
 #menuButton:active,
-#nav_logout>button:active {
-  text-decoration-line: underline;
-  text-decoration-color: var(--c-core-brand-accent-1-darken);
-  text-underline-offset: 6px;
-}
-
+#nav_logout>button:active,
+#home #nav_home,
+#my-requests #nav_my-requests,
+#my-drafts #nav_my-drafts,
 #services #nav_services {
   text-decoration-line: underline;
   text-decoration-color: var(--c-core-brand-accent-1-darken);
