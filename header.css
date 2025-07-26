@@ -99,10 +99,13 @@
   #menuButton:hover,
   #nav_logout > button:hover {
     text-decoration-line: underline;
+    text-decoration-color: var(--c-greys-white);
+    text-underline-offset: 6px;
   }
 
   #nav_home:focus,
   #widget_Navigation > div > ul.menuList > li:focus-within,
+  #widget_Navigation > div > ul.menuList > li:focus-within > a,
   #menuButton:focus,
   #nav_logout > button:focus {
     color: var(--c-greys-black);
@@ -110,11 +113,7 @@
     border: 1px solid var(--c-focus-links) !important;
     outline: none !important;
     text-decoration-line: underline;
-  }
-
-  #widget_Navigation > div > ul.menuList > li:focus-within > a {
-    color: var(--c-greys-black);
-    text-decoration-line: underline;
+    text-underline-offset: 6px;
   }
 
   #nav_home:active,
@@ -123,6 +122,7 @@
   #nav_logout > button:active {
     text-decoration-line: underline;
     text-decoration-color: var(--c-core-brand-accent-1-darken);
+    text-underline-offset: 6px;
    }
   
   @media screen and (min-width: 1000px) {
