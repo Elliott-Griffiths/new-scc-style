@@ -177,7 +177,7 @@
   #dform_container button.secondary-btn:hover,
   #dform_container button.secondary-btn:focus {
     color: var(--c-brand-accents-teal);
-    background: var(--c-greys-white);;
+    background: var(--c-greys-white);
     border-color: var(--c-brand-accents-teal);
     box-shadow: none;
   }
