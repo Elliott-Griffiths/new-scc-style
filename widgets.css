@@ -59,6 +59,16 @@
 
 /* --- SELECT --- */
 
+#dform_container select {
+  appearance: base-select;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('./icons/circle-chevron-down.svg');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  line-height: normal;
+}
+
 select option {
   margin-block: var(--spacing-md);
   font-family: var(--font-family);
