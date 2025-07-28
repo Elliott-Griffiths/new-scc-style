@@ -237,11 +237,14 @@ select option {
 
 #dform_container .currency-input-group {
   display: flex;
-    align-items: center;
+  flex-wrap: nowrap;
 }
 
 #dform_container .currency-symbol {
-  width: var(--field-width-max-1);
+  display: flex;
+  align-items: center;
+    width: var(--field-width-max-1);
+    border-right: none;
 }
 
 /* #dform_container div.currency > div:nth-child(2) {
@@ -342,7 +345,8 @@ select option {
   border-left: solid var(--spacing-xxs) var(--c-alerts-danger) !important;
 }
 
-#dform_container .dform_fielderror {
+#dform_container .dform_fielderror,
+#dform_container .currency-symbol {
   box-shadow: none;
   border: solid 2px var(--c-alerts-danger) !important;
   outline: none;
