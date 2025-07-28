@@ -72,20 +72,26 @@
   cursor: pointer;
 }
 
-select option {
+#dform_container select option {
   margin-block: var(--spacing-md);
+  padding: var(--spacing-md);
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-style: var(--font-size-base);
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-body);
-  color: var(--c-core-brand-body);
+  color: var(--c-core-brand-secondary);
+  background: var(--c-core-tints-accent-2-tint-20);
+  border-bottom: 1px solid var(--c-core-tints-accent-2-tint-80);
 
   display: block;
   min-height: var(--field-height-md);
-  margin: var(--spacing-xxs);
-  padding: var(--spacing-xxs);
   white-space: nowrap;
+}
+
+#dform_container select option:hover {
+  color: var(--c-greys-white);
+  background: var(--c-core-brand-primary);
 }
 
 /* --- RADIO --- */
@@ -243,44 +249,9 @@ select option {
 #dform_container .currency-symbol {
   display: flex;
   align-items: center;
-    width: var(--field-width-max-1);
-    border-right: none;
+  width: var(--field-width-max-1);
+  border-right: none !important;
 }
-
-/* #dform_container div.currency > div:nth-child(2) {
-  display: grid;
-  align-items: baseline;
-  width: var(--field-width-100);
-}
-
-#dform_container div.currency > div:nth-child(2)::after {
-  content: "£";
-  grid-row: 3 / 4;
-  grid-column: 1 / -1;
-  padding-left: var(--spacing-md);
-  padding-block: var(--spacing-sm);
-  width: max-content;
-  font-family: var(--font-family);
-  font-size: var(--font-size-xl);
-  font-style: normal;
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-body);
-}
-
-#dform_container .currency-symbol {
-  grid-row: 1 / -1;
-  grid-column: 1 / -1;
-  z-index: 3;
-  padding-left: var(--spacing-md);
-  padding-block: var(--spacing-sm);
-  width: max-content;
-}
-
-#dform_container .currency input[type="number"] {
-  grid-row: 3 / 4;
-  grid-column: 1 / -1;
-  padding-left: var(--spacing-xl) !important;
-} */
 
 /* --- DATE / TIME --- */
 
@@ -346,7 +317,7 @@ select option {
 }
 
 #dform_container .dform_fielderror,
-#dform_container .currency-symbol {
+#dform_container .dform_fielderror .currency-symbol {
   box-shadow: none;
   border: solid 2px var(--c-alerts-danger) !important;
   outline: none;
