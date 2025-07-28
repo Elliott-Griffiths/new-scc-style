@@ -94,6 +94,11 @@
   margin-right: auto !important;
 }
 
+#nav_home::before {
+  content: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" class="svg-inline--fa fa-home fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M280.37 148.26L96 322.1A31.79 31.79 0 0 0 64 350.33V448a32 32 0 0 0 32 32h160V320a32 32 0 0 1 32-32h64a32 32 0 0 1 32 32v160h160a32 32 0 0 0 32-32V350.33a31.79 31.79 0 0 0-32-28.23L295.63 148.26a31.79 31.79 0 0 0-31.99 0z"></path></svg>');
+  display: inline-block;
+}
+
 #nav_home:hover,
 #widget_Navigation>div>ul.menuList>li>a:hover,
 #menuButton:hover,
