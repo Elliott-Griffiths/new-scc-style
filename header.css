@@ -56,12 +56,38 @@
 
 #nav_home {
   grid-area: 1 / 1 / 2 / 2;
+  margin-right: auto !important;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+#nav_home > .icon-home {
+  display: flex;
+  align-items: center;
+}
+
+#nav_home > .icon-home > svg {
+  padding: 0;
+  margin: 0;
+  fill: var(--c-greys-white);
+  width: var(--font-size-xl);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height);
 }
 
 #widget_Navigation>div>.menuButton {
   grid-area: 1 / 2 / 2 / 3;
   margin: unset !important;
   display: flex;
+}
+
+#menuButton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  text-decoration: none;
 }
 
 #widget_Navigation>div>ul.menuList {
