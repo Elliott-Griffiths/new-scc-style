@@ -113,8 +113,9 @@ a,
 
 a:hover,
 #dform_container a:hover {
+  color: var(--c-brand-accents-teal);
   text-decoration: underline;
-  text-decoration-color: var(--c-core-brand-accent-1-darken);
+  text-decoration-thickness: 2px;
 }
 
 a:focus,
