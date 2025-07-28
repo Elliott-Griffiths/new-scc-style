@@ -35,6 +35,8 @@
     --c-alerts-success: #008b40;
     --c-core-tints-success-tint-20: #ddffed;
     --c-alerts-danger: #d4351c;
+
+    --c-alerts-warning: #ffbf47;
   
     /* Typography */
     --font-family: "Poppins";
