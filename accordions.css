@@ -101,7 +101,7 @@
     width: max-content;
     background: var(--c-focus-links);
     color: var(--c-greys-black);
-    border-bottom: 0.4rem solid var(--c-greys-black);
+    border-bottom: 1px solid var(--c-greys-black);
     outline: none;
   }
   
