@@ -9,7 +9,8 @@
 
 #dform_container input,
 #dform_container select,
-#dform_container textarea {
+#dform_container textarea,
+#dform_container .currency-symbol {
   margin: 0;
   font-family: var(--font-family);
   font-size: var(--font-size-xl);
@@ -234,7 +235,16 @@ select option {
 
 /* --- CURRENCY --- */
 
-#dform_container div.currency > div:nth-child(2) {
+#dform_container .currency-input-group {
+  display: flex;
+    align-items: center;
+}
+
+#dform_container .currency-symbol {
+  width: var(--field-width-max-1);
+}
+
+/* #dform_container div.currency > div:nth-child(2) {
   display: grid;
   align-items: baseline;
   width: var(--field-width-100);
@@ -267,7 +277,7 @@ select option {
   grid-row: 3 / 4;
   grid-column: 1 / -1;
   padding-left: var(--spacing-xl) !important;
-}
+} */
 
 /* --- DATE / TIME --- */
 
