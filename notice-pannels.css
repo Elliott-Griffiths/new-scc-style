@@ -7,7 +7,7 @@
   position: relative;
   padding: var(--spacing-lg);
   display: grid;
-  justify-items: start;
+  justify-items: center;
   align-items: end;
   grid-template-columns: auto 1fr;
   gap: var(--spacing-sm);
@@ -43,7 +43,6 @@
 
 #dform_container .info-panel {
   border-color: var(--c-core-brand-primary-darken);
-  background: var(--c-core-tints-accent-2-tint-20);
 }
 
 #dform_container .success-panel:before,
