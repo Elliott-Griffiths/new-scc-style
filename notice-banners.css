@@ -13,15 +13,22 @@
   background: var(--c-brand-accents-teal);
 }
 
-#dform_container .dform_success {
+#dform_container .dform_infoMessage_outer {
+  background: var(--c-brand-accents-teal);
+}
+
+#dform_container .dform_success,
+#dform_container .dform_successMessage_outer {
   background: var(--c-alerts-success);
 }
 
-#dform_container .dform_error {
+#dform_container .dform_error,
+#dform_container .dform_errorMessage_outer {
   background: var(--c-alerts-danger);
 }
 
-#dform_container .dform_warning {
+#dform_container .dform_warning,
+#dform_container .dform_warningMessage_outer {
   color: var(--c-greys-black);
   background: var(--c-alerts-warning);
 }
