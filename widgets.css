@@ -203,15 +203,11 @@
   display: none;
 }
 
-#dform_container input[type="checkbox"] {
-  display: inline-block;
-  margin: 0;
-  width: var(--field-height-sm);
-  height: var(--field-height-sm);
-  transition: all 0.2s ease;
-  box-shadow: inset 0 0 0 2px var(--c-greys-black);
-  accent-color: var(--c-greys-white);
-  background: var(--c-greys-white);
+#dform_container .dform_fielderror,
+.container.dform_widget:has(input.dform_fielderror) .currency-symbol {
+  box-shadow: none;
+  border: solid 2px var(--c-alerts-danger) !important;
+  outline: none;
 }
 
 #dform_container fieldset.checkboxgroup > span,
@@ -317,7 +313,7 @@
 }
 
 #dform_container .dform_fielderror,
-#dform_container .dform_fielderror .currency-symbol {
+.container.dform_widget:has(input.dform_fielderror) .currency-symbol {
   box-shadow: none;
   border: solid 2px var(--c-alerts-danger) !important;
   outline: none;
