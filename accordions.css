@@ -81,6 +81,7 @@
   }
   
   #dform_container .details-accordion summary {
+    height: 35px;
     font-family: var(--font-family);
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-semibold);
