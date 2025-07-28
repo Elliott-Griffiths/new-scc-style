@@ -22,6 +22,7 @@
 }
 
 #dform_container .dform_warning {
+  color: var(--c-greys-black);
   background: var(--c-alerts-warning);
 }
 
@@ -38,17 +39,17 @@
 }
 
 #dform_container .dform_success:before {
-  content: url(./icons/circle-check-success.svg);
+  content: url(./icons/circle-check-success-white.svg);
 }
 
 #dform_container .dform_info:before {
-  content: url(./icons/circle-info-primary-darkened.svg);
+  content: url(./icons/circle-info-white.svg);
 }
 
 #dform_container .dform_error:before {
-  content: url(./icons/triangle-exclamation-danger.svg);
+  content: url(./icons/triangle-exclamation-danger-white.svg);
 }
 
 #dform_container .dform_warning:before {
-  content: url(./icons/circle-info-primary-darkened.svg);
+  content: url(./icons/triangle-exclamation-danger-black.svg);
 }
