@@ -207,6 +207,7 @@
   height: var(--field-height-sm);
   width: var(--field-height-sm);
   box-shadow: inset 0 0 0 2px var(--c-greys-black) !important;
+  accent-color: var(--c-greys-black);
 }
 
 #dform_container .dform_fielderror,
@@ -342,7 +343,7 @@
 
 #dform_container input[type="checkbox"]:focus,
 #dform_container input[type="checkbox"]:checked:focus::after {
-  box-shadow: inset 0 0 0 3px var(--c-greys-black) !important;
+  box-shadow: inset 0 0 0 2px var(--c-greys-black) !important;
 }
 
 #dform_container input:focus-visible {
