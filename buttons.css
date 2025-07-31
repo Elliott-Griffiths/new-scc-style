@@ -25,7 +25,7 @@
     color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
     border: solid 2px var(--c-core-brand-primary-darken);
-    border-radius: 1.5625rem;
+    border-radius: 1.5625rem !important;
     min-width: 8.75rem;
     width: max-content;
     min-height: var(--field-height-sm);
@@ -156,8 +156,10 @@
   
   #dform_container button:hover,
   #dform_container button:focus,
+  #dform_container button:active,
   #dform_container a.button:hover,
-  #dform_container a.button:focus {
+  #dform_container a.button:focus,
+  #dform_container a.button:active {
     color: var(--c-greys-white);
     background: var(--c-brand-accents-teal);
     border-color: var(--c-brand-accents-teal);
@@ -165,7 +167,8 @@
   }
 
   #dform_container button.teal-btn:hover,
-  #dform_container button.teal-btn:focus {
+  #dform_container button.teal-btn:focus,
+  #dform_container button.teal-btn:active {
     color: var(--c-greys-white);
     background: var(--c-core-brand-primary-darken);
     border-color: var(--c-core-brand-primary-darken);
@@ -173,7 +176,8 @@
   }
 
   #dform_container button.secondary-btn:hover,
-  #dform_container button.secondary-btn:focus {
+  #dform_container button.secondary-btn:focus,
+  #dform_container button.secondary-btn:active {
     color: var(--c-brand-accents-teal);
     background: var(--c-greys-white);
     border-color: var(--c-brand-accents-teal);
@@ -181,9 +185,11 @@
   }
   
   #dform_container a.link-btn:hover,
-  #dform_container button.link-btn:hover,
   #dform_container a.link-btn:focus,
-  #dform_container button.link-btn:focus {
+  #dform_container a.link-btn:active,
+  #dform_container button.link-btn:hover,
+  #dform_container button.link-btn:focus,
+  #dform_container button.link-btn:active {
     color: var(--c-brand-accents-teal);
     background: transparent;
     text-decoration: underline;
@@ -197,3 +203,4 @@
     box-shadow: none;
     outline-offset: 4px !important;
   }
+

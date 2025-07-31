@@ -4,7 +4,7 @@
 }
 
 #dform_container .make-header {
-  margin-block: unset;
+  margin-top: var(--spacing-lg);
 }
 
 #dform_container input,

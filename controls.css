@@ -118,7 +118,8 @@
     line-height: var(--line-height);
   }
 
-  #dform_container button.back-btn:hover {
+  #dform_container button.back-btn:hover,
+  #dform_container button.back-btn:focus {
     background: transparent !important;
   }
 
