@@ -81,8 +81,8 @@
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-body);
   color: var(--c-core-brand-secondary);
-  background: var(--c-core-tints-accent-2-tint-20);
-  border-bottom: 1px solid var(--c-core-tints-accent-2-tint-80);
+  /* background: var(--c-core-tints-accent-2-tint-20);
+  border-bottom: 1px solid var(--c-core-tints-accent-2-tint-80); */
 
   display: block;
   min-height: var(--field-height-md);
