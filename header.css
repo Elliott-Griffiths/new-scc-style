@@ -62,12 +62,12 @@
   gap: var(--spacing-xs);
 }
 
-#nav_home > .icon-home {
+#nav_home .icon-home {
   display: flex;
   align-items: center;
 }
 
-#nav_home > .icon-home > svg {
+#nav_home .icon-home svg {
   padding: 0;
   margin: 0;
   fill: var(--c-greys-white);
