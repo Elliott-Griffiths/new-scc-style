@@ -136,7 +136,7 @@
   margin: unset;
   display: grid;
   grid-template-columns: 1fr max-content;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto;
   column-gap: var(--spacing-sm);
   /* height: 8.8125rem; 141px */
   width: 22.5rem; /* 360px */
