@@ -212,7 +212,7 @@
 
 #dform_container .dform_fielderror,
 .container.dform_widget:has(input.dform_fielderror) .currency-symbol {
-  box-shadow: none;
+  box-shadow: none !important;
   border: solid 2px var(--c-alerts-danger) !important;
   outline: none;
 }
