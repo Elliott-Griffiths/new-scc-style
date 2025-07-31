@@ -9,7 +9,8 @@
 #dform_controls,
 #dform_pageholder,
 #dform_container .dform_message,
-#FooterAreaInSingleColumnNoNavigationTemplate {
+#FooterAreaInSingleColumnNoNavigationTemplate,
+#dform_pagenav {
   float: unset !important;
   margin: 0 auto !important;;
   width: auto !important;;
