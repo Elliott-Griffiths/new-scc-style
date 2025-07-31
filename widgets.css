@@ -133,7 +133,7 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-xs);
   margin-right: var(--spacing-lg);
   margin-bottom: var(--spacing-xxs);
   text-align: center;
