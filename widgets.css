@@ -206,6 +206,8 @@
 #dform_container input[type="checkbox"] {
   height: var(--field-height-sm);
   width: var(--field-height-sm);
+  border: 2px solid var(--c-greys-black);
+  box-sizing: border-box;
 }
 
 #dform_container .dform_fielderror,
