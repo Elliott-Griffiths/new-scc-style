@@ -203,6 +203,11 @@
   display: none;
 }
 
+#dform_container input[type="checkbox"] {
+  height: var(--field-height-sm);
+  width: var(--field-height-sm);
+}
+
 #dform_container .dform_fielderror,
 .container.dform_widget:has(input.dform_fielderror) .currency-symbol {
   box-shadow: none;

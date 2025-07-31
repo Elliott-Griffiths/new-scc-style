@@ -62,7 +62,6 @@ h3,
 #dform_container h3,
 #dform_container .header3 {
   font-size: var(--font-size-xxl);
-  color: var(--c-brand-accents-teal);
 }
 h4,
 .header4,
