@@ -114,6 +114,7 @@
   color: var(--c-greys-white);
   text-decoration-line: none;
   text-underline-offset: 6px;
+  font-weight: var(--font-weight-normal);
 }
 
 #menuButton::after {
@@ -131,6 +132,7 @@
 #nav_logout>button:hover {
   text-decoration-line: underline;
   text-decoration-color: var(--c-greys-white);
+  text-decoration-thickness: 2px;
   text-underline-offset: 6px;
 }
 
