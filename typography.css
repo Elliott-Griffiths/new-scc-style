@@ -139,8 +139,7 @@ a:active,
 #dform_container a:active,
 a.secondary-link:active,
 #dform_container a.secondary-link:active {
-  outline: none;
-  outline-offset: 0;
+  outline: none !important;
   color: var(--c-greys-black);
   background: var(--c-focus-links);
   border-bottom: 2px solid var(--c-greys-black);
