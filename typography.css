@@ -110,6 +110,13 @@ a,
   text-underline-offset: 0.25rem;
 }
 
+a.secondary-link,
+#dform_container a.secondary-link {
+  color: var(--c-brand-accents-teal);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
 a:hover,
 #dform_container a:hover {
   color: var(--c-brand-accents-teal);
@@ -117,11 +124,27 @@ a:hover,
   text-decoration-thickness: 2px;
 }
 
-a:focus,
-#dform_container a:focus {
-  outline: 2px solid var(--c-focus-links);
-  outline-offset: 2px;
-  color: var(--c-focus-links);
+a.secondary-link:hover,
+#dform_container a.secondary-link:hover {
+  color: var(--c-greys-black);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+a:focus, 
+#dform_container a:focus
+a.secondary-link:focus,
+#dform_container a.secondary-link:focus,
+a:active, 
+#dform_container a:active,
+a.secondary-link:active,
+#dform_container a.secondary-link:active {
+  outline: none;
+  outline-offset: 0;
+  color: var(--c-greys-black);
+  background: var(--c-focus-links);
+  border-bottom: 2px solid var(--c-greys-black);
+  text-decoration: none;
 }
 
 ul,
