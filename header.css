@@ -143,9 +143,9 @@
 #menuButton:focus,
 #nav_logout>button:focus {
   outline: none !important;
-  color: var(--c-greys-black);
-  background: var(--c-focus-links);
-  border-bottom: 2px solid var(--c-greys-black);
+  color: var(--c-greys-black) !important;
+  background: var(--c-focus-links) !important;
+  border-bottom: 2px solid var(--c-greys-black) !important;
   text-decoration: none !important;
 }
 
