@@ -117,3 +117,13 @@
     padding-inline: var(--spacing-lg);
     margin: 0;
   }
+
+
+  #dform_container .details-accordion .details-accordion-content .dform_widget_field {
+    margin-block: 0;
+    padding-block: var(--spacing-lg);
+  }
+
+  #dform_container .details-accordion-content .dform_widget_field:first-child {
+    padding-top: 0;
+  }
