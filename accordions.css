@@ -125,7 +125,7 @@
 
   #dform_container .details-accordion .details-accordion-content .dform_widget_field {
     margin-block: 0;
-    padding-block: var(--spacing-lg);
+    padding-block: var(--spacing-md);
   }
 
   #dform_container .details-accordion-content .dform_widget_field:first-child {
