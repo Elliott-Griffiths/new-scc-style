@@ -110,14 +110,18 @@
   #dform_container .details-accordion-content {
     background: var(--c-greys-white);
   }
-  
+
   #dform_container .details-accordion-content > * {
-    border-left: solid 5px var(--c-brand-accents-teal);
+    border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal);
     padding-block: 0.6rem 1rem;
-    padding-inline: var(--spacing-lg);
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
     margin: 0;
   }
 
+  #dform_container .details-accordion-content .dform_widget_field_with_error {
+    border-left: solid var(--spacing-xxs) var(--c-danger-red);
+  }
 
   #dform_container .details-accordion .details-accordion-content .dform_widget_field {
     margin-block: 0;
