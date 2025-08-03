@@ -114,8 +114,7 @@
   #dform_container .details-accordion-content {
     border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal);
     padding-block: 0.6rem 1rem;
-    padding-left: var(--spacing-md);
-    padding-right: var(--spacing-md);
+    padding-inline: var(--spacing-md);
     margin: 0;
   }
 
