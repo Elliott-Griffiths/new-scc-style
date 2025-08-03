@@ -145,7 +145,7 @@
   color: var(--c-greys-black);
   background: var(--c-focus-links);
   border-bottom: 2px solid var(--c-greys-black);
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 #nav_home:active,
