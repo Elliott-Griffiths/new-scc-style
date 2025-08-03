@@ -111,7 +111,7 @@
     background: var(--c-greys-white);
   }
 
-  #dform_container .details-accordion-content > * {
+  #dform_container .details-accordion-content {
     border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal);
     padding-block: 0.6rem 1rem;
     padding-left: var(--spacing-md);
