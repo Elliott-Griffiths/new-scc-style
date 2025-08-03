@@ -132,7 +132,7 @@ a.secondary-link:hover,
 }
 
 a:focus, 
-#dform_container a:focus
+#dform_container a:focus,
 a.secondary-link:focus,
 #dform_container a.secondary-link:focus,
 a:active, 
