@@ -111,13 +111,9 @@
     background: var(--c-greys-white);
   }
   
-  #dform_container .details-accordion-content p {
+  #dform_container .details-accordion-content > * {
     border-left: solid 5px var(--c-brand-accents-teal);
     padding-block: 0.6rem 1rem;
     padding-inline: var(--spacing-lg);
     margin: 0;
-  }
-  
-  #dform_container .details-accordion-content > * {
-    border-left: solid 0.4rem var(--c-greys-black);
   }
