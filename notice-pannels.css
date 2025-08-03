@@ -108,6 +108,15 @@
   color: var(--c-core-brand-primary-darken);
 }
 
+#dform_container .message-panel a,
+#dform_container .success-panel a,
+#dform_container .alert-panel a,
+#dform_container .alert-panel--ineligible a,
+#dform_container .info-panel a,
+#dform_container .notice-panel a {
+  font-weight: var(--font-weight-semibold);
+}
+
 #dform_container .confirmation-panel {
   padding: var(--spacing-lg);
   display: flex;
