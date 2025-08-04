@@ -1,4 +1,4 @@
-#dform_container input[type="file"] {
+/* #dform_container input[type="file"] {
   padding: 0 !important;
   border: none;
   height: 100%;
@@ -22,7 +22,7 @@ input[type="file"]::file-selector-button {
 
 #dform_container .dform_widget_type_file br {
   display: none;
-}
+} */
 
 /* #dform_container div[data-type="file"] > div:nth-child(2) {
     display: grid;
