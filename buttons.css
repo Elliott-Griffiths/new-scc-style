@@ -192,29 +192,32 @@
 /* --- BUTTON HOVER/FOCUS --- */
 
 #dform_container button:hover,
-#dform_container button:focus,
 #dform_container button:active,
-#dform_container a.button:hover,
-#dform_container a.button:focus,
-#dform_container a.button:active {
+#dform_container a.button:hover {
   color: var(--c-greys-white);
   background: var(--c-brand-accents-teal);
   border-color: var(--c-brand-accents-teal);
   box-shadow: none;
 }
 
-#dform_container button.teal-btn:hover,
-#dform_container button.teal-btn:focus,
-#dform_container button.teal-btn:active {
+#dform_container button:focus,
+#dform_container a.button:focus,
+#dform_container a.button:active {
+  color: var(--c-greys-black);
+  background: var(--c-focus-links);
+  border-color: var(---c-focus-links);
+  box-shadow: none;
+  outline: none;
+}
+
+#dform_container button.teal-btn:hover{
   color: var(--c-greys-white);
   background: var(--c-core-brand-primary-darken);
   border-color: var(--c-core-brand-primary-darken);
   box-shadow: none;
 }
 
-#dform_container button.secondary-btn:hover,
-#dform_container button.secondary-btn:focus,
-#dform_container button.secondary-btn:active {
+#dform_container button.secondary-btn:hover {
   color: var(--c-brand-accents-teal);
   background: var(--c-greys-white);
   border-color: var(--c-brand-accents-teal);
@@ -224,9 +227,7 @@
 #dform_container a.link-btn:hover,
 #dform_container a.link-btn:focus,
 #dform_container a.link-btn:active,
-#dform_container button.link-btn:hover,
-#dform_container button.link-btn:focus,
-#dform_container button.link-btn:active {
+#dform_container button.link-btn:hover {
   color: var(--c-brand-accents-teal);
   background: transparent;
   text-decoration: underline;
@@ -237,6 +238,9 @@
 #dform_container button.secondary-link-btn:focus,
 #dform_container button.secondary-link-btn:active {
   color: var(--c-greys-black);
+  background: transparent;
+  text-decoration: underline;
+  box-shadow: none;
 }
 
 #dform_container a.link-btn:focus,
@@ -244,7 +248,6 @@
   padding: 0;
   border-radius: 0;
   box-shadow: none;
-  outline: none;;
 }
 
 #dform_container button.action-link-btn:hover {
