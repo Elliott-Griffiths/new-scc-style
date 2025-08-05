@@ -113,7 +113,7 @@
 
   #dform_container button.back-btn::before {
     content: url(./icons/arrow-right-primary-darkened.svg);
-    transform: rotate(180deg) translateY(-2px);
+    transform: rotate(180deg);
     width: var(--font-size-base);
     line-height: var(--line-height);
   }

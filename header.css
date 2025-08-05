@@ -138,15 +138,18 @@
 
 #nav_home:focus,
 #widget_Navigation>div>ul.menuList>li:focus-within,
-#widget_Navigation>div>ul.menuList>li:focus-within>a,
-#widget_Navigation>div>ul.menuList>li>a:focus,
-#menuButton:focus,
-#nav_logout>button:focus {
+#widget_Navigation>div>ul.menuList>li:focus-within>a {
   outline: none !important;
   color: var(--c-greys-black) !important;
   background: var(--c-focus-links) !important;
   border-bottom: 2px solid var(--c-greys-black) !important;
   text-decoration: none !important;
+}
+
+#widget_Navigation>div>ul.menuList>li>a:focus,
+#menuButton:focus,
+#nav_logout>button:focus {
+  border-bottom: none !important;
 }
 
 #nav_home:active,
@@ -161,6 +164,17 @@
   text-decoration-line: underline;
   text-decoration-color: var(--c-core-brand-accent-1-darken);
   text-underline-offset: 6px;
+}
+
+#dform_progressbar_sheffield {
+  background: transparent;
+  font-family: var(--font-family);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-500) !important;
+  line-height: var(--line-height);
+  color: var(--c-brand-accents-teal) !important;
+  margin-top: var(--spacing-md);
+  transform: translateY(var(--spacing-xs));
 }
 
 @media screen and (min-width: 1000px) {
