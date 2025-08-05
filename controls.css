@@ -137,6 +137,10 @@
     border-bottom: 2px solid var(--c-greys-black);
   }
 
+  #dform_container button.back-btn:focus::before {
+    content: url(./icons/arrow-right-black.svg);
+  } 
+
   #dform_container button.back-btn:focus > .back-btn--text {
     color: var(--c-greys-black) !important;
     background: var(--c-focus-links);
