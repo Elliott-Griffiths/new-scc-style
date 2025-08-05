@@ -93,6 +93,7 @@
   min-height: fit-content;
   height: fit-content;
   max-height: fit-content;
+  line-height: var(--line-height-body);
   color: var(--c-core-brand-primary-darken);
   background: transparent;
   border: none;
@@ -262,8 +263,9 @@
 #dform_container button.action-link-btn:focus {
   color: var(--c-greys-black);
   background: var(--c-focus-links);
-  border-radius: 0;
+  border-radius: unset !important;
   outline: none;
+  border-bottom: 2px solid var(--c-greys-black);
 }
 
 #dform_container button.action-link-btn:focus::before {
