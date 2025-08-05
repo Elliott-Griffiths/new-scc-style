@@ -128,7 +128,8 @@
     text-decoration-thickness: 2px;
   }
 
-  #dform_container button.back-btn:focus {
+  #dform_container button.back-btn:focus,
+  #dform_container button.back-btn:focus > .back-btn--text {
     color: var(--c-greys-black) !important;;
     background: var(--c-focus-links);
     text-decoration: none  !important;;
