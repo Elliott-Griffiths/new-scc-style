@@ -148,6 +148,11 @@
   color: var(--c-greys-black);
 }
 
+#dform_container .dform_hidden,
+#dform_container *.dform_hidden {
+  display: none !important;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }
