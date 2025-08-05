@@ -2962,23 +2962,14 @@ function updateProgressBar(currentPageIndex) {
       if (percentage <= 0) {
         percentage = 0;
         childDiv.style.width = `max-content`;
-        childDiv.style.color = "var(--color-black)";
-        childDiv.style.background = "var(--color-empty-pb)";
-        parentDiv.style.background = "var(--color-background)";
       } else if (percentage >= 100) {
         percentage = 100;
-        childDiv.style.width = `${percentage}%`;
-        childDiv.style.color = "var(--color-white)";
-        childDiv.style.background = "var(--color-white)";
-        parentDiv.style.background = "var(--color-white)";
+        childDiv.style.width = `${percentage}% complete`;
       } else {
-        childDiv.style.width = `${percentage}%`;
-        childDiv.style.color = "var(--color-white)";
-        childDiv.style.background = "var(--color-primary)";
-        parentDiv.style.background = "var(--color-background)";
+        childDiv.style.width = `${percentage}% complete`;
       }
-      childDiv.textContent = `${percentage}%`;
-      childSpan.style.width = `${100 - percentage}%`;
+      childDiv.textContent = `${percentage}% complete`;
+      childSpan.style.width = `${100 - percentage}% complete`;
     }
   }
 }

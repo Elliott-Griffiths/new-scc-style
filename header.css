@@ -168,13 +168,17 @@
 
 #dform_progressbar_sheffield {
   background: transparent;
+  margin-top: var(--spacing-md);
+  transform: translateY(var(--spacing-xs));
+}
+
+#dform_progressbar_sheffield>div {
+  background: transparent;
   font-family: var(--font-family);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-500) !important;
   line-height: var(--line-height);
   color: var(--c-brand-accents-teal) !important;
-  margin-top: var(--spacing-md);
-  transform: translateY(var(--spacing-xs));
 }
 
 @media screen and (min-width: 1000px) {
