@@ -93,12 +93,6 @@
 
   /* --- ACTION LINK --- */
 
-  #dform_container .dform_widget_type_buttonset.action-link-btn-container:focus-within {
-    width: max-content;
-    background: var(--c-focus-links);
-    border-bottom: 2px solid var(--c-greys-black);
-  }
-
   #dform_container button.action-link-btn::before {
     content: url(./icons/arrow-right-primary-darkened.svg);
     align-items: center;
@@ -111,14 +105,27 @@
     border-radius: 100%;
   }
 
-  #dform_container .dform_widget_type_buttonset.action-link-btn-container:focus-within #dform_container button.action-link-btn::before {
-    content: url(./icons/arrow-right-black.svg);
-  }
-
   #dform_container button.action-link-btn:hover {
     color: var(--c-core-brand-primary-darken);
-    background: var(--c-core-brand-accent-2);
+    background: var(--c-greys-white);
     text-decoration: underline;
+  }
+
+  #dform_container .dform_widget_type_buttonset.action-link-btn-container:focus-within {
+    width: max-content;
+    background: var(--c-focus-links);
+    border-bottom: 2px solid var(--c-greys-black);
+  }
+
+  #dform_container button.action-link-btn:focus {
+    color: var(--c-greys-black);
+    background: var(--c-focus-links);
+    outline: none;
+  }
+
+  #dform_container button.action-link-btn:focus::before {
+    content: url(./icons/arrow-right-teal.svg);
+    background: var(--c-greys-black);
   }
 
   /* --- FIND ON MAP --- */
