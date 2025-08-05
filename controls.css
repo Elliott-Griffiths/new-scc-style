@@ -142,6 +142,7 @@
   } 
 
   #dform_container button.back-btn:focus > .back-btn--text {
+    font-weight: var(--font-weight-semibold);
     color: var(--c-greys-black) !important;
     background: var(--c-focus-links);
     text-decoration: none  !important;
