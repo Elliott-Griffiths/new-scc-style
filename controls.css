@@ -123,9 +123,9 @@
   }
 
   #dform_container button.back-btn:focus {
-    color: var(--c-greys-black);
+    color: var(--c-greys-black) !important;;
     background: var(--c-focus-links);
-    text-decoration: none;
+    text-decoration: none  !important;;
     border-radius: unset !important;
     outline: none;
     border-bottom: 2px solid var(--c-greys-black);
