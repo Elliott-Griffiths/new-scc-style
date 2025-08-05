@@ -118,9 +118,17 @@
     line-height: var(--line-height);
   }
 
-  #dform_container button.back-btn:hover,
-  #dform_container button.back-btn:focus {
+  #dform_container button.back-btn:hover {
     background: transparent !important;
+  }
+
+  #dform_container button.back-btn:focus {
+    color: var(--c-greys-black);
+    background: var(--c-focus-links);
+    text-decoration: none;
+    border-radius: unset !important;
+    outline: none;
+    border-bottom: 2px solid var(--c-greys-black);
   }
 
   #dform_container button.back-btn:hover > .back-btn--text,

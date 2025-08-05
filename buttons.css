@@ -191,7 +191,7 @@
   line-height: var(--line-height-body);
   text-decoration: underline;
   text-underline-offset: 0.25rem;
-  text-decoration-color: var(--c-greys-white);
+  text-decoration-color: transparent;
 }
 
 /* --- BUTTON HOVER/FOCUS --- */
