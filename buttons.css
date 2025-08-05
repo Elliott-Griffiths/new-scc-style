@@ -91,7 +91,13 @@
     /* text-underline-offset: 0.25rem; */
   }
 
-  /* --- ACTIOBN LINK --- */
+  /* --- ACTION LINK --- */
+
+  #dform_container .dform_widget_type_buttonset.action-link-btn-container:focus-within {
+    width: max-content;
+    background: var(--c-focus-links);
+    border-bottom: 2px solid var(--c-greys-black);
+  }
 
   #dform_container button.action-link-btn::before {
     content: url(./icons/arrow-right-primary-darkened.svg);
@@ -100,18 +106,19 @@
     height: var(--field-height-md);
     width: var(--field-height-md);
     margin-right: 1rem;
-    padding: 0.5rem 0.8rem;
+    padding: 0.8rem;
     background: var(--c-core-brand-accent-2);
     border-radius: 100%;
   }
 
-  #dform_container button.action-link-btn:hover {
-    text-decoration: underline;
+  #dform_container .dform_widget_type_buttonset.action-link-btn-container:focus-within #dform_container button.action-link-btn::before {
+    content: url(./icons/arrow-right-black.svg);
   }
 
-  #dform_container button.action-link-btn::focus {
-    content: url(./icons/arrow-right-primary-darkened.svg);
-    background: var(--c-greys-black);
+  #dform_container button.action-link-btn:hover {
+    color: var(--c-core-brand-primary-darken);
+    background: var(--c-core-brand-accent-2);
+    text-decoration: underline;
   }
 
   /* --- FIND ON MAP --- */
