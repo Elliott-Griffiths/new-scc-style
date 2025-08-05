@@ -80,6 +80,10 @@
   margin-block: var(--spacing-xl);
 }
 
+#dform_container .dform_widget_type_buttonset.link-btn-container {
+  margin: 0;
+}
+
 #dform_container a.link-btn,
 #dform_container button.link-btn,
 #dform_container button.secondary-link-btn,
