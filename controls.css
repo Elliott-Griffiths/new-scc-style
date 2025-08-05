@@ -122,6 +122,12 @@
     background: transparent !important;
   }
 
+  #dform_container button.back-btn:hover > .back-btn--text {
+    background: transparent !important;
+    color: var(--c-brand-accents-teal);
+    text-decoration-thickness: 2px;
+  }
+
   #dform_container button.back-btn:focus {
     color: var(--c-greys-black) !important;;
     background: var(--c-focus-links);
@@ -131,19 +137,6 @@
     border-bottom: 2px solid var(--c-greys-black);
   }
 
-  #dform_container button.back-btn:hover > .back-btn--text,
-  #dform_container button.back-btn:focus > .back-btn--text {
-    background: transparent !important;
-    color: var(--c-brand-accents-teal);
-    text-decoration-thickness: 2px;
-  }
- 
-  #dform_container button.back-btn:focus {
-    border-radius: 0;
-    outline-offset: 4px;
-    box-shadow: none;
-  }
-  
   #dform_controls > div.container > div:nth-child(1) {
     display: none;
   }
