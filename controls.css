@@ -228,7 +228,7 @@ header.header.skip-focused {
   color: unset;
 }
 
-#dform_control_buttons #dform_pagenav {
+#dform_pagenav {
   display: none;
   margin: 0 !important;
   margin-right: auto !important;
