@@ -76,7 +76,10 @@
   }
   
   #dform_container button.back-btn,
-  #dform_control_buttons #dform_save {
+  #dform_control_buttons #dform_print,
+  #dform_control_buttons #dform_check,
+  #dform_control_buttons #dform_save,
+  #dform_control_buttons #dform_close {
     margin: unset !important;
     padding: 0;
     display: none;
