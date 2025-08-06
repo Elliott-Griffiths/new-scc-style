@@ -203,7 +203,7 @@ header.header.skip-focused {
 }
 
 #dform_controls #dform_control_buttons #case-display-wrapper {
-  margin-right: var(--spacing-md);
+  margin-right: var(--spacing-sm);
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-style: normal;
@@ -238,7 +238,7 @@ header.header.skip-focused {
 #dform_control_buttons #dform_pagenav #dform_navigation {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-xxs);
 }
 
 #dform_control_buttons #dform_pagenav #dform_navigation li,
@@ -270,6 +270,11 @@ header.header.skip-focused {
   text-underline-offset: 0.25rem;
 }
 
+#dform_control_buttons #dform_pagenav #dform_navigation li::before {
+  content: "" !important;
+  margin: unset !important;
+}
+
 #dform_control_buttons #dform_pagenav #dform_navigation li.selected,
 #dform_control_buttons #dform_pagenav #dform_navigation li.selected:hover {
   color: var(--c-core-brand-body);
@@ -284,7 +289,7 @@ header.header.skip-focused {
 #dform_control_buttons #dform_pagenav #dform_navigation li span {
   position: unset;
   margin: unset;
-  padding-right: var(--spacing-sm);
+  padding-right: var(--spacing-xs);
   text-decoration-color: var(--c-greys-white) !important;
 }
 
