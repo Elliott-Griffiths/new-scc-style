@@ -114,6 +114,9 @@ function logArguments(event, kdf, ...args) {
 
 // --- GLOBAL CONSTS AND VARIABLES ----------------------------------------- \\
 
+const formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
+const { protocol, hostname } = window.location;
+
 let customerState = false;
 
 let pageName = "";
@@ -291,7 +294,7 @@ function handleInitialisingEvent() {
       backButton.insertAdjacentElement("afterend", pagenav);
     }
   })();
-  
+
   // --- ADD CHARACTER COUNT ----------------------------------------------- \\
 
   (() => {
@@ -474,13 +477,13 @@ function handleOnReadyEvent(_, kdf) {
     }
   }
 
+  // --- SET FEEDBACK LINK ------------------------------------------------- \\
+
+  buildFormLink("give_feedback_suggestion", true);
+
   // --- SET EQUALITIES LINK ----------------------------------------------- \\
 
-  const formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
-  $("#equality-btn").attr(
-    "href",
-    `https://sheffielddev.form.ukpreview.empro.verintcloudservices.com/form/auto/equalities_monitoring?formTitle=${formattedTitle}&channel=web`
-  );
+  buildFormLink("equalities_monitoring", true);
 
   storeDefaultValidationMessages();
 
@@ -1414,6 +1417,9 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
     KDF.setVal("txt_finish_date_and_time", formatDateTime().utc);
   }
 
+  // Toggle back button visibility
+  displayBackButton(targetpageid > 1 && pageName !== "complete" && kdf.form.complete !== "Y");
+
   getAndSetReviewPageData();
 
   // keep at the bottom
@@ -2015,13 +2021,37 @@ function handleFailedSave(event, kdf) {
 // --- HANDLE ON COMPLETE EVENT ------------------------------------------- \\
 
 function handleFomComplate(event, kdf) {
-  document.getElementById("form-title").textContent = "Confirmation";
-
   setTimeout(function () {
     KDF.hideMessages();
   }, 0);
 
-  $("#dform_progressbar_sheffield, #dform_ref_display").hide();
+  displayBackButton(false);
+
+  createAndInsertReferenceDisplay(kdf.form.caseid);
+
+  setTimeout(function () {
+    const pagenav = document.getElementById("dform_pagenav");
+    if (pagenav) {
+      pagenav.style.setProperty('display', 'inline-flex', 'important');
+      const ul = pagenav.querySelector("#dform_navigation");
+      if (ul) {
+        ul.style.setProperty('display', 'flex', 'important');
+      }
+    }
+  }, 0);
+
+  const printButton = document.getElementById("dform_print");
+  if (printButton) {
+    printButton.style.setProperty('display', 'inline-flex', 'important');
+  }
+
+  if (kdf.form.data.eml_address && kdf.form.data.eml_address !== "") {
+    KDF.showWidget("ahtm_confirmation_email");
+  }
+
+  if (kdf.access === "citizen" && (kdf.profileData.customerid && kdf.profileData.customerid !== "")) {
+    buildMyAccountLink(kdf.form.caseid);
+  }
 }
 
 // --- DISPLAY BACK BUTTON ------------------------------------------------ \\
@@ -5099,12 +5129,12 @@ function buildAddressMarkup(addressData) {
  * @param {string} referenceValue - The dynamic value to be displayed.
  */
 function createAndInsertReferenceDisplay(referenceValue) {
-  // Get the parent container and the target element (the <ul>)
+  // Get the parent container and the target insertion point (the #skip div)
   const controlButtons = document.getElementById("dform_control_buttons");
-  const ulElement = controlButtons ? controlButtons.querySelector("ul") : null;
+  const skipElement = controlButtons ? controlButtons.querySelector("#skip") : null;
 
   // Safely proceed only if both elements exist and a value is provided
-  if (!controlButtons || !ulElement || !referenceValue) {
+  if (!controlButtons || !skipElement || !referenceValue) {
     console.error("Could not find required DOM elements or the reference value is missing.");
     return;
   }
@@ -5120,7 +5150,7 @@ function createAndInsertReferenceDisplay(referenceValue) {
     return;
   }
 
-  // Create the new parent wrapper element with its children in one go
+  // Create the new parent wrapper element
   const newWrapper = document.createElement("div");
   newWrapper.id = "case-display-wrapper";
   newWrapper.className = "case-display-wrapper";
@@ -5128,6 +5158,65 @@ function createAndInsertReferenceDisplay(referenceValue) {
     Reference: <span id="case-reference-display" class="case-reference-display">${referenceValue}</span>
   `;
 
-  // Insert the new wrapper element just before the <ul>
-  ulElement.insertAdjacentElement("beforebegin", newWrapper);
+  // Insert the new wrapper element just after the #skip div
+  skipElement.insertAdjacentElement("afterend", newWrapper);
+}
+
+// --- BUILD MY ACCOUNT LINK ------------------------------------------------ \\
+
+/**
+ * Builds and updates the href for the 'Check your application status' link.
+ * @param {string} referenceNumber - The SRID to be inserted into the link.
+ */
+function buildMyAccountLink(referenceNumber) {
+  // Get the current URL from the browser.
+  const currentUrl = window.location.href;
+
+  // Extract the base URL from the current URL.
+  const baseUrlMatch = currentUrl.match(/^(.*)\/form\//);
+  if (!baseUrlMatch) {
+    console.error("Could not determine the base URL from the current page.");
+    return;
+  }
+  const baseUrl = baseUrlMatch[1];
+
+  // Find the existing link element by its ID.
+  const linkElement = document.getElementById("my-account-request");
+
+  if (!linkElement) {
+    console.error("The link element with id 'my-account-request' could not be found.");
+    return;
+  }
+
+  // Construct the new URL using the base URL and reference number.
+  const newHref = `${baseUrl}/my-requests?srid=${referenceNumber}`;
+
+  // Update the href attribute of the existing link.
+  linkElement.setAttribute('href', newHref);
+
+  KDF.showWidget("ahtm_confirmation_account");
+}
+
+/**
+ * Builds and updates the href for a given feedback link using the global formattedTitle.
+ * @param {string} formName - The name of the form to build the URL for (e.g., 'equalities_monitoring').
+ */
+function buildFormLink(formName, includeFormTitle = false) {
+  const { protocol, hostname } = window.location;
+
+  // Build the ID of the element to find based on the form name
+  const elementId = formName.replace(/_/g, '-');
+  const linkElement = document.getElementById(elementId);
+
+  if (!linkElement) {
+    console.error(`The link element with id '${elementId}' could not be found.`);
+    return;
+  }
+
+  // Conditionally add the formTitle part to the URL
+  const titleParameter = includeFormTitle ? `?formTitle=${formattedTitle}` : '';
+  const newHref = `${protocol}//${hostname}/site/form/auto/${formName}${titleParameter}`;
+
+  // Update the href attribute
+  linkElement.setAttribute('href', newHref);
 }
