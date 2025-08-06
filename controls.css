@@ -126,7 +126,7 @@
   }
   
   #dform_control_buttons #dform_print {
-    display: inline-flex;
+    display: none;
     gap: var(--spacing-xs);
     font-weight: var(--font-weight-semibold);
   }
@@ -192,3 +192,22 @@
     align-self: stretch;
     border-bottom: none;
   }
+
+  #case-display-wrapper {
+    display: none;
+}
+
+#dform_controls #dform_control_buttons #case-display-wrapper {
+    margin-right: var(--spacing-md);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height);
+    color: var(--c-core-brand-body);
+}
+
+#dform_controls #dform_control_buttons #case-display-wrapper #case-reference-display {
+    font-weight: var(--font-weight-semibold);
+    color: var(--c-brand-accents-teal);
+}

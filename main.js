@@ -5068,3 +5068,44 @@ function buildAddressMarkup(addressData) {
     </address>
   `;
 }
+
+// --- BUILD REFERENCE ELEMENT ---------------------------------------------- \\
+
+/**
+ * Creates and inserts a new dynamic reference display element.
+ * It assumes the provided reference value is already in the desired format.
+ * @param {string} referenceValue - The dynamic value to be displayed.
+ */
+function createAndInsertReferenceDisplay(referenceValue) {
+  // Get the parent container and the target element (the <ul>)
+  const controlButtons = document.getElementById("dform_control_buttons");
+  const ulElement = controlButtons ? controlButtons.querySelector("ul") : null;
+
+  // Safely proceed only if both elements exist and a value is provided
+  if (!controlButtons || !ulElement || !referenceValue) {
+    console.error("Could not find required DOM elements or the reference value is missing.");
+    return;
+  }
+  
+  // Check if the new wrapper element already exists to avoid duplicates
+  const existingWrapper = document.getElementById("case-display-wrapper");
+  if (existingWrapper) {
+    // If it exists, just update the reference value inside it
+    const referenceSpan = document.getElementById("case-reference-display");
+    if (referenceSpan) {
+      referenceSpan.textContent = referenceValue;
+    }
+    return;
+  }
+
+  // Create the new parent wrapper element with its children in one go
+  const newWrapper = document.createElement("div");
+  newWrapper.id = "case-display-wrapper";
+  newWrapper.className = "case-display-wrapper"; 
+  newWrapper.innerHTML = `
+    Reference: <span id="case-reference-display" class="case-reference-display">${referenceValue}</span>
+  `;
+  
+  // Insert the new wrapper element just before the <ul>
+  ulElement.insertAdjacentElement("beforebegin", newWrapper);
+}
