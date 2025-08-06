@@ -193,10 +193,6 @@
     border-bottom: none;
   }
 
-  #case-display-wrapper {
-    display: none;
-}
-
 #dform_controls #dform_control_buttons #case-display-wrapper {
     margin-right: var(--spacing-md);
     font-family: var(--font-family);
