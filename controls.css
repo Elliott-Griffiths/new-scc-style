@@ -119,7 +119,7 @@ header.header.skip-focused {
 }
 
 #dform_control_buttons>ul {
-  display: flex;
+  display: none;
   align-items: center;
 }
 
