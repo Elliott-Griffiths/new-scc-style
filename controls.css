@@ -138,8 +138,8 @@
     transform: translateY(2px);
   }
 
-  #dform_container #dform_print::after {
-    content: url('this page');
+  #dform_container #dform_print:focus::before {
+    transform: translateY(2px);
   }
 
   #dform_container button.back-btn:hover > .back-btn--text,
