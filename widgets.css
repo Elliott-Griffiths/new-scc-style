@@ -16,19 +16,23 @@
   box-sizing: border-box;
 }
 
-#dform_container div.w-75 input {
+#dform_container div.w-75 input,
+#dform_container div.w-75 select {
   width: var(--field-width-75);
 }
 
-#dform_container div.w-50 input {
+#dform_container div.w-50 input,
+#dform_container div.w-50 select {
   width: var(--field-width-50);
 }
 
-#dform_container div.w-25 input {
+#dform_container div.w-25 input,
+#dform_container div.w-25 select {
   width: var(--field-width-25);
 }
 
-#dform_container div.max-4 input {
+#dform_container div.max-4 input,
+#dform_container div.max-4 select {
   width: var(--field-width-max-4);
 }
 
