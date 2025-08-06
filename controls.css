@@ -211,3 +211,107 @@
     font-weight: var(--font-weight-semibold);
     color: var(--c-brand-accents-teal);
 }
+
+/* Overwriting Verint styles */
+#dform_container #dform_navigation li:hover, #dform_container #dform_navigation li.selected, #dform_container #dform_navigation li.selected:hover {
+  font-weight: var(--font-weight-normal) !important;
+  border: none !important;
+  border-left: none !important;
+  color: unset;
+}
+
+#dform_control_buttons #dform_pagenav {
+  display: none;
+  margin: 0 !important;
+  margin-right: auto !important;
+  padding: 0 !important;
+}
+
+#dform_control_buttons #dform_pagenav #dform_navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+#dform_control_buttons #dform_pagenav #dform_navigation li,
+#dform_control_buttons #dform_pagenav #dform_navigation li.selected,
+#dform_control_buttons #dform_pagenav #dform_navigation li span {
+  margin: unset !important;
+  padding: 0;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+  min-width: fit-content;
+  width: fit-content;
+  max-width: fit-content;
+  min-height: fit-content;
+  height: fit-content;
+  max-height: fit-content;
+  border: none !important;
+  border-left: none !important;
+  border-radius: 0;
+  background: none;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-body);
+  color: var(--c-links-link);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+#dform_control_buttons #dform_pagenav #dform_navigation li.selected,
+#dform_control_buttons #dform_pagenav #dform_navigation li.selected:hover {
+  color: var(--c-core-brand-body);
+  text-decoration: none;
+  cursor: default !important;
+}
+
+#dform_control_buttons #dform_pagenav #dform_navigation li:first-child span {
+  display: none;
+}
+
+#dform_control_buttons #dform_pagenav #dform_navigation li span {
+  position: unset;
+  margin: unset;
+  padding-right: var(--spacing-sm);
+  text-decoration-color: var(--c-greys-white) !important;
+} 
+
+#dform_control_buttons #dform_pagenav #dform_navigation li:hover {
+  font-weight: var(--font-weight-normal) !important;
+  background: transparent !important;
+  color: var(--c-brand-accents-teal);
+  text-decoration-thickness: 2px;
+  border: none !important;
+  border-left: none !important;
+}
+
+#dform_control_buttons #dform_pagenav #dform_navigation li:hover span {
+  text-decoration-thickness: 2px;
+} 
+
+#dform_control_buttons #dform_pagenav #dform_navigation li:focus  {
+  color: var(--c-greys-black) !important;
+  background: var(--c-focus-links);
+  text-decoration: none  !important;
+  border-radius: unset !important;
+  outline: none;
+  border-bottom: 2px solid var(--c-greys-black);
+}
+
+#dform_control_buttons #dform_pagenav #dform_navigation li.selected:focus  {
+  color: var(--c-core-brand-body) !important;
+  background: transparent !important;
+  text-decoration: none  !important;
+  border-radius: unset !important;
+  outline: none;
+  border-bottom: none;
+}
+
+#dform_control_buttons #dform_pagenav #dform_navigation li:focus span {
+  text-decoration-color: var(--c-focus-links) !important;
+  text-decoration-thickness: 2px;
+}
