@@ -176,7 +176,7 @@ li,
 #dform_container fieldset.searchwidget > legend {
   font-family: var(--font-family);
   color: var(--c-core-brand-primary-darken);
-  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
   margin-bottom: var(--spacing-sm);
   line-height: var(--line-height);
   font-weight: var(--font-weight-semibold);
