@@ -126,6 +126,8 @@
   }
   
   #dform_control_buttons #dform_print {
+    display: inline-flex;
+    gap: var(--spacing-xs);
     font-weight: var(--font-weight-semibold);
   }
 
@@ -133,6 +135,11 @@
     content: url(./icons/sheffield-action-icons-black/PRINT.svg);
     width: var(--font-size-base);
     line-height: var(--line-height);
+    transform: translateY(2px);
+  }
+
+  #dform_container #dform_print::after {
+    content: url('this page');
   }
 
   #dform_container button.back-btn:hover > .back-btn--text,
