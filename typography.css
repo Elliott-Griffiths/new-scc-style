@@ -174,13 +174,13 @@ li,
 #dform_container fieldset.area > legend,
 #dform_container fieldset.box > legend,
 #dform_container fieldset.searchwidget > legend {
-  margin: unset;
-  padding: unset;
   font-family: var(--font-family);
+  color: var(--c-core-brand-primary-darken);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-xxl);
-  font-style: normal;
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-heading);
   color: var(--c-core-brand-primary-darken);
   background: transparent;
 }
