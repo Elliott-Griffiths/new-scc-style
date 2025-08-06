@@ -126,7 +126,7 @@
   }
   
   #dform_control_buttons #dform_print {
-    display: none;
+    display: none !important;
     gap: var(--spacing-xs);
     font-weight: var(--font-weight-semibold);
   }

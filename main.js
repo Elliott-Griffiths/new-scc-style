@@ -270,6 +270,10 @@ function handleInitialisingEvent() {
     }
   })();
 
+  // --- AUPDATE PRNT BUTTON LABEL ----------------------------------------- \\
+
+  document.getElementById("dform_print").textContent = "Print this page";
+
   // --- ADD CHARACTER COUNT ----------------------------------------------- \\
 
   (() => {
