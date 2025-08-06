@@ -136,6 +136,7 @@ header.header.skip-focused {
 
 #dform_control_buttons #dform_print {
   margin: 0;
+  padding: 0;
   display: none !important;
   gap: var(--spacing-xs);
   font-weight: var(--font-weight-semibold);
