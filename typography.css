@@ -181,7 +181,7 @@ li,
   font-style: normal;
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-heading);
-  color: var(--c-brand-accents-teal);
+  color: var(--c-core-brand-primary-darken);
   background: transparent;
 }
 
