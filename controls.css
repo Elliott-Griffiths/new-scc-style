@@ -1,215 +1,227 @@
 #dform_controls {
-    margin-block: 0 2rem;
-  }
-  
-  #dform_controls > div.container {
-    width: 100%;
-    margin: 0;
-  }
-  
-  #dform_controls > div:nth-child(2) {
-    width: 100%;
-  }
-  
+  margin-block: 0 2rem;
+}
+
+#dform_controls>div.container {
+  width: 100%;
+  margin: 0;
+}
+
+#dform_controls>div:nth-child(2) {
+  width: 100%;
+}
+
+#dform_control_buttons {
+  float: unset;
+  margin-block: unset !important;
+  padding-block: 0.625rem !important;
+  clear: unset;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-block: var(--spacing-sm);
+  border-bottom: 1px solid var(--c-greys-slate);
+}
+
+@media screen and (min-width: 1000px) {
   #dform_control_buttons {
-    float: unset;
-    margin-block: unset !important;
-    padding-block: 0.625rem !important;
-    clear: unset;
-    width: 100%;
-    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding-block: var(--spacing-sm);
-    border-bottom: 1px solid var(--c-greys-slate);
   }
-  
-  #dform_control_buttons > ul,
-  #dform_control_buttons > ol {
-    margin: 0;
-    padding: 0;
-  }
-  
-  #dform_container #dform_controls a,
-  #dform_container #dform_files a {
-    border: none;
-  }
-  
-  #skip {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    background: var(--c-greys-white);
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  #skip > a {
-    font-family: Poppins;
-    font-size: 2rem;
-    font-weight: 600;
-    line-height: 100%;
-    margin: 0;
-    padding: 1rem 2rem !important;
-    text-decoration: none !important;
-    cursor: pointer;
-    color: var(--c-greys-white) !important;
-    background: var(--c-core-brand-primary-darken);
-    border: solid 2px var(--c-core-brand-primary-darken);
-    border-radius: 2.5rem !important;
-    transition: all 0.2s ease;
-    outline: none !important;
-  }
-  
-  #skip:focus-within {
-    height: 5.5rem;
-  }
-  
-  header.header.skip-focused {
-    margin-top: 5.5rem;
-  }
-  
-  #dform_container button.back-btn,
-  #dform_control_buttons #dform_print,
-  #dform_control_buttons #dform_check,
-  #dform_control_buttons #dform_save,
-  #dform_control_buttons #dform_close {
-    margin: unset !important;
-    padding: 0;
-    display: none;
-    flex-direction: row;
-    justify-content: center;
-    align-items: baseline;
-    gap: var(--spacing-sm);
-    min-width: fit-content;
-    width: fit-content;
-    max-width: fit-content;
-    min-height: fit-content;
-    height: fit-content;
-    max-height: fit-content;
-    border: none;
-    border-radius: 0;
-    background: none;
-    font-family: var(--font-family);
-    font-size: var(--font-size-sm);
-    font-style: normal;
-    font-weight: var(--font-weight-normal);
-    line-height: var(--line-height-body);
-    color: var(--c-links-link);
-  }
+}
 
-  #dform_container button.back-btn {
-    margin-right: auto !important;
-  }
+#dform_control_buttons>ul,
+#dform_control_buttons>ol {
+  margin: 0;
+  padding: 0;
+}
 
-  #dform_container button.back-btn > .back-btn--text {
-    text-decoration: underline;
-    text-underline-offset: 0.25rem;
-  }
-  
-  #dform_control_buttons > ul {
-    display: flex;
-    align-items: center;
-  }
-  
-  #dform_container button.back-btn::before {
-    content: url(./icons/arrow-right-primary-darkened.svg);
-    transform: rotate(180deg);
-    width: var(--font-size-base);
-    line-height: var(--line-height);
-  }
-  
-  #dform_container button.back-btn:hover {
-    background: transparent !important;
-  }
-  
-  #dform_control_buttons #dform_print {
-    display: none !important;
-    gap: var(--spacing-xs);
-    font-weight: var(--font-weight-semibold);
-  }
+#dform_container #dform_controls a,
+#dform_container #dform_files a {
+  border: none;
+}
 
-  #dform_container #dform_print::before {
-    content: url(./icons/sheffield-action-icons-black/PRINT.svg);
-    width: var(--font-size-base);
-    line-height: var(--line-height);
-    transform: translateY(2px);
-  }
+#skip {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background: var(--c-greys-white);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
-  #dform_container #dform_print:focus::before {
-    transform: translateY(2px);
-  }
+#skip>a {
+  font-family: Poppins;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 100%;
+  margin: 0;
+  padding: 1rem 2rem !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  color: var(--c-greys-white) !important;
+  background: var(--c-core-brand-primary-darken);
+  border: solid 2px var(--c-core-brand-primary-darken);
+  border-radius: 2.5rem !important;
+  transition: all 0.2s ease;
+  outline: none !important;
+}
 
-  #dform_container button.back-btn:hover > .back-btn--text,
-  #dform_control_buttons #dform_print:hover,
-  #dform_control_buttons #dform_check:hover,
-  #dform_control_buttons #dform_save:hover,
-  #dform_control_buttons #dform_close:hover   {
-    background: transparent !important;
-    color: var(--c-brand-accents-teal);
-    text-decoration-thickness: 2px;
-  }
+#skip:focus-within {
+  height: 5.5rem;
+}
 
-  #dform_container button.back-btn:focus,
-  #dform_control_buttons #dform_print:focus,
-  #dform_control_buttons #dform_check:focus,
-  #dform_control_buttons #dform_save:focus,
-  #dform_control_buttons #dform_close:focus  {
-    color: var(--c-greys-black) !important;
-    background: var(--c-focus-links);
-    text-decoration: none  !important;
-    border-radius: unset !important;
-    outline: none;
-    border-bottom: 2px solid var(--c-greys-black);
-  }
+header.header.skip-focused {
+  margin-top: 5.5rem;
+}
 
-  #dform_container button.back-btn:focus::before {
-    content: url(./icons/arrow-right-black.svg);
-  } 
+#dform_container button.back-btn,
+#dform_control_buttons #dform_print,
+#dform_control_buttons #dform_check,
+#dform_control_buttons #dform_save,
+#dform_control_buttons #dform_close {
+  margin: unset !important;
+  padding: 0;
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+  min-width: fit-content;
+  width: fit-content;
+  max-width: fit-content;
+  min-height: fit-content;
+  height: fit-content;
+  max-height: fit-content;
+  border: none;
+  border-radius: 0;
+  background: none;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-body);
+  color: var(--c-links-link);
+}
 
-  #dform_container button.back-btn:focus > .back-btn--text {
-    font-weight: var(--font-weight-semibold);
-    color: var(--c-greys-black) !important;
-    background: var(--c-focus-links);
-    text-decoration: none  !important;
-  }
+#dform_container button.back-btn {
+  margin-right: auto !important;
+}
 
-  #dform_controls > div.container > div:nth-child(1) {
-    display: none;
-  }
-  
-  #dform_controls > div.container > div.last.six {
-    width: 100%;
-  }
-  
-  #dform_container #dform_controls {
-    padding-block: unset !important;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    align-self: stretch;
-    border-bottom: none;
-  }
+#dform_container button.back-btn>.back-btn--text {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+#dform_control_buttons>ul {
+  display: flex;
+  align-items: center;
+}
+
+#dform_container button.back-btn::before {
+  content: url(./icons/arrow-right-primary-darkened.svg);
+  transform: rotate(180deg);
+  width: var(--font-size-base);
+  line-height: var(--line-height);
+}
+
+#dform_container button.back-btn:hover {
+  background: transparent !important;
+}
+
+#dform_control_buttons #dform_print {
+  display: none !important;
+  gap: var(--spacing-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+#dform_container #dform_print::before {
+  content: url(./icons/sheffield-action-icons-black/PRINT.svg);
+  width: var(--font-size-base);
+  line-height: var(--line-height);
+  transform: translateY(2px);
+}
+
+#dform_container #dform_print:focus::before {
+  transform: translateY(2px);
+}
+
+#dform_container button.back-btn:hover>.back-btn--text,
+#dform_control_buttons #dform_print:hover,
+#dform_control_buttons #dform_check:hover,
+#dform_control_buttons #dform_save:hover,
+#dform_control_buttons #dform_close:hover {
+  background: transparent !important;
+  color: var(--c-brand-accents-teal);
+  text-decoration-thickness: 2px;
+}
+
+#dform_container button.back-btn:focus,
+#dform_control_buttons #dform_print:focus,
+#dform_control_buttons #dform_check:focus,
+#dform_control_buttons #dform_save:focus,
+#dform_control_buttons #dform_close:focus {
+  color: var(--c-greys-black) !important;
+  background: var(--c-focus-links);
+  text-decoration: none !important;
+  border-radius: unset !important;
+  outline: none;
+  border-bottom: 2px solid var(--c-greys-black);
+}
+
+#dform_container button.back-btn:focus::before {
+  content: url(./icons/arrow-right-black.svg);
+}
+
+#dform_container button.back-btn:focus>.back-btn--text {
+  font-weight: var(--font-weight-semibold);
+  color: var(--c-greys-black) !important;
+  background: var(--c-focus-links);
+  text-decoration: none !important;
+}
+
+#dform_controls>div.container>div:nth-child(1) {
+  display: none;
+}
+
+#dform_controls>div.container>div.last.six {
+  width: 100%;
+}
+
+#dform_container #dform_controls {
+  padding-block: unset !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  border-bottom: none;
+}
 
 #dform_controls #dform_control_buttons #case-display-wrapper {
-    margin-right: var(--spacing-md);
-    font-family: var(--font-family);
-    font-size: var(--font-size-base);
-    font-style: normal;
-    font-weight: var(--font-weight-normal);
-    line-height: var(--line-height);
-    color: var(--c-core-brand-body);
+  margin-right: var(--spacing-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height);
+  color: var(--c-core-brand-body);
+  transform: translateY(1px);
 }
 
 #dform_controls #dform_control_buttons #case-display-wrapper #case-reference-display {
-    font-weight: var(--font-weight-semibold);
-    color: var(--c-brand-accents-teal);
+  font-weight: var(--font-weight-semibold);
+  color: var(--c-brand-accents-teal);
 }
 
 /* Overwriting Verint styles */
-#dform_container #dform_navigation li:hover, #dform_container #dform_navigation li.selected, #dform_container #dform_navigation li.selected:hover {
+#dform_container #dform_navigation li:hover,
+#dform_container #dform_navigation li.selected,
+#dform_container #dform_navigation li.selected:hover {
   font-weight: var(--font-weight-normal) !important;
   border: none !important;
   border-left: none !important;
@@ -274,7 +286,7 @@
   margin: unset;
   padding-right: var(--spacing-sm);
   text-decoration-color: var(--c-greys-white) !important;
-} 
+}
 
 #dform_control_buttons #dform_pagenav #dform_navigation li:hover {
   font-weight: var(--font-weight-normal) !important;
@@ -287,21 +299,21 @@
 
 #dform_control_buttons #dform_pagenav #dform_navigation li:hover span {
   text-decoration-thickness: 2px;
-} 
+}
 
-#dform_control_buttons #dform_pagenav #dform_navigation li:focus  {
+#dform_control_buttons #dform_pagenav #dform_navigation li:focus {
   color: var(--c-greys-black) !important;
   background: var(--c-focus-links);
-  text-decoration: none  !important;
+  text-decoration: none !important;
   border-radius: unset !important;
   outline: none;
   border-bottom: 2px solid var(--c-greys-black);
 }
 
-#dform_control_buttons #dform_pagenav #dform_navigation li.selected:focus  {
+#dform_control_buttons #dform_pagenav #dform_navigation li.selected:focus {
   color: var(--c-core-brand-body) !important;
   background: transparent !important;
-  text-decoration: none  !important;
+  text-decoration: none !important;
   border-radius: unset !important;
   outline: none;
   border-bottom: none;
