@@ -312,6 +312,6 @@
 }
 
 #dform_control_buttons #dform_pagenav #dform_navigation li:focus span {
-  text-decoration-color: var(--c-focus-links) !important;
+  text-decoration-color: transparent !important;
   text-decoration-thickness: 2px;
 }
