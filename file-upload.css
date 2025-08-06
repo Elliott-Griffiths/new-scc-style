@@ -22,8 +22,14 @@ input[type="file"]::file-selector-button {
 
 #dform_container div[data-type="file"] > div:nth-child(2) {
   display: grid;
-  grid-template-columns: 9.3rem auto;
+  grid-template-columns: 8.3rem auto;
   align-items: baseline;
+}
+
+@media screen and (min-width: 1000px) {
+  #dform_container div[data-type="file"] > div:nth-child(2) {
+    grid-template-columns: 9.3rem auto;
+  }
 }
 
 #dform_container input[type="file"] {
@@ -65,7 +71,7 @@ input[type="file"]::file-selector-button {
 
 
 #dform_container .dform_filenames {
-    height: 90%;
+    max-height: 90%;
     transform: translateY(2px);
 }
 
