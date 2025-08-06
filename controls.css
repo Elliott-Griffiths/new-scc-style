@@ -109,24 +109,30 @@
     text-underline-offset: 0.25rem;
   }
   
-  #dform_control_buttons #dform_print {
-    font-weight: var(--font-weight-semibold);
-  }
-
   #dform_control_buttons > ul {
     display: flex;
     align-items: center;
   }
-
+  
   #dform_container button.back-btn::before {
     content: url(./icons/arrow-right-primary-darkened.svg);
     transform: rotate(180deg);
     width: var(--font-size-base);
     line-height: var(--line-height);
   }
-
+  
   #dform_container button.back-btn:hover {
     background: transparent !important;
+  }
+  
+  #dform_control_buttons #dform_print {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  #dform_container #dform_print::before {
+    content: url(./icons/sheffield-action-icons-black/PRINT.svg);
+    width: var(--font-size-base);
+    line-height: var(--line-height);
   }
 
   #dform_container button.back-btn:hover > .back-btn--text,
