@@ -75,10 +75,10 @@
 }
 
 #dform_container #dform_widget_button_but_use_current_location {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     text-decoration: underline;
     text-underline-offset: 0.32rem;
-    font-weight: var(--font-weight-500);
+    font-weight: var(--font-weight-semibold);
 }
 
 #dform_container .map-container #map_container {
