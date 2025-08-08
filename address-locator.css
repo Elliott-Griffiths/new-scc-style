@@ -7,11 +7,15 @@
 }
 
 #dform_container .address-search-btn-container {
-    margin-block: var(--spacing-md);
+    margin-block: var(--spacing-md) 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-md);
+}
+
+#dform_container .address-search-btn-container.margin-bottom {
+    margin-block: var(--spacing-md);
 }
 
 #dform_container button.address-search-btn,
