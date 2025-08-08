@@ -47,7 +47,7 @@
 #skip {
   display: flex;
   width: 100%;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background: var(--c-focus-links);
   position: absolute;
@@ -65,6 +65,7 @@
     text-decoration: underline !important;
     line-height: var(--line-height);
     border-radius: unset !important;
+    border: none !important;
     color: var(--c-greys-black) !important;
     padding: 10px !important;
   transition: all 0.2s ease;
