@@ -1783,7 +1783,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     
     if (status == 400 && action === "retrieve-location-from-coordinates") {
       const $button = $(".geo-btn");
-      const $container = $button.closest(".geo-btn-container");
+      // const $container = $button.closest(".geo-btn-container");
       
       const addressSelectionSection = document.querySelector(`#${currentPageId} .address-selection-section`);
       if (addressSelectionSection) {
@@ -1792,10 +1792,9 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
 
       const selectedAddressSpan = document.getElementById('selected-address');
       if (selectedAddressSpan) {
-        if (selectedAddressSpan) {
-          selectedAddressSpan.textContent = message;
-          selectedAddressSpan.classList.add('dform_validationMessage');
-        }
+        selectedAddressSpan.textContent = message;
+        selectedAddressSpan.classList.add('dform_validationMessage');
+        selectedAddressSpan.style.display = 'block';
       }
 
       // const $validationMessage = $container.find(".dform_validationMessage");
