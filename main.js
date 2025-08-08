@@ -1781,7 +1781,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     console.log(response.data)
     const currentPageId = getCurrentPageId();
     const addressSelectionSection = document.querySelector(`#${currentPageId} .address-selection-section`);
-    const selectedAddressSpan = document.querySelector(`#${currentPageId} .selected-address`);
+    const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
     
     if (status == 400 && action === "retrieve-location-from-coordinates") {
       if (addressSelectionSection) {
@@ -1808,7 +1808,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     };
 
     const fullAddressDisplay = buildAddressMarkup(addressDataForDisplay);
-    // const selectedAddressContainer = document.querySelector(`#${currentPageId} .selected-address-container`);
+    const selectedAddressContainer = document.querySelector(`#${currentPageId} .selected-address-container`);
     
     if (addressSelectionSection) {
       addressSelectionSection.classList.add('dform_fieldsuccess');
