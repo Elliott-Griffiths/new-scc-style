@@ -229,13 +229,20 @@
   align-items: start;
 }
 
+#dform_container .dform_widget_type_checkbox label {
+  margin-block: auto;
+  color: var(--c-greys-black);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-body);
+}
+
 #dform_container fieldset.checkboxgroup > span > label {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   gap: var(--spacing-xs);
   margin-block: auto;
-  align-self: flex-start;
   color: var(--c-greys-black);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-normal);
