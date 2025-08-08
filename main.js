@@ -1778,24 +1778,32 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       areaContact,
       officerContact,
     } = response.data;
-    
+    console.log(response.data)
     const currentPageId = getCurrentPageId();
     
     if (status == 400 && action === "retrieve-location-from-coordinates") {
       const $button = $(".geo-btn");
       const $container = $button.closest(".geo-btn-container");
-      const $validationMessage = $container.find(".dform_validationMessage");
-      const errorMessageHtml = `
-          <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
-            ${message}
-          </div>
-        `;
-
-      if (!$validationMessage.length) {
-        $button.before(errorMessageHtml);
-      } else {
-        $validationMessage.html(message).show();
+      
+      const selectedAddressSpan = document.getElementById('selected-address');
+      if (selectedAddressSpan) {
+        if (selectedAddressSpan) {
+          selectedAddressSpan.textContent = message;
+        }
       }
+
+      // const $validationMessage = $container.find(".dform_validationMessage");
+      // const errorMessageHtml = `
+      //   <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
+      //     ${message}
+      //   </div>
+      // `;
+
+      // if (!$validationMessage.length) {
+      //   $button.before(errorMessageHtml);
+      // } else {
+      //   $validationMessage.html(message).show();
+      // }
       return;
     }
 

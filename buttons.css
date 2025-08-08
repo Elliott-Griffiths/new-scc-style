@@ -132,7 +132,7 @@
 
 /* --- FIND ON MAP --- */
 
-#dform_container button.link-btn.map-icon {
+/* #dform_container button.link-btn.map-icon {
   font-weight: var(--font-weight-semibold);
 }
 
@@ -154,11 +154,11 @@
   border: solid 0.1rem var(--c-core-brand-primary-darken);
   cursor: not-allowed;
   outline: none;
-}
+} */
 
 /* --- FIND VIA GEO LOCATION --- */
 
-#dform_container button.geo-btn.dform_widget_type_button {
+/* #dform_container button.geo-btn.dform_widget_type_button {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto;
@@ -196,7 +196,7 @@
   text-decoration: underline;
   text-underline-offset: 0.25rem;
   text-decoration-color: transparent;
-}
+} */
 
 /* --- BUTTON HOVER/FOCUS --- */
 
