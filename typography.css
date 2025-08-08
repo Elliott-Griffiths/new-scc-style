@@ -191,6 +191,7 @@ li,
 #dform_container .dform_widget_type_checkbox label,
 #dform_container fieldset.radiogroup > legend,
 #dform_container fieldset.checkboxgroup > legend {
+  padding: 0;
   display: inline-block;
   font-family: var(--font-family);
   font-size: var(--font-size-xl);
