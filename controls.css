@@ -58,26 +58,21 @@
 #skip>a {
   font-family: Poppins;
   font-size: 2rem;
-  font-weight: 600;
-  line-height: 100%;
-  margin: 0;
-  padding: 1rem 2rem !important;
-  text-decoration: none !important;
-  cursor: pointer;
-  color: var(--c-greys-white) !important;
-  background: var(--c-core-brand-primary-darken);
-  border: solid 2px var(--c-core-brand-primary-darken);
-  border-radius: 2.5rem !important;
+  margin-block: auto;
+    width: 100%;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    text-decoration: underline !important;
+    line-height: var(--line-height);
+    border-radius: unset !important;
+    color: var(--c-greys-black) !important;
+    padding: 10px !important;
   transition: all 0.2s ease;
   outline: none !important;
 }
 
 #skip:focus-within {
-  height: 5.5rem;
-}
-
-header.header.skip-focused {
-  margin-top: 5.5rem;
+  height: 44px;
 }
 
 #dform_container button.back-btn,
