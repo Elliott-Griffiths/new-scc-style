@@ -64,14 +64,14 @@
 }
 
 #dform_container button.link-btn.locator-icon::before {
-  content: url(./icons/location-white.svg);
+  content: url(./icons/location-primary-darkened.svg);
   align-items: center;
   justify-content: center;
   height: var(--field-height-md);
   width: var(--field-height-md);
   margin-right: 1rem;
   padding: 0.5rem 0.8rem;
-  background: var(--c-core-brand-primary-darken);
+  background: transparent;
 }
 
 #dform_container #dform_widget_button_but_use_current_location {
