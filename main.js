@@ -114,8 +114,8 @@ function logArguments(event, kdf, ...args) {
 
 // --- GLOBAL CONSTS AND VARIABLES ----------------------------------------- \\
 
-// const formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
-// const { protocol, hostname } = window.location;
+let formattedTitle = "";
+const { protocol, hostname } = window.location;
 
 let customerState = false;
 
@@ -411,6 +411,7 @@ function handleInitialisingEvent() {
 
 function handleOnReadyEvent(_, kdf) {
   customerState = kdf.customerset;
+  formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
 
   // --- ADD CONTENT TO WHY WE NEED DATE OF BIRTH -------------------------- \\
 
@@ -5211,7 +5212,7 @@ function buildFormLink(id, formName, includeFormTitle = false) {
   }
 
   // Conditionally add the formTitle part to the URL
-  const titleParameter = includeFormTitle ? `?formTitle=${formattedTitle}` : '';
+  const titleParameter = includeFormTitle ? `?formTitle=${KDF.getVal("le_title").replace(/\s+/g, "-")}` : '';
   const newHref = `${protocol}//${hostname}/site/form/auto/${formName}${titleParameter}`;
 
   // Update the href attribute
