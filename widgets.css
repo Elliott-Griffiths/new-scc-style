@@ -129,7 +129,6 @@
   flex-direction: row;
   align-items: flex-start;
   gap: var(--spacing-xs);
-  margin-top: 0;
   margin-right: var(--spacing-lg);
   margin-bottom: var(--spacing-xxs);
   text-align: center;
@@ -140,6 +139,7 @@
 }
 
 #dform_container fieldset.radiogroup span label {
+  margin-top: 0;
   color: var(--c-greys-black);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-normal);
