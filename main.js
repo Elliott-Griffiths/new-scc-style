@@ -120,7 +120,6 @@ const { protocol, hostname } = window.location;
 let customerState = false;
 
 let pageName = "";
-console.log("initial pageName", pageName);
 
 let addressSearchType = {};
 let acceptGMSites = true;
@@ -137,7 +136,6 @@ const formUserPath = [];
 // --- HANDLE INITIALISING EVENT ------------------------------------------- \\
 
 function handleInitialisingEvent() {
-  console.log("initi start")
   // --- GOOGLE ANALITICS  ------------------------------------------------- \\
 
   if (KDF.kdf().access === "citizen") {
@@ -407,13 +405,11 @@ function handleInitialisingEvent() {
   //   }
   //   return null;
   // }
-  console.log("init end")
 }
 
 // --- HANDLE ON READY EVENT ----------------------------------------------- \\
 
 function handleOnReadyEvent(_, kdf) {
-  console.log("ready start")
   customerState = kdf.customerset;
   formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
 
@@ -614,7 +610,6 @@ const handleSearchResults = (currentPageId, buttonId) => {
     // A valid address was selected.
     const action = addressSearchType === "national" ? "retrieve-national-address" : "retrieve-local-address";
     KDF.customdata(action, buttonId, true, true, { propertyId: searchResultsSelect.value });
-    console.log("An address was selected from the dropdown.");
     return true; // Return true to indicate success
   } else if (searchResultsContainer) {
     // No address was selected, so show the validation error.
@@ -625,7 +620,6 @@ const handleSearchResults = (currentPageId, buttonId) => {
     if (searchResultsSelect) {
       searchResultsSelect.classList.add('dform_fielderror');
     }
-    console.log("No address was selected. Validation error displayed.");
     return false; // Return false to indicate failure
   }
   return false; // No search results container found
@@ -644,7 +638,6 @@ const handleSearchResults = (currentPageId, buttonId) => {
       const searchResultsSelect = document.querySelector(`#${currentPageId} .address-search-results select`);
       if (searchResultsSelect) {
         searchResultsSelect.value = ''; // Clear selected value from search results
-        console.log('Reset the selected value of the search results list.');
       }
 
       const addressFields = getValuesOfInputFields([
@@ -1363,7 +1356,6 @@ function checkAddressHasBeenSet(action = "next page") {
       KDF.showWarning("A customer has not been set.");
     }
   });
-  console.log("ready end")
 }
 
 // --- HANDLE ON PAGE CHANGE EVENT ----------------------------------------- \\
@@ -1371,11 +1363,9 @@ function checkAddressHasBeenSet(action = "next page") {
 function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   KDF.hideMessages();
 
-  console.log("handlePageChangeEvent")
   // Get the name for the current page
   $(`div[data-type="page"][data-pos="${currentpageid}"]`).each(function () {
     pageName = this.id.slice(11);
-    console.log("set pageName", pageName, this.id.slice(11))
   });
   
   updateProgressBar(targetpageid);
@@ -3072,7 +3062,6 @@ function getValueFromAlias(pageId, alias) {
 
 // Function to get and set data for the review page
 function getAndSetReviewPageData() {
-  console.log("getAndSetReviewPageData");
   // Find the currently active form page
   const activeFormPage = $('.dform_page[data-active="true"]:visible');
   // Get the page number of the current form page
