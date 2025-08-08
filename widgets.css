@@ -234,7 +234,7 @@
   flex-direction: row;
   align-items: flex-start;
   gap: var(--spacing-xs);
-  margin-top: 0;
+  margin-block: auto;
   align-self: flex-start;
   color: var(--c-greys-black);
   font-size: var(--font-size-base);
