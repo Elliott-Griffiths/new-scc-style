@@ -196,7 +196,7 @@ li,
   font-family: var(--font-family);
   font-size: var(--font-size-xl);
   line-height: var(--line-height-body);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-500);
   color: var(--c-core-brand-primary-darken);
   vertical-align: unset;
   background: transparent;
