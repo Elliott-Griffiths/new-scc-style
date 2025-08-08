@@ -290,7 +290,7 @@ header.header.skip-focused {
 #dform_control_buttons #dform_pagenav #dform_navigation li span {
   position: unset;
   margin: unset;
-  padding-right: var(--spacing-xs);
+  padding-right: var(--spacing-xxs);
   text-decoration-color: var(--c-greys-white) !important;
 }
 
