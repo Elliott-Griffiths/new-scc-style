@@ -5177,17 +5177,6 @@ function createAndInsertReferenceDisplay(referenceValue) {
  * @param {string} referenceNumber - The SRID to be inserted into the link.
  */
 function buildMyAccountLink(referenceNumber) {
-  // Get the current URL from the browser.
-  const currentUrl = window.location.href;
-  
-  // Extract the base URL from the current URL.
-  const baseUrlMatch = currentUrl.match(/^(.*)\/form\//);
-  if (!baseUrlMatch) {
-    console.error("Could not determine the base URL from the current page.");
-    return;
-  }
-  const baseUrl = baseUrlMatch[1];
-
   // Find the existing link element by its ID.
   const linkElement = document.getElementById("my-account-request");
 
@@ -5197,7 +5186,7 @@ function buildMyAccountLink(referenceNumber) {
   }
 
   // Construct the new URL using the base URL and reference number.
-  const newHref = `${baseUrl}/my-requests?srid=${referenceNumber}`;
+  const newHref = `${PORTAL_URL}/my-requests?srid=${referenceNumber}`;
 
   // Update the href attribute of the existing link.
   linkElement.setAttribute('href', newHref);
@@ -5210,8 +5199,6 @@ function buildMyAccountLink(referenceNumber) {
  * @param {string} formName - The name of the form to build the URL for (e.g., 'equalities_monitoring').
  */
 function buildFormLink(id, formName, includeFormTitle = false) {
-  const { protocol, hostname } = window.location;
-
   // Build the ID of the element to find based on the form name
   const linkElement = document.getElementById(id);
 
@@ -5222,7 +5209,7 @@ function buildFormLink(id, formName, includeFormTitle = false) {
 
   // Conditionally add the formTitle part to the URL
   const titleParameter = includeFormTitle ? `?formTitle=${KDF.getVal("le_title").replace(/\s+/g, "-")}` : '';
-  const newHref = `${protocol}//${hostname}/site/form/auto/${formName}${titleParameter}`;
+  const newHref = `${PORTAL_URL}//${hostname}/form/${formName}${titleParameter}`;
 
   // Update the href attribute
   linkElement.setAttribute('href', newHref);
