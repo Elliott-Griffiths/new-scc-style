@@ -566,10 +566,10 @@ function handleOnReadyEvent(_, kdf) {
   $(document).on("click", ".search-again-btn", function () {
     const currentPageId = getCurrentPageId();
     const searchInput = document.querySelector(`#${currentPageId} input[data-customalias="postcode"]`);
-    const searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
+    let searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
     const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
     
-    const manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
+    let manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
     if (manualAddressElement) {
       const detailsElement = manualAddressElement.querySelector('.details-accordion');
       if (detailsElement && detailsElement.hasAttribute('open')) {
@@ -577,32 +577,38 @@ function handleOnReadyEvent(_, kdf) {
       }
     }
     
-    const setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
+    let setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
 
     const buttonContainer = document.querySelector(`#${getCurrentPageId()} .address-search-btn-container`);
     if (buttonContainer) {
       buttonContainer.style.display = 'flex'; // Shows the element
     }
     
-    const searchButtonId = searchButton.id.replace('dform_widget_button_', '');
-    const manualAddressElementId = manualAddressElement.id.replace('dform_widget_html_', '');
-    const setAddressButtonId = setAddressButton.id.replace('dform_widget_button_', '');
+    searchButton = searchButton.id.replace('dform_widget_button_', '');
+    if (manualAddressElement) {
+      manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+    }
+    setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
 
-    const selectedAddressContainer = document.querySelector(`#${getCurrentPageId()} .selected-address-container`);
-    const selectedAddressContainerId = selectedAddressContainer.id.replace('dform_widget_html_', '');
+    let selectedAddressContainer = document.querySelector(`#${getCurrentPageId()} .selected-address-container`);
+    if (selectedAddressContainer) {
+      selectedAddressContainer = selectedAddressContainer.id.replace('dform_widget_html_', '');
+    }
 
-    const mapCntainer = document.querySelector(`#${currentPageId} .map-container`);
-    const mapCntainerId = mapCntainer.id.replace('dform_widget_html_', '');
+    let mapCntainer = document.querySelector(`#${currentPageId} .map-container`);
+    if (mapCntainer) {
+      mapCntainer = mapCntainer.id.replace('dform_widget_html_', '');
+    }
 
     if (resultsList && searchInput && searchButton && selectedAddressContainer) {
       hideShowMultipleElements([
         { name: searchInput.name, display: "show" },
-        { name: searchButtonId, display: "show" },
+        { name: searchButton, display: "show" },
         { name: resultsList.dataset.name, display: "hide" },
-        { name: manualAddressElementId, display: "hide" },
-        { name: setAddressButtonId, display: "hide" },
-        { name: selectedAddressContainerId, display: "hide" },
-        { name: mapCntainerId, display: "show" },
+        { name: manualAddressElement, display: "hide" },
+        { name: setAddressButton, display: "hide" },
+        { name: selectedAddressContainer, display: "hide" },
+        { name: mapCntainer, display: "show" },
       ]);
 
       searchInput.focus();
@@ -1714,7 +1720,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       const currentPageId = getCurrentPageId();
 
       const searchInput = document.querySelector(`#${currentPageId} input[data-customalias="postcode"]`);
-      const searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
+      let searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
 
       const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
       let resultsLabelId = null;
@@ -1725,8 +1731,8 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
         }
       }
       
-      const manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
-      const setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
+      let manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
+      let setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
       const searchedPostcode = searchInput ? searchInput.value : '';
 
       const resultsContent = `
@@ -1735,26 +1741,31 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       `;
 
       if (resultsList && searchInput && searchButton) {
-        const searchStatusMessageElement = document.getElementById(resultsLabelId);
+        let searchStatusMessageElement = document.getElementById(resultsLabelId);
         if (searchStatusMessageElement) {
           searchStatusMessageElement.innerHTML = resultsContent;
         }
 
-        const selectElement = resultsList.querySelector('select');
+        let selectElement = resultsList.querySelector('select');
         if (selectElement) {
           selectElement.style.display = 'block'; // Shows the element
         }
 
-        const searchButtonId = searchButton.id.replace('dform_widget_button_', '');
-        const manualAddressElementId = manualAddressElement.id.replace('dform_widget_html_', '');
-        const setAddressButtonId = setAddressButton.id.replace('dform_widget_button_', '');
+        searchButton = searchButton.id.replace('dform_widget_button_', '');
+
+        if (manualAddressElement) {
+          manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+        }
+        if (setAddressButton) {
+          setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
+        }
         
         hideShowMultipleElements([
           { name: searchInput.name, display: "hide" },
-          { name: searchButtonId, display: "hide" },
+          { name: searchButton, display: "hide" },
           { name: resultsList.dataset.name, display: "show" },
-          { name: manualAddressElementId, display: "show" },
-          { name: setAddressButtonId, display: "show" },
+          { name: manualAddressElement, display: "show" },
+          { name: setAddressButton, display: "show" },
         ]);
       }
   }
