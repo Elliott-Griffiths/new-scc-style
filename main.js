@@ -273,6 +273,15 @@ function handleInitialisingEvent() {
     }
   })();
   
+  // --- AUPDATE PRNT BUTTON LABEL ----------------------------------------- \\
+
+  (() => {
+    const printButton = document.getElementById("dform_print");
+    if (printButton) {
+      printButton.textContent = "Print this page"
+    }
+  })();
+
   // --- REPOSITIONING THE PAGE NAV ---------------------------------------- \\
 
   (() => {
@@ -406,12 +415,6 @@ function handleInitialisingEvent() {
 function handleOnReadyEvent(_, kdf) {
   customerState = kdf.customerset;
   formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
-
-  // --- AUPDATE PRNT BUTTON LABEL ----------------------------------------- \\
-
-  (() => {
-    document.getElementById("dform_print").textContent = "Print this page";
-  })();
 
   // --- ADD CONTENT TO WHY WE NEED DATE OF BIRTH -------------------------- \\
 
