@@ -43,3 +43,50 @@
     padding-left: var(--spacing-md) !important;
     border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal) !important;
 }
+
+#dform_container .map-container .details-accordion .details-accordion-content {
+    padding-bottom: 0;
+}
+
+#dform_container .map-container .address-selection-section {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: solid var(--spacing-xxs) var(--c-greys-slate);
+}
+
+#dform_container .map-container .address-selection-section p {
+        margin: 0;
+}
+
+#dform_container .map-container .address-selection-section p strong {
+    font-weight: var( --font-weight-semibold);
+    display: block;
+}
+
+#dform_container button.link-btn.locator-icon::before {
+  content: url(./icons/location-white.svg);
+  align-items: center;
+  justify-content: center;
+  height: var(--field-height-md);
+  width: var(--field-height-md);
+  margin-right: 1rem;
+  padding: 0.5rem 0.8rem;
+  background: var(--c-core-brand-primary-darken);
+}
+
+#dform_container #dform_widget_button_but_use_current_location {
+    font-size: var(--font-size-base);
+    text-decoration: underline;
+    text-underline-offset: 0.32rem;
+    font-weight: var(--font-weight-500);
+}
+
+#dform_container .map-container #map_container {
+    height: 25rem;
+    border-radius: unset;
+    border: none;
+}
+
+#map_container .esri-attribution {
+    display: none;
+}
