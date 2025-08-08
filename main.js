@@ -114,8 +114,10 @@ function logArguments(event, kdf, ...args) {
 
 // --- GLOBAL CONSTS AND VARIABLES ----------------------------------------- \\
 
-let formattedTitle = "";
 const { protocol, hostname } = window.location;
+const PORTAL_URL = `${protocol}//${hostname}/site/sheffield_dev`;
+
+let formattedTitle = "";
 
 let customerState = false;
 
