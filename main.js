@@ -1415,7 +1415,7 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   if (controlElement) {
     controlElement.style.display = targetpageid > 1 ? "flex" : "none";
   }
-  
+
   // Toggle back button visibility
   displayBackButton(targetpageid > 1 && pageName !== "complete" && kdf.form.complete !== "Y");
 
@@ -2041,6 +2041,10 @@ function handleFomComplate(event, kdf) {
   
   const printButton = document.getElementById("dform_print");
   if (printButton) {
+    const controlButtonsList = document.querySelector('#dform_control_buttons > ul');
+    if (controlButtonsList) {
+      controlButtonsList.style.setProperty('display', 'block', 'important');
+    }
     printButton.style.setProperty('display', 'inline-flex', 'important');
   }
 
