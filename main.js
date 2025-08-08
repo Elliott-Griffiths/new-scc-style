@@ -584,16 +584,25 @@ function handleOnReadyEvent(_, kdf) {
       buttonContainer.style.display = 'flex'; // Shows the element
     }
     
+    const searchButtonId = searchButton.id.replace('dform_widget_button_', '');
+    const manualAddressElementId = manualAddressElement.id.replace('dform_widget_html_', '');
+    const setAddressButtonId = setAddressButton.id.replace('dform_widget_button_', '');
+
     const selectedAddressContainer = document.querySelector(`#${getCurrentPageId()} .selected-address-container`);
+    const selectedAddressContainerId = selectedAddressContainer.id.replace('dform_widget_html_', '');
+
+    const mapCntainer = document.querySelector(`#${currentPageId} .map-container`);
+    const mapCntainerId = mapCntainer.id.replace('dform_widget_html_', '');
 
     if (resultsList && searchInput && searchButton && selectedAddressContainer) {
       hideShowMultipleElements([
         { name: searchInput.name, display: "show" },
-        { name: searchButton.id.replace('dform_widget_button_', ''), display: "show" },
+        { name: searchButtonId, display: "show" },
         { name: resultsList.dataset.name, display: "hide" },
-        { name: manualAddressElement.id.replace('dform_widget_html_', ''), display: "hide" },
-        { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
-        { name: selectedAddressContainer.id.replace('dform_widget_html_', ''), display: "hide" },
+        { name: manualAddressElementId, display: "hide" },
+        { name: setAddressButtonId, display: "hide" },
+        { name: selectedAddressContainerId, display: "hide" },
+        { name: mapCntainerId, display: "show" },
       ]);
 
       searchInput.focus();
