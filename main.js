@@ -114,8 +114,8 @@ function logArguments(event, kdf, ...args) {
 
 // --- GLOBAL CONSTS AND VARIABLES ----------------------------------------- \\
 
-const formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
-const { protocol, hostname } = window.location;
+// const formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
+// const { protocol, hostname } = window.location;
 
 let customerState = false;
 
@@ -1364,6 +1364,7 @@ function checkAddressHasBeenSet(action = "next page") {
 
 function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   KDF.hideMessages();
+
   console.log(this.id.slice(11))
   // Get the name for the current page
   $(`div[data-type="page"][data-pos="${currentpageid}"]`).each(function () {
@@ -1372,9 +1373,6 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   });
   
   updateProgressBar(targetpageid);
-
-  // Toggle back button visibility
-  displayBackButton(targetpageid > 1 && kdf.form.complete !== "Y");
 
   if (pageName === "page_about_you") {
     if (kdf.access === "agent" && !kdf.form.data?.num_reporter_obj_id) {
