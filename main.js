@@ -1364,20 +1364,16 @@ function checkAddressHasBeenSet(action = "next page") {
 
 function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   KDF.hideMessages();
-  // Toggle back button visibility
-  displayBackButton(targetpageid > 1 && kdf.form.complete !== "Y");
 
   // Get the name for the current page
   $(`div[data-type="page"][data-pos="${currentpageid}"]`).each(function () {
     pageName = this.id.slice(11);
   });
 
-  // Get the name for the current page
-  $(`div[data-type="page"][data-pos="${targetpageid}"]`).each(function () {
-    pageName = this.id.slice(11);
-  });
-
   updateProgressBar(targetpageid);
+
+  // Toggle back button visibility
+  displayBackButton(targetpageid > 1 && kdf.form.complete !== "Y");
 
   if (pageName === "page_about_you") {
     if (kdf.access === "agent" && !kdf.form.data?.num_reporter_obj_id) {
