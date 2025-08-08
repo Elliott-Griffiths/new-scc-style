@@ -159,30 +159,29 @@ function handleInitialisingEvent() {
   // --- ADD TAB TITLE AND ICON  ------------------------------------------- \\
 
   (() => {
-    // // Set form title
-    // const formTitle = document.getElementById("dform_widget_le_title").value;
+    const defaultServiceTitle = "My Account";
 
-    // // Set document title
-    // document.title = formTitle;
+    let finalServiceTitle = defaultServiceTitle;
 
-    // // Update document title after a short delay to ensure it's set properly
-    // setTimeout(() => {
-    //   document.title = formTitle;
-    // }, 10);
-
-    // Update favicon
-    const favicon = document.querySelector("link[rel~='icon']");
-    if (favicon) {
-      favicon.href =
-        "https://www.sheffield.gov.uk/verint-files/SCC%20Favicon.png";
-    } else {
-      // If favicon element doesn't exist, create it and append to head
-      const newFavicon = document.createElement("link");
-      newFavicon.rel = "icon";
-      newFavicon.href =
-        "https://www.sheffield.gov.uk/verint-files/SCC%20Favicon.png";
-      document.head.appendChild(newFavicon);
+    const formTitle = document.getElementById("dform_widget_le_title");
+    if (formTitle && formTitle.value) {
+      finalServiceTitle = formTitle.value;
     }
+
+    const serviceLabel = document.getElementById("service-label");
+    if (serviceLabel) {
+      serviceLabel.textContent = finalServiceTitle;
+    }
+
+    document.title = finalServiceTitle;
+
+    let favicon = document.querySelector("link[rel='icon']");
+    if (!favicon) {
+      favicon = document.createElement("link");
+      favicon.rel = "icon";
+      document.head.appendChild(favicon);
+    }
+    favicon.href = "https://www.sheffield.gov.uk/verint-files/SCC%20Favicon.png";
   })();
 
   // --- APPLY CLASS WHEN SKIP IF FOCUSED  --------------------------------- \\
