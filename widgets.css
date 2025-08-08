@@ -129,6 +129,7 @@
   flex-direction: row;
   align-items: flex-start;
   gap: var(--spacing-xs);
+  margin-top: 0;
   margin-right: var(--spacing-lg);
   margin-bottom: var(--spacing-xxs);
   text-align: center;
@@ -139,6 +140,10 @@
 }
 
 #dform_container fieldset.radiogroup span label {
+  color: var(--c-greys-black);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-body);
   text-align: left;
   max-width: var(--field-width-100);
   white-space: normal;
@@ -225,6 +230,11 @@
 }
 
 #dform_container fieldset.checkboxgroup > span > label {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-xs);
+  margin-top: 0;
   align-self: flex-start;
   text-align: left;
   max-width: 100%;
