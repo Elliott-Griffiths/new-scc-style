@@ -740,26 +740,26 @@ const handleSearchResults = (currentPageId, buttonId) => {
   // --- HANDLE FIND CURRENT LOCATION CLICK -------------------------------- \\
 
   $(".geo-btn").on("click", function () {
-    $(`.address-search`).find(".dform_validationMessage").hide();
+    // $(`.address-search`).find(".dform_validationMessage").hide();
 
-    const currentPageId = getCurrentPageId();
-    const container = document.querySelector(
-      `#${currentPageId} .map-container`
-    );
+    // const currentPageId = getCurrentPageId();
+    // const container = document.querySelector(
+    //   `#${currentPageId} .map-container`
+    // );
 
-    if (container) {
-      container.classList.add("dform_hidden");
-    }
-    resetAddressSearch();
+    // if (container) {
+    //   container.classList.add("dform_hidden");
+    // }
+    // resetAddressSearch();
 
     const $button = $(this);
-    const $container = $button.closest(".geo-btn-container");
-    const $validationMessage = $container.find(".dform_validationMessage");
+    // const $container = $button.closest(".geo-btn-container");
+    // const $validationMessage = $container.find(".dform_validationMessage");
 
-    // Hide the validation message if it's visible
-    if ($validationMessage.is(":visible")) {
-      $validationMessage.hide();
-    }
+    // // Hide the validation message if it's visible
+    // if ($validationMessage.is(":visible")) {
+    //   $validationMessage.hide();
+    // }
 
     // Proceed with geolocation retrieval
     if (navigator.geolocation) {
@@ -788,10 +788,10 @@ const handleSearchResults = (currentPageId, buttonId) => {
                   : "An unknown error occurred";
 
           const errorMessageHtml = `
-                      <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
-                          ${errorMessage}
-                      </div>
-                  `;
+            <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
+              ${errorMessage}
+            </div>
+          `;
 
           if (!$validationMessage.length) {
             $button.before(errorMessageHtml);
@@ -804,10 +804,10 @@ const handleSearchResults = (currentPageId, buttonId) => {
       const errorMessage = "Geolocation is not supported by this browser";
 
       const errorMessageHtml = `
-              <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
-                  ${errorMessage}
-              </div>
-          `;
+        <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
+          ${errorMessage}
+        </div>
+      `;
 
       if (!$validationMessage.length) {
         $button.before(errorMessageHtml);
