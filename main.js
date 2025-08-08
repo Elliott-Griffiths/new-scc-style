@@ -120,6 +120,7 @@ const { protocol, hostname } = window.location;
 let customerState = false;
 
 let pageName = "";
+console.log("initial pageName", pageName);
 
 let addressSearchType = {};
 let acceptGMSites = true;
@@ -136,6 +137,7 @@ const formUserPath = [];
 // --- HANDLE INITIALISING EVENT ------------------------------------------- \\
 
 function handleInitialisingEvent() {
+  console.log("initi start")
   // --- GOOGLE ANALITICS  ------------------------------------------------- \\
 
   if (KDF.kdf().access === "citizen") {
@@ -405,11 +407,13 @@ function handleInitialisingEvent() {
   //   }
   //   return null;
   // }
+  console.log("init end")
 }
 
 // --- HANDLE ON READY EVENT ----------------------------------------------- \\
 
 function handleOnReadyEvent(_, kdf) {
+  console.log("ready start")
   customerState = kdf.customerset;
   formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
 
@@ -1359,6 +1363,7 @@ function checkAddressHasBeenSet(action = "next page") {
       KDF.showWarning("A customer has not been set.");
     }
   });
+  console.log("ready end")
 }
 
 // --- HANDLE ON PAGE CHANGE EVENT ----------------------------------------- \\
@@ -1366,11 +1371,11 @@ function checkAddressHasBeenSet(action = "next page") {
 function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   KDF.hideMessages();
 
-  console.log(this.id.slice(11))
+  console.log("handlePageChangeEvent")
   // Get the name for the current page
   $(`div[data-type="page"][data-pos="${currentpageid}"]`).each(function () {
     pageName = this.id.slice(11);
-    console.log(pageName)
+    console.log("set pageName", pageName, this.id.slice(11))
   });
   
   updateProgressBar(targetpageid);
@@ -3067,7 +3072,7 @@ function getValueFromAlias(pageId, alias) {
 
 // Function to get and set data for the review page
 function getAndSetReviewPageData() {
-  console.log("getAndSetReviewPageData")
+  console.log("getAndSetReviewPageData");
   // Find the currently active form page
   const activeFormPage = $('.dform_page[data-active="true"]:visible');
   // Get the page number of the current form page
