@@ -1411,8 +1411,12 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
     KDF.setVal("txt_finish_date_and_time", formatDateTime().utc);
   }
 
+  const controlElement = document.getElementById('dform_controls');
+  if (controlElement) {
+    controlElement.style.display = targetpageid > 1 ? "flex" : "none";
+  }
+  
   // Toggle back button visibility
-  console.log("show back button", targetpageid > 1 && pageName !== "complete" && kdf.form.complete !== "Y")
   displayBackButton(targetpageid > 1 && pageName !== "complete" && kdf.form.complete !== "Y");
 
   getAndSetReviewPageData();
