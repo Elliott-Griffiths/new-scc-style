@@ -173,7 +173,7 @@ body {
 }
 
 /* Tablet and Desktop */
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 960px) {
   :root {
     /* Font Sizes - Using 16px as base for rem calculation */
     --font-size-base: 1.125rem;

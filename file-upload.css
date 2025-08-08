@@ -26,7 +26,7 @@ input[type="file"]::file-selector-button {
   align-items: baseline;
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 960px) {
   #dform_container div[data-type="file"] > div:nth-child(2) {
     grid-template-columns: 9.3rem auto;
   }

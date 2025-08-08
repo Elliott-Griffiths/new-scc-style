@@ -181,7 +181,7 @@
   color: var(--c-brand-accents-teal);
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 960px) {
   #widget_Navigation>div {
     display: flex;
   }
