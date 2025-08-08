@@ -1735,13 +1735,17 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
         if (selectElement) {
           selectElement.style.display = 'block'; // Shows the element
         }
+
+        const searchButtonId = searchButton.id.replace('dform_widget_button_', '');
+        const manualAddressElementId = manualAddressElement.id.replace('dform_widget_html_', '');
+        const setAddressButtonId = setAddressButton.id.replace('dform_widget_button_', '');
         
         hideShowMultipleElements([
           { name: searchInput.name, display: "hide" },
-          { name: searchButton.id.replace('dform_widget_button_', ''), display: "hide" },
+          { name: searchButtonId, display: "hide" },
           { name: resultsList.dataset.name, display: "show" },
-          { name: manualAddressElement.id.replace('dform_widget_html_', ''), display: "show" },
-          { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "show" },
+          { name: manualAddressElementId, display: "show" },
+          { name: setAddressButtonId, display: "show" },
         ]);
       }
   }
