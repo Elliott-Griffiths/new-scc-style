@@ -1409,6 +1409,7 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   }
 
   // Toggle back button visibility
+  console.log("show back button", targetpageid > 1 && pageName !== "complete" && kdf.form.complete !== "Y")
   displayBackButton(targetpageid > 1 && pageName !== "complete" && kdf.form.complete !== "Y");
 
   getAndSetReviewPageData();
