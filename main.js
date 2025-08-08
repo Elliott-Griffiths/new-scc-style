@@ -1364,7 +1364,7 @@ function checkAddressHasBeenSet(action = "next page") {
 
 function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   KDF.hideMessages();
-  console.log(pageName, this.id.slice(11))
+  console.log(this.id.slice(11))
   // Get the name for the current page
   $(`div[data-type="page"][data-pos="${currentpageid}"]`).each(function () {
     pageName = this.id.slice(11);
