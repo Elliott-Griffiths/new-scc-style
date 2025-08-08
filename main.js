@@ -1780,35 +1780,19 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     } = response.data;
     console.log(response.data)
     const currentPageId = getCurrentPageId();
+    const addressSelectionSection = document.querySelector(`#${currentPageId} .address-selection-section`);
+    const selectedAddressSpan = document.querySelector(`#${currentPageId} .selected-address`);
     
     if (status == 400 && action === "retrieve-location-from-coordinates") {
-      const $button = $(".geo-btn");
-      // const $container = $button.closest(".geo-btn-container");
-      
-      const addressSelectionSection = document.querySelector(`#${currentPageId} .address-selection-section`);
       if (addressSelectionSection) {
         addressSelectionSection.classList.add('dform_fielderror');
       }
 
-      const selectedAddressSpan = document.getElementById('selected-address');
       if (selectedAddressSpan) {
         selectedAddressSpan.textContent = message;
         selectedAddressSpan.classList.add('dform_validationMessage');
         selectedAddressSpan.style.display = 'block';
       }
-
-      // const $validationMessage = $container.find(".dform_validationMessage");
-      // const errorMessageHtml = `
-      //   <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
-      //     ${message}
-      //   </div>
-      // `;
-
-      // if (!$validationMessage.length) {
-      //   $button.before(errorMessageHtml);
-      // } else {
-      //   $validationMessage.html(message).show();
-      // }
       return;
     }
 
@@ -1824,9 +1808,14 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     };
 
     const fullAddressDisplay = buildAddressMarkup(addressDataForDisplay);
-    const selectedAddressContainer = document.querySelector(`#${currentPageId} .selected-address-container`);
-    if (selectedAddressContainer) {
-      selectedAddressContainer.innerHTML = fullAddressDisplay;
+    // const selectedAddressContainer = document.querySelector(`#${currentPageId} .selected-address-container`);
+    
+    if (addressSelectionSection) {
+      addressSelectionSection.classList.add('dform_fieldsuccess');
+    }
+
+    if (selectedAddressSpan) {
+      selectedAddressSpan.textContent = fullAddressDisplay;
     }
 
     const addressearchResults = document.querySelector(`#${currentPageId} .address-search-results`);
