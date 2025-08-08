@@ -157,16 +157,16 @@ function handleInitialisingEvent() {
   // --- ADD TAB TITLE AND ICON  ------------------------------------------- \\
 
   (() => {
-    // Set form title
-    const formTitle = document.getElementById("dform_widget_le_title").value;
+    // // Set form title
+    // const formTitle = document.getElementById("dform_widget_le_title").value;
 
-    // Set document title
-    document.title = formTitle;
+    // // Set document title
+    // document.title = formTitle;
 
-    // Update document title after a short delay to ensure it's set properly
-    setTimeout(() => {
-      document.title = formTitle;
-    }, 10);
+    // // Update document title after a short delay to ensure it's set properly
+    // setTimeout(() => {
+    //   document.title = formTitle;
+    // }, 10);
 
     // Update favicon
     const favicon = document.querySelector("link[rel~='icon']");
@@ -273,12 +273,6 @@ function handleInitialisingEvent() {
     }
   })();
   
-  // --- AUPDATE PRNT BUTTON LABEL ----------------------------------------- \\
-
-  (() => {
-    document.getElementById("dform_print").textContent = "Print this page";
-  })();
-
   // --- REPOSITIONING THE PAGE NAV ---------------------------------------- \\
 
   (() => {
@@ -412,6 +406,12 @@ function handleInitialisingEvent() {
 function handleOnReadyEvent(_, kdf) {
   customerState = kdf.customerset;
   formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
+
+  // --- AUPDATE PRNT BUTTON LABEL ----------------------------------------- \\
+
+  (() => {
+    document.getElementById("dform_print").textContent = "Print this page";
+  })();
 
   // --- ADD CONTENT TO WHY WE NEED DATE OF BIRTH -------------------------- \\
 
