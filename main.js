@@ -4260,7 +4260,7 @@ function do_KDF_Custom_esriMap(action, response) {
         // { alias: "northing", value: northing },
       ]);
 
-      const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
+      const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
       if (selectedAddressSpan) {
         selectedAddressSpan.textContent = fullAddress;
       }
