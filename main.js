@@ -3842,6 +3842,7 @@ function do_KDF_mapReady_esriMap(map, positionLayer) {
 }
 
 function mapClick(evt) {
+  console.log('mapClick', evt)
   KDF.setVal("txt_site_name", "");
   KDF.setVal("txt_site_code", "");
   KDF.setVal("txt_feature_name", "");
@@ -3880,14 +3881,16 @@ function mapClick(evt) {
       var source = new proj4.Proj("SR-ORG:7483");
       var dest = new proj4.Proj("EPSG:27700");
       var dest4326 = new proj4.Proj("EPSG:4326");
-      var convertPointP4 = new proj4.Point(
-        selectedLocation.x,
-        selectedLocation.y
-      );
-      var convertPoint4326 = new proj4.Point(
-        selectedLocation.x,
-        selectedLocation.y
-      );
+      // var convertPointP4 = new proj4.Point(
+      //   selectedLocation.x,
+      //   selectedLocation.y
+      // );
+      // var convertPoint4326 = new proj4.Point(
+      //   selectedLocation.x,
+      //   selectedLocation.y
+      // );
+      var convertPointP4 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
+      var convertPoint4326 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
 
       proj4.transform(source, dest, convertPointP4);
       proj4.transform(source, dest4326, convertPoint4326);
