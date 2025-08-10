@@ -768,26 +768,7 @@ const handleSearchResults = (currentPageId, buttonId) => {
   // --- HANDLE FIND CURRENT LOCATION CLICK -------------------------------- \\
 
   $(".geo-btn").on("click", function () {
-    // $(`.address-search`).find(".dform_validationMessage").hide();
-
-    // const currentPageId = getCurrentPageId();
-    // const container = document.querySelector(
-    //   `#${currentPageId} .map-container`
-    // );
-
-    // if (container) {
-    //   container.classList.add("dform_hidden");
-    // }
-    // resetAddressSearch();
-
     const $button = $(this);
-    // const $container = $button.closest(".geo-btn-container");
-    // const $validationMessage = $container.find(".dform_validationMessage");
-
-    // // Hide the validation message if it's visible
-    // if ($validationMessage.is(":visible")) {
-    //   $validationMessage.hide();
-    // }
 
     // Proceed with geolocation retrieval
     if (navigator.geolocation) {
@@ -1213,16 +1194,16 @@ function checkAddressHasBeenSet(action = "next page") {
   function createReviewSection(pageId, pageTitle, fields) {
     let statusCardHtml = `
       <div class="review-section">
-          <div class="review-content">
-              <div class="review-content-header">
-                  <h3>${pageTitle}</h3>
-                  <button type="button" class="go-to-page-btn" id="go-to-${pageId}">Edit</button>
-              </div>
-              ${fields
+        <div class="review-content">
+          <div class="review-content-header">
+            <h3>${pageTitle}</h3>
+            <button type="button" class="go-to-page-btn" id="go-to-${pageId}">Edit</button>
+          </div>
+      ${fields
         .map(
           (field) => `
-                    <p>${field.fieldlabel}: ${field.fieldValue}</p>
-                  `
+            <p>${field.fieldlabel}: ${field.fieldValue}</p>
+          `
         )
         .join("")}
           </div>
@@ -1654,46 +1635,46 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
   }
 
   // Check if the action is to check the map status
-  if (action === "check-map-status") {
-    // Spread the data object
-    const { isMapAvailable } = response.data;
+  // if (action === "check-map-status") {
+  //   // Spread the data object
+  //   const { isMapAvailable } = response.data;
 
-    // Select all elements with the class "map-icon"
-    const mapIcon = $(".map-icon");
+  //   // Select all elements with the class "map-icon"
+  //   const mapIcon = $(".map-icon");
 
-    // Check if the response data indicates unavailable maps
-    if (isMapAvailable === "false") {
-      // (Optional) Disable elements using native method (comment out if not used)
-      mapIcon.prop("disabled", true);
+  //   // Check if the response data indicates unavailable maps
+  //   if (isMapAvailable === "false") {
+  //     // (Optional) Disable elements using native method (comment out if not used)
+  //     mapIcon.prop("disabled", true);
 
-      // Set aria-disabled to true for accessibility
-      mapIcon.attr("aria-disabled", "true");
+  //     // Set aria-disabled to true for accessibility
+  //     mapIcon.attr("aria-disabled", "true");
 
-      // Add the "disabled" class for styling
-      mapIcon.addClass("disabled");
+  //     // Add the "disabled" class for styling
+  //     mapIcon.addClass("disabled");
 
-      // Show the "maps-unavailable-notice" element
-      $(".maps-unavailable-notice").show();
-    } else {
-      // (Optional) Enable elements using native method (comment out if not used)
-      mapIcon.prop("disabled", false);
+  //     // Show the "maps-unavailable-notice" element
+  //     $(".maps-unavailable-notice").show();
+  //   } else {
+  //     // (Optional) Enable elements using native method (comment out if not used)
+  //     mapIcon.prop("disabled", false);
 
-      // Set aria-disabled to false for accessibility
-      mapIcon.attr("aria-disabled", "false");
+  //     // Set aria-disabled to false for accessibility
+  //     mapIcon.attr("aria-disabled", "false");
 
-      // Remove the "disabled" class
-      mapIcon.removeClass("disabled");
+  //     // Remove the "disabled" class
+  //     mapIcon.removeClass("disabled");
 
-      // Hide the "maps-unavailable-notice" element
-      $(".maps-unavailable-notice").hide();
+  //     // Hide the "maps-unavailable-notice" element
+  //     $(".maps-unavailable-notice").hide();
 
-      if (KDF.kdf().access === "agent") {
-        $(
-          "#map_container > div.esri-view-root > div.esri-ui.calcite-theme-light > div.esri-ui-inner-container.esri-ui-corner-container > div.esri-ui-top-right.esri-ui-corner > div"
-        ).css("display", "inline-flex");
-      }
-    }
-  }
+  //     if (KDF.kdf().access === "agent") {
+  //       $(
+  //         "#map_container > div.esri-view-root > div.esri-ui.calcite-theme-light > div.esri-ui-inner-container.esri-ui-corner-container > div.esri-ui-top-right.esri-ui-corner > div"
+  //       ).css("display", "inline-flex");
+  //     }
+  //   }
+  // }
 
   if (action === "set-raised-by") {
     const { customerid } = response.data;
@@ -4278,8 +4259,14 @@ function do_KDF_Custom_esriMap(action, response) {
         // { alias: "easting", value: easting },
         // { alias: "northing", value: northing },
       ]);
+
+      const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
+      if (selectedAddressSpan) {
+        selectedAddressSpan.textContent = fullAddress;
+      }
+
       // setSelectedAddress(fullAddress, "show");
-      $(".popup").text(streetName);
+      // $(".popup").text(streetName);
       setRequiredStateByAlias("postcode", "not required");
     }
   }
