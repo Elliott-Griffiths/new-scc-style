@@ -540,19 +540,6 @@ function handleOnReadyEvent(_, kdf) {
 
   $(".find-btn").on("click", function () {
     if ($(this).text() === "Find address") {
-      const currentPageId = getCurrentPageId();
-      const container = document.querySelector(
-        `#${currentPageId} .map-container`
-      );
-
-      if (container) {
-        container.classList.add("dform_hidden");
-      }
-      if ($(".geo-btn-container").find(".dform_validationMessage").length) {
-        $(".geo-btn-container")
-          .find(".dform_validationMessage")
-          .css("display", "none");
-      }
       resetAddressSearch();
       setRequiredStateByAlias("postcode", "required");
     }
@@ -5268,25 +5255,28 @@ function buildFormLink(id, formName, includeFormTitle = false) {
 
 
 
+
+
 function plotLocationOnMap(easting, northing) {
   console.log('plotLocationOnMap', easting, northing)
-  // Convert to the ESRI Point in the same spatial reference your map uses
-  const esriPoint = new ESRI.Point({
-    x: parseFloat(easting),
-    y: parseFloat(northing),
-    spatialReference: { wkid: 27700 } // Or whatever your projected system is
-  });
+  require(["esri/geometry/Point"], function (Point) {
+    const point = new Point({
+      x: parseFloat(easting),
+      y: parseFloat(northing),
+      spatialReference: { wkid: 27700 } // OSGB projection
+    });
 
-  streetMapView.goTo({
-    center: esriPoint,
-    zoom: 18
-  }).then(() => {
-    const screenPoint = streetMapView.toScreen(esriPoint);
-    const fakeEvt = {
-      mapPoint: esriPoint,
-      x: screenPoint.x,
-      y: screenPoint.y
-    };
-    mapClick(fakeEvt); // Reuse your existing click handler
+    streetMapView.goTo({
+      center: point,
+      zoom: 18
+    }).then(() => {
+      const screenPoint = streetMapView.toScreen(point);
+      const fakeEvt = {
+        mapPoint: point,
+        x: screenPoint.x,
+        y: screenPoint.y
+      };
+      mapClick(fakeEvt);
+    });
   });
 }
