@@ -1899,6 +1899,10 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       { name: selectedAddressContainer.id.replace('dform_widget_html_', ''), display: "show" },
       { name: manualAddressElement.id.replace('dform_widget_html_', ''), display: "hide" },
     ]);
+
+    if (easting && northing) {
+      plotLocationOnMap(easting, northing);
+    }
   }
 
   if (action === "retrieve-vehicle-details") {
@@ -5244,4 +5248,37 @@ function buildFormLink(id, formName, includeFormTitle = false) {
 
   // Update the href attribute
   linkElement.setAttribute('href', newHref);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function plotLocationOnMap(easting, northing) {
+  // Convert to the ESRI Point in the same spatial reference your map uses
+  const esriPoint = new ESRI.Point({
+    x: parseFloat(easting),
+    y: parseFloat(northing),
+    spatialReference: { wkid: 27700 } // Or whatever your projected system is
+  });
+
+  streetMapView.goTo({
+    center: esriPoint,
+    zoom: 18
+  }).then(() => {
+    const screenPoint = streetMapView.toScreen(esriPoint);
+    const fakeEvt = {
+      mapPoint: esriPoint,
+      x: screenPoint.x,
+      y: screenPoint.y
+    };
+    mapClick(fakeEvt); // Reuse your existing click handler
+  });
 }
