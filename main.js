@@ -595,6 +595,11 @@ function handleOnReadyEvent(_, kdf) {
       selectedAddressContainer = selectedAddressContainer.id.replace('dform_widget_html_', '');
     }
 
+    const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
+    if (selectedAddressSpan) {
+      selectedAddressSpan.textContent = "Choose a location on the map";
+    }
+
     let mapCntainer = document.querySelector(`#${currentPageId} .map-container`);
     if (mapCntainer) {
       mapCntainer = mapCntainer.id.replace('dform_widget_html_', '');
