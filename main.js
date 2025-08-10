@@ -1842,7 +1842,10 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     }
 
     if (selectedAddressSpan) {
-      selectedAddressSpan.innerHTML = fullAddressDisplay;
+      const addressParts = Object.values(addressDataForDisplay)
+        .filter(Boolean)
+        .join(', ');
+      selectedAddressSpan.innerHTML = addressParts;
     }
 
     const addressearchResults = document.querySelector(`#${currentPageId} .address-search-results`);

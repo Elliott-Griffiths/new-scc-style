@@ -55,12 +55,18 @@
 }
 
 #dform_container .map-container .address-selection-section p {
-        margin: 0;
+    margin: 0;
 }
 
 #dform_container .map-container .address-selection-section p strong {
     font-weight: var( --font-weight-semibold);
     display: block;
+}
+
+#dform_container .map-container #selected-address > address {
+    display: block;
+    border-left: none !important;
+    padding-left: 0 !important;
 }
 
 #dform_container button.link-btn.locator-icon::before {
