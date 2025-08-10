@@ -3730,7 +3730,7 @@ function initialize_map(map_param) {
           exactMatch: false,
           outFields: ["*"],
           name: "Sheffield Search",
-          placeholder: "Search within Sheffield",
+          placeholder: "",
           filter: {
             geometry: sheffieldExtent,
           },
@@ -3787,6 +3787,11 @@ function initialize_map(map_param) {
 
     groupLayer = layerGroup;
   });
+
+  const searchInput = document.querySelector('.esri-search__input');
+  if (searchInput) {
+    searchInput.placeholder = "";
+  }
 }
 
 function do_KDF_mapReady_esriMap(map, positionLayer) {
