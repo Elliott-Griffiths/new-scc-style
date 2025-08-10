@@ -1,27 +1,85 @@
-<details class="details-accordion">
-  <summary class="details-accordion-summary">
-    Find on a map
-  </summary>
-  <div class="details-accordion-content">
-    <section class="address-selection-section">
-      <h3 class="address-label">Selected address:</h3>
-      <p class="selected-address-text">
-        <span class="selected-address">
-          Choose a marker on the map
-        </span>
-      </p>
-      <div data-type="buttonset" data-name="bset_geo_location" id="dform_widget_buttonset_bset_geo_location"
-        data-active="true" data-access="citizen"
-        class="dform_widget geo-location-btn-container dform_widget_type_buttonset dform_widget_bset_geo_location">
-        <button type="button" tabindex="" id="dform_widget_button_but_use_current_location" data-active="true"
-          data-desktopaction=""
-          class="dform_widget geo-location-btn dform_widget_type_button dform_widget_but_use_current_location">
-          Use my current location
-        </button>
-      </div>
-    </section>
-    <div id="map_container" class="map_placeholder">
-      Map will be here
+<div tabindex="-1" class="esri-search--multiple-sources esri-search__container"><button
+    id="19895c98111-widget-3-source-menu-button" aria-label="Search in" title="Search in" aria-haspopup="true"
+    aria-expanded="false" aria-controls="19895c98111-widget-3-source-menu"
+    class="esri-search__sources-button esri-widget--button" data-node-ref="_sourceMenuButtonNode" type="button" style="
+  color: black;
+"><span aria-hidden="true" class="esri-icon-down-arrow esri-search__sources-button--down"></span><span
+      aria-hidden="true" class="esri-icon-up-arrow esri-search__sources-button--up"></span><span
+      class="esri-search__source-name">Sheffield Search</span></button>
+  <div class="esri-menu esri-search__sources-menu">
+    <ul aria-labelledby="19895c98111-widget-3-source-menu-button" id="19895c98111-widget-3-source-menu" role="menu"
+      data-node-ref="_sourceListNode" class="esri-menu__list" tabindex="-1">
+      <li id="19895c98111-widget-3-source-item-0" aria-checked="false" role="menuitemradio"
+        class="esri-search__source esri-menu__list-item">ArcGIS World Geocoding Service</li>
+      <li id="19895c98111-widget-3-source-item-1" aria-checked="true" role="menuitemradio"
+        class="esri-search__source esri-menu__list-item esri-menu__list-item--active">Sheffield Search</li>
+    </ul>
+  </div>
+  <div class="esri-search__input-container">
+    <form class="esri-search__form" role="search"><input type="text" aria-autocomplete="list" aria-expanded="false"
+        aria-controls="19895c98111-widget-3-suggest-menu" aria-haspopup="listbox" aria-label="Search"
+        placeholder="Search within Sheffield" autocomplete="off"
+        class="esri-input esri-search__input dform_field_active" id="19895c98111-widget-3-input" role="combobox"
+        data-node-ref="_inputNode" title="Search within Sheffield"></form>
+    <div id="19895c98111-widget-3-suggest-menu" class="esri-menu esri-search__suggestions-menu" role="listbox"
+      aria-labelledby="19895c98111-widget-3-input" data-node-ref="_suggestionListNode">
+      <ul role="group"
+        class="esri-menu__list esri-search__suggestions-list esri-search__suggestions-list--current-location">
+        <li id="19895c98111-widget-3-suggestion-item-0" aria-selected="false" role="option"
+          class="esri-menu__list-item"><span aria-hidden="true" class="esri-icon-locate-circled"></span> Use current
+          location</li>
+      </ul>
+    </div>
+  </div><button aria-label="Search" class="esri-search__submit-button esri-widget--button" title="Search"
+    type="button"><span aria-hidden="true" class="esri-icon-search"></span></button>
+  <div class="esri-menu esri-search__warning-menu">
+    <div class="esri-search__warning-body">
+      <div><span aria-hidden="true" class="esri-icon-notice-triangle"></span><span
+          class="esri-search__no-value-text">Please enter a search term.</span></div>
     </div>
   </div>
-</details>
+</div>
+
+
+<div tabindex="-1" class="esri-search--multiple-sources esri-search__container"><button
+    id="19895c98111-widget-3-source-menu-button" aria-label="Search in" title="Search in" aria-haspopup="true"
+    aria-expanded="false" aria-controls="19895c98111-widget-3-source-menu"
+    class="esri-search__sources-button esri-widget--button" data-node-ref="_sourceMenuButtonNode" type="button" style="
+  color: black;
+"><span aria-hidden="true" class="esri-icon-down-arrow esri-search__sources-button--down"></span><span
+      aria-hidden="true" class="esri-icon-up-arrow esri-search__sources-button--up"></span><span
+      class="esri-search__source-name">ArcGIS World Geocoding Service</span></button>
+  <div class="esri-menu esri-search__sources-menu">
+    <ul aria-labelledby="19895c98111-widget-3-source-menu-button" id="19895c98111-widget-3-source-menu" role="menu"
+      data-node-ref="_sourceListNode" class="esri-menu__list" tabindex="-1">
+      <li id="19895c98111-widget-3-source-item-0" aria-checked="true" role="menuitemradio"
+        class="esri-search__source esri-menu__list-item esri-menu__list-item--active">ArcGIS World Geocoding Service
+      </li>
+      <li id="19895c98111-widget-3-source-item-1" aria-checked="false" role="menuitemradio"
+        class="esri-search__source esri-menu__list-item">Sheffield Search</li>
+    </ul>
+  </div>
+  <div class="esri-search__input-container">
+    <form class="esri-search__form" role="search"><input type="text" aria-autocomplete="list" aria-expanded="false"
+        aria-controls="19895c98111-widget-3-suggest-menu" aria-haspopup="listbox" aria-label="Search"
+        placeholder="Find address or place" autocomplete="off" class="esri-input esri-search__input dform_field_active"
+        id="19895c98111-widget-3-input" role="combobox" data-node-ref="_inputNode" title="Find address or place"></form>
+    <div id="19895c98111-widget-3-suggest-menu" class="esri-menu esri-search__suggestions-menu" role="listbox"
+      aria-labelledby="19895c98111-widget-3-input" data-node-ref="_suggestionListNode">
+      <ul role="group"
+        class="esri-menu__list esri-search__suggestions-list esri-search__suggestions-list--current-location">
+        <li id="19895c98111-widget-3-suggestion-item-0" aria-selected="false" role="option"
+          class="esri-menu__list-item"><span aria-hidden="true" class="esri-icon-locate-circled"></span> Use current
+          location</li>
+      </ul>
+    </div>
+  </div><button aria-label="Search" class="esri-search__submit-button esri-widget--button" title="Search"
+    type="button"><span aria-hidden="true" class="esri-icon-search"></span></button>
+  <div class="esri-menu esri-search__warning-menu">
+    <div class="esri-search__warning-body">
+      <div><span aria-hidden="true" class="esri-icon-notice-triangle"></span><span
+          class="esri-search__no-value-text">Please enter a search term.</span></div>
+    </div>
+  </div>
+</div>
+
