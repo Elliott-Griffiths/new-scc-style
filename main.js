@@ -689,10 +689,17 @@ const handleSearchResults = (currentPageId, buttonId) => {
       
       if (allFieldsValid) {
         const addressearchResults = document.querySelector(`#${currentPageId} .address-search-results`);
-        const setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
-        const buttonContainer = document.querySelector(`#${currentPageId} .address-search-btn-container`);
-        const manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
+        let setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
+        if (setAddressButton) {
+          setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
+        }
         
+        const buttonContainer = document.querySelector(`#${currentPageId} .address-search-btn-container`);
+        let manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
+        if (manualAddressElement) {
+          manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+        }
+
         const addressDataForDisplay = {
           property: addressFields.find(field => field.alias === 'property')?.value || '',
           streetName: addressFields.find(field => field.alias === 'streetName')?.value || '',
@@ -701,9 +708,10 @@ const handleSearchResults = (currentPageId, buttonId) => {
         };
         
         const fullAddressDisplay = buildAddressMarkup(addressDataForDisplay);
-        const selectedAddressContainer = document.querySelector(`#${currentPageId} .selected-address-container`);
+        let selectedAddressContainer = document.querySelector(`#${currentPageId} .selected-address-container`);
         if (selectedAddressContainer) {
           selectedAddressContainer.innerHTML = fullAddressDisplay;
+          selectedAddressContainer = selectedAddressContainer.id.replace('dform_widget_html_', '');
         }
         
         let fullAddress = '';
@@ -734,9 +742,9 @@ const handleSearchResults = (currentPageId, buttonId) => {
         }
         
         hideShowMultipleElements([
-          { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
-          { name: selectedAddressContainer.id.replace('dform_widget_html_', ''), display: "show" },
-          { name: manualAddressElement.id.replace('dform_widget_html_', ''), display: "hide" },
+          { name: setAddressButton, display: "hide" },
+          { name: selectedAddressContainer, display: "show" },
+          { name: manualAddressElement, display: "hide" },
         ]);
       }
       
