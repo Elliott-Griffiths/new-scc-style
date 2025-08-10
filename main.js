@@ -4531,6 +4531,51 @@ function fetchSccRing() {
   });
 }
 
+function plotLocationOnMap(easting, northing) {
+  require([
+    "esri/geometry/Point",
+    "esri/geometry/projection"
+  ], function (Point, projection) {
+
+    // Create OSGB point
+    const osgbPoint = new Point({
+      x: parseFloat(easting),
+      y: parseFloat(northing),
+      spatialReference: { wkid: 27700 }
+    });
+
+    // Project to Web Mercator (map’s spatial reference)
+    projection.load().then(function () {
+      const wmPoint = projection.project(osgbPoint, streetMapView.spatialReference);
+
+      // Zoom to location
+      streetMapView.goTo({ center: wmPoint, zoom: 18 }).then(() => {
+        
+        // Convert to screen coordinates
+        const screenPoint = streetMapView.toScreen(wmPoint);
+
+        // Build a realistic fake event
+        const fakeEvt = {
+          type: "click",
+          pointerType: "mouse",
+          button: 0,
+          buttons: 0,
+          x: screenPoint.x,
+          y: screenPoint.y,
+          screenPoint: { x: screenPoint.x, y: screenPoint.y },
+          mapPoint: wmPoint,
+          native: { isTrusted: true },
+          timestamp: performance.now(),
+          cancelable: false
+        };
+
+        // Trigger mapClick like a real click
+        mapClick(fakeEvt);
+      });
+    });
+  });
+}
+
 // --- FORMATING FUNCTIONS -------------------------------------------------- \\
 
 // --- FORMATING TO TITLE CASE ---------------------------------------------- \\
@@ -5261,47 +5306,4 @@ function buildFormLink(id, formName, includeFormTitle = false) {
 
 
 
-function plotLocationOnMap(easting, northing) {
-  require([
-    "esri/geometry/Point",
-    "esri/geometry/projection"
-  ], function (Point, projection) {
 
-    // 1. Create OSGB point
-    const osgbPoint = new Point({
-      x: parseFloat(easting),
-      y: parseFloat(northing),
-      spatialReference: { wkid: 27700 }
-    });
-
-    // 2. Project to Web Mercator (map’s spatial reference)
-    projection.load().then(function () {
-      const wmPoint = projection.project(osgbPoint, streetMapView.spatialReference);
-
-      // 3. Zoom to location
-      streetMapView.goTo({ center: wmPoint, zoom: 18 }).then(() => {
-        
-        // 4. Convert to screen coordinates
-        const screenPoint = streetMapView.toScreen(wmPoint);
-
-        // 5. Build a realistic fake event
-        const fakeEvt = {
-          type: "click",
-          pointerType: "mouse",
-          button: 0,
-          buttons: 0,
-          x: screenPoint.x,
-          y: screenPoint.y,
-          screenPoint: { x: screenPoint.x, y: screenPoint.y },
-          mapPoint: wmPoint,
-          native: { isTrusted: true },
-          timestamp: performance.now(),
-          cancelable: false
-        };
-
-        // 6. Trigger mapClick like a real click
-        mapClick(fakeEvt);
-      });
-    });
-  });
-}

@@ -96,3 +96,20 @@
 #map_container .esri-attribution {
     display: none;
 }
+
+
+
+div.esri-component.esri-search.esri-widget > div {
+    margin-left: -140% !important;
+    margin-top: 20% !important;
+  }
+  
+  .esri-search__submit-button {
+    margin: 0 !important;
+    min-width: 5rem !important;
+  }
+  
+  .esri-search__submit-button:hover {
+    color: var(--color-white) !important;
+    background: var(--color-primary) !important;
+  }
