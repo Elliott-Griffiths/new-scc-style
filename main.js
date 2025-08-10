@@ -1836,13 +1836,13 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     if (selectedAddressContainer) {
       selectedAddressContainer.innerHTML = fullAddressDisplay;
     }
-    
+
     if (addressSelectionSection) {
       addressSelectionSection.classList.add('dform_fieldsuccess');
     }
 
     if (selectedAddressSpan) {
-      selectedAddressSpan.textContent = fullAddressDisplay;
+      selectedAddressSpan.innerHTML = fullAddressDisplay;
     }
 
     const addressearchResults = document.querySelector(`#${currentPageId} .address-search-results`);
