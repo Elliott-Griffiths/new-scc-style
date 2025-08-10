@@ -100,12 +100,12 @@
 
 
 #dform_container #map_container div.esri-component.esri-search.esri-widget>div {
-    margin-left: -155% !important;
+    margin-left: -170% !important;
     margin-top: 10% !important;
 }
 
 #dform_container #map_container .esri-search__form input.esri-search__input {
-    width: 200px;
+    max-width: 200px;
 }
 
 #dform_container #map_container .esri-search__submit-button {

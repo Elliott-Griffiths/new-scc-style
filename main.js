@@ -3788,10 +3788,12 @@ function initialize_map(map_param) {
     groupLayer = layerGroup;
   });
 
-  const searchInput = document.querySelector('.esri-search__input');
-  if (searchInput) {
-    searchInput.placeholder = "";
-  }
+  setTimeout(() => {
+    const searchInput = document.querySelector('.esri-search__input');
+    if (searchInput) {
+      searchInput.placeholder = "";
+    }
+  }, 0);
 }
 
 function do_KDF_mapReady_esriMap(map, positionLayer) {
