@@ -1861,7 +1861,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
         .filter(Boolean)
         .join(', ');
       selectedAddressSpan.innerHTML = addressParts;
-      selectedAddressSpan.classList.removeClass('dform_validationMessage');
+      selectedAddressSpan.classList.remove('dform_validationMessage');
     }
 
     const addressearchResults = document.querySelector(`#${currentPageId} .address-search-results`);
@@ -4045,7 +4045,7 @@ function mapClick(evt) {
   // setSelectedAddress("", "hide");
   const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
   if (selectedAddressSpan) {
-    selectedAddressSpan.classList.removeClass('dform_validationMessage');
+    selectedAddressSpan.classList.remove('dform_validationMessage');
   }
 
   $(".esriPopup").hide();
