@@ -157,6 +157,13 @@ function handleInitialisingEvent() {
     })(window, document, "script", "dataLayer", "GTM-PBGBFQVW");
   }
 
+  // --- HANDLE SIGN IN PAGE ----------------------------------------------- \\
+
+  if (KDF.kdf().access === "citizen"
+    && (KDF.kdf().profileData.customerid && KDF.kdf().profileData.customerid !== "")) {
+    KDF.hidePage("page_sign_in");
+  }
+
   // --- ADD TAB TITLE AND ICON  ------------------------------------------- \\
 
   (() => {
@@ -1388,6 +1395,20 @@ function handleOnReadyEvent(_, kdf) {
     } else {
       KDF.showWarning("A customer has not been set.");
     }
+  });
+
+  // --- HANDLE SIGN IN BUTTTON CLICK -------------------------------------- \\
+
+  $('#dform_widget_button_but_next_sign_in').on('click', function () {
+    if (KDF.getVal("rad_sign_in") === "true") {
+      window.location.href = `${PORTAL_URL}/account/${kdf.form.name}`;
+    } else {
+      KDF.gotoNextPage();
+    }
+  });
+
+  $('#dform_widget_button_but_view_my_requests').on('click', function () {
+    window.location.href = `${PORTAL_URL}/my-requests`;
   });
 }
 
@@ -4045,6 +4066,7 @@ function mapClick(evt) {
   // setSelectedAddress("", "hide");
   const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
   if (selectedAddressSpan) {
+    selectedAddressSpan.textContent = defaultSelectedAddressMessage;
     selectedAddressSpan.classList.remove('dform_validationMessage');
   }
 
