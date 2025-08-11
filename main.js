@@ -119,6 +119,7 @@ const PORTAL_URL = `${protocol}//${hostname}/site/sheffield_dev`;
 
 let formattedTitle = "";
 
+let saveProgress = false;
 let customerState = false;
 
 let pageName = "";
@@ -162,6 +163,7 @@ function handleInitialisingEvent() {
   if (KDF.kdf().access === "citizen"
     && (KDF.kdf().profileData.customerid && KDF.kdf().profileData.customerid !== "")) {
     KDF.hidePage("page_sign_in");
+    KDF.setVal("rad_sign_in", "true");
   }
 
   // --- ADD TAB TITLE AND ICON  ------------------------------------------- \\
