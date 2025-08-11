@@ -10,12 +10,55 @@
 #dform_pageholder,
 #dform_container .dform_message,
 #FooterAreaInSingleColumnNoNavigationTemplate,
-#dform_pagenav {
+#dform_pagenav,
+#dform_holder {
   float: unset !important;
   margin: 0 auto !important;;
   width: auto !important;;
   max-width: 87.5rem !important;;
-  padding: 15px;
+  padding-inline: 15px;
+}
+
+#dform_pageholder {
+  padding-block: 0;
+}
+
+#dform_container .dform_message {
+  padding-inline: 15px;
+}
+
+@media screen and (min-width: 600px) {
+  .header>.service-header-bar,
+  #widget_Navigation>div,
+  #dform_controls,
+  #dform_pageholder,
+  #dform_container .dform_message,
+  #FooterAreaInSingleColumnNoNavigationTemplate,
+  #dform_pagenav,
+  #dform_holder {
+    padding-inline: 15px;
+  }
+
+  #dform_container .dform_message {
+    padding-inline: 15px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .header>.service-header-bar,
+  #widget_Navigation>div,
+  #dform_controls,
+  #dform_pageholder,
+  #dform_container .dform_message,
+  #FooterAreaInSingleColumnNoNavigationTemplate,
+  #dform_pagenav,
+  #dform_holder {
+    padding-inline: 15px;
+  }
+
+  #dform_container .dform_message {
+    padding-inline: 15px;
+  }
 }
 
 @media screen and (min-width: 960px) {
@@ -25,19 +68,17 @@
   #dform_pageholder,
   #dform_container .dform_message,
   #FooterAreaInSingleColumnNoNavigationTemplate,
-  #dform_pagenav {
+  #dform_pagenav,
+  #dform_holder {
     /* 1400px - (126 * 2) = 1148px */
     /* padding: var(--spacing-sm) clamp(20px, 10vw, 126px) !important; */
-    padding: 146px;
+    padding-inline: 146px;
   }
-}
 
-#dform_pageholder {
-  padding-block: 0;
-}
-
-#dform_container .dform_message {
-  padding: var(--spacing-lg) clamp(20px, 10vw, 126px) !important;
+  #dform_container .dform_message {
+    /* padding: var(--spacing-lg) clamp(20px, 10vw, 126px) !important; */
+    padding-inline: 146px;
+  }
 }
 
 .content {
