@@ -602,7 +602,7 @@ function handleOnReadyEvent(_, kdf) {
         { name: searchInput.name, display: "show" },
         { name: searchButton, display: "show" },
         { name: resultsList.dataset.name, display: "hide" },
-        { name: manualAddressElement, display: "show" },
+        { name: manualAddressElement, display: "hide" },
         { name: setAddressButton, display: "hide" },
         { name: selectedAddressContainer, display: "hide" },
         { name: mapCntainer, display: "show" },
@@ -3362,7 +3362,7 @@ function getAndSetReviewPageData() {
           const fieldName = $(pageFields[field]).attr("data-name");
           const fieldClass = $(pageFields[field]).attr("class");
           let fieldLabel = "";
-          let fieldValue = "";
+          let fieldValue = "Not answered";
     
           function getLegendText(classSelector) {
             const parentElement = $(`.container[data-name="${fieldName}"]`).length
@@ -3376,12 +3376,14 @@ function getAndSetReviewPageData() {
           console.log("fieldType", fieldType, fieldName, KDF.getVal(fieldName))
           if (fieldType === "select") {
             console.log(fieldName)
-            fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-            fieldValue = KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
+            if (fieldName.startsWith("sel_search_results_")) {
+              fieldLabel = "Selected address" 
+              fieldValue = getValueFromAlias(pageId, "fullAddress");
+            } else {
+              fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
+              fieldValue = KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
+            }
           } else if (fieldType === "radio") {
-            fieldLabel = getLegendText("radiogroup");
-            fieldValue = KDF.getVal(fieldName);
-          } else if (fieldType === "checbox") {
             fieldLabel = getLegendText("radiogroup");
             fieldValue = KDF.getVal(fieldName);
           } else if (fieldType === "multicheckbox") {
@@ -3402,11 +3404,11 @@ function getAndSetReviewPageData() {
               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
               fieldValue = `£${KDF.getVal(fieldName)}`;
             } else if (fieldClass.indexOf("address-search") !== -1) {
-              fieldLabel = "Address";
+              fieldLabel = "Selected address";
               fieldValue = getValueFromAlias(pageId, "fullAddress");
-            } else if (/\b(property|street-name|city|postcode)\b/.test(fieldClass)) {
-              fieldLabel = false;
-              fieldValue = "";
+            // } else if (/\b(property|street-name|city|postcode)\b/.test(fieldClass)) {
+            //   fieldLabel = false;
+            //   fieldValue = "";
             } else {
               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
               fieldValue = KDF.getVal(fieldName);
@@ -3414,7 +3416,7 @@ function getAndSetReviewPageData() {
           }
     
           if (fieldLabel) {
-            if (fieldValue === "" || fieldValue === null || fieldValue === undefined) {
+            if (!fieldValue || fieldValue === "" || fieldValue === null || fieldValue === undefined) {
               if (fieldType === "file") {
                 fieldValue = "Not uploaded";
               } else {
