@@ -3340,25 +3340,13 @@ function getAndSetReviewPageData() {
           contentDiv.empty();
         }
     
-        // Header container
+        // Header with page title only
         const headerContainer = $('<div class="review-page-header-container"></div>');
-        const buttonHtml = `<button type="button" id="edit_button_${pageName}" class="review-page-edit-button">Edit</button>`;
-        headerContainer.append(buttonHtml);
-    
         const pageHeader = $(formPages[i]).find(".header2").text();
         headerContainer.append(`<h3 id="review-header-${pageName}">${pageHeader}</h3>`);
         contentDiv.append(headerContainer);
     
-        const button = headerContainer.find(".review-page-edit-button");
-        button.on("click", function () {
-          const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
-          if (buttonSet.is(":hidden")) {
-            buttonSet.show();
-          }
-          KDF.gotoPage(pageName, true, true, true);
-        });
-    
-        // Create a <dl> for the Q/A pairs
+        // Create <dl> for Q/A pairs
         const dl = $("<dl class='review-list'></dl>");
         contentDiv.append(dl);
     
@@ -3430,18 +3418,27 @@ function getAndSetReviewPageData() {
               }
             }
     
-            // Append as <dt>/<dd>
-            dl.append(`
-              <div class="review-item">
-                <dt class="question">${fieldLabel}</dt>
-                <dd class="answer">${fieldValue}</dd>
-                <dd class="action"><a href="#edit_button_${pageName}">Change</a></dd>
-              </div>
-            `);
+            // Append Q/A with Change link (same function as old Edit button)
+            const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
+              e.preventDefault();
+              const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
+              if (buttonSet.is(":hidden")) {
+                buttonSet.show();
+              }
+              KDF.gotoPage(pageName, true, true, true);
+            });
+    
+            const reviewItem = $("<div class='review-item'></div>")
+              .append(`<dt class="question">${fieldLabel}</dt>`)
+              .append(`<dd class="answer">${fieldValue}</dd>`)
+              .append($("<dd class='action'></dd>").append(changeLink));
+    
+            dl.append(reviewItem);
           }
         });
       }
     });
+    
     
   }
 }
