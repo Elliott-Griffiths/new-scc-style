@@ -3333,9 +3333,21 @@ function getAndSetReviewPageData() {
         const pageName = pageId.split("dform_page_")[1];
     
         KDF.showPage(pageName);
-        const contentDivId = `review-page-content--${pageName}`;
     
+        const pageFields = $(formPages[i])
+          .find(".dform_widget_field")
+          .filter(function () {
+            return $(this).css("display") === "block";
+          });
+    
+        // If there are no visible fields, skip adding the section entirely
+        if (!pageFields.length) {
+          return; // Skip to next page
+        }
+    
+        const contentDivId = `review-page-content--${pageName}`;
         let contentDiv = $("#" + contentDivId);
+    
         if (!contentDiv.length) {
           $("#review-page-content-container").append(
             `<section class="review-page-content-section" id="${contentDivId}" aria-labelledby="review-header-${pageName}"></section>`
@@ -3353,18 +3365,9 @@ function getAndSetReviewPageData() {
     
         // Create <dl> for Q/A pairs
         const dl = $("<dl class='review-list'></dl>");
-        contentDiv.append(dl);
     
-        // Loop fields
-        const pageFields = $(formPages[i])
-          .find(".dform_widget_field")
-          .filter(function () {
-            return $(this).css("display") === "block";
-          });
-
-        if (!pageFields.length) {
-          return; // Skip to next page
-        }
+        // Track if we actually append any fields
+        let hasFields = false;
     
         pageFields.each(function (field) {
           const fieldType = $(pageFields[field]).attr("data-type");
@@ -3382,11 +3385,10 @@ function getAndSetReviewPageData() {
               return parentElement.find(`.${classSelector} legend`).text();
             }
           }
-          console.log("fieldType", fieldType, fieldName, KDF.getVal(fieldName))
+    
           if (fieldType === "select") {
-            console.log(fieldName)
             if (fieldName.startsWith("sel_search_results_")) {
-              fieldLabel = "Selected address" 
+              fieldLabel = "Selected address";
               fieldValue = getValueFromAlias(pageId, "fullAddress");
             } else {
               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
@@ -3426,11 +3428,7 @@ function getAndSetReviewPageData() {
     
           if (fieldLabel) {
             if (!fieldValue || fieldValue === "" || fieldValue === null || fieldValue === undefined) {
-              if (fieldType === "file") {
-                fieldValue = "Not uploaded";
-              } else {
-                fieldValue = "Not answered";
-              }
+              fieldValue = fieldType === "file" ? "Not uploaded" : "Not answered";
             }
     
             const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
@@ -3448,10 +3446,19 @@ function getAndSetReviewPageData() {
               .append($("<dd class='action'></dd>").append(changeLink));
     
             dl.append(reviewItem);
+            hasFields = true;
           }
         });
+    
+        // Only append the section if we found at least one field with a label
+        if (hasFields) {
+          contentDiv.append(dl);
+        } else {
+          contentDiv.remove();
+        }
       }
     });
+    
     
     
   }
