@@ -18,21 +18,22 @@
     margin-block: var(--spacing-md);
 }
 
-#dform_container button.address-search-btn,
+/* #dform_container button.address-search-btn,
 #dform_container button.address-search-btn:hover,
 #dform_container button.address-search-btn:focus,
 #dform_container button.set-address-btn,
 #dform_container button.set-address-btn:hover,
 #dform_container button.set-address-btn:focus {
-    color: var(--c-greys-white);
-    background: var(--c-alerts-success);
-    border: solid 2px var(--c-alerts-success);
-}
+color: var(--c-core-brand-primary-darken);
+  background: var(--c-greys-white);
+  border: solid 2px var(--c-core-brand-primary-darken);
+} */
 
 #dform_container button.search-again-btn {
     display: inline;
     margin-left: var(--spacing-xs);
     color: var(--c-links-link);
+    text-decoration: underline;
     text-underline-offset: 0.25rem;
 }
 

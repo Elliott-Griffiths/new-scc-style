@@ -3375,6 +3375,7 @@ function getAndSetReviewPageData() {
           }
     
           if (fieldType === "select") {
+            console.log(fieldName)
             fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
             fieldValue = KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
           } else if (fieldType === "radio") {
@@ -3418,7 +3419,6 @@ function getAndSetReviewPageData() {
               }
             }
     
-            // Append Q/A with Change link (same function as old Edit button)
             const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
               e.preventDefault();
               const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
