@@ -3361,6 +3361,10 @@ function getAndSetReviewPageData() {
           .filter(function () {
             return $(this).css("display") === "block";
           });
+
+        if (!pageFields.length) {
+          return; // Skip to next page
+        }
     
         pageFields.each(function (field) {
           const fieldType = $(pageFields[field]).attr("data-type");
