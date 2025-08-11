@@ -3411,9 +3411,9 @@ function getAndSetReviewPageData() {
             } else if (fieldClass.indexOf("address-search") !== -1) {
               fieldLabel = "Selected address";
               fieldValue = getValueFromAlias(pageId, "fullAddress");
-            // } else if (/\b(property|street-name|city|postcode)\b/.test(fieldClass)) {
-            //   fieldLabel = false;
-            //   fieldValue = "";
+            } else if (/\b(property|street-name|city|postcode)\b/.test(fieldClass)) {
+              fieldLabel = false;
+              fieldValue = "";
             } else {
               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
               fieldValue = KDF.getVal(fieldName);
