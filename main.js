@@ -3180,84 +3180,215 @@ function getAndSetReviewPageData() {
       formPages = $(".dform_page").not("#dform_page_page_review");
     }
 
-    formPages.each(function (i) {
-      // Get the page number of the current form page
-      const pageNumber = $(this).attr("data-pos");
+    // formPages.each(function (i) {
+    //   // Get the page number of the current form page
+    //   const pageNumber = $(this).attr("data-pos");
 
-      // Check if the page is relevant and should be added to the review page
+    //   // Check if the page is relevant and should be added to the review page
+    //   if (relevantPages.indexOf(pageNumber) > -1) {
+    //     // Extract the page name from the element's ID
+    //     const pageId = $(formPages[i]).attr("id");
+    //     const pageName = pageId.split("dform_page_")[1];
+
+    //     KDF.showPage(pageName);
+    //     const contentDivId = `review-page-content--${pageName}`;
+
+    //     // Create a container for the review page content (if it doesn't exist)
+    //     let contentDiv = $("#" + contentDivId);
+    //     if (!contentDiv.length) {
+    //       $("#review-page-content-container").append(
+    //         `<div class="review-page-content-section" id="${contentDivId}"></div>`
+    //       );
+    //       contentDiv = $("#" + contentDivId); // Re-select the newly created div
+    //     } else {
+    //       contentDiv.empty(); // Clear existing content if the page is re-rendered
+    //     }
+
+    //     // Create a container for the edit button and page header
+    //     const headerContainer = $('<div class="review-page-header-container"></div>');
+
+    //     // Create a button to allow editing of the page
+    //     const buttonHtml = `<button type="button" id="edit_button_${pageName}" class="review-page-edit-button">Edit</button>`;
+    //     headerContainer.append(buttonHtml);
+
+    //     // Get the page header text
+    //     const pageHeader = $(formPages[i]).find(".header2").text();
+    //     headerContainer.append(`<h3>${pageHeader}</h3>`);
+
+    //     // Append the header container to the content div
+    //     contentDiv.append(headerContainer);
+
+    //     // Attach a click event handler to the button (move it after button creation)
+    //     const button = headerContainer.find(".review-page-edit-button");
+    //     button.on("click", function () {
+    //       const buttonSet = $(
+    //         '.dform_section_box_review div[data-type="buttonset"]'
+    //       );
+    //       if (buttonSet.is(":hidden")) {
+    //         buttonSet.show();
+    //       }
+    //       KDF.gotoPage(pageName, true, true, true);
+    //     });
+
+    //     // Find all visible fields on the page
+    //     const pageFields = $(formPages[i])
+    //       .find(".dform_widget_field")
+    //       .filter(function () {
+    //         return $(this).css("display") === "block";
+    //       });
+
+    //     pageFields.each(function (field) {
+    //       const fieldType = $(pageFields[field]).attr("data-type");
+    //       const fieldName = $(pageFields[field]).attr("data-name");
+    //       const fieldClass = $(pageFields[field]).attr("class");
+    //       let fieldLabel = "";
+    //       let fieldValue = "";
+
+    //       function getLegendText(classSelector) {
+    //         const parentElement = $(`.container[data-name="${fieldName}"]`)
+    //           .length
+    //           ? $(`.container[data-name="${fieldName}"]`)
+    //           : $(`.container.dform_widget_${fieldName}`);
+
+    //         if (parentElement.length) {
+    //           return parentElement.find(`.${classSelector} legend`).text();
+    //         }
+    //       }
+    //       if (fieldType === "select") {
+    //         fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
+    //         fieldValue =
+    //           KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
+    //       } else if (fieldType === "radio") {
+    //         fieldLabel = getLegendText("radiogroup");
+    //         fieldValue = KDF.getVal(fieldName);
+    //       } else if (fieldType === "multicheckbox") {
+    //         fieldLabel = getLegendText("checkboxgroup");
+    //         fieldValue = `<br/>${KDF.getVal(fieldName).join("<br>")}`;
+    //       } else if (fieldType === "date") {
+    //         fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
+    //         fieldValue = formatDateTime(KDF.getVal(fieldName)).uk.date;
+    //       } else if (fieldType === "file") {
+    //         fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
+    //         fieldValue = KDF.getVal(
+    //           fieldName.replace("file_", "txt_file_name_")
+    //         );
+    //         const filePath = KDF.getVal(
+    //           fieldName.replace("file_", "txt_file_path_")
+    //         );
+    //         if (KDF.kdf().access === "agent" && filePath) {
+    //           fieldValue = `<a href="${filePath}" target="_blank">${fieldValue}</a>`;
+    //         }
+    //       } else {
+    //         if (fieldClass.indexOf("currency") !== -1) {
+    //           fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
+    //           fieldValue = `£${KDF.getVal(fieldName)}`;
+    //         } else if (fieldClass.indexOf("address-search") !== -1) {
+    //           fieldLabel = "Address";
+    //           fieldValue = getValueFromAlias(pageId, "fullAddress");
+    //         } else if (
+    //           /\b(property|street-name|city|postcode)\b/.test(fieldClass)
+    //         ) {
+    //           fieldLabel = false;
+    //           fieldValue = "";
+    //         } else {
+    //           fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
+    //           fieldValue = KDF.getVal(fieldName);
+    //         }
+    //       }
+
+    //       // Check if the field has a label
+    //       if (fieldLabel) {
+    //         // Set a default value for optional fields that are visible but not answered
+    //         if (
+    //           fieldValue === "" ||
+    //           fieldValue === null ||
+    //           fieldValue === undefined
+    //         ) {
+    //           if (fieldType === "file") {
+    //             fieldValue = "Not uploaded";
+    //           } else {
+    //             fieldValue = "Not answered";
+    //           }
+    //         }
+
+    //         // Append the field information to the review page content
+    //         $(`#${contentDivId}`).append(
+    //           `<p class="review-page-item"><span class="review-page-question-text">${fieldLabel}:</span> ${fieldValue}</p>`
+    //         );
+    //       }
+    //     });
+    //   }
+    // });
+
+    formPages.each(function (i) {
+      const pageNumber = $(this).attr("data-pos");
+    
       if (relevantPages.indexOf(pageNumber) > -1) {
-        // Extract the page name from the element's ID
         const pageId = $(formPages[i]).attr("id");
         const pageName = pageId.split("dform_page_")[1];
-
+    
         KDF.showPage(pageName);
         const contentDivId = `review-page-content--${pageName}`;
-
-        // Create a container for the review page content (if it doesn't exist)
+    
         let contentDiv = $("#" + contentDivId);
         if (!contentDiv.length) {
           $("#review-page-content-container").append(
-            `<div class="review-page-content-section" id="${contentDivId}"></div>`
+            `<section class="review-page-content-section" id="${contentDivId}" aria-labelledby="review-header-${pageName}"></section>`
           );
-          contentDiv = $("#" + contentDivId); // Re-select the newly created div
+          contentDiv = $("#" + contentDivId);
         } else {
-          contentDiv.empty(); // Clear existing content if the page is re-rendered
+          contentDiv.empty();
         }
-
-        // Create a container for the edit button and page header
+    
+        // Header container
         const headerContainer = $('<div class="review-page-header-container"></div>');
-
-        // Create a button to allow editing of the page
         const buttonHtml = `<button type="button" id="edit_button_${pageName}" class="review-page-edit-button">Edit</button>`;
         headerContainer.append(buttonHtml);
-
-        // Get the page header text
+    
         const pageHeader = $(formPages[i]).find(".header2").text();
-        headerContainer.append(`<h3>${pageHeader}</h3>`);
-
-        // Append the header container to the content div
+        headerContainer.append(`<h3 id="review-header-${pageName}">${pageHeader}</h3>`);
         contentDiv.append(headerContainer);
-
-        // Attach a click event handler to the button (move it after button creation)
+    
         const button = headerContainer.find(".review-page-edit-button");
         button.on("click", function () {
-          const buttonSet = $(
-            '.dform_section_box_review div[data-type="buttonset"]'
-          );
+          const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
           if (buttonSet.is(":hidden")) {
             buttonSet.show();
           }
           KDF.gotoPage(pageName, true, true, true);
         });
-
-        // Find all visible fields on the page
+    
+        // Create a <dl> for the Q/A pairs
+        const dl = $("<dl class='review-list'></dl>");
+        contentDiv.append(dl);
+    
+        // Loop fields
         const pageFields = $(formPages[i])
           .find(".dform_widget_field")
           .filter(function () {
             return $(this).css("display") === "block";
           });
-
+    
         pageFields.each(function (field) {
           const fieldType = $(pageFields[field]).attr("data-type");
           const fieldName = $(pageFields[field]).attr("data-name");
           const fieldClass = $(pageFields[field]).attr("class");
           let fieldLabel = "";
           let fieldValue = "";
-
+    
           function getLegendText(classSelector) {
-            const parentElement = $(`.container[data-name="${fieldName}"]`)
-              .length
+            const parentElement = $(`.container[data-name="${fieldName}"]`).length
               ? $(`.container[data-name="${fieldName}"]`)
               : $(`.container.dform_widget_${fieldName}`);
-
+    
             if (parentElement.length) {
               return parentElement.find(`.${classSelector} legend`).text();
             }
           }
+    
           if (fieldType === "select") {
             fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-            fieldValue =
-              KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
+            fieldValue = KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
           } else if (fieldType === "radio") {
             fieldLabel = getLegendText("radiogroup");
             fieldValue = KDF.getVal(fieldName);
@@ -3269,12 +3400,8 @@ function getAndSetReviewPageData() {
             fieldValue = formatDateTime(KDF.getVal(fieldName)).uk.date;
           } else if (fieldType === "file") {
             fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-            fieldValue = KDF.getVal(
-              fieldName.replace("file_", "txt_file_name_")
-            );
-            const filePath = KDF.getVal(
-              fieldName.replace("file_", "txt_file_path_")
-            );
+            fieldValue = KDF.getVal(fieldName.replace("file_", "txt_file_name_"));
+            const filePath = KDF.getVal(fieldName.replace("file_", "txt_file_path_"));
             if (KDF.kdf().access === "agent" && filePath) {
               fieldValue = `<a href="${filePath}" target="_blank">${fieldValue}</a>`;
             }
@@ -3285,9 +3412,7 @@ function getAndSetReviewPageData() {
             } else if (fieldClass.indexOf("address-search") !== -1) {
               fieldLabel = "Address";
               fieldValue = getValueFromAlias(pageId, "fullAddress");
-            } else if (
-              /\b(property|street-name|city|postcode)\b/.test(fieldClass)
-            ) {
+            } else if (/\b(property|street-name|city|postcode)\b/.test(fieldClass)) {
               fieldLabel = false;
               fieldValue = "";
             } else {
@@ -3295,30 +3420,29 @@ function getAndSetReviewPageData() {
               fieldValue = KDF.getVal(fieldName);
             }
           }
-
-          // Check if the field has a label
+    
           if (fieldLabel) {
-            // Set a default value for optional fields that are visible but not answered
-            if (
-              fieldValue === "" ||
-              fieldValue === null ||
-              fieldValue === undefined
-            ) {
+            if (fieldValue === "" || fieldValue === null || fieldValue === undefined) {
               if (fieldType === "file") {
                 fieldValue = "Not uploaded";
               } else {
                 fieldValue = "Not answered";
               }
             }
-
-            // Append the field information to the review page content
-            $(`#${contentDivId}`).append(
-              `<p class="review-page-item"><span class="review-page-question-text">${fieldLabel}:</span> ${fieldValue}</p>`
-            );
+    
+            // Append as <dt>/<dd>
+            dl.append(`
+              <div class="review-item">
+                <dt class="question">${fieldLabel}</dt>
+                <dd class="answer">${fieldValue}</dd>
+                <dd class="action"><a href="#edit_button_${pageName}">Change</a></dd>
+              </div>
+            `);
           }
         });
       }
     });
+    
   }
 }
 
