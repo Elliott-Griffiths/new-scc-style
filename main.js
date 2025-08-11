@@ -562,7 +562,7 @@ function handleOnReadyEvent(_, kdf) {
     const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
     if (resultsList) {
       resultsList.value = '';
-      KDF.setWidgetRequired(resultsList.replace('dform_widget_', ''));
+      KDF.setWidgetRequired(resultsList.id.replace('dform_widget_', ''));
     }
     
     let manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
@@ -658,7 +658,7 @@ const handleSearchResults = (currentPageId, buttonId) => {
       const searchResultsSelect = document.querySelector(`#${currentPageId} .address-search-results select`);
       if (searchResultsSelect) {
         searchResultsSelect.value = ''; // Clear selected value from search results
-        KDF.setWidgetNotRequired(searchResultsSelectid.replace('dform_widget_', ''));
+        KDF.setWidgetNotRequired(searchResultsSelect.id.replace('dform_widget_', ''));
       }
 
       const addressFields = getValuesOfInputFields([
