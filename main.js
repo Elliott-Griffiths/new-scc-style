@@ -602,7 +602,7 @@ function handleOnReadyEvent(_, kdf) {
         { name: searchInput.name, display: "show" },
         { name: searchButton, display: "show" },
         { name: resultsList.dataset.name, display: "hide" },
-        { name: manualAddressElement, display: "hide" },
+        { name: manualAddressElement, display: "show" },
         { name: setAddressButton, display: "hide" },
         { name: selectedAddressContainer, display: "hide" },
         { name: mapCntainer, display: "show" },
@@ -3373,7 +3373,7 @@ function getAndSetReviewPageData() {
               return parentElement.find(`.${classSelector} legend`).text();
             }
           }
-    
+          console.log("fieldType", fieldType, fieldName, KDF.getVal(fieldName))
           if (fieldType === "select") {
             console.log(fieldName)
             fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
