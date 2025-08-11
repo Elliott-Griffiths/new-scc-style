@@ -861,6 +861,7 @@ const handleSearchResults = (currentPageId, buttonId) => {
 
 function checkAddressHasBeenSet(action = "next page") {
   const currentPageId = getCurrentPageId();
+  const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
   const fullAddress = document.querySelector(
     `#${currentPageId} input[data-customalias="fullAddress"]`
   );
@@ -890,14 +891,19 @@ function checkAddressHasBeenSet(action = "next page") {
         const errorMessage = acceptGMSites
           ? "Select a location inside the Sheffield area"
           : "Slecte a public highway inside the Sheffield area";
+          if (selectedAddressSpan) {
+            selectedAddressSpan.textContent = errorMessage;
+            selectedAddressSpan.classList.add('dform_validationMessage');
+            selectedAddressSpan.style.display = 'block';
+          }
         $("#map_container").addClass("map_container_error");
-        if ($("#map_error").length == "0") {
-          $("#dform_widget_html_ahtm_map_container").prepend(
-            `<div id="map_error" class="dform_validationMessage" style="display: block;">${errorMessage}</div>`
-          );
-        }
-        KDF.setVal("ahtm_map_location_error", errorMessage);
-        KDF.showWidget("ahtm_map_location_error");
+        // if ($("#map_error").length == "0") {
+        //   $("#dform_widget_html_ahtm_map_container").prepend(
+        //     `<div id="map_error" class="dform_validationMessage" style="display: block;">${errorMessage}</div>`
+        //   );
+        // }
+        // KDF.setVal("ahtm_map_location_error", errorMessage);
+        // KDF.showWidget("ahtm_map_location_error");
       }
     } else {
       if (action === "submit") {
@@ -912,14 +918,19 @@ function checkAddressHasBeenSet(action = "next page") {
       const errorMessage = acceptGMSites
         ? "Select a location inside the Sheffield area"
         : "Slecte a public highway inside the Sheffield area";
+        if (selectedAddressSpan) {
+          selectedAddressSpan.textContent = errorMessage;
+          selectedAddressSpan.classList.add('dform_validationMessage');
+          selectedAddressSpan.style.display = 'block';
+        }
       $("#map_container").addClass("map_container_error");
-      if ($("#map_error").length == "0") {
-        $("#dform_widget_html_ahtm_map_container").prepend(
-          `<div id="map_error" class="dform_validationMessage" style="display: block;">${errorMessage}</div>`
-        );
-      }
-      KDF.setVal("ahtm_map_location_error", errorMessage);
-      KDF.showWidget("ahtm_map_location_error");
+      // if ($("#map_error").length == "0") {
+      //   $("#dform_widget_html_ahtm_map_container").prepend(
+      //     `<div id="map_error" class="dform_validationMessage" style="display: block;">${errorMessage}</div>`
+      //   );
+      // }
+      // KDF.setVal("ahtm_map_location_error", errorMessage);
+      // KDF.showWidget("ahtm_map_location_error");
     } else {
       const searchResult = document.querySelector(
         `#${currentPageId} select[data-customalias="searchResult"]`
