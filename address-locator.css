@@ -105,7 +105,13 @@
 }
 
 #dform_container #map_container .esri-search__form input.esri-search__input {
-    max-width: 200px;
+    max-width: 125px;
+}
+
+@media screen and (min-width: 960px) {
+    #dform_container #map_container .esri-search__form input.esri-search__input {
+        max-width: 200px;
+    }
 }
 
 #dform_container #map_container .esri-search__submit-button {
@@ -170,6 +176,14 @@
     height: var(--field-height-sm);
     width: var(--field-height-sm);
     border: 2px solid var(--c-core-brand-primary-darken);
+    border-top: 1px solid var(--c-core-brand-primary-darken);
+}
+
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1) {
+    border-bottom: 1px solid var(--c-core-brand-primary-darken);
+}
+
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2) {
     border-top: 1px solid var(--c-core-brand-primary-darken);
 }
 
