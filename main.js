@@ -125,6 +125,7 @@ let pageName = "";
 
 let addressSearchType = {};
 let acceptGMSites = true;
+let defaultSelectedAddressMessage = "Choose a location on the map";
 
 const datePairs = [];
 
@@ -417,6 +418,10 @@ function handleOnReadyEvent(_, kdf) {
   customerState = kdf.customerset;
   formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
 
+  if (document.getElementById('selected-address')) {
+    defaultSelectedAddressMessage = document.getElementById('selected-address').textContent.trim();
+  }
+
   // --- ADD CONTENT TO WHY WE NEED DATE OF BIRTH -------------------------- \\
 
   $(".dob-reason").text(
@@ -584,7 +589,7 @@ function handleOnReadyEvent(_, kdf) {
 
     const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
     if (selectedAddressSpan) {
-      selectedAddressSpan.textContent = "Choose a location on the map";
+      selectedAddressSpan.textContent = defaultSelectedAddressMessage;
     }
 
     let mapCntainer = document.querySelector(`#${currentPageId} .map-container`);

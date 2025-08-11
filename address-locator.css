@@ -49,8 +49,8 @@
 }
 
 #dform_container .map-container .address-selection-section {
-    margin-bottom: var(--spacing-md);
-    padding: var(--spacing-xs) var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-md);
     border: solid var(--spacing-xxs) var(--c-greys-slate);
 }
 
@@ -77,7 +77,7 @@
     width: var(--font-size-xs);
     margin-right: var(--spacing-xs);
     background: transparent;
-    transform: translateY(-6px);
+    transform: translateY(-4px);
 }
 
 #dform_container #dform_widget_button_but_use_current_location {
@@ -178,7 +178,7 @@
 
     #dform_container #map_container .esri-search__submit-button {
         margin-left: var(--spacing-sm) !important;
-        border-radius: 100 !important;
+        border-radius: 25px !important;
         border-left: 2px solid var(--c-core-brand-primary-darken) !important;
     }
 
@@ -189,7 +189,7 @@
 }
 
 #dform_container #map_container .esri-search__submit-button:hover span::before {
-    color: var(--c-brand-accents-teal);
+    color: var(--c-brand-accents-teal) !important;
 }
 
 #dform_container #map_container .esri-search__submit-button:focus span::before {

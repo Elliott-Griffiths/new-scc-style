@@ -108,7 +108,7 @@
   }
   
   #dform_container .details-accordion-content {
-    background: var(--c-greys-white);
+    background: transparent;
   }
 
   #dform_container .details-accordion-content {
