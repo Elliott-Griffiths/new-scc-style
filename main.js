@@ -889,8 +889,8 @@ function checkAddressHasBeenSet(action = "next page") {
         }
       } else {
         const errorMessage = acceptGMSites
-          ? "Select a location inside the Sheffield area"
-          : "Slecte a public highway inside the Sheffield area";
+          ? defaultSelectedAddressMessage
+          : "Choose a location on the public highway";
           if (selectedAddressSpan) {
             selectedAddressSpan.textContent = errorMessage;
             selectedAddressSpan.classList.add('dform_validationMessage');
@@ -916,8 +916,8 @@ function checkAddressHasBeenSet(action = "next page") {
     const isMapContainerVisible = $("#map_container").is(":visible");
     if (isMapContainerVisible) {
       const errorMessage = acceptGMSites
-        ? "Select a location inside the Sheffield area"
-        : "Slecte a public highway inside the Sheffield area";
+        ? defaultSelectedAddressMessage
+        : "Choose a location on the public highway";
         if (selectedAddressSpan) {
           selectedAddressSpan.textContent = errorMessage;
           selectedAddressSpan.classList.add('dform_validationMessage');
@@ -4077,17 +4077,23 @@ function mapClick(evt) {
       store_layer_attr.background_attribute = {};
 
       if (!withinSccCheck(convertPointP4)) {
-        $("#map_container").addClass("map_container_error");
-        if ($("#map_error").length == "0") {
-          $("#dform_widget_html_ahtm_map_container").prepend(
-            '<div id="map_error" class="dform_validationMessage" style="display: block;">Select a location inside Sheffield area</div>'
-          );
+        const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
+        if (selectedAddressSpan) {
+          selectedAddressSpan.textContent = "Choose a location inside the Sheffield area";
+          selectedAddressSpan.classList.add('dform_validationMessage');
+          selectedAddressSpan.style.display = 'block';
         }
-        KDF.setVal(
-          "ahtm_map_location_error",
-          "Select a location inside the Sheffield area"
-        );
-        KDF.showWidget("ahtm_map_location_error");
+        $("#map_container").addClass("map_container_error");
+        // if ($("#map_error").length == "0") {
+        //   $("#dform_widget_html_ahtm_map_container").prepend(
+        //     '<div id="map_error" class="dform_validationMessage" style="display: block;">Select a location inside Sheffield area</div>'
+        //   );
+        // }
+        // KDF.setVal(
+        //   "ahtm_map_location_error",
+        //   "Select a location inside the Sheffield area"
+        // );
+        // KDF.showWidget("ahtm_map_location_error");
         //clear location information when out of our area
         selectedLocation = "";
         KDF.setVal("le_gis_lat", "");
