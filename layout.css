@@ -17,6 +17,8 @@
   width: auto !important;;
   max-width: 87.5rem !important;;
   padding-inline: 15px;
+  /* 1400px - (126 * 2) = 1148px */
+  /* padding: var(--spacing-sm) clamp(20px, 10vw, 126px) !important; */
 }
 
 #dform_pageholder {
@@ -25,6 +27,8 @@
 
 #dform_container .dform_message {
   padding-inline: 15px;
+  /* 1400px - (126 * 2) = 1148px */
+  /* padding: var(--spacing-sm) clamp(20px, 10vw, 126px) !important; */
 }
 
 @media screen and (min-width: 600px) {
