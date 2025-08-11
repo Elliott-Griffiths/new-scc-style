@@ -15,8 +15,21 @@
   margin: 0 auto !important;;
   width: auto !important;;
   max-width: 87.5rem !important;;
-  /* 1400px - (126 * 2) = 1148px */
-  padding: var(--spacing-sm) clamp(20px, 10vw, 126px) !important;
+  padding: 15px;
+}
+
+@media screen and (min-width: 960px) {
+  .header>.service-header-bar,
+  #widget_Navigation>div,
+  #dform_controls,
+  #dform_pageholder,
+  #dform_container .dform_message,
+  #FooterAreaInSingleColumnNoNavigationTemplate,
+  #dform_pagenav {
+    /* 1400px - (126 * 2) = 1148px */
+    /* padding: var(--spacing-sm) clamp(20px, 10vw, 126px) !important; */
+    padding: 146px;
+  }
 }
 
 #dform_pageholder {
