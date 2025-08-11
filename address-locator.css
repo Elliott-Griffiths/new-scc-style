@@ -100,7 +100,7 @@
 
 
 #dform_container #map_container div.esri-component.esri-search.esri-widget>div {
-    margin-left: -170% !important;
+    margin-left: -130% !important;
     margin-top: 10% !important;
 }
 
@@ -109,8 +109,10 @@
 }
 
 #dform_container #map_container .esri-search__submit-button {
-    margin-left: var(--spacing-sm) !important;
-    color: var(--c-brand-accents-teal);
+    min-width: max-content;
+    width: max-content;
+    border-radius: 0 !important;
+    border-left: none;
 }
 
 #dform_container #map_container .esri-search__submit-button:hover {
@@ -120,13 +122,40 @@
     box-shadow: none;
 }
 
+#dform_container #map_container .esri-search__submit-button:focus {
+    color: var(--c-greys-black);
+    background: var(--c-focus-links);
+    border-color: var(--c-focus-links);
+    box-shadow: none;
+    outline: none;
+}
+
 #dform_container #map_container .esri-search__submit-button span::before {
-    content: 'Search' !important;
-    font-family: var(--font-family);
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
     line-height: var(--line-height);
     color: var(--c-core-brand-primary-darken) !important;
+}
+
+@media screen and (min-width: 960px) {
+    #dform_container #map_container div.esri-component.esri-search.esri-widget>div {
+        margin-left: -170% !important;
+    }
+
+    #dform_container #map_container .esri-search__submit-button {
+        margin-left: var(--spacing-sm) !important;
+        border-radius: 100 !important;
+        border-left: 2px solid var(--c-core-brand-primary-darken) !important;
+    }
+
+    #dform_container #map_container .esri-search__submit-button span::before {
+        content: 'Search' !important;
+        font-family: var(--font-family);
+    }
+}
+
+#dform_container #map_container .esri-search__submit-button:hover span::before {
+    color: var(--c-brand-accents-teal);
 }
 
 #dform_container #map_container .esri-search__submit-button:focus span::before {
@@ -136,7 +165,36 @@
     outline: none;
 }
 
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1),
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2) {
+    height: var(--field-height-sm);
+    width: var(--field-height-sm);
+    border: 2px solid var(--c-core-brand-primary-darken);
+    border-top: 1px solid var(--c-core-brand-primary-darken);
+}
+
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1):hover,
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2):hover {
+    color: var(--c-brand-accents-teal);
+    background: var(--c-greys-white);
+    border-color: var(--c-brand-accents-teal);
+    box-shadow: none;
+}
+
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1) span,
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2) span {
+    color: var(--c-core-brand-primary-darken);
+    font-weight: var(--font-weight-semibold);
+}
+
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1):hover span,
+#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2):hover span {
+    color: var(--c-brand-accents-teal);
+}
+
+
 #dform_container #map_container .esri-search__sources-button,
 #dform_container #map_container .esri-search__clear-button {
     display: none !important;
 }
+
