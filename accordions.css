@@ -113,7 +113,7 @@
 
   #dform_container .details-accordion-content {
     border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal);
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
     margin: 0;
   }
 
@@ -122,7 +122,7 @@
   }
 
   #dform_container .details-accordion .details-accordion-content .dform_widget_field {
-    margin-block: var(--spacing-md);
+    margin-block: var(--spacing-sm);
   }
 
   #dform_container .details-accordion-content .dform_widget_field:first-child {

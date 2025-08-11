@@ -50,7 +50,7 @@
 
 #dform_container .map-container .address-selection-section {
     margin-bottom: var(--spacing-md);
-    padding: var(--spacing-xs) var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
     border: solid var(--spacing-xxs) var(--c-greys-slate);
 }
 
