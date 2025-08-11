@@ -85,6 +85,7 @@
     text-decoration: underline;
     text-underline-offset: 0.32rem;
     font-weight: var(--font-weight-semibold);
+    text-align: start;
 }
 
 #dform_container .map-container #map_container {
@@ -97,18 +98,45 @@
     display: none;
 }
 
-
+#dform_container #map_container div.esri-ui-top-left.esri-ui-corner div.esri-zoom {
+    margin-top: 730%;
+}
 
 #dform_container #map_container div.esri-component.esri-search.esri-widget>div {
-    margin-left: -130% !important;
+    display: inline-flex;
+    margin-left: -92% !important;
     margin-top: 10% !important;
 }
 
 #dform_container #map_container .esri-search__form input.esri-search__input {
-    max-width: 125px;
+    max-width: 110px;
+}
+
+@media screen and (min-width: 350px) {
+    #dform_container #map_container div.esri-component.esri-search.esri-widget>div {
+        margin-left: -105% !important;
+    }
+
+    #dform_container #map_container .esri-search__form input.esri-search__input {
+        max-width: 140px;
+    }
+}
+
+@media screen and (min-width: 500px) {
+    #dform_container #map_container div.esri-component.esri-search.esri-widget>div {
+        margin-left: -130% !important;
+    }
+
+    #dform_container #map_container .esri-search__form input.esri-search__input {
+        max-width: 200px;
+    }
 }
 
 @media screen and (min-width: 960px) {
+    #dform_container #map_container div.esri-component.esri-search.esri-widget>div {
+        margin-left: -130% !important;
+    }
+
     #dform_container #map_container .esri-search__form input.esri-search__input {
         max-width: 200px;
     }
@@ -145,7 +173,7 @@
 
 @media screen and (min-width: 960px) {
     #dform_container #map_container div.esri-component.esri-search.esri-widget>div {
-        margin-left: -170% !important;
+        margin-left: -167% !important;
     }
 
     #dform_container #map_container .esri-search__submit-button {
@@ -171,38 +199,37 @@
     outline: none;
 }
 
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1),
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2) {
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(1),
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(2) {
     height: var(--field-height-sm);
     width: var(--field-height-sm);
     border: 2px solid var(--c-core-brand-primary-darken);
-    border-top: 1px solid var(--c-core-brand-primary-darken);
 }
 
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1) {
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(1) {
     border-bottom: 1px solid var(--c-core-brand-primary-darken);
 }
 
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2) {
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(2) {
     border-top: 1px solid var(--c-core-brand-primary-darken);
 }
 
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1):hover,
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2):hover {
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(1):hover,
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(2):hover {
     color: var(--c-brand-accents-teal);
     background: var(--c-greys-white);
     border-color: var(--c-brand-accents-teal);
     box-shadow: none;
 }
 
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1) span,
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2) span {
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(1) span,
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(2) span {
     color: var(--c-core-brand-primary-darken);
     font-weight: var(--font-weight-semibold);
 }
 
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(1):hover span,
-#map_container div.esri-ui-top-left.esri-ui-corner > div > div:nth-child(2):hover span {
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(1):hover span,
+#map_container div.esri-ui-top-left.esri-ui-corner>div>div:nth-child(2):hover span {
     color: var(--c-brand-accents-teal);
 }
 
@@ -211,4 +238,3 @@
 #dform_container #map_container .esri-search__clear-button {
     display: none !important;
 }
-
