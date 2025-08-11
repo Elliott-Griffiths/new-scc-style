@@ -1861,7 +1861,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
         .filter(Boolean)
         .join(', ');
       selectedAddressSpan.innerHTML = addressParts;
-      selectedAddressSpan.classList.remove('dform_validationMessage');
+      selectedAddressSpan.classList.removeClass('dform_validationMessage');
     }
 
     const addressearchResults = document.querySelector(`#${currentPageId} .address-search-results`);
@@ -4025,7 +4025,6 @@ function do_KDF_mapReady_esriMap(map, positionLayer) {
 }
 
 function mapClick(evt) {
-  console.log('mapClick', evt)
   KDF.setVal("txt_site_name", "");
   KDF.setVal("txt_site_code", "");
   KDF.setVal("txt_feature_name", "");
@@ -4044,6 +4043,10 @@ function mapClick(evt) {
     { alias: "siteCode", value: "" },
   ]);
   // setSelectedAddress("", "hide");
+  const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
+  if (selectedAddressSpan) {
+    selectedAddressSpan.classList.removeClass('dform_validationMessage');
+  }
 
   $(".esriPopup").hide();
   if (KDF.kdf().form.complete !== "Y" || KDF.kdf().viewmode === "U") {
@@ -4089,7 +4092,6 @@ function mapClick(evt) {
       store_layer_attr.background_attribute = {};
 
       if (!withinSccCheck(convertPointP4)) {
-        const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
         if (selectedAddressSpan) {
           selectedAddressSpan.textContent = "Choose a location inside the Sheffield area";
           selectedAddressSpan.classList.add('dform_validationMessage');
@@ -4121,7 +4123,7 @@ function mapClick(evt) {
           null,
         ]);
       } else {
-        $("#map_error").remove();
+        // $("#map_error").remove();
         if (streetMapView.zoom >= 18) {
           streetMapView.goTo({
             center: evt.mapPoint,
