@@ -560,6 +560,10 @@ function handleOnReadyEvent(_, kdf) {
     const searchInput = document.querySelector(`#${currentPageId} input[data-customalias="postcode"]`);
     let searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
     const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
+    if (resultsList) {
+      resultsList.value = '';
+      KDF.setWidgetRequired(resultsList.replace('dform_widget_', ''));
+    }
     
     let manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
     if (manualAddressElement) {
@@ -654,6 +658,7 @@ const handleSearchResults = (currentPageId, buttonId) => {
       const searchResultsSelect = document.querySelector(`#${currentPageId} .address-search-results select`);
       if (searchResultsSelect) {
         searchResultsSelect.value = ''; // Clear selected value from search results
+        KDF.setWidgetNotRequired(searchResultsSelectid.replace('dform_widget_', ''));
       }
 
       const addressFields = getValuesOfInputFields([
