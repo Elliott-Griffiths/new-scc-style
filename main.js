@@ -1841,6 +1841,11 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
     }
 
+    let findOnMapElement = document.querySelector(`#${currentPageId} .map-container`);
+    if (findOnMapElement) {
+      findOnMapElement = findOnMapElement.id.replace('dform_widget_html_', '');
+    }
+
     property = formatTitleCase(property);
     streetName = formatTitleCase(streetName);
     fullAddress = `${formatTitleCase(property)} ${formatTitleCase(
@@ -1887,16 +1892,17 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     if (buttonContainer) {
       buttonContainer.style.display = 'none'; // Hides the element
     }
+    
+    if (easting && northing) {
+      plotLocationOnMap(easting, northing);
+    }
 
     hideShowMultipleElements([
       { name: setAddressButton, display: "hide" },
       { name: selectedAddressContainer, display: "show" },
       { name: manualAddressElement, display: "hide" },
+      { name: findOnMapElement, display: "hide" },
     ]);
-
-    if (easting && northing) {
-      plotLocationOnMap(easting, northing);
-    }
   }
 
   if (action === "retrieve-vehicle-details") {
