@@ -1849,6 +1849,7 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
         .filter(Boolean)
         .join(', ');
       selectedAddressSpan.innerHTML = addressParts;
+      selectedAddressSpan.classList.remove('dform_validationMessage');
     }
 
     const addressearchResults = document.querySelector(`#${currentPageId} .address-search-results`);
