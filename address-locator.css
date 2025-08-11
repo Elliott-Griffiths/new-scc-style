@@ -1,5 +1,5 @@
 #dform_container .address-search {
-    margin-block: var(--spacing-md);
+    margin-block: var(--spacing-sm);
 }
 
 #dform_container .address-search input[type="text"] {
@@ -7,15 +7,15 @@
 }
 
 #dform_container .address-search-btn-container {
-    margin-block: var(--spacing-md) 0;
+    margin-block: var(--spacing-sm) 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
 }
 
 #dform_container .address-search-btn-container.margin-bottom {
-    margin-block: var(--spacing-md);
+    margin-block: var(--spacing-sm);
 }
 
 #dform_container button.search-again-btn {
@@ -30,8 +30,12 @@
     display: flex;
     flex-direction: column;
     font-style: normal;
-    padding-left: var(--spacing-md) !important;
+    padding-left: var(--spacing-sm) !important;
     border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal) !important;
+}
+
+#dform_container .dform_widget_type_html.manual-address-container {
+    margin-block: var(--spacing-sm) 0;
 }
 
 #dform_container .map-container .details-accordion .details-accordion-content {
@@ -40,7 +44,7 @@
 
 #dform_container .map-container .address-selection-section {
     margin-bottom: var(--spacing-sm);
-    padding: var(--spacing-xs) var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
     border: solid var(--spacing-xxs) var(--c-greys-slate);
 }
 

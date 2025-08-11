@@ -3381,6 +3381,9 @@ function getAndSetReviewPageData() {
           } else if (fieldType === "radio") {
             fieldLabel = getLegendText("radiogroup");
             fieldValue = KDF.getVal(fieldName);
+          } else if (fieldType === "checbox") {
+            fieldLabel = getLegendText("radiogroup");
+            fieldValue = KDF.getVal(fieldName);
           } else if (fieldType === "multicheckbox") {
             fieldLabel = getLegendText("checkboxgroup");
             fieldValue = `<br/>${KDF.getVal(fieldName).join("<br>")}`;
