@@ -3350,9 +3350,11 @@ function getAndSetReviewPageData() {
             if (!fieldValue || fieldValue === "" || fieldValue === null || fieldValue === undefined) {
               fieldValue = fieldType === "file" ? "Not uploaded" : "Not answered";
             }
+            
+            let changeLink = null;
 
             if (kdf.form.complete !== "Y") {
-              const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
+              changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
                 e.preventDefault();
                 const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
                 if (buttonSet.is(":hidden")) {
@@ -3365,7 +3367,7 @@ function getAndSetReviewPageData() {
             const reviewItem = $("<div class='review-item'></div>")
               .append(`<dt class="question">${fieldLabel}</dt>`)
               .append(`<dd class="answer">${fieldValue}</dd>`)
-              .append($("<dd class='action'></dd>").append(changeLink));
+              .append($("<dd class='action'></dd>").append(changeLink)); // This appends the link (or null)
 
             dl.append(reviewItem);
             hasFields = true;
