@@ -119,6 +119,7 @@ const PORTAL_URL = `${protocol}//${hostname}/site/sheffield_dev`;
 
 let formattedTitle = "";
 
+let enableSave = false;
 let saveProgress = false;
 let customerState = false;
 
@@ -161,9 +162,16 @@ function handleInitialisingEvent() {
   // --- HANDLE SIGN IN PAGE ----------------------------------------------- \\
 
   if (KDF.kdf().access === "citizen"
-    && (KDF.kdf().profileData.customerid && KDF.kdf().profileData.customerid !== "")) {
+    && KDF.kdf().profileData.customerset === "citizen_true") {
     KDF.hidePage("page_sign_in");
     KDF.setVal("rad_sign_in", "true");
+    if (enableSave) {
+      const buttons = document.querySelectorAll('button.success-btn');
+      const nextButtons = Array.from(buttons).filter(button => button.textContent.trim() === 'Next');
+      nextButtons.forEach(button => {
+        button.textContent = 'Save and continue';
+      });
+    }
   }
 
   // --- ADD TAB TITLE AND ICON  ------------------------------------------- \\
@@ -1426,6 +1434,12 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
 
   updateProgressBar(targetpageid);
 
+  if (enableSave && kdf.profileData.customerset === "citizen_true") {
+    if (targetpageid > 2) {
+      KDF.saveQuiet();
+    }
+  }
+
   if (pageName === "page_about_you") {
     if (kdf.access === "agent" && !kdf.form.data?.num_reporter_obj_id) {
       KDF.sendDesktopAction("raised_by");
@@ -1450,7 +1464,6 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   if (pageName === "save") {
     KDF.setVal("txt_resume_form", "true");
     getAndSetReviewPageData();
-    // showContactTeamPanel();
     KDF.save();
   }
 
@@ -1460,7 +1473,6 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
     } else {
       KDF.showWidget("ahtm_confirmation_email_send");
     }
-    // showContactTeamPanel();
     KDF.setVal("txt_finish_date_and_time", formatDateTime().utc);
   }
 
@@ -1470,7 +1482,7 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   }
 
   // Toggle back button visibility
-  displayBackButton(targetpageid > 1 && pageName !== "complete" && kdf.form.complete !== "Y");
+  displayBackButton(targetpageid > 2 && pageName !== "complete" && kdf.form.complete !== "Y");
 
   getAndSetReviewPageData();
 
@@ -2096,6 +2108,8 @@ function handleFailedAction(event, action, xhr, settings, thrownError) {
 
 function handleFormSave(event, kdf) {
   KDF.hideMessages();
+
+  createAndInsertReferenceDisplay(kdf.form.caseid);
 }
 
 // --- HANDLE ON FAILED SAVE EVENT ---------------------------------------- \\
@@ -2113,7 +2127,7 @@ function handleFomComplate(event, kdf) {
 
   displayBackButton(false);
 
-  createAndInsertReferenceDisplay(kdf.form.caseid);
+  // createAndInsertReferenceDisplay(kdf.form.caseid);
 
   setTimeout(function () {
     const pagenav = document.getElementById("dform_pagenav");
@@ -2139,7 +2153,7 @@ function handleFomComplate(event, kdf) {
     KDF.showWidget("ahtm_confirmation_email");
   }
 
-  if (kdf.access === "citizen" && (kdf.profileData.customerid && kdf.profileData.customerid !== "")) {
+  if (kdf.access === "citizen" && kdf.profileData.customerset === "citizen_true") {
     buildMyAccountLink(kdf.form.caseid);
   }
 }
