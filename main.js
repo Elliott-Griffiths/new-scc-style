@@ -1435,7 +1435,7 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   updateProgressBar(targetpageid);
 
   if (enableSave && kdf.customerset === "citizen_true") {
-    if (targetpageid > 2 && pageName !== "complete" && kdf.form.complete.toUpperCase() !== "Y") {
+    if (targetpageid > 2 && pageName !== "complete" && kdf.form.complete !== "Y") {
       KDF.saveQuiet();
     }
   }
