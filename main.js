@@ -1478,7 +1478,7 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
 
   const controlElement = document.getElementById('dform_controls');
   if (controlElement) {
-    controlElement.style.display = targetpageid > 1 ? "flex" : "none";
+    controlElement.style.display = targetpageid > 2 ? "flex" : "none";
   }
 
   // Toggle back button visibility
