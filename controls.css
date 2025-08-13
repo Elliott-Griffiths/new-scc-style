@@ -279,7 +279,8 @@
   cursor: default !important;
 }
 
-#dform_control_buttons #dform_pagenav #dform_navigation li:first-child span {
+#dform_control_buttons #dform_pagenav #dform_navigation li:first-child span,
+#dform_control_buttons #dform_pagenav #dform_navigation li:nth-child(2) span {
   display: none;
 }
 
