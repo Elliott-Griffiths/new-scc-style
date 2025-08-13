@@ -160,7 +160,7 @@ function handleInitialisingEvent() {
   }
 
   // --- HANDLE SIGN IN PAGE ----------------------------------------------- \\
-
+console.log(KDF.kdf().access, KDF.kdf().profileData.customerset, enableSave)
   if (KDF.kdf().access === "citizen"
     && KDF.kdf().profileData.customerset === "citizen_true") {
     KDF.hidePage("page_sign_in");
