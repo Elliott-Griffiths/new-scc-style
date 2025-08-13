@@ -1,5 +1,5 @@
 #dform_container .dform_widget_type_buttonset {
-  margin-block: var(--spacing-xl);
+  margin-block: var(--spacing-lg);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
