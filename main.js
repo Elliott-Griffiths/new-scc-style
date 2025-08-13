@@ -160,9 +160,9 @@ function handleInitialisingEvent() {
   }
 
   // --- HANDLE SIGN IN PAGE ----------------------------------------------- \\
-console.log(KDF.kdf().access, KDF.kdf().profileData.customerset, enableSave, KDF.kdf())
+console.log(KDF.kdf().access, KDF.kdf().customerset, enableSave, KDF.kdf())
   if (KDF.kdf().access === "citizen"
-    && KDF.kdf().profileData.customerset === "citizen_true") {
+    && KDF.kdf().customerset === "citizen_true") {
     KDF.hidePage("page_sign_in");
     KDF.setVal("rad_sign_in", "true");
     if (enableSave) {
@@ -1434,7 +1434,7 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
 
   updateProgressBar(targetpageid);
 
-  if (enableSave && kdf.profileData.customerset === "citizen_true") {
+  if (enableSave && kdf.customerset === "citizen_true") {
     if (targetpageid > 2) {
       KDF.saveQuiet();
     }
@@ -2153,7 +2153,7 @@ function handleFomComplate(event, kdf) {
     KDF.showWidget("ahtm_confirmation_email");
   }
 
-  if (kdf.access === "citizen" && kdf.profileData.customerset === "citizen_true") {
+  if (kdf.access === "citizen" && kdf.customerset === "citizen_true") {
     buildMyAccountLink(kdf.form.caseid);
   }
 }
