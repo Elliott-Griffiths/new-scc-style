@@ -3346,28 +3346,56 @@ function getAndSetReviewPageData() {
             }
           }
 
+          // if (fieldLabel) {
+          //   if (!fieldValue || fieldValue === "" || fieldValue === null || fieldValue === undefined) {
+          //     fieldValue = fieldType === "file" ? "Not uploaded" : "Not answered";
+          //   }
+
+          //   const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
+          //     e.preventDefault();
+          //     const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
+          //     if (buttonSet.is(":hidden")) {
+          //       buttonSet.show();
+          //     }
+          //     KDF.gotoPage(pageName, true, true, true);
+          //   });
+
+          //   const reviewItem = $("<div class='review-item'></div>")
+          //     .append(`<dt class="question">${fieldLabel}</dt>`)
+          //     .append(`<dd class="answer">${fieldValue}</dd>`)
+          //     .append($("<dd class='action'></dd>").append(changeLink));
+
+          //   dl.append(reviewItem);
+          //   hasFields = true;
+          // }
+
           if (fieldLabel) {
             if (!fieldValue || fieldValue === "" || fieldValue === null || fieldValue === undefined) {
               fieldValue = fieldType === "file" ? "Not uploaded" : "Not answered";
             }
-
-            const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
-              e.preventDefault();
-              const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
-              if (buttonSet.is(":hidden")) {
-                buttonSet.show();
-              }
-              KDF.gotoPage(pageName, true, true, true);
-            });
-
+          
+            // Create the review item container
             const reviewItem = $("<div class='review-item'></div>")
               .append(`<dt class="question">${fieldLabel}</dt>`)
-              .append(`<dd class="answer">${fieldValue}</dd>`)
-              .append($("<dd class='action'></dd>").append(changeLink));
-
+              .append(`<dd class="answer">${fieldValue}</dd>`);
+          
+            // Only add the change link if the form is not complete
+            if (KDF.kdf().form.complete !== "Y") {
+              const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
+                e.preventDefault();
+                const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
+                if (buttonSet.is(":hidden")) {
+                  buttonSet.show();
+                }
+                KDF.gotoPage(pageName, true, true, true);
+              });
+              reviewItem.append($("<dd class='action'></dd>").append(changeLink));
+            }
+          
             dl.append(reviewItem);
             hasFields = true;
           }
+          
         });
 
         // Only append the section if we found at least one field with a label
