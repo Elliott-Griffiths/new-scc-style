@@ -79,8 +79,8 @@ button.tab-button {
   text-decoration: none;
   cursor: pointer;
   color: var(--c-core-brand-primary-darken);
-  background: var(--c-blue);
-  border: solid 2px var(--c-blue);
+  background: var(--c-grey);
+  border: solid 2px var(--c-grey);
   border-radius: 1.5625rem 1.5625rem 0 0 !important;
   min-width: 8.75rem;
   width: max-content;
