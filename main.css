@@ -12,6 +12,8 @@
 @import url("./buttons.css");
 @import url("./address-locator.css");
 
+@import url("./my-requests.css");
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
@@ -37,6 +39,8 @@
   --c-alerts-danger: #d4351c;
 
   --c-alerts-warning: #ffbf47;
+  --c-blue: #e0f7fd;
+  --c-orange: #ff8b44;
 
   /* Typography */
   --font-family: "Poppins";
