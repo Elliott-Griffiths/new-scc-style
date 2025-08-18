@@ -8,6 +8,9 @@
   padding: var(--spacing-sm);
   border-radius: 1.5625rem 1.5625rem 0 0 !important;
   transform: translateX(3px);
+  display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
 }
 
 #dform_container .profile-details-container {
@@ -56,8 +59,15 @@
   border-left: none !important;
 }
 
-.dform_section_box_account fieldset > legend::before {
+
+
+.dform_section_box_account fieldset > legend::before,
+.dform_section_box_secure_details fieldset > legend::before,
+.dform_section_box_about_you fieldset > legend::before {
   content: url(./icons/gear.svg);
+  width: var(--font-size-xxxl);
+    height: var(--font-size-xxxl);
+    line-height: var(--line-height);
 }
 
 .dform_section_box_secure_details fieldset > legend::before {
