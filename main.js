@@ -550,6 +550,10 @@ function handleOnReadyEvent(_, kdf) {
         $('.dform_section_box_review div[data-type="buttonset"]').remove();
       }
     }
+    setTimeout(() => {
+      KDF.showPage("page_review");
+      KDF.gotoPage("page_review");
+    }, 0);
   }
 
   // --- HANDLE FORMAT TITLE CASE ------------------------------------------ \\
