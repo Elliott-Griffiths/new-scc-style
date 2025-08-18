@@ -16,7 +16,7 @@
 #dform_container button.secondary-link-btn,
 #dform_container button.action-link-btn,
 #dform_container a.button,
-a.button {
+#back-to-requests-link {
   font-family: var(--font-family);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-normal);
@@ -78,7 +78,7 @@ a.button {
 }
 
 #dform_container a.button,
-a.button {
+#back-to-requests-link {
   margin-block: var(--spacing-xl);
 }
 
@@ -205,7 +205,7 @@ a.button {
 #dform_container button:hover,
 #dform_container button:active,
 #dform_container a.button:hover,
-a.button:hover {
+#back-to-requests-link:hover {
   color: var(--c-greys-white);
   background: var(--c-brand-accents-teal);
   border-color: var(--c-brand-accents-teal);
@@ -215,8 +215,8 @@ a.button:hover {
 #dform_container button:focus,
 #dform_container a.button:focus,
 #dform_container a.button:active,
-a.button:focus, 
-a.button:active {
+#back-to-requests-link:focus, 
+#back-to-requests-link:active {
   color: var(--c-greys-black);
   background: var(--c-focus-links);
   border-color: var(--c-focus-links);
