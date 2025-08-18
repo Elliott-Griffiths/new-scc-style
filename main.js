@@ -522,7 +522,7 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
 
-  setTimeout(() => {
+  // setTimeout(() => {
   if (kdf.form.complete === "Y") {
     KDF.showPage("page_review");
     KDF.gotoPage("page_review");
@@ -552,7 +552,7 @@ function handleOnReadyEvent(_, kdf) {
       }
     }
   }
-}, 0);
+// }, 0);
 
   // --- HANDLE FORMAT TITLE CASE ------------------------------------------ \\
 
