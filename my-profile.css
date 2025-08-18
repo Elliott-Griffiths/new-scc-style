@@ -1,5 +1,4 @@
-#profile #dform_controls,
-.le-request-form-details #dform_pageholder {
+#profile #dform_controls, #dform_pageholder {
   padding: 0 !important;
 }
 
