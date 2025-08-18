@@ -15,7 +15,8 @@
 #dform_container button.link-btn,
 #dform_container button.secondary-link-btn,
 #dform_container button.action-link-btn,
-#dform_container a.button {
+#dform_container a.button,
+a.button {
   font-family: var(--font-family);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-normal);
@@ -76,7 +77,8 @@
   border: solid 2px var(--c-core-brand-accent-2);
 }
 
-#dform_container a.button {
+#dform_container a.button,
+a.button {
   margin-block: var(--spacing-xl);
 }
 
@@ -202,7 +204,8 @@
 
 #dform_container button:hover,
 #dform_container button:active,
-#dform_container a.button:hover {
+#dform_container a.button:hover,
+a.button:hover {
   color: var(--c-greys-white);
   background: var(--c-brand-accents-teal);
   border-color: var(--c-brand-accents-teal);
@@ -211,7 +214,9 @@
 
 #dform_container button:focus,
 #dform_container a.button:focus,
-#dform_container a.button:active {
+#dform_container a.button:active,
+a.button:focus, 
+a.button:active {
   color: var(--c-greys-black);
   background: var(--c-focus-links);
   border-color: var(--c-focus-links);
