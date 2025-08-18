@@ -1,9 +1,9 @@
-div.page {
+#my-requests {
   background: var(--c-greys-chalk);
 }
 
-div.navigation,
-div.content {
+#my-requests div.navigation,
+#my-requests div.content {
   margin: 0 auto !important;
   padding: var(--spacing-sm) clamp(15px, 5vw, 131px) !important;
   width: 100% !important;
