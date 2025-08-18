@@ -522,6 +522,7 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
 
+  setTimeout(() => {
   if (kdf.form.complete === "Y") {
     KDF.showPage("page_review");
     KDF.gotoPage("page_review");
@@ -550,11 +551,8 @@ function handleOnReadyEvent(_, kdf) {
         $('.dform_section_box_review div[data-type="buttonset"]').remove();
       }
     }
-    setTimeout(() => {
-      KDF.showPage("page_review");
-      KDF.gotoPage("page_review");
-    }, 0);
   }
+}, 0);
 
   // --- HANDLE FORMAT TITLE CASE ------------------------------------------ \\
 
