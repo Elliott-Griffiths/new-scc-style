@@ -311,6 +311,7 @@ li.le-stat-closed li.le-request-status-text::after {
 .le-request-list-link a {
     display: flex;
   align-items: center;
+  gap: var(--spacing-sm);
 font-family: var(--font-family);
 font-size: var(--font-size-sm);
 font-style: normal;
@@ -320,9 +321,31 @@ margin: 0;
 text-decoration: none;
 }
 
+.le-request-list-link a:focus {
+  color: var(--c-greys-black) !important;
+  background: var(--c-focus-links);
+  text-decoration: none !important;
+  border-radius: unset !important;
+  outline: none;
+  border-bottom: 2px solid var(--c-greys-black);
+}
+
 .le-request-list-link a span {
   text-decoration: underline;
   text-underline-offset: 0.25rem;
+}
+
+.le-request-list-link a:hover span {
+  background: transparent !important;
+  color: var(--c-brand-accents-teal);
+  text-decoration-thickness: 2px;
+}
+
+.le-request-list-link a:focus span {
+  font-weight: var(--font-weight-semibold);
+  color: var(--c-greys-black) !important;
+  background: var(--c-focus-links);
+  text-decoration: none !important;
 }
 
 .le-request-list-link a::before {
@@ -332,6 +355,9 @@ width: var(--font-size-base);
 line-height: var(--line-height);
 }
 
+.le-request-list-link a:focus::before {
+  content: url(./icons/arrow-right-black.svg);
+}
 
 .le-content .le-request-list-link .le-request-label {
   width: max-content;
