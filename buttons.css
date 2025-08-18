@@ -59,7 +59,8 @@
   border: solid 2px var(--c-core-brand-primary-darken);
 }
 
-#dform_container button.secondary-btn {
+#dform_container button.secondary-btn,
+#back-to-requests-link {
   color: var(--c-core-brand-primary-darken);
   background: var(--c-greys-white);
   border: solid 2px var(--c-core-brand-primary-darken);
@@ -204,8 +205,7 @@
 
 #dform_container button:hover,
 #dform_container button:active,
-#dform_container a.button:hover,
-#back-to-requests-link:hover {
+#dform_container a.button:hover {
   color: var(--c-greys-white);
   background: var(--c-brand-accents-teal);
   border-color: var(--c-brand-accents-teal);
@@ -215,7 +215,7 @@
 #dform_container button:focus,
 #dform_container a.button:focus,
 #dform_container a.button:active,
-#back-to-requests-link:focus, 
+#back-to-requests-link:focus,
 #back-to-requests-link:active {
   color: var(--c-greys-black);
   background: var(--c-focus-links);
@@ -231,7 +231,8 @@
   box-shadow: none;
 }
 
-#dform_container button.secondary-btn:hover {
+#dform_container button.secondary-btn:hover,
+#back-to-requests-link:hover {
   color: var(--c-brand-accents-teal);
   background: var(--c-greys-white);
   border-color: var(--c-brand-accents-teal);
