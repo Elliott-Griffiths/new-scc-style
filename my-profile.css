@@ -2,6 +2,68 @@
   padding: 0 !important;
 }
 
-/* #profile #dform_container .container .area .box {
-  max-width: 100% !important;
-} */
+#dform_container div.box.profile-details-header fieldset > legend {
+  margin: 0;
+  background: var(--c-greys-white);
+  padding: var(--spacing-sm);
+  border-radius: 1.5625rem 1.5625rem 0 0 !important;
+  transform: translateX(3px);
+}
+
+#dform_container .profile-details-container {
+  margin: 0;
+  margin-bottom: var(--spacing-xl);
+  background: var(--c-greys-white);
+  padding: var(--spacing-sm);
+  border-radius: 0 1.5625rem 1.5625rem !important;
+}
+
+#dform_container .user-account-details {
+  background: var(--c-blue);
+  padding: 0 var(--spacing-sm);
+  border-radius: 1.5625rem !important;
+}
+
+#dform_container .user-detail-group {
+  padding-block: var(--spacing-xs);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  border-bottom: 1px solid var(--c-core-brand-secondary);
+}
+
+#dform_container .user-detail-group:last-child {
+  border-bottom: none;
+}
+
+#dform_container .user-detail-group p {
+  margin: 0 !important;
+}
+
+#dform_container  .detail-change-link {
+  grid-column: 2 / -1;
+  grid-row: 1 / -1;
+  align-self: end;
+}
+
+#dform_container .detail-label {
+  font-weight: var(--font-weight-semibold);
+}
+
+#dform_container #address-value address {
+  margin-block: 0 !important;
+  padding-left: 0 !important;
+  border-left: none !important;
+}
+
+.dform_section_box_account fieldset > legend::before {
+  content: url(./icons/gear.svg);
+}
+
+.dform_section_box_secure_details fieldset > legend::before {
+  content: url(./icons/lock.svg);
+}
+
+.dform_section_box_about_you fieldset > legend::before {
+  content: url(./icons/user.svg);
+}
