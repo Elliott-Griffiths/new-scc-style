@@ -8,6 +8,17 @@ dl div.review-item {
   border-bottom: 2px solid var(--c-core-brand-body);
 }
 
+dl div.review-item dt.question,
+dl div.review-item dd.question {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-style: normal;
+  letter-spacing: 0;
+  line-height: var(--line-height);
+  color: var(--c-core-brand-body);
+  font-weight: var(--font-weight-normal);
+}
+
 dl div.review-item dt.question {
   font-weight: var(--font-weight-semibold);
 }
@@ -309,16 +320,16 @@ li.le-stat-closed li.le-request-status-text::after {
 }
 
 .le-request-list-link a {
-    display: flex;
+  display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-font-family: var(--font-family);
-font-size: var(--font-size-sm);
-font-style: normal;
-font-weight: var(--font-weight-normal);
-line-height: var(--line-height);
-margin: 0;
-text-decoration: none;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height);
+  margin: 0;
+  text-decoration: none;
 }
 
 .le-request-list-link a:focus {
@@ -349,10 +360,10 @@ text-decoration: none;
 }
 
 .le-request-list-link a::before {
-content: url(./icons/arrow-right-primary-darkened.svg);
-transform: rotate(180deg);
-width: var(--font-size-base);
-line-height: var(--line-height);
+  content: url(./icons/arrow-right-primary-darkened.svg);
+  transform: rotate(180deg);
+  width: var(--font-size-base);
+  line-height: var(--line-height);
 }
 
 .le-request-list-link a:focus::before {
@@ -362,12 +373,12 @@ line-height: var(--line-height);
 .le-content .le-request-list-link .le-request-label {
   width: max-content;
   padding-right: 8px;
-font-family: var(--font-family);
-font-size: var(--font-size-base);
-font-style: normal;
-font-weight: var(--font-weight-normal);
-line-height: var(--line-height);
-color: var(--c-core-brand-body);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height);
+  color: var(--c-core-brand-body);
 }
 
 .le-content .le-request-list-link .le-request-label::after {
@@ -375,6 +386,6 @@ color: var(--c-core-brand-body);
 }
 
 .le-content .le-request-list-link .le-request-value {
-font-weight: var(--font-weight-semibold);
-color: var(--c-brand-accents-teal);
+  font-weight: var(--font-weight-semibold);
+  color: var(--c-brand-accents-teal);
 }

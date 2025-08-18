@@ -26,6 +26,11 @@
   padding: var(--spacing-sm) clamp(15px, 5vw, 131px) !important;
 }
 
+.le-request-form-details #dform_controls,
+.le-request-form-details #dform_pageholder {
+  padding: 0 !important;
+}
+
 .content {
   flex-grow: 1;
   margin: unset;
