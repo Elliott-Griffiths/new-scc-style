@@ -295,3 +295,60 @@ li.le-stat-closed li.le-request-status-text::after {
   opacity: 50%;
   cursor: not-allowed;
 }
+
+
+/* request details */
+
+
+.le-request-list-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--c-core-brand-body);
+  padding-bottom: var(--spacing-xs);
+}
+
+.le-request-list-link a {
+    display: flex;
+  align-items: center;
+font-family: var(--font-family);
+font-size: var(--font-size-sm);
+font-style: normal;
+font-weight: var(--font-weight-normal);
+line-height: var(--line-height);
+margin: 0;
+text-decoration: none;
+}
+
+.le-request-list-link a span {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.le-request-list-link a::before {
+content: url(./icons/arrow-right-primary-darkened.svg);
+transform: rotate(180deg);
+width: var(--font-size-base);
+line-height: var(--line-height);
+}
+
+
+.le-content .le-request-list-link .le-request-label {
+  width: max-content;
+  padding-right: 8px;
+font-family: var(--font-family);
+font-size: var(--font-size-base);
+font-style: normal;
+font-weight: var(--font-weight-normal);
+line-height: var(--line-height);
+color: var(--c-core-brand-body);
+}
+
+.le-content .le-request-list-link .le-request-label::after {
+  content: ':';
+}
+
+.le-content .le-request-list-link .le-request-value {
+font-weight: var(--font-weight-semibold);
+color: var(--c-brand-accents-teal);
+}
