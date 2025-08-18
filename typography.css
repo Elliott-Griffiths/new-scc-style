@@ -92,7 +92,8 @@ ol,
 #dform_container ol,
 li,
 #dform_container li,
-#dform_container address {
+#dform_container address,
+time {
   margin: var(--spacing-sm) 0;
   min-height: 1.5rem;
   font-family: var(--font-family);

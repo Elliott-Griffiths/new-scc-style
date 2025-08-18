@@ -14,7 +14,7 @@ section.review-page-content-section {
     font-size: var(--font-size-base);
     font-style: normal;
     letter-spacing: 0;
-    line-height: var(--line-height);
+    line-height: var(--line-height-body);
     color: var(--c-core-brand-body);
     font-weight: var(--font-weight-normal);
   }
