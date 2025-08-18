@@ -4,7 +4,7 @@ div.content {
   padding: var(--spacing-sm) clamp(15px, 5vw, 131px) !important;
   width: 100% !important;
   max-width: 87.5rem !important;
-  background: var(--c-greys-white);
+  background: var(--c-greys-chalk);
 }
 
 div.navigation {
@@ -29,6 +29,7 @@ div.navigation a:active {
 }
 
 .page-title {
+  font-weight: var(--font-weight-700);
   padding-bottom: var(--spacing-xs);
   border-bottom: 1px solid var(--c-core-brand-body);
 }
