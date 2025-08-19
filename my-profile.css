@@ -51,6 +51,10 @@
   margin: 0;
 }
 
+#dform_container .detail-change-link a {
+  margin: 0;
+}
+
 #dform_container .detail-label {
   font-weight: var(--font-weight-semibold);
 }

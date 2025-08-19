@@ -1,3 +1,11 @@
+#home, #profile, #my-requests {
+  background: var(--c-greys-chalk);
+}
+
+#form {
+  background: var(--c-greys-white);
+}
+
 div.navigation,
 div.content {
   margin: 0 auto !important;
@@ -5,6 +13,11 @@ div.content {
   width: 100% !important;
   max-width: 87.5rem !important;
   background: var(--c-greys-chalk);
+}
+
+#form div.navigation,
+#form div.content{
+  background: var(--c-greys-white);
 }
 
 div.navigation {
