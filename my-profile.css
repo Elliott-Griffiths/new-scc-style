@@ -105,10 +105,13 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  font-weight: var(--font-weight-semibold);
   color: var(--c-brand-accents-teal);
   text-underline-offset: 0.5rem;
   width: max-content;
+}
+
+#dform_container #see-all-services {
+  font-weight: var(--font-weight-semibold);
 }
 
 #dform_container #see-all-services::before {
