@@ -23,6 +23,11 @@
   max-width: 100%;
 }
 
+#dform_widget_html_ahtm_finish_profile,
+#dform_widget_html_ahtm_profile_updated {
+  margin-top: 0 !important;
+}
+
 #dform_container div.box.profile-details-header fieldset>legend {
   margin: 0;
   background: var(--c-greys-white);
