@@ -3,6 +3,16 @@
   padding: 0 !important;
 }
 
+#profile #dform_container .container > .three {
+  width: 100%;
+}
+
+@media screen and (min-width: 960px) {
+  #profile #dform_container .container > .three {
+    width: 35%;
+  }
+}
+
 #dform_container div.box.profile-details-header fieldset>legend {
   margin: 0;
   background: var(--c-greys-white);
@@ -82,4 +92,36 @@
 
 .dform_section_box_about_you fieldset>legend::before {
   content: url(./icons/user.svg);
+}
+
+#dform_container #see-all-services {
+  padding: 5px 1px;
+  font-weight: var(--font-weight-semibold);
+}
+
+#dform_container #see-all-services::before {
+  content: url(./icons/arrow-right-primary-darkened.svg);
+  align-items: center;
+  justify-content: center;
+  height: var(--field-height-md);
+  width: var(--field-height-md);
+}
+
+#dform_container #see-all-services:hover {
+  color: var(--c-core-brand-primary-darken);
+  background: var(--c-greys-white);
+  text-decoration: underline;
+}
+
+#dform_container #see-all-services:focus {
+  color: var(--c-greys-black);
+  background: var(--c-focus-links);
+  border-radius: unset !important;
+  outline: none;
+  border-bottom: 2px solid var(--c-greys-black);
+}
+
+#dform_container #see-all-services:focus::before {
+  content: url(./icons/arrow-right-focus-link.svg);
+  background: var(--c-greys-black);
 }
