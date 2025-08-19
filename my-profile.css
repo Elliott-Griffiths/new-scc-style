@@ -9,7 +9,7 @@
   max-width: 47.6875rem;
 }
 
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 1220px) {
   #dform_page_page_profile > div.container.area.dform_section_area_account {
     display: flex;
   }
