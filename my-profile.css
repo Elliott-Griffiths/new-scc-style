@@ -106,12 +106,14 @@
   align-items: center;
   gap: var(--spacing-sm);
   color: var(--c-brand-accents-teal);
-  text-underline-offset: 0.5rem;
+  text-underline-offset: 0.25rem;
   width: max-content;
+  margin: 0
 }
 
 #dform_container #see-all-services {
   font-weight: var(--font-weight-semibold);
+  text-underline-offset: 0.5rem;
 }
 
 #dform_container #see-all-services::before {
