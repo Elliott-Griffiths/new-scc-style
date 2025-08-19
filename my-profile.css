@@ -100,6 +100,7 @@
   content: url(./icons/user.svg);
 }
 
+#dform_container .dform_section_box_more_services .services-list a,
 #dform_container #see-all-services {
   display: flex;
   align-items: center;
@@ -119,6 +120,7 @@
   transform: translateY(3px);
 }
 
+#dform_container .dform_section_box_more_services .services-list a:hover,
 #dform_container #see-all-services:hover {
   color: var(--c-greys-black);
   background: transparent;
