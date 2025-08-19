@@ -111,7 +111,6 @@
   justify-content: unset;
   align-items: unset;
   width: var(--font-size-sm);
-  margin-left: var(--spacing-sm);
   transform: translateY(3px);
 }
 
