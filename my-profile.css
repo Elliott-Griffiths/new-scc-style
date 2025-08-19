@@ -107,9 +107,12 @@
 
 #dform_container #see-all-services::before {
   content: url(./icons/arrow-right-primary-darkened.svg);
-  height: var(--font-size-sm);
+  height: unset;
+  justify-content: unset;
+  align-items: unset;
   width: var(--font-size-sm);
   margin-left: var(--spacing-sm);
+  transform: translateY(3px);
 }
 
 #dform_container #see-all-services:hover {
