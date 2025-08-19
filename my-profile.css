@@ -103,6 +103,7 @@
   font-weight: var(--font-weight-semibold);
   color: var(--c-brand-accents-teal);
   text-underline-offset: 0.5rem;
+  width: max-content;
 }
 
 #dform_container #see-all-services::before {
@@ -129,6 +130,5 @@
 }
 
 #dform_container #see-all-services:focus::before {
-  content: url(./icons/arrow-right-focus-link.svg);
-  background: var(--c-greys-black);
+  content: url(./icons/arrow-right-black.svg);
 }
