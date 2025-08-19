@@ -3,8 +3,10 @@
   padding: 0 !important;
 }
 
+#dform_container .container .area .box,
 #profile #dform_container .container>.three {
   width: 100%;
+  max-width: 47.6875rem;
 }
 
 @media screen and (min-width: 960px) {
