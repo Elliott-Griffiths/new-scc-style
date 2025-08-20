@@ -60,3 +60,7 @@
   padding-left: var(--spacing-md) !important;
   border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal) !important;
 }
+
+.no-top-padding {
+  padding-top: 0 !important;
+}
