@@ -76,6 +76,7 @@
   height: 44px;
 }
 
+#NavigationAreaInSingleColumnTemplate button.back-btn,
 #dform_container button.back-btn,
 #dform_control_buttons #dform_print,
 #dform_control_buttons #dform_check,
@@ -105,10 +106,12 @@
   color: var(--c-links-link);
 }
 
+#NavigationAreaInSingleColumnTemplate button.back-btn,
 #dform_container button.back-btn {
   margin-right: auto !important;
 }
 
+#NavigationAreaInSingleColumnTemplate button.back-btn>.back-btn--text,
 #dform_container button.back-btn>.back-btn--text {
   text-decoration: underline;
   text-underline-offset: 0.25rem;
@@ -119,6 +122,7 @@
   align-items: center;
 }
 
+#NavigationAreaInSingleColumnTemplate button.back-btn::before,
 #dform_container button.back-btn::before {
   content: url(./icons/arrow-right-primary-darkened.svg);
   transform: rotate(180deg);
@@ -126,6 +130,7 @@
   line-height: var(--line-height);
 }
 
+#NavigationAreaInSingleColumnTemplate ,button.back-btn:hover
 #dform_container button.back-btn:hover {
   background: transparent !important;
 }
@@ -149,6 +154,7 @@
   transform: translateY(2px);
 }
 
+#NavigationAreaInSingleColumnTemplate button.back-btn:hover>.back-btn--text,
 #dform_container button.back-btn:hover>.back-btn--text,
 #dform_control_buttons #dform_print:hover,
 #dform_control_buttons #dform_check:hover,
@@ -159,6 +165,7 @@
   text-decoration-thickness: 2px;
 }
 
+#NavigationAreaInSingleColumnTemplate button.back-btn:focus,
 #dform_container button.back-btn:focus,
 #dform_control_buttons #dform_print:focus,
 #dform_control_buttons #dform_check:focus,
@@ -172,10 +179,12 @@
   border-bottom: 2px solid var(--c-greys-black);
 }
 
+#NavigationAreaInSingleColumnTemplate button.back-btn:focus::before,
 #dform_container button.back-btn:focus::before {
   content: url(./icons/arrow-right-black.svg);
 }
 
+#NavigationAreaInSingleColumnTemplate button.back-btn:focus>.back-btn--text,
 #dform_container button.back-btn:focus>.back-btn--text {
   font-weight: var(--font-weight-semibold);
   color: var(--c-greys-black) !important;
