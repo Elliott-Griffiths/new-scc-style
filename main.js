@@ -271,7 +271,8 @@ function handleInitialisingEvent() {
       console.error(".dform_section_box_core_case_fields element not found.");
     }
 
-    const controlButtons = document.getElementById("dform_control_buttons");
+    const targetElement = KDF.kdf().form.name === "cpe_my_profile" ? "NavigationAreaInSingleColumnTemplate" : "dform_control_buttons";
+    const controlButtons = document.getElementById(targetElement);
     if (controlButtons) {
       const visibleBackButtonHTML = `
       <button
