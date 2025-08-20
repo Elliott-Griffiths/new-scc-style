@@ -9,13 +9,13 @@
   max-width: 47.6875rem;
 }
 
-#dform_page_page_profile > div.container.area.dform_section_area_account {
+#dform_page_page_profile > div.container.area.dform_section_area_about_you {
   display: flex;
   flex-direction: column;
 }
 
 @media screen and (min-width: 1050px) {
-  #dform_page_page_profile > div.container.area.dform_section_area_account {
+  #dform_page_page_profile > div.container.area.dform_section_area_about_you {
     flex-direction: row;
   }
   
