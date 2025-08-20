@@ -49,7 +49,7 @@
 }
 
 #dform_container .make-header {
-  margin-top: var(--spacing-xs) !important;
+  margin-top: 0 !important;
 }
 
 #dform_container .container .area .box {
