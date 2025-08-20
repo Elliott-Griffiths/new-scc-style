@@ -44,5 +44,8 @@ div.navigation a:active {
 .page-title {
   font-weight: var(--font-weight-700);
   padding-bottom: var(--spacing-xs);
+}
+
+#NavigationAreaInSingleColumnTemplate {
   border-bottom: 1px solid var(--c-core-brand-body);
 }

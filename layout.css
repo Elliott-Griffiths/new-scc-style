@@ -47,10 +47,10 @@
 #dform_container .dform_widget_type_html {
   margin-block: var(--spacing-md);
 }
-
+/* 
 #dform_container .make-header {
   margin-top: var(--spacing-lg);
-}
+} */
 
 #dform_container .container .area .box {
   max-width: 47.6875rem;
