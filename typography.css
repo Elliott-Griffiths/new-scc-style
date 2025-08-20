@@ -46,7 +46,7 @@ h1,
 #dform_container .header1,
 #dform_container fieldset.area > legend,
 #dform_container div .header2,
-#dform_container .make-header label,
+#dform_container .make-header > div > label,
 #dform_container .make-header fieldset.radiogroup > legend,
 #dform_container .make-header fieldset.checkboxgroup > legend {
   font-size: var(--font-size-xxxxl);
