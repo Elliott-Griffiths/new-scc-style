@@ -90,7 +90,7 @@
   content: url(./icons/arrow-right-white.svg);
 }
 
-#dform_container #dform_widget_buttonset_bset_quick_links button:hover::after {
+#dform_container #dform_widget_buttonset_bset_quick_links button:focus::after {
   content: url(./icons/arrow-right-black.svg) !important;
 }
 
