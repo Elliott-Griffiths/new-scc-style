@@ -25,7 +25,11 @@
 }
 
 #dform_page_page_dashboard > div.container.area.dform_section_area_profile_info > div,
-#dform_page_page_dashboard > div.container.area.dform_section_area_quick_links > div {
+#dform_page_page_dashboard > div.container.area.dform_section_area_quick_links > div,
+#dform_page_page_dashboard > div.container.area.dform_section_area_location_results > div,
+#dform_page_page_dashboard > div.container.area.dform_section_area_most_popular > div,
+#dform_page_page_dashboard > div.container.area.dform_section_area_waste_and_recycling > div,
+#dform_page_page_dashboard > div.container.area.dform_section_area_your_nearest > div {
   max-width: 100%;
 }
 
