@@ -73,6 +73,12 @@
   border-color: var(--c-core-brand-primary-darken);
 }
 
+#dform_container #dform_widget_buttonset_bset_quick_links button:focus {
+  background: var(--c-focus-links);
+  color: var(--c-greys-black);
+  border-color: var(--c-focus-links);
+}
+
 #dform_container #dform_widget_buttonset_bset_quick_links button::after {
   content: url(./icons/arrow-right-primary-darkened.svg);
   width: var(--font-size-xl);
@@ -82,6 +88,10 @@
 
 #dform_container #dform_widget_buttonset_bset_quick_links button:hover::after {
   content: url(./icons/arrow-right-white.svg);
+}
+
+#dform_container #dform_widget_buttonset_bset_quick_links button:hover::after {
+  content: url(./icons/arrow-right-black.svg) !important;
 }
 
 #dform_container #location-results {
