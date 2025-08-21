@@ -95,8 +95,6 @@
   border-left: none !important;
 }
 
-
-
 .dform_section_box_account fieldset>legend::before,
 .dform_section_box_secure_details fieldset>legend::before,
 .dform_section_box_about_you fieldset>legend::before {
