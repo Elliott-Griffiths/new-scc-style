@@ -1,0 +1,54 @@
+#profile #dform_controls,
+#dform_pageholder {
+  padding: 0 !important;
+}
+
+#dform_container .container .area .box,
+#profile #dform_container .container>.three {
+  width: 100%;
+  max-width: 47.6875rem;
+}
+
+#dform_page_page_profile > div.container.area.dform_section_area_other_contacts {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 1050px) {
+  #dform_page_page_profile > div.container.area.dform_section_area_other_contacts {
+    flex-direction: row;
+  }
+  
+  #profile #dform_container .container>.three {
+    width: 35%;
+  }
+}
+
+#dform_page_page_profile > div.container.area.dform_section_area_profile_info > div,
+#dform_page_page_profile > div.container.area.dform_section_area_quick_links > div {
+  max-width: 100%;
+}
+
+#dform_widget_html_ahtm_finish_profile,
+#dform_widget_html_ahtm_profile_updated {
+  margin-top: 0 !important;
+}
+
+#dform_container div.box.dashboard-details-header fieldset>legend {
+    margin: 0;
+    background: var(--c-greys-white);
+    padding: var(--spacing-sm);
+    border-radius: 1.5625rem 1.5625rem 0 0 !important;
+    transform: translateX(3px);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+#dform_container .dashboard-details-container {
+    margin: 0;
+    margin-bottom: var(--spacing-xl);
+    background: var(--c-greys-white);
+    padding: var(--spacing-sm);
+    border-radius: 0 1.5625rem 1.5625rem !important;
+  }
