@@ -55,6 +55,9 @@
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 5rem;
   border-radius: 40px !important;
   flex-grow: 1;
@@ -72,11 +75,16 @@
 
 #dform_container #dform_widget_buttonset_bset_quick_links button::after {
   content: url(./icons/arrow-right-primary-darkened.svg);
-  width: var(--font-size-xxxl);
-  height: var(--font-size-xxxl);
+  width: var(--font-size-xl);
+  height: var(--font-size-xl);
   line-height: var(--line-height);
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button:hover::after {
   content: url(./icons/arrow-right-white.svg);
+}
+
+#dform_container #location-results {
+  color: var(--c-brand-accents-teal);
+  font-weight: var(--font-weight-semibold);
 }
