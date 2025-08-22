@@ -177,8 +177,8 @@
   top: unset;
   transform: unset;
 
-  width: var(--font-size-base);
-  height: var(--font-size-base);
+  width: var(--font-size-sm);
+  height: var(--font-size-sm);
   background-image: url('./icons/arrow-right-white.svg');
   background-size: contain;
   background-repeat: no-repeat;
