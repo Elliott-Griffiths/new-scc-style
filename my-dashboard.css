@@ -174,7 +174,7 @@
   top: unset;
   transform: unset;
 
-  width: max-content;
+  width: var(--font-size-base);
   height: var(--font-size-base);
   background-image: url('./icons/arrow-right-white.svg');
   background-size: contain;
