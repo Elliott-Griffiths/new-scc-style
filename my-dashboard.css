@@ -220,3 +220,8 @@
 #dform_container .dashboard-details-container .card a.button:focus::after {
   content: url(./icons/chevron-right-black.svg) !important;
 }
+
+#dform_container .dashboard-details-container .card p span,
+#dform_container .dashboard-details-container .card.recycling ul li a {
+  font-weight: var(--font-weight-semibold);
+}
