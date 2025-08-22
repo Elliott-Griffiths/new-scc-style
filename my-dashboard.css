@@ -161,19 +161,19 @@
   text-align: center;
 }
 
-#dform_container .dashboard-details-container .card.recycling ul li {
-  /* content: url(./icons/arrow-right-white.svg);
+#dform_container .dashboard-details-container .card.recycling ul li::before {
+  content: url(./icons/arrow-right-white.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
-  line-height: var(--line-height); */
-  .links li::before {
+  line-height: var(--line-height);
+  /* .links li::before {
     content: '→';
     position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
     font-size: var(--font-size-base);
-  }
+  } */
 }
 
 #dform_container .dashboard-details-container .card a.button {
