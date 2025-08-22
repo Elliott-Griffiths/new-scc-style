@@ -112,48 +112,48 @@
 
 #dform_container .dashboard-details-container .card,
 #dform_container .dashboard-details-container .card div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #dform_container .dashboard-details-container .card {
-    gap: var(--spacing-md);
-    flex-grow: 1;
-    padding: var(--spacing-md) var(--spacing-sm);
-    border: 3px solid var(--c-core-brand-primary-darken);
-    border-radius: 1.5625rem;
+  gap: var(--spacing-md);
+  flex: 1;
+  padding: var(--spacing-md) var(--spacing-sm);
+  border: 3px solid var(--c-core-brand-primary-darken);
+  border-radius: 1.5625rem;
 }
 
 #dform_container .dashboard-details-container .card div {
-    gap: var(--spacing-sm);
-    flex-grow: 1;
-    background: transparent;
+  gap: var(--spacing-sm);
+  flex: 1;
+  background: transparent;
 }
 
 #dform_container .dashboard-details-container .card div *,
 #dform_container .dashboard-details-container .card a.button {
-    margin: 0 !important;
-    color: var(--c-greys-white);
+  margin: 0 !important;
+  color: var(--c-greys-white);
 }
 
 #dform_container .dashboard-details-container .card.school {
-    background: var(--c-purple);
-    border-color: var(--c-purple-darken);
+  background: var(--c-purple);
+  border-color: var(--c-purple-darken);
 }
 
 #dform_container .dashboard-details-container .card.council-tax {
-    background: var(--c-brand-accents-teal);
-    border-color: var(--c-core-brand-primary);
+  background: var(--c-brand-accents-teal);
+  border-color: var(--c-core-brand-primary);
 }
 
 #dform_container .dashboard-details-container .card.council-tax p {
-    text-align: center;
+  text-align: center;
 }
 
 #dform_container .dashboard-details-container .card.recycling {
-    background: var(--c-alerts-success);
-    border-color: var(--c-alerts-success-darken);
+  background: var(--c-alerts-success);
+  border-color: var(--c-alerts-success-darken);
 }
 
 #dform_container .dashboard-details-container .card.recycling ul {
@@ -190,9 +190,9 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-xs);
-    background: transparent;
-    color: var(--c-greys-white);
-    border-color: var(--c-greys-white);
+  background: transparent;
+  color: var(--c-greys-white);
+  border-color: var(--c-greys-white);
 }
 
 #dform_container .dashboard-details-container .card a.button::after {
