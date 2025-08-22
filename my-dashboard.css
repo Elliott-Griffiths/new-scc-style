@@ -167,6 +167,7 @@
 #dform_container .dashboard-details-container .card.recycling ul li {
   display: flex;
   align-items: center;
+  gap: var(--spacing-xs);
 }
 
 #dform_container .dashboard-details-container .card.recycling ul li::before {
