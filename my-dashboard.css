@@ -157,44 +157,22 @@
 }
 
 #dform_container .dashboard-details-container .card.recycling ul {
-  /* list-style-image: url(./icons/arrow-right-white.svg); */
   list-style: none;
   text-align: center;
 }
 
-/* #dform_container .dashboard-details-container .card.recycling ul li {
-  text-align: center;
-} */
-
- /* #dform_container .dashboard-details-container .card.recycling ul li::before {
-  content: url(./icons/arrow-right-white.svg);
-  width: var(--font-size-xl);
-  height: var(--font-size-xl);
-  line-height: var(--line-height);
-} */
+#dform_container .dashboard-details-container .card.recycling ul li {
+  display: flex;
+  align-items: center;
+}
 
 #dform_container .dashboard-details-container .card.recycling ul li::before {
   content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: var(--font-size-base);
   height: var(--font-size-base);
   background-image: url('./icons/arrow-right-white.svg');
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
 }
-
-/* #dform_container .dashboard-details-container .card.recycling ul li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: var(--font-size-base);
-} */
 
 #dform_container .dashboard-details-container .card a.button {
   display: flex;
