@@ -217,6 +217,6 @@
   content: url(./icons/chevron-right-teal.svg);
 }
 
-#dform_container #dform_widget_buttonset_bset_quick_links button:focus::after {
+#dform_container .dashboard-details-container .card a.button:focus::after {
   content: url(./icons/chevron-right-black.svg) !important;
 }
