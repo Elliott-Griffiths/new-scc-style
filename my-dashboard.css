@@ -153,6 +153,9 @@
 }
 
 #dform_container .dashboard-details-container .card a.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
     background: transparent;
     color: var(--c-greys-white);
     border-color: var(--c-greys-white);
@@ -172,6 +175,16 @@
   border-color: var(--c-brand-accents-teal);
 }
 
+#dform_container .dashboard-details-container .card a.button:focus {
+  background: var(--c-focus-links);
+  color: var(--c-greys-black);
+  border-color: var(--c-focus-links);
+}
+
 #dform_container .dashboard-details-container .card a.button:hover::after {
   content: url(./icons/chevron-right-teal.svg);
+}
+
+#dform_container #dform_widget_buttonset_bset_quick_links button:focus::after {
+  content: url(./icons/chevron-right-black.svg) !important;
 }
