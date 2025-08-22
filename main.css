@@ -40,6 +40,7 @@
   --c-links-link: #003142;
   --c-focus-links: #3fc49a;
   --c-alerts-success: #008b40;
+  --c-alerts-success-darken: #006b31;
   --c-core-tints-success-tint-20: #ddffed;
   --c-alerts-danger: #d4351c;
 
@@ -47,6 +48,7 @@
   --c-blue: #e0f7fd;
   --c-orange: #ff8b44;
   --c-purple: #964a88;
+  --c-purple-darken: #723f6f;
   --c-grey: #d1dbdf;
 
   /* Typography */
