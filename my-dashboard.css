@@ -168,6 +168,13 @@
 
 #dform_container .dashboard-details-container .card.recycling ul li::before {
   content: '';
+
+  position: unset;
+  left: unset;
+  top: unset;
+  transform: unset;
+
+  width: max-content;
   height: var(--font-size-base);
   background-image: url('./icons/arrow-right-white.svg');
   background-size: contain;
