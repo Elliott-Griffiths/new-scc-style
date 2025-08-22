@@ -101,6 +101,13 @@
 
 /* MOST POPULAR */
 
+.dform_section_box_most_popular fieldset>legend::before {
+  content: url(./icons/thumb-up.svg);
+  width: var(--font-size-xxxl);
+  height: var(--font-size-xxxl);
+  line-height: var(--line-height);
+}
+
 #dform_container .dashboard-details-container .card,
 #dform_container .dashboard-details-container .card div {
     display: flex;
