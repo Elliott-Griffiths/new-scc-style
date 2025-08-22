@@ -48,6 +48,8 @@
   border-radius: 0 1.5625rem 1.5625rem !important;
 }
 
+/* QUICK LINKS */
+
 #dform_container #dform_widget_buttonset_bset_quick_links {
   justify-content: space-between;
   margin-block: var(--spacing-xs);
@@ -155,18 +157,25 @@
 }
 
 #dform_container .dashboard-details-container .card.recycling ul {
-  list-style-image: url(./icons/arrow-right-white.svg);
+  list-style: none;
   text-align: center;
+}
+
+#dform_container .dashboard-details-container .card.recycling ul li {
+  content: url(./icons/arrow-right-white.svg);
+  width: var(--font-size-xl);
+  height: var(--font-size-xl);
+  line-height: var(--line-height);
 }
 
 #dform_container .dashboard-details-container .card a.button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--spacing-xs);
     background: transparent;
     color: var(--c-greys-white);
     border-color: var(--c-greys-white);
-    line-height: 1.3;
 }
 
 #dform_container .dashboard-details-container .card a.button::after {
