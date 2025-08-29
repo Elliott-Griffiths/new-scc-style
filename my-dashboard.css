@@ -112,9 +112,9 @@
 }
 
 #dform_container .dashboard-details-container .most-popular-container {
- display: flex;
- justify-content: space-between;
- gap: var(--spacing-smd);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-smd);
 }
 
 #dform_container .dashboard-details-container .card,
@@ -161,7 +161,7 @@
 #dform_container .dashboard-details-container .card.recycling {
   background: var(--c-alerts-success);
   border-color: var(--c-green-darken);
-} 
+}
 
 #dform_container .dashboard-details-container .card.recycling ul {
   display: flex;
@@ -264,7 +264,8 @@
 
 #dform_container .dashboard-details-container p.status-banner span {
   display: flex;
-  gap: var(--spacing-smd);
+  gap: var(--spacing-xs);
+  align-items: center;
 }
 
 #dform_container .dashboard-details-container p.status-banner span::before {
@@ -338,7 +339,7 @@
 }
 
 #dform_container .dashboard-details-container .status-banner a::before,
-#dform_container .dashboard-details-container .waste-recycling-container .card span::before{
+#dform_container .dashboard-details-container .waste-recycling-container .card span::before {
   content: url(./icons/arrow-right-primary-darkened.svg);
   width: var(--font-size-base);
   height: var(--font-size-base);
@@ -412,7 +413,7 @@
 }
 
 #dform_container .dashboard-details-container .your-nearest-container .card h3 {
-      font-weight: var(--font-weight-500);
+  font-weight: var(--font-weight-500);
 }
 
 #dform_container .dashboard-details-container .your-nearest-container .card .location address,
@@ -439,7 +440,7 @@
 }
 
 #dform_container .dashboard-details-container .your-nearest-container .card .location a,
-#dform_container .dashboard-details-container .your-nearest-container .card .opening-times p, 
+#dform_container .dashboard-details-container .your-nearest-container .card .opening-times p,
 #dform_container .dashboard-details-container .your-nearest-container .card .time-row .hours {
   font-weight: var(--font-weight-semibold);
 }
@@ -452,7 +453,7 @@
   text-underline-offset: 0.5rem;
 }
 
-#dform_container .dashboard-details-container .your-nearest-container .card .location a.map-link::before{
+#dform_container .dashboard-details-container .your-nearest-container .card .location a.map-link::before {
   content: url(./icons/location-primary-darkened.svg);
   width: var(--font-size-base);
   height: var(--font-size-base);
