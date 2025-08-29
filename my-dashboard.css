@@ -482,6 +482,19 @@
 
 #dform_container .dashboard-details-container ul {
   list-style: none;
+  padding-left: 0;
+}
+
+#dform_container .dashboard-details-container ul li {
+  margin-block: var(--spacing-xs);
+}
+
+#dform_container .dashboard-details-container ul li:first-child {
+  margin-top: 0;
+}
+
+#dform_container .dashboard-details-container ul li:last-child {
+  margin-bottom: 0;
 }
 
 #dform_container .dashboard-details-container ul.other-links li a {
