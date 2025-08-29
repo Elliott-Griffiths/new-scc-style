@@ -425,6 +425,12 @@
   font-weight: var(--font-weight-semibold);
 }
 
+#dform_container .dashboard-details-container .waste-recycling-container .card .location a.map-link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
 #dform_container .dashboard-details-container .waste-recycling-container .card .location a.map-link::before{
   content: url(./icons/location-primary-darkened.svg);
   width: var(--font-size-base);
