@@ -236,6 +236,14 @@
 
 /* WASTE AND RECYCLING */
 
+.dform_section_box_waste_and_recycling fieldset>legend::before {
+  content: url(./icons/recycle.svg);
+  width: var(--font-size-xxxl);
+  height: var(--font-size-xxxl);
+  line-height: var(--line-height);
+  transform: scale(1.2);
+}
+
 #dform_container .dashboard-details-container .status-banner {
   margin-bottom: var(--spacing-smd);
   padding: var(--spacing-smd);
@@ -301,3 +309,5 @@
   display: block;
   font-weight: var(--font-weight-semibold);
 }
+
+
