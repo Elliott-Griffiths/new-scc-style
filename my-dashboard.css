@@ -446,3 +446,23 @@
   height: var(--font-size-base);
   line-height: var(--line-height);
 }
+
+/* CONTACTS IN YOUR AREA */
+
+.dform_section_box_contacts_in_your_area fieldset>legend::before {
+  content: url(./icons/book.svg);
+  width: var(--font-size-xl);
+  height: var(--font-size-xl);
+  line-height: var(--line-height);
+  transform: scale(1.3);
+}
+
+/* OTHER LINKS */
+
+.dform_section_box_other_links fieldset>legend::before {
+  content: url(./icons/links.svg);
+  width: var(--font-size-xl);
+  height: var(--font-size-xl);
+  line-height: var(--line-height);
+  transform: scale(1.3);
+}
