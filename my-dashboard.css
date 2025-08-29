@@ -483,7 +483,7 @@
 #dform_container .dashboard-details-container ul {
   list-style: none;
   padding-left: 0;
-  margin-block: 0;
+  margin-block: 0 var(--spacing-xs);;
 }
 
 #dform_container .dashboard-details-container ul li {
@@ -505,7 +505,6 @@
   font-weight: var(--font-weight-semibold);
   text-underline-offset: 0.5rem;
   margin-block: 0;
-  line-height: var(--line-height);
 }
 
 #dform_container .dashboard-details-container ul.other-links li a::before {
