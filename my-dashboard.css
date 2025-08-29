@@ -310,6 +310,10 @@
   text-decoration: none;
 }
 
+#dform_container .dashboard-details-container a.calendar-link:hover {
+  text-decoration: underline;
+}
+
 #dform_container .dashboard-details-container .status-banner a,
 #dform_container .dashboard-details-container .waste-recycling-container .card .collection,
 #dform_container .dashboard-details-container .waste-recycling-container .card .bin,
