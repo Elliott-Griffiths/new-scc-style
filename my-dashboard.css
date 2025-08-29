@@ -42,7 +42,7 @@
 
 #dform_container .dashboard-details-container {
   margin: 0;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
   background: var(--c-greys-white);
   padding: var(--spacing-smd);
   border-radius: 0 1.5625rem 1.5625rem !important;
@@ -306,31 +306,40 @@
 
 #dform_container .dashboard-details-container a.calendar-link {
   margin-top: var(--spacing-smd);
-  display: block;
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
 }
 
 #dform_container .dashboard-details-container .status-banner a,
-#dform_container .dashboard-details-container .waste-recycling-container .card .type::before,
-#dform_container .dashboard-details-container a.calendar-link::after {
+#dform_container .dashboard-details-container .waste-recycling-container .card .collection,
+#dform_container .dashboard-details-container .waste-recycling-container .card .bin,
+#dform_container .dashboard-details-container .waste-recycling-container .card .type,
+#dform_container .dashboard-details-container a.calendar-link {
   display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
+  align-items: center;
+  gap: var(--spacing-xs);
 }
 
-#dform_container .dashboard-details-container .status-banner a::before {
+#dform_container .dashboard-details-container .status-banner a::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card .collection::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card .bin::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card .type::before {
   content: url(./icons/arrow-right-primary-darkened.svg);
   width: var(--font-size-base);
   height: var(--font-size-base);
   line-height: var(--line-height);
 }
 
+#dform_container .dashboard-details-container .waste-recycling-container .card .tycollectionpe::before {
+  content: url(./icons/calendar.svg);
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card .bin::before {
+  content: url(./icons/trash-can.svg);
+}
+
 #dform_container .dashboard-details-container .waste-recycling-container .card .type::before {
   content: url(./icons/circle-check-success-white.svg);
-  width: var(--font-size-xl);
-  height: var(--font-size-xl);
-  line-height: var(--line-height);
 }
 
 #dform_container .dashboard-details-container a.calendar-link::after {
