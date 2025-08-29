@@ -128,7 +128,7 @@
   gap: var(--spacing-smd);
   flex: 1;
   padding: var(--spacing-md) var(--spacing-sm);
-  border: 3px solid var(--c-core-brand-primary-darken);
+  border: 4px solid var(--c-core-brand-primary-darken);
   border-radius: 1.5625rem;
 }
 
@@ -231,5 +231,73 @@
 
 #dform_container .dashboard-details-container .card p span,
 #dform_container .dashboard-details-container .card.recycling ul li a {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* WASTE AND RECYCLING */
+
+#dform_container .dashboard-details-container .status-banner {
+  margin-bottom: var(--spacing-smd);
+  padding: var(--spacing-smd);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-alerts-success);
+  background: var(--c-green-lighten);
+  border: 4px solid var(--c-green-darken);
+  border-radius: 1.5625rem;
+}
+
+#dform_container .dashboard-details-container .status-banner p,
+#dform_container .dashboard-details-container .status-banner a {
+  font-weight: var(--font-weight-semibold);
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container {
+  display: flex;
+  gap: var(--spacing-smd);
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card {
+  gap: var(--spacing-md);
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card.today {
+  color: var(--c-greys-white);
+  background: var(--c-blue);
+  border: 4px solid var(--c-blue-darken);
+  border-radius: 1.5625rem;
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card.today * {
+  color: var(--c-greys-white);
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card.next * {
+  color: var(--c-greys-black);
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card h2 {
+  margin: 0;
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card p {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-smd);
+  align-items: center;
+  line-height: var(--line-height);
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card.next {
+  background: var(--c-alerts-warning);
+  border: 4px solid var(--c-greys-black);
+  border-radius: 1.5625rem;
+}
+
+#dform_container .dashboard-details-container a.calendar-link {
+  margin-top: var(--spacing-smd);
+  display: block;
   font-weight: var(--font-weight-semibold);
 }
