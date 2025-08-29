@@ -262,6 +262,18 @@
   font-weight: var(--font-weight-semibold);
 }
 
+#dform_container .dashboard-details-container .status-banner p span {
+  display: flex;
+  gap: var(--spacing-smd);
+}
+
+#dform_container .dashboard-details-container .status-banner p span::before {
+  content: url(./icons/circle-check-success.svg);
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+  line-height: var(--line-height);
+}
+
 #dform_container .dashboard-details-container .waste-recycling-container {
   display: flex;
   gap: var(--spacing-smd);
