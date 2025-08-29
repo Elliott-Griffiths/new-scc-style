@@ -36,7 +36,7 @@
 #dform_container div.box.profile-details-header fieldset>legend {
   margin: 0;
   background: var(--c-greys-white);
-  padding: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-smd);
   border-radius: 1.5625rem 1.5625rem 0 0 !important;
   transform: translateX(3px);
   display: flex;
