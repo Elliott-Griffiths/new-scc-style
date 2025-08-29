@@ -105,10 +105,10 @@
 
 .dform_section_box_most_popular fieldset>legend::before {
   content: url(./icons/thumb-up.svg);
-  width: var(--font-size-xxxl);
-  height: var(--font-size-xxxl);
+  width: var(--font-size-xl);
+  height: var(--font-size-xl);
   line-height: var(--line-height);
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 #dform_container .dashboard-details-container .most-popular-container {
@@ -238,10 +238,10 @@
 
 .dform_section_box_waste_and_recycling fieldset>legend::before {
   content: url(./icons/recycle.svg);
-  width: var(--font-size-xxxl);
-  height: var(--font-size-xxxl);
+  width: var(--font-size-xl);
+  height: var(--font-size-xl);
   line-height: var(--line-height);
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 #dform_container .dashboard-details-container .status-banner {
@@ -374,10 +374,10 @@
 
 .dform_section_box_your_nearest fieldset>legend::before {
   content: url(./icons/location-purple.svg);
-  width: var(--font-size-xxxl);
-  height: var(--font-size-xxxl);
+  width: var(--font-size-xl);
+  height: var(--font-size-xl);
   line-height: var(--line-height);
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 #dform_container .dashboard-details-container .your-nearest-container {
