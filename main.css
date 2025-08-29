@@ -104,6 +104,8 @@
   /* 8px */
   --spacing-sm: 0.625rem;
   /* 10px */
+  --spacing-smd: 1rem;
+  /* 16px */
   --spacing-md: 0.9375rem;
   /* 15px */
   --spacing-lg: 1.5625rem;
@@ -225,7 +227,9 @@ body {
     --spacing-xs: 0.625rem;
     /* 10px */
     --spacing-sm: 0.9375rem;
-    /* 15px */
+    /* 20px */
+    --spacing-smd: 1.25rem;
+    /* 20px */
     --spacing-md: 1.5625rem;
     /* 25px */
     --spacing-lg: 1.5625rem;
