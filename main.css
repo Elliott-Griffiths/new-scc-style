@@ -44,9 +44,13 @@
   --c-alerts-success-darken: #006b31;
   --c-core-tints-success-tint-20: #ddffed;
   --c-alerts-danger: #d4351c;
+  --c-alerts-warning: #FFCC3F;
 
-  --c-alerts-warning: #ffbf47;
-  --c-blue: #e0f7fd;
+  --c-blue: #0072BB;
+  --c-blue-lighten: #e0f7fd;
+  --c-blue-darken: #004673;
+  --c-green-lighten: #EAFFF4;
+  --c-green-darken: #006b31;
   --c-orange: #ff8b44;
   --c-purple: #964a88;
   --c-purple-darken: #723f6f;

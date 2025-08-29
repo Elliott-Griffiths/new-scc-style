@@ -53,7 +53,7 @@
 }
 
 #dform_container .user-account-details {
-  background: var(--c-blue);
+  background: var(--c-core-tints-accent-2-tint-20);
   padding: var(--spacing-md);
   border-radius: 1.5625rem !important;
 }

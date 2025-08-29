@@ -153,8 +153,8 @@
 
 #dform_container .dashboard-details-container .card.recycling {
   background: var(--c-alerts-success);
-  border-color: var(--c-alerts-success-darken);
-}
+  border-color: var(--c-green-darken);
+} 
 
 #dform_container .dashboard-details-container .card.recycling ul {
   display: flex;
