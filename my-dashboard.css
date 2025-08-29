@@ -324,7 +324,7 @@
   line-height: var(--line-height);
 }
 
-#dform_container .dashboard-details-container .status-banner a.calendar-link::after {
+#dform_container .dashboard-details-container a.calendar-link::after {
   content: url(./icons/arrow-right-primary-darkened.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
