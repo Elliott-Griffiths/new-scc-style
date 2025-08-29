@@ -480,7 +480,14 @@
   transform: scale(1.3);
 }
 
+#dform_container .dashboard-details-container ul {
+  list-style: none;
+}
+
 #dform_container .dashboard-details-container ul.other-links li a {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
   font-weight: var(--font-weight-semibold);
   text-underline-offset: 0.5rem;
 }
