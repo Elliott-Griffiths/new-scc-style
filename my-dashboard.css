@@ -257,17 +257,17 @@
   border-radius: 1.5625rem;
 }
 
-#dform_container .dashboard-details-container .status-banner p,
-#dform_container .dashboard-details-container .status-banner a {
+#dform_container .dashboard-details-container p.status-banner,
+#dform_container .dashboard-details-container p.status-banner a {
   font-weight: var(--font-weight-semibold);
 }
 
-#dform_container .dashboard-details-container .status-banner p span {
+#dform_container .dashboard-details-container p.status-banner span {
   display: flex;
   gap: var(--spacing-smd);
 }
 
-#dform_container .dashboard-details-container .status-banner p span::before {
+#dform_container .dashboard-details-container p.status-banner span::before {
   content: url(./icons/circle-check-success.svg);
   width: var(--font-size-base);
   height: var(--font-size-base);
