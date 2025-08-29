@@ -334,7 +334,7 @@
   line-height: var(--line-height);
 }
 
-#dform_container .dashboard-details-container .waste-recycling-container .card .tycollectionpe::before {
+#dform_container .dashboard-details-container .waste-recycling-container .card .collection::before {
   content: url(./icons/calendar.svg);
 }
 
