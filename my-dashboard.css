@@ -470,6 +470,30 @@
   transform: scale(1.3);
 }
 
+#dform_container .dashboard-details-container .area-contacts-container {
+  display: flex;
+  flex-direction: column;
+gap: var(--spacing-smd);
+}
+
+#dform_container .dashboard-details-container .section-container {
+  padding-left: var(--spacing-smd) !important;
+  border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal);
+}
+
+#dform_container .dashboard-details-container .section-container h3.section-header {
+  font-weight: var(--font-weight-500);
+  margin-top: 0;
+}
+
+#dform_container .dashboard-details-container .section-container .contact-list ul {
+  margin-bottom: 0;    
+}
+
+#dform_container .dashboard-details-container .section-container .contact-list a {
+  font-weight: var(--font-weight-semibold);
+}
+
 /* OTHER LINKS */
 
 .dform_section_box_other_links fieldset>legend::before {
