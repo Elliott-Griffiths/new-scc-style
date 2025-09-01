@@ -3,11 +3,11 @@
   padding: 0 !important;
 }
 
-/* #dform_container .container .area .box,
+#dform_container .container .area .box,
 #profile #dform_container .container>.three {
   width: 100%;
-  max-width: 47.6875rem;
-} */
+  max-width: 100%;
+}
 
 #dform_page_page_profile>div.container.area.dform_section_area_account {
   display: flex;
@@ -32,9 +32,9 @@
     flex-direction: row;
   }
 
-  /* #home #dform_container .container>.three {
+  #home #dform_container .container>.three {
     width: 35%;
-  } */
+  }
 }
 
 
