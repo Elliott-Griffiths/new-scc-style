@@ -77,8 +77,8 @@ li.le-stat-closed {
 li.le-request-item {
   margin: 0;
   padding: var(--spacing-sm) !important;
-  background: var(--c-blue) !important;
-  border-color: var(--c-blue) !important;
+  background: var(--c-blue-lighten) !important;
+  border-color: var(--c-blue-lighten) !important;
   border-radius: 1.5rem;
 }
 
@@ -183,7 +183,7 @@ li.le-stat-closed li.le-request-status-text::after {
 
 #pagination-container li a:hover {
   color: var(--c-brand-accents-teal);
-  background: var(--c-blue);
+  background: var(--c-blue-lighten);
 }
 
 #pagination-container li a:focus {
@@ -198,7 +198,7 @@ li.le-stat-closed li.le-request-status-text::after {
 
 #pagination-container li.le-pagination-nav a:hover {
   color: var(--c-brand-accents-teal) !important;
-  background: var(--c-blue);
+  background: var(--c-blue-lighten);
   text-decoration: none !important;
 }
 

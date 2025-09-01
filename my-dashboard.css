@@ -462,6 +462,14 @@
 
 /* CONTACTS IN YOUR AREA */
 
+#dform_page_page_dashboard > div.container.area.dform_section_area_other_contacts > div.box.profile-details-header.box_contacts_in_your_area.nine {
+    flex: 1;
+}
+
+#dform_page_page_dashboard > div.container.area.dform_section_area_other_contacts > div.box.profile-details-header.box_other_links.last.three {
+    flex: 0.5;
+}
+
 .dform_section_box_contacts_in_your_area fieldset>legend::before {
   content: url(./icons/book.svg);
   width: var(--font-size-xl);
