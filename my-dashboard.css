@@ -77,6 +77,7 @@
   background: var(--c-greys-white);
   color: var(--c-core-brand-primary-darken);
   border-color: var(--c-brand-accents-teal);
+  min-width: max-content;
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button:hover {
@@ -96,6 +97,7 @@
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
+  margin-right: var(--spacing-xs);
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button:hover::after {
