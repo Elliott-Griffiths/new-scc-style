@@ -452,6 +452,11 @@
   font-weight: var(--font-weight-semibold);
 }
 
+#dform_container .dashboard-details-container .your-nearest-container .card .opening-times p,
+#dform_container .dashboard-details-container .your-nearest-container .card .time-row .hours {
+  text-align: end;
+}
+
 
 #dform_container .dashboard-details-container .your-nearest-container .card .location a.map-link {
   display: flex;
@@ -499,6 +504,11 @@ gap: var(--spacing-smd);
 
 #dform_container .dashboard-details-container .section-container .contact-list a {
   font-weight: var(--font-weight-semibold);
+}
+
+
+#dform_container .dashboard-details-container .section-container .contact-list .party-info {
+  margin-left: 6px;
 }
 
 /* OTHER LINKS */
