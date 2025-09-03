@@ -14,15 +14,15 @@
   flex-direction: column;
 }
 
-#dform_page_page_dashboard > div.container.area.dform_section_area_other_contacts > div.box.profile-details-header.box_contacts_in_your_area.nine {
+#dform_page_page_dashboard>div.container.area.dform_section_area_other_contacts>div.box.profile-details-header.box_contacts_in_your_area.nine {
   flex: 1;
 }
 
-#dform_page_page_dashboard > div.container.area.dform_section_area_other_contacts > div.box.profile-details-header.box_other_links.last.three {
+#dform_page_page_dashboard>div.container.area.dform_section_area_other_contacts>div.box.profile-details-header.box_other_links.last.three {
   flex: 0.5;
 }
 
-@media screen and (min-width: 1050px) {
+@media screen and (min-width: 960px) {
   #dform_page_page_dashboard>div.container.area.dform_section_area_other_contacts {
     flex-direction: row;
   }
@@ -71,7 +71,7 @@
   align-items: center;
   justify-content: space-between;
   height: 5rem;
-  border-radius: 40px !important;
+  border-radius: 1.5625rem !important;
   flex: 1;
   text-align: start;
   background: var(--c-greys-white);
@@ -512,7 +512,7 @@
 #dform_container .dashboard-details-container .area-contacts-container {
   display: flex;
   flex-direction: column;
-gap: var(--spacing-smd);
+  gap: var(--spacing-smd);
 }
 
 #dform_container .dashboard-details-container .section-container {
@@ -526,7 +526,7 @@ gap: var(--spacing-smd);
 }
 
 #dform_container .dashboard-details-container .section-container .contact-list ul {
-  margin-bottom: 0;    
+  margin-bottom: 0;
 }
 
 #dform_container .dashboard-details-container .section-container .contact-list a {
@@ -551,7 +551,8 @@ gap: var(--spacing-smd);
 #dform_container .dashboard-details-container ul {
   list-style: none;
   padding-left: 0;
-  margin-block: 0 var(--spacing-xs);;
+  margin-block: 0 var(--spacing-xs);
+  ;
 }
 
 #dform_container .dashboard-details-container ul li {
@@ -582,4 +583,23 @@ gap: var(--spacing-smd);
   align-items: unset;
   width: var(--font-size-sm);
   transform: translateY(3px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (min-width: 960px) {
+  #dform_container #dform_widget_buttonset_bset_quick_links button {
+    border-radius: 40px !important;
+  }
 }
