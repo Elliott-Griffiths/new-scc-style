@@ -174,3 +174,13 @@
   background: var(--c-alerts-danger);
   border-color: var(--c-alerts-danger);
 }
+
+#dform_container #dform_widget_button_but_delete_account:hover {
+  background: var(--c-brand-accents-teal);
+  border-color: var(--c-brand-accents-teal);
+}
+
+#dform_container #dform_widget_button_but_delete_account:focus {
+  background: var(--c-focus-links);
+  border-color: var(--c-focus-links);
+}
