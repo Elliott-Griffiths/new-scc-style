@@ -61,9 +61,12 @@
   justify-content: space-between;
   margin-block: var(--spacing-xs);
   gap: var(--spacing-xl);
+
+  flex-wrap: wrap;
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button {
+  flex: 1 1 200px;
   display: flex;
   align-items: center;
   justify-content: space-between;
