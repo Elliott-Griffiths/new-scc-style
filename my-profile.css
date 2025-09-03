@@ -169,7 +169,6 @@
   content: url(./icons/arrow-right-black.svg);
 }
 
-
 #dform_container #dform_widget_button_but_delete_account {
   background: var(--c-alerts-danger);
   border-color: var(--c-alerts-danger);

@@ -2,6 +2,7 @@
   background: var(--c-greys-chalk);
 }
 
+#register #content,
 #form {
   background: var(--c-greys-white);
 }
