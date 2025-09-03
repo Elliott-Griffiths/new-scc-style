@@ -19,11 +19,11 @@
   flex-direction: column;
 }
 
-#dform_page_page_profile > div.container.area.dform_section_area_account > div.box.profile-details-header.box_account.nine {
+#dform_page_page_profile > div.container.area.dform_section_area_account > div.box.profile-details-header.box_my_details.nine {
   flex: 1;
 }
 
-#dform_page_page_profile > div.container.area.dform_section_area_account > div.box.profile-details-header.box_more_services.last.three {
+#dform_page_page_profile > div.container.area.dform_section_area_account > div.box.profile-details-header.box_account.last.three {
   flex: 0.5;
 }
 
