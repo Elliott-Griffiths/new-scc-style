@@ -37,18 +37,6 @@
   }
 }
 
-
-
-/* @media screen and (min-width: 1050px) {
-  #dform_page_page_profile>div.container.area.dform_section_area_about_you {
-    flex-direction: row;
-  }
-
-  #profile #dform_container .container>.three {
-    width: 35%;
-  }
-} */
-
 #dform_page_page_profile>div.container.area.dform_section_area_profile_info>div {
   max-width: 100%;
 }

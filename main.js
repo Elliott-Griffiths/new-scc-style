@@ -553,7 +553,7 @@ function handleOnReadyEvent(_, kdf) {
       }
     }
   }
-// }, 0);
+  // }, 0);
 
   // --- HANDLE FORMAT TITLE CASE ------------------------------------------ \\
 
@@ -3250,12 +3250,12 @@ function getAndSetReviewPageData() {
             if (!fieldValue || fieldValue === "" || fieldValue === null || fieldValue === undefined) {
               fieldValue = fieldType === "file" ? "Not uploaded" : "Not answered";
             }
-          
+
             // Create the review item container
             const reviewItem = $("<div class='review-item'></div>")
               .append(`<dt class="question">${fieldLabel}</dt>`)
               .append(`<dd class="answer">${fieldValue}</dd>`);
-          
+
             // Only add the change link if the form is not complete
             if (KDF.kdf().form.complete !== "Y") {
               const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
@@ -3268,11 +3268,11 @@ function getAndSetReviewPageData() {
               });
               reviewItem.append($("<dd class='action'></dd>").append(changeLink));
             }
-          
+
             dl.append(reviewItem);
             hasFields = true;
           }
-          
+
         });
 
         // Only append the section if we found at least one field with a label

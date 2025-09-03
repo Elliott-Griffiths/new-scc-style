@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const navigationDiv = document.querySelector('.navigation');
   const usernameLink = document.createElement('a');
 
-  usernameLink.href = '/site/sheffield_dev/profile';
+  usernameLink.href = '/site/sheffield_dev/my-profile';
   usernameLink.tabIndex = 0;
 
   usernameLink.textContent = userName;
