@@ -31,10 +31,10 @@
   #dform_page_page_profile > div.container.area.dform_section_area_account {
     flex-direction: row;
   }
-
+/* 
   #home #dform_container .container>.three {
     width: 35%;
-  }
+  } */
 }
 
 #dform_page_page_profile>div.container.area.dform_section_area_profile_info>div {
