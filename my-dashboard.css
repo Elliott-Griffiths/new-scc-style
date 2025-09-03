@@ -14,11 +14,11 @@
   flex-direction: column;
 }
 
-#dform_page_page_dashboard > div.container.area.dform_section_area_other_contacts>div.box.profile-details-header.box_contacts_in_your_area.nine {
+#dform_page_page_dashboard > div.container.area.dform_section_area_other_contacts > div.box.profile-details-header.box_contacts_in_your_area.nine {
   flex: 1;
 }
 
-#dform_page_page_dashboard > div.container.area.dform_section_area_other_contacts>div.box.profile-details-header.box_other_links.last.three {
+#dform_page_page_dashboard > div.container.area.dform_section_area_other_contacts > div.box.profile-details-header.box_other_links.last.three {
   flex: 0.5;
 }
 
