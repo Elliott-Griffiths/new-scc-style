@@ -156,10 +156,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // --- TRIGGER WHEN MY REQUESTS LOADS ---
   /**
-   * Contains logic specific to the '/my-requests' page, handling
+   * Contains logic specific to the '/requests' page, handling
    * the display and formatting of request lists and details.
    */
-  if (window.location.pathname.endsWith('/my-requests')) {
+  if (window.location.pathname.endsWith('/requests')) {
     /**
      * Checks if the 'srid' URL parameter exists and starts with '101000',
      * indicating a request details page.
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (formDetailsDiv) {
         const backLink = document.createElement('a');
-        backLink.href = '/site/sheffield_dev/my-requests';
+        backLink.href = '/site/sheffield_dev/requests';
         backLink.textContent = 'Back to My Requests';
         backLink.id = 'back-to-requests-link';
         formDetailsDiv.after(backLink);

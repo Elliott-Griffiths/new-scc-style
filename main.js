@@ -1295,7 +1295,7 @@ function handleOnReadyEvent(_, kdf) {
   });
 
   $('#dform_widget_button_but_view_my_requests').on('click', function () {
-    window.location.href = `${PORTAL_URL}/my-requests`;
+    window.location.href = `${PORTAL_URL}/requests`;
   });
 }
 
@@ -5368,7 +5368,7 @@ function buildMyAccountLink(referenceNumber) {
   }
 
   // Construct the new URL using the base URL and reference number.
-  const newHref = `${PORTAL_URL}/my-requests?srid=${referenceNumber}`;
+  const newHref = `${PORTAL_URL}/requests?srid=${referenceNumber}`;
 
   // Update the href attribute of the existing link.
   linkElement.setAttribute('href', newHref);
