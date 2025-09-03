@@ -10,7 +10,7 @@
   if (currentMonth >= 8) {
     const nextYear = currentYear + 1;
     schoolTermSpan.textContent = `${currentYear} - ${nextYear}`;
-  } 
+  }
   // Else, the date is between January 1 and July 31
   else {
     const previousYear = currentYear - 1;
@@ -26,23 +26,26 @@ $('#dform_cpe_dashboard')
   .off('_KDF_ready')
   .on('_KDF_ready', function (event, kdf) {
     handleOnReadyEvent(event, kdf);
-    
+
     KDF.disableNavToLastPage();
 
     $('#dform_widget_button_but_my_requests').on('click', function () {
       window.location.href = `${PORTAL_URL}/requests`;
     });
-    
+
     $('#dform_widget_button_but_my_saved_drafts').on('click', function () {
       window.location.href = `${PORTAL_URL}/requests?type=drafts`;
     });
-    
+
     $('#dform_widget_button_but_my_profile').on('click', function () {
       window.location.href = `${PORTAL_URL}/profile`;
     });
 
+// ---------------------------------------- \\
+// --- EXAMPLE ---------------------------- \\
+
     setCouncilTaxBand("D");
-    
+
     const sitesToDisplay = [
       "Greaves Lane",
       "Longley Avenue West"
@@ -59,79 +62,80 @@ $('#dform_cpe_dashboard')
     const sevenDaysFromNow = new Date();
     sevenDaysFromNow.setDate(today.getDate() + 7);
     const collectionData = [{
-        bin: "Blue Bin",
-        due: getFormattedDate(today),
-        issues: false
+      bin: "Blue Bin",
+      due: getFormattedDate(today),
+      issues: false
     }, {
-        bin: "Black Bin",
-        due: getFormattedDate(sevenDaysFromNow),
-        issues: false
+      bin: "Black Bin",
+      due: getFormattedDate(sevenDaysFromNow),
+      issues: false
     }];
     const uprn = "100050940900";
     buildBinCards(collectionData, uprn);
 
-  const locationsData = [{
-    title: "Library",
-    address: [
-      "Sheffield Central Library",
-      "Surrey St,",
-      "Sheffield City Centre,",
-      "Sheffield S1 1XZ"
-    ],
-    mapLink: "https://www.google.com/maps/place/Beighton+Road+HWRC/@53.3538879,-1.3551176,399m/data=!3m1!1e3!4m6!3m5!1s0x48799de8ccc686fd:0x40642cb8ee4d63ef!8m2!3d53.3541255!4d-1.3524958!16s%2Fg%2F11y1dx8gr1?entry=ttu&g_ep=EgoyMDI1MDMxOS4yIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D",
-    openingTimes: [{
-      days: "Monday, Tuesday, Wednesday and Friday",
-      hours: "9am to 4pm"
+    const locationsData = [{
+      title: "Library",
+      address: [
+        "Sheffield Central Library",
+        "Surrey St,",
+        "Sheffield City Centre,",
+        "Sheffield S1 1XZ"
+      ],
+      mapLink: "https://www.google.com/maps/place/Beighton+Road+HWRC/@53.3538879,-1.3551176,399m/data=!3m1!1e3!4m6!3m5!1s0x48799de8ccc686fd:0x40642cb8ee4d63ef!8m2!3d53.3541255!4d-1.3524958!16s%2Fg%2F11y1dx8gr1?entry=ttu&g_ep=EgoyMDI1MDMxOS4yIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D",
+      openingTimes: [{
+        days: "Monday, Tuesday, Wednesday and Friday",
+        hours: "9am to 4pm"
+      }, {
+        days: "Thursdays",
+        hours: "Closed"
+      }]
     }, {
-      days: "Thursdays",
-      hours: "Closed"
-    }]
-  }, {
-    title: "Neighbourhood Office",
-    address: [
-      "Chambers Court",
-      "1b Station Road,",
-      "Chapeltown,",
-      "Sheffield S35 2XE"
-    ],
-    mapLink: "https://www.google.com/maps/place/Blackstock+Road+HWRC/@53.3503537,-1.4512779,159m/data=!3m1!1e3!4m6!3m5!1s0x487983e7b570cfaf:0xdbe2e10d468af211!8m2!3d53.3502496!4d-1.4501577!16s%2Fg%2F11v9cf7vvx?entry=ttu&g_ep=EgoyMDI1MDMxOS4yIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D",
-    openingTimes: [{
-      days: "Monday, Tuesday, Wednesday and Friday",
-      hours: "9am to 4pm"
-    }, {
-      days: "Thursdays",
-      hours: "Closed"
-    }]
-  }];
-  buildNearestCards(locationsData);
+      title: "Neighbourhood Office",
+      address: [
+        "Chambers Court",
+        "1b Station Road,",
+        "Chapeltown,",
+        "Sheffield S35 2XE"
+      ],
+      mapLink: "https://www.google.com/maps/place/Blackstock+Road+HWRC/@53.3503537,-1.4512779,159m/data=!3m1!1e3!4m6!3m5!1s0x487983e7b570cfaf:0xdbe2e10d468af211!8m2!3d53.3502496!4d-1.4501577!16s%2Fg%2F11v9cf7vvx?entry=ttu&g_ep=EgoyMDI1MDMxOS4yIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D",
+      openingTimes: [{
+        days: "Monday, Tuesday, Wednesday and Friday",
+        hours: "9am to 4pm"
+      }, {
+        days: "Thursdays",
+        hours: "Closed"
+      }]
+    }];
+    buildNearestCards(locationsData);
 
-  const contactData = [
-  {
-    title: "Councillors",
-    introText: "Your 3 Manor Castle councillors:",
-    contacts: [{
-      name: "Laura Moynahan",
-      link: "https://democracy.sheffield.gov.uk/mgUserInfo.aspx?UID=36917",
-      info: "Labour"
-    }, {
-      name: "Terry Fox",
-      link: "https://democracy.sheffield.gov.uk/mgUserInfo.aspx?UID=156",
-      info: "Community Councillors Group"
-    }, {
-      name: "Elle Dodd",
-      link: "https://democracy.sheffield.gov.uk/mgUserInfo.aspx?UID=37910",
-      info: "Labour"
-    }]
-  }
-];
+    const contactData = [{
+      title: "Councillors",
+      introText: "Your 3 Manor Castle councillors:",
+      contacts: [{
+        name: "Laura Moynahan",
+        link: "https://democracy.sheffield.gov.uk/mgUserInfo.aspx?UID=36917",
+        info: "Labour"
+      }, {
+        name: "Terry Fox",
+        link: "https://democracy.sheffield.gov.uk/mgUserInfo.aspx?UID=156",
+        info: "Community Councillors Group"
+      }, {
+        name: "Elle Dodd",
+        link: "https://democracy.sheffield.gov.uk/mgUserInfo.aspx?UID=37910",
+        info: "Labour"
+      }]
+    }];
 
-  buildContactCards(contactData);
+    buildContactCards(contactData);
+
+// ---------------------------------------- \\
+// ---------------------------------------- \\
 
     $('#your-requests-link').on('click', function (event) {
       event.preventDefault();
       window.location.href = `${PORTAL_URL}/requests`;
     });
-    
+
     $('#edit-profile-link').on('click', function (event) {
       event.preventDefault();
       window.location.href = `${PORTAL_URL}/profile?a=edit`;
@@ -220,7 +224,7 @@ $('#dform_cpe_dashboard')
 function setCouncilTaxBand(band) {
   // Select the <span> element by its ID
   const taxBandSpan = document.getElementById('taxBand');
-  
+
   // Check if the element exists to prevent errors
   if (taxBandSpan) {
     // Update the text content to the new band
@@ -253,7 +257,7 @@ function setRecyclingSites(siteNames) {
     console.error("The '.card.recycling .links' element was not found.");
     return;
   }
-  
+
   // Clear any existing hard-coded list items
   linksList.innerHTML = '';
 
@@ -280,7 +284,6 @@ function setRecyclingSites(siteNames) {
 
 /**
  * Dynamically builds and updates the bin collection cards and status banner.
- * Creates cards for each collection that has not yet passed.
  *
  * @param {object[]} collections - An array of objects, each containing bin collection data.
  * @param {string} uprn - The UPRN (Unique Property Reference Number) for the dynamic link.
@@ -291,10 +294,10 @@ function buildBinCards(collections, uprn) {
     console.error("Container '.waste-recycling-container' not found.");
     return;
   }
-  
+
   // Clear any existing cards
   container.innerHTML = '';
-  
+
   // Sort collections by date
   collections.sort((a, b) => new Date(a.due) - new Date(b.due));
 
@@ -320,7 +323,7 @@ function buildBinCards(collections, uprn) {
     const card = document.createElement('div');
     const cardClass = binType.toLowerCase().includes('blue') ? 'card recycling' : 'card general';
     card.className = cardClass;
-    
+
     const h2 = document.createElement('h2');
     h2.textContent = headerText;
 
@@ -341,14 +344,13 @@ function buildBinCards(collections, uprn) {
     card.appendChild(detailsDiv);
     return card;
   };
-  
+
   // Build and append cards for each collection that has not passed
   let cardCount = 0;
   collections.forEach(collection => {
     const collectionDate = new Date(collection.due);
     collectionDate.setHours(0, 0, 0, 0);
 
-    // Fail-safe check: only create a card if the date is not in the past
     if (collectionDate.getTime() >= today.getTime()) {
       let headerText;
       if (cardCount === 0) {
@@ -371,27 +373,32 @@ function buildBinCards(collections, uprn) {
 
   // Handle the status banner logic
   const statusBanner = document.querySelector('.status-banner');
-  const firstUpcomingCollection = collections.find(c => new Date(c.due).getTime() >= today.getTime());
+  const bannerLink = statusBanner ? statusBanner.querySelector('a') : null;
+  const bannerSpan = statusBanner ? statusBanner.querySelector('span') : null;
 
-  if (statusBanner) {
-    const bannerSpan = statusBanner.querySelector('span');
+  if (statusBanner && bannerSpan && bannerLink) {
+    // Find if there is a collection today with issues
+    const hasIssuesToday = collections.some(c => {
+      const dueDate = new Date(c.due);
+      // Check if the due date is the same day as today, ignoring time
+      const isSameDay = dueDate.getDate() === today.getDate() &&
+        dueDate.getMonth() === today.getMonth() &&
+        dueDate.getFullYear() === today.getFullYear();
+      return c.issues === true && isSameDay;
+    });
 
-    // Only update the banner if the first upcoming collection is today
-    if (firstUpcomingCollection && new Date(firstUpcomingCollection.due).getTime() === today.getTime()) {
-      if (firstUpcomingCollection.issues) {
-        statusBanner.className = 'status-banner error';
-        bannerSpan.className = 'error';
-        bannerSpan.textContent = "There are issues reported on your collection route";
-      } else {
-        statusBanner.className = 'status-banner success';
-        bannerSpan.className = 'success';
-        bannerSpan.textContent = "There are currently no issues reported on your collection route";
-      }
+    if (hasIssuesToday) {
+      statusBanner.className = 'status-banner error';
+      bannerSpan.className = 'error';
+      bannerSpan.textContent = "Collections are delayed on your route due to a shortage of crew members";
+      bannerLink.textContent = "See all collection updates";
+      bannerLink.href = "https://www.sheffield.veolia.co.uk/service-alerts";
     } else {
-      // Revert to default "no issues" state if the collection is not today
       statusBanner.className = 'status-banner success';
       bannerSpan.className = 'success';
       bannerSpan.textContent = "There are currently no issues reported on your collection route";
+      bannerLink.textContent = "Report a missed collection";
+      bannerLink.href = "https://www.sheffield.gov.uk/bins-recycling-services/report-missed-collection";
     }
   }
 
@@ -413,7 +420,7 @@ function buildNearestCards(locations) {
     console.error("Container '.your-nearest-container' not found.");
     return;
   }
-  
+
   // Clear any existing cards
   container.innerHTML = '';
 
@@ -443,7 +450,7 @@ function buildNearestCards(locations) {
     // Append to the location section
     locationDiv.appendChild(address);
     locationDiv.appendChild(mapLink);
-    
+
     // Create the opening times section
     const openingTimesDiv = document.createElement('div');
     openingTimesDiv.className = 'opening-times';
@@ -490,7 +497,7 @@ function buildContactCards(sections) {
     console.error("Container '.area-contacts-container' not found.");
     return;
   }
-  
+
   // Clear any existing sections
   container.innerHTML = '';
 
@@ -512,7 +519,7 @@ function buildContactCards(sections) {
     const p = document.createElement('p');
     p.textContent = section.introText;
     contactListDiv.appendChild(p);
-    
+
     // Create the list of contacts
     const ul = document.createElement('ul');
 
@@ -525,7 +532,7 @@ function buildContactCards(sections) {
 
       if (contact.info) {
         const span = document.createElement('span');
-        span.className = 'party-info'; // or optional-info, depending on use case
+        span.className = 'party-info';
         span.textContent = `(${contact.info})`;
         li.appendChild(span);
       }
@@ -533,11 +540,11 @@ function buildContactCards(sections) {
     });
 
     contactListDiv.appendChild(ul);
-    
+
     // Append all parts to the main section container
     sectionContainer.appendChild(h3);
     sectionContainer.appendChild(contactListDiv);
-    
+
     // Append the final section to the main container
     container.appendChild(sectionContainer);
   });

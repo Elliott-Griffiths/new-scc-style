@@ -22,16 +22,6 @@
   flex: 0.5;
 }
 
-@media screen and (min-width: 960px) {
-  #dform_page_page_dashboard>div.container.area.dform_section_area_other_contacts {
-    flex-direction: row;
-  }
-
-  #home #dform_container .container>.three {
-    width: 35%;
-  }
-}
-
 #dform_widget_html_ahtm_finish_profile {
   margin-top: 0 !important;
 }
@@ -587,20 +577,17 @@
   transform: translateY(3px);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* Media */
 
 @media screen and (min-width: 960px) {
+  #dform_page_page_dashboard>div.container.area.dform_section_area_other_contacts {
+    flex-direction: row;
+  }
+
+  #home #dform_container .container>.three {
+    width: 35%;
+  }
+
   #dform_container #dform_widget_buttonset_bset_quick_links button {
     border-radius: 40px !important;
   }
