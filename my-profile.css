@@ -14,11 +14,6 @@
   flex-direction: column;
 }
 
-#dform_page_page_dashboard>div.container.area.dform_section_area_other_contacts {
-  display: flex;
-  flex-direction: column;
-}
-
 #dform_page_page_profile > div.container.area.dform_section_area_account > div.box.profile-details-header.box_my_details.nine {
   flex: 1;
 }
@@ -32,7 +27,7 @@
     flex-direction: row;
   }
 /* 
-  #home #dform_container .container>.three {
+  #profile #dform_container .container>.three {
     width: 35%;
   } */
 }
