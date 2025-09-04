@@ -116,32 +116,29 @@ function buildBinCards(collections, uprn) {
 
   // Handle the status banner logic
   const statusBanner = document.querySelector('.status-banner');
-  const bannerLink = statusBanner ? statusBanner.querySelector('a') : null;
-  const bannerSpan = statusBanner ? statusBanner.querySelector('span') : null;
-
-  if (statusBanner && bannerSpan && bannerLink) {
-    // Find if there is a collection today with issues
-    const hasIssuesToday = collections.some(c => {
-      const dueDate = new Date(c.due);
-      // Check if the due date is the same day as today, ignoring time
-      const isSameDay = dueDate.getDate() === today.getDate() &&
-        dueDate.getMonth() === today.getMonth() &&
-        dueDate.getFullYear() === today.getFullYear();
-      return c.issues === true && isSameDay;
-    });
-
-    if (hasIssuesToday) {
-      statusBanner.className = 'status-banner error';
-      bannerSpan.className = 'error';
-      bannerSpan.textContent = "Collections are delayed on your route due to a shortage of crew members";
-      bannerLink.textContent = "See all collection updates";
-      bannerLink.href = "https://www.sheffield.veolia.co.uk/service-alerts";
+  if (statusBanner) {
+    if (todayCollection) {
+      statusBanner.style.display = ''; // Show banner
+      const bannerLink = statusBanner.querySelector('a');
+      const bannerSpan = statusBanner.querySelector('span');
+      if (bannerSpan && bannerLink) {
+        const hasIssuesToday = todayCollection.issues === true;
+        if (hasIssuesToday) {
+          statusBanner.className = 'status-banner error';
+          bannerSpan.className = 'error';
+          bannerSpan.textContent = "Collections are delayed on your route due to a shortage of crew members";
+          bannerLink.textContent = "See all collection updates";
+          bannerLink.href = "https://www.sheffield.veolia.co.uk/service-alerts";
+        } else {
+          statusBanner.className = 'status-banner success';
+          bannerSpan.className = 'success';
+          bannerSpan.textContent = "There are currently no issues reported on your collection route";
+          bannerLink.textContent = "Report a missed collection";
+          bannerLink.href = "https://www.sheffield.gov.uk/bins-recycling-services/report-missed-collection";
+        }
+      }
     } else {
-      statusBanner.className = 'status-banner success';
-      bannerSpan.className = 'success';
-      bannerSpan.textContent = "There are currently no issues reported on your collection route";
-      bannerLink.textContent = "Report a missed collection";
-      bannerLink.href = "https://www.sheffield.gov.uk/bins-recycling-services/report-missed-collection";
+      statusBanner.style.display = 'none'; // Hide banner
     }
   }
 

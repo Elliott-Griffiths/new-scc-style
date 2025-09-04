@@ -280,7 +280,8 @@
 }
 
 #dform_container .dashboard-details-container p.status-banner span {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   gap: var(--spacing-xs);
   align-items: center;
 }
@@ -353,7 +354,8 @@
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.bin,
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.type,
 #dform_container .dashboard-details-container a.calendar-link {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   align-items: center;
   gap: var(--spacing-xs);
 }
