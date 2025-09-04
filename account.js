@@ -322,10 +322,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       }
     } else {
-      if (KDF.getParams().a === 'draft') {
-        document.getElementById('drafts-tab').click();
-      }
-      
       document.querySelectorAll('li.le-request-status-text').forEach(el => {
         el.textContent = 'Status:';
       });
@@ -498,6 +494,13 @@ document.addEventListener('DOMContentLoaded', function () {
       draftsBtn.addEventListener('click', () => {
         activateTab(draftsBtn, submittedBtn, widgetDrafts, widgetSubmitted);
       });
+
+      if (KDF.getParams().a === 'drafts') {
+        console.log('click');
+        setTimeout(() => {
+          activateTab(draftsBtn, submittedBtn, widgetDrafts, widgetSubmitted);
+        }, 0);
+      }
 
       if (submittedBtn.classList.contains('active')) {
         widgetSubmitted.style.display = 'block';
