@@ -359,7 +359,10 @@
 }
 
 #dform_container .dashboard-details-container .status-banner a::before,
-#dform_container .dashboard-details-container .waste-recycling-container .card span::before {
+#dform_container .dashboard-details-container .waste-recycling-container .card span::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.date::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.bin::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.type::before {
   content: url(./icons/arrow-right-primary-darkened.svg);
   width: var(--font-size-base);
   height: var(--font-size-base);
