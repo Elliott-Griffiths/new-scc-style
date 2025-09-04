@@ -309,30 +309,27 @@
   gap: var(--spacing-md);
 }
 
-#dform_container .dashboard-details-container .waste-recycling-container .card.today {
-  background: var(--c-alerts-warning);
-  border: 4px solid var(--c-greys-black);
-}
-
-#dform_container .dashboard-details-container .waste-recycling-container .card.today * {
-  color: var(--c-core-brand-secondary);
-}
-
-#dform_container .dashboard-details-container .waste-recycling-container .card.next * {
-  color: var(--c-brand-accents-teal);
-}
-
 #dform_container .dashboard-details-container .waste-recycling-container .card h2 {
-  margin: 0;
   color: var(--c-core-brand-secondary);
+  margin: 0;
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card p {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--spacing-smd);
   align-items: center;
   line-height: var(--line-height);
+  color: var(--c-core-brand-secondary);
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card.next p {
+  color: var(--c-brand-accents-teal);
+}
+
+#dform_container .dashboard-details-container .waste-recycling-container .card.today {
+  background: var(--c-alerts-warning);
+  border: 4px solid var(--c-greys-black);
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card.next {
