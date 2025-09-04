@@ -366,33 +366,18 @@
   line-height: var(--line-height);
 }
 
-#dform_container .dashboard-details-container .waste-recycling-container .card.today .collection::before {
-  content: url(./icons/calendar-white.svg);
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.date::before {
+  content: url(./icons/calendar-brand-secondary.svg);
   transform: scale(1.4);
 }
 
-#dform_container .dashboard-details-container .waste-recycling-container .card.today .bin::before {
-  content: url(./icons/trash-can-white.svg);
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.bin::before {
+  content: url(./icons/trash-can-brand-secondary.svg);
   transform: scale(1.3);
 }
 
-#dform_container .dashboard-details-container .waste-recycling-container .card.today .type::before {
-  content: url(./icons/circle-check-success-white.svg);
-  transform: scale(1.2);
-}
-
-#dform_container .dashboard-details-container .waste-recycling-container .card.next .collection::before {
-  content: url(./icons/calendar-black.svg);
-  transform: scale(1.4);
-}
-
-#dform_container .dashboard-details-container .waste-recycling-container .card.next .bin::before {
-  content: url(./icons/trash-can-black.svg);
-  transform: scale(1.3);
-}
-
-#dform_container .dashboard-details-container .waste-recycling-container .card.next .type::before {
-  content: url(./icons/circle-check-success-black.svg);
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.type::before {
+  content: url(./icons/circle-check-success-brand-secondary.svg);
   transform: scale(1.2);
 }
 

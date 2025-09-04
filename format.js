@@ -63,20 +63,21 @@ function buildBinCards(collections, uprn) {
     // Scenario 1: Collection today
     const formattedDate = formatDate(todayCollection.due);
     todayDetails.innerHTML = `
-      <p><img src="icons/calendar-black.svg" alt=""> ${formattedDate}</p>
-      <p><img src="icons/trash-can-black.svg" alt=""> ${todayCollection.bin}</p>
-      <p><img src="icons/circle-check-success.svg" alt=""> ${binTypeMap[todayCollection.bin]}</p>
+      <p class="date">${formattedDate}</p>
+      <p class="bin">${todayCollection.bin}</p>
+      <p class="type">${binTypeMap[todayCollection.bin]}</p>
     `;
   } else {
     // Scenario 2: No collection today
     const formattedDate = formatDate(today.toISOString());
     todayDetails.innerHTML = `
-        <p><img src="icons/calendar-black.svg" alt=""> ${formattedDate}</p>
+        <p class="date">${formattedDate}</p>
         <p>You don't have a collection scheduled at your address.</p>
     `;
   }
   todayCard.appendChild(todayDetails);
   container.appendChild(todayCard);
+
 
   // --- Next Collection Card ---
   const nextCollectionCard = document.createElement('div');
@@ -103,9 +104,9 @@ function buildBinCards(collections, uprn) {
   if (nextCollection) {
     const formattedDate = formatDate(nextCollection.due);
     nextDetails.innerHTML = `
-      <p><img src="icons/calendar-black.svg" alt=""> ${formattedDate}</p>
-      <p><img src="icons/trash-can-black.svg" alt=""> ${nextCollection.bin}</p>
-      <p><img src="icons/circle-check-success.svg" alt=""> ${binTypeMap[nextCollection.bin]}</p>
+      <p class="date">${formattedDate}</p>
+      <p class="bin">${nextCollection.bin}</p>
+      <p class="type">${binTypeMap[nextCollection.bin]}</p>
     `;
   } else {
     nextDetails.innerHTML = `<p>No further collections scheduled.</p>`;
