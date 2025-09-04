@@ -163,12 +163,12 @@
   text-align: center;
 }
 
-#dform_container .dashboard-details-container .card.today {
+#dform_container .dashboard-details-container .card.recycling {
   background: var(--c-alerts-success);
   border-color: var(--c-green-darken);
 }
 
-#dform_container .dashboard-details-container .card.today ul {
+#dform_container .dashboard-details-container .card.recycling ul {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,13 +176,13 @@
   list-style: none;
 }
 
-#dform_container .dashboard-details-container .card.today ul li {
+#dform_container .dashboard-details-container .card.recycling ul li {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
 }
 
-#dform_container .dashboard-details-container .card.today ul li::before {
+#dform_container .dashboard-details-container .card.recycling ul li::before {
   content: '';
 
   position: unset;
@@ -235,7 +235,7 @@
 }
 
 #dform_container .dashboard-details-container .card p span,
-#dform_container .dashboard-details-container .card.today ul li a {
+#dform_container .dashboard-details-container .card.recycling ul li a {
   font-weight: var(--font-weight-semibold);
 }
 
