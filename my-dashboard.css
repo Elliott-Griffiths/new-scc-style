@@ -349,9 +349,9 @@
 }
 
 #dform_container .dashboard-details-container .status-banner a,
-#dform_container .dashboard-details-container .waste-recycling-container .card .collection,
-#dform_container .dashboard-details-container .waste-recycling-container .card .bin,
-#dform_container .dashboard-details-container .waste-recycling-container .card .type,
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.date,
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.bin,
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.type,
 #dform_container .dashboard-details-container a.calendar-link {
   display: flex;
   align-items: center;
