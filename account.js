@@ -164,9 +164,8 @@ document.addEventListener('DOMContentLoaded', function () {
      * Checks if the 'srid' URL parameter exists and starts with '101000',
      * indicating a request details page.
      */
-    const urlParams = new URLSearchParams(window.location.search);
-    const sridValue = urlParams.get('srid');
-    const isSridValid = sridValue && sridValue.startsWith('101000');
+    const sridValue = KDF.getParams().srid;
+    const isSridValid = KDF.getParams()?.srid?.startsWith('1010') ?? false;
 
     // --- TRIGGER IF MY REQUESTS DETAILS LOADS ---
     /**
@@ -175,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * certain elements and reformatting others.
      */
     if (isSridValid) {
-      const page = document.getElementById('my-requests');
+      const page = document.getElementById('requests');
       const content = document.getElementById('content');
       const navigation = document.querySelector('.navigation');
       const tabButtons = document.getElementById('widget_ahtm_request_tabs');
@@ -323,6 +322,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       }
     } else {
+      if (KDF.getParams().a === 'draft') {
+        document.getElementById('drafts-tab').click();
+      }
+      
       document.querySelectorAll('li.le-request-status-text').forEach(el => {
         el.textContent = 'Status:';
       });
