@@ -3668,10 +3668,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "6",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/6",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "1",
@@ -3680,10 +3677,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "24",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/24",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "2",
@@ -3692,10 +3686,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "0",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/0",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "3",
@@ -3704,10 +3695,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "41",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/41",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "4",
@@ -3716,10 +3704,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "2",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/2",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "5",
@@ -3728,10 +3713,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "3",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/3",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "6",
@@ -3740,10 +3722,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "4",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/4",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "7",
@@ -3752,10 +3731,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "5",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/5",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "8",
@@ -3764,10 +3740,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "7",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/7",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "9",
@@ -3776,10 +3749,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "8",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/8",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "10",
@@ -3788,10 +3758,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "27",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/27",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "11",
