@@ -248,8 +248,9 @@ body {
   width: 220px;
   height: 20px;
   position: fixed;
-  bottom: 0px;
-  right: 0px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: URL('./Sheffield-Preloader.gif');
   background-repeat: no-repeat;
 }
