@@ -1749,6 +1749,8 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       areaContact,
       officerContact,
     } = response.data;
+
+    console.log(action, response.data);
     const currentPageId = getCurrentPageId();
     const addressSelectionSection = document.querySelector(`#${currentPageId} .address-selection-section`);
     const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
@@ -2319,6 +2321,7 @@ function disabledButtonToggle(enable) {
 
 // Function to set value to fields based on data-customalias attributes of inputs on the current page
 function setValuesToInputFields(aliasesAndValues) {
+  console.log('setValuesToInputFields', aliasesAndValues)
   const currentPageId = getCurrentPageId(); // Get the current page ID
 
   // Iterate over each custom alias and value pair
