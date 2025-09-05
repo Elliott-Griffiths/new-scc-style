@@ -110,12 +110,12 @@
 #widget_MySubmittedRequests>div>div.le-request-details>div>br,
 #widget_MySubmittedRequests>div>div.le-request-details>div>div:nth-child(6),
 #widget_MySubmittedRequests>div>div.le-request-details>div>div.le-request-form-details>br:nth-child(14),
-#dform_errorMessage,
-#dform_successMessage,
-#dform_warningMessage,
-#dform_infoMessage,
-#dform_controls,
-#dform_control_buttons {
+#requests #dform_errorMessage,
+#requests #dform_successMessage,
+#requests #dform_warningMessage,
+#requests #dform_infoMessage,
+#requests #dform_controls,
+#requests #dform_control_buttons {
   display: none !important;
 }
 
