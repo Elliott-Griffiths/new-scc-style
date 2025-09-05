@@ -241,3 +241,15 @@ body {
     /* 30px */
   }
 }
+
+#dform_container #dform_lockMsg {
+  z-index: 2000;
+  padding: 10px;
+  width: 220px;
+  height: 20px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  background: URL('./Sheffield-Preloader.gif');
+  background-repeat: no-repeat;
+}
