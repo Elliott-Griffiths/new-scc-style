@@ -118,7 +118,7 @@
 }
 
 #menuButton::after {
-  content: url(./icons/home-white.svg);
+  content: url(./icons/menu-white.svg);
   display: inline-block;
   width: var(--font-size-base);
   height: var(--font-size-base);
@@ -156,7 +156,7 @@
 }
 
 #menuButton:focus::after {
-  content: url(./icons/home-black.svg);
+  content: url(./icons/menu-black.svg);
   display: inline-block;
 }
 
