@@ -154,6 +154,7 @@ li.le-stat-closed li.le-request-status-text::after {
 }
 
 #pagination-container {
+  margin-bottom: var(--spacing-xl);
   display: flex;
   justify-content: center;
   align-items: center;
