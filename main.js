@@ -2031,10 +2031,10 @@ function handleFomComplate(event, kdf) {
   setTimeout(function () {
     const pagenav = document.getElementById("dform_pagenav");
     if (pagenav) {
-      pagenav.style.setProperty('display', 'inline-flex', 'important');
+      pagenav.style.setProperty('display', 'none', 'important');
       const ul = pagenav.querySelector("#dform_navigation");
       if (ul) {
-        ul.style.setProperty('display', 'flex', 'important');
+        ul.style.setProperty('display', 'none', 'important');
       }
     }
   }, 0);
