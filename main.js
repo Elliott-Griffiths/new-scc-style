@@ -1629,13 +1629,17 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
   if (
     action === "search-local-address" ||
     action === "search-national-address"
-  ) {
+  ) {    
     let targetPageId = getCurrentPageId();
+    if (targetPageId === 'dform_page_page_about_you') {
+      KDF.setWidgetRequired('sel_search_results_about_you');  
+    }
     if (initialProfileAddressLoad === true) {
       initialProfileAddressLoad = false;
       targetPageId = "dform_page_page_about_you";
       setTimeout(function () {
         setProfileAddressDetails(targetPageId, kdf);
+        KDF.setWidgetNotRequired('sel_search_results_about_you');  
       }, 0);
     }
   
@@ -3299,9 +3303,6 @@ function getAndSetReviewPageData() {
         }
       }
     });
-
-
-
   }
 }
 
