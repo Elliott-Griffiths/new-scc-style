@@ -201,7 +201,7 @@
 }
 
 #dform_container #dform_controls {
-  padding-block: unset !important;
+  padding: unset !important;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
