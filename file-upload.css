@@ -36,6 +36,7 @@ input[type="file"]::file-selector-button {
   grid-column: 1 / -1;
   grid-row: 2 / 3;
   z-index: 0;
+  height: auto;
   background: var(--c-greys-white);
   border: 2px transparent var(--c-core-brand-secondary);
 }
