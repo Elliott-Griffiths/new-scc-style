@@ -1,196 +1,108 @@
-let initialProfileAddressLoad = false;
+function checkAddressHasBeenSet(action = "next page") {
+  const currentPageId = getCurrentPageId();
+  const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
+  const fullAddress = document.querySelector(
+    `#${currentPageId} input[data-customalias="fullAddress"]`
+  );
+  const fullAddressHasValue = KDF.getVal(fullAddress.name) ? true : false;
+  const siteName = document.querySelector(
+    `#${currentPageId} input[data-customalias="siteName"]`
+  );
+  const siteCode = document.querySelector(
+    `#${currentPageId} input[data-customalias="siteCode"]`
+  );
+  if (fullAddressHasValue) {
+    if (siteName && siteCode) {
+      const siteNameHasValue = KDF.getVal(siteName.name) ? true : false;
+      const siteCodeHasValue = KDF.getVal(siteCode.name) ? true : false;
+      const validSiteCode = acceptGMSites
+        ? true
+        : KDF.getVal(siteCode.name).startsWith("344")
+          ? true
+          : false;
+      if (siteNameHasValue && siteCodeHasValue && validSiteCode) {
+        if (action === "submit") {
+          KDF.gotoPage("complete", true, true, false);
+        } else {
+          KDF.gotoNextPage();
+        }
+      } else {
+        const errorMessage = acceptGMSites
+          ? defaultSelectedAddressMessage
+          : "Choose a location on the public highway";
+        if (selectedAddressSpan) {
+          selectedAddressSpan.textContent = errorMessage;
+          selectedAddressSpan.classList.add('dform_validationMessage');
+          selectedAddressSpan.style.display = 'block';
+        }
+        $("#map_container").addClass("map_container_error");
+      }
+    } else {
+      if (action === "submit") {
+        KDF.gotoPage("complete", true, true, false);
+      } else {
+        KDF.gotoNextPage();
+      }
+    }
+  } else {
+    const mapElement = document.querySelector(`#${currentPageId} .map-container`);
 
-if (kdf.profileData['customerid'] && kdf.profileData['customerid'] !== "" 
- && kdf.profileData['profile-Postcode'] && kdf.profileData['profile-Postcode'] !== "") {
-  initialProfileAddressLoad = true;
-  $('#dform_widget_button_but_find_address_about_you').click();
-}
+    // Check if the map element exists on the page
+    if (mapElement) {
+      const detailsElement = mapElement.querySelector('.details-accordion');
 
-if (
-  action === "search-local-address" ||
-  action === "search-national-address"
-) {
-  let targetPageId = getCurrentPageId();
-  if (initialProfileAddressLoad === true) {
-    initialProfileAddressLoad = false;
-    targetPageId = "dform_page_page_about_you";
-    setTimeout(function () {
-      setProfileAddressDetails(targetPageId, kdf);
-    }, 0);
-  }
+      // Check if the map accordion is open
+      if (detailsElement && detailsElement.hasAttribute('open')) {
 
-  if (action === "search-local-address") {
-    addressSearchType[targetPageId] = "local";
-  }
-  if (action === "search-national-address") {
-    addressSearchType[targetPageId] = "national";
-  }
+        // const isMapContainerVisible = $("#map_container").is(":visible");
+        const errorMessage = acceptGMSites
+          ? defaultSelectedAddressMessage
+          : "Choose a location on the public highway";
+        if (selectedAddressSpan) {
+          selectedAddressSpan.textContent = errorMessage;
+          selectedAddressSpan.classList.add('dform_validationMessage');
+          selectedAddressSpan.style.display = 'block';
+        }
+        $("#map_container").addClass("map_container_error");
+      }
+    } else {
+      const searchResult = document.querySelector(
+        `#${currentPageId} select[data-customalias="searchResult"]`
+      );
 
-  const { propertySearchResult } = response.data;
-  // if (propertySearchResult.length > 0) {
-  const formattedSearchResult = propertySearchResult.map((addressLine) => {
-    // Create a copy to avoid mutating the original object
-    const newAddressLine = { ...addressLine };
-    const parts = newAddressLine.label.split(",");
-    newAddressLine.label =
-      formatTitleCase(parts[0]) + "," + parts.slice(1).join(",");
-    return newAddressLine;
-  });
-  setValuesToInputFields([
-    { alias: "searchResult", value: formattedSearchResult },
-  ]);
+      const isSearchResultVisible = searchResult.offsetParent !== null;
+      if (isSearchResultVisible) {
+        const searchResultContainer = searchResult.closest('.dform_widget_field');
+        const validationMessage = searchResultContainer?.querySelector('.dform_validationMessage');
+        const selectedValue = searchResult.value;
+        let message = "Select the address";
 
-  const numberOfResults = propertySearchResult ? propertySearchResult.length : 0;
+        if (selectedValue !== '' && selectedValue !== 'Please select...') {
+          const message = "Click use this address";
+        }
+        if (validationMessage) {
+          validationMessage.style.display = "block";
+          validationMessage.textContent = message;
+        }
+        searchResult.classList.add('dform_fielderror');
+      } else {
+        const postcode = document.querySelector(
+          `#${currentPageId} input[data-customalias="postcode"]`
+        );
+        const postcodeContainer = postcode?.closest('.dform_widget_field');
+        const validationMessage = postcodeContainer?.querySelector('.dform_validationMessage');
+        const postcodeHasValue = postcode ? KDF.getVal(postcode.name) : false;
+        let message = "Enter the postcode";
+        if (postcodeHasValue) {
+          message = "Click find address";
+        }
+        if (validationMessage) {
+          validationMessage.style.display = "block";
+          validationMessage.textContent = message;
+        }
+        postcode?.classList.add('dform_fielderror');
+      }
 
-  const searchInput = document.querySelector(`#${targetPageId} input[data-customalias="postcode"]`);
-  let searchButton = document.querySelector(`#${targetPageId} .address-search-btn`);
-
-  const resultsList = document.querySelector(`#${targetPageId} .address-search-results`);
-  let resultsLabelId = null;
-  if (resultsList) {
-    const labelElement = resultsList.querySelector('label');
-    if (labelElement) {
-      resultsLabelId = labelElement.id;
     }
   }
-
-  let manualAddressElement = document.querySelector(`#${targetPageId} .manual-address-container`);
-  let setAddressButton = document.querySelector(`#${targetPageId} .set-address-btn`);
-  const searchedPostcode = searchInput ? searchInput.value : '';
-
-  const resultsContent = `
-      ${numberOfResults} addresses found for <strong>${searchedPostcode}</strong>.
-      <button type="button" class="search-again-btn link-btn">Search again</button>
-    `;
-
-  if (resultsList && searchInput && searchButton) {
-    let searchStatusMessageElement = document.getElementById(resultsLabelId);
-    if (searchStatusMessageElement) {
-      searchStatusMessageElement.innerHTML = resultsContent;
-    }
-
-    let selectElement = resultsList.querySelector('select');
-    if (selectElement) {
-      selectElement.style.display = 'block'; // Shows the element
-    }
-
-    searchButton = searchButton.id.replace('dform_widget_button_', '');
-
-    if (manualAddressElement) {
-      manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
-    }
-    if (setAddressButton) {
-      setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
-    }
-
-    hideShowMultipleElements([
-      { name: searchInput.name, display: "hide" },
-      { name: searchButton, display: "hide" },
-      { name: resultsList.dataset.name, display: "show" },
-      { name: manualAddressElement, display: "show" },
-      { name: setAddressButton, display: "show" },
-    ]);
-  }
-}
-
-function setProfileAddressDetails(targetPageId, kdf) {
-  let {
-    'profile-AddressNumber': property,
-    'profile-AddressLine1': streetName,
-    'profile-AddressLine2': locality,
-    'profile-AddressLine4': city,
-    'profile-Postcode': postcode,
-  } = kdf.profileData;
-  let subProperty, buildingName, buildingNumber, fullAddress;
-
-  const addressSelectionSection = document.querySelector(`#${targetPageId} .address-selection-section`);
-  const selectedAddressSpan = document.querySelector(`#${targetPageId} #selected-address`);
-
-  const addressDataForDisplay = {
-    subProperty: subProperty ? formatTitleCase(subProperty) : '',
-    buildingName: buildingName ? formatTitleCase(buildingName) : '',
-    buildingNumber: buildingNumber ? formatTitleCase(buildingNumber) : '',
-    property: property ? formatTitleCase(property) : '',
-    streetName: streetName ? formatTitleCase(streetName) : '',
-    locality: locality ? formatTitleCase(locality) : '',
-    city: city ? formatTitleCase(city) : '',
-    postcode: postcode ? postcode.toUpperCase() : ''
-  };
-
-  const fullAddressDisplay = buildAddressMarkup(addressDataForDisplay);
-  let selectedAddressContainer = document.querySelector(`#${targetPageId} .selected-address-container`);
-  if (selectedAddressContainer) {
-    selectedAddressContainer.innerHTML = fullAddressDisplay;
-    selectedAddressContainer = selectedAddressContainer.id.replace('dform_widget_html_', '');
-  }
-
-  if (addressSelectionSection) {
-    addressSelectionSection.classList.add('dform_fieldsuccess');
-  }
-
-  if (selectedAddressSpan) {
-    const addressParts = Object.values(addressDataForDisplay)
-      .filter(Boolean)
-      .join(', ');
-    selectedAddressSpan.innerHTML = addressParts;
-    selectedAddressSpan.classList.remove('dform_validationMessage');
-  }
-
-  const addressearchResults = document.querySelector(`#${targetPageId} .address-search-results`);
-  let setAddressButton = document.querySelector(`#${targetPageId} .set-address-btn`);
-  if (setAddressButton) {
-    setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
-  }
-  const buttonContainer = document.querySelector(`#${targetPageId} .address-search-btn-container`);
-  let manualAddressElement = document.querySelector(`#${targetPageId} .manual-address-container`);
-  if (manualAddressElement) {
-    manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
-  }
-
-  property = formatTitleCase(property);
-  streetName = formatTitleCase(streetName);
-  fullAddress = `${formatTitleCase(property)} ${formatTitleCase(
-    streetName
-  )}, ${city}, ${postcode}`;
-
-  setValuesToInputFields([
-    { alias: "property", value: property },
-    { alias: "streetName", value: streetName },
-    { alias: "city", value: city },
-    { alias: "postCode", value: postcode },
-    { alias: "fullAddress", value: fullAddress },
-  ]);
-
-  if (addressearchResults) {
-    const selectElement = addressearchResults.querySelector('select');
-    if (selectElement) {
-      selectElement.style.display = 'none'; // Hides the element
-      selectElement.classList.remove('dform_fielderror');
-    }
-    const validationMessage = addressearchResults?.querySelector('.dform_validationMessage');
-    if (validationMessage) {
-      validationMessage.style.display = "none";
-      validationMessage.textContent = "Select the address";
-    }
-  }
-
-  if (buttonContainer) {
-    buttonContainer.style.display = 'none'; // Hides the element
-  }
-
-  let findOnMapElement = document.querySelector(`#${targetPageId} .map-container`);
-  if (findOnMapElement) {
-    if (easting && northing) {
-      plotLocationOnMap(easting, northing);
-    }
-    findOnMapElement = findOnMapElement.id.replace('dform_widget_html_', '');
-  }
-
-  console.log(addressearchResults.querySelector('select'), manualAddressElement);
-  hideShowMultipleElements([
-    { name: setAddressButton, display: "hide" },
-    { name: selectedAddressContainer, display: "show" },
-    { name: manualAddressElement, display: "hide" },
-    { name: findOnMapElement, display: "hide" },
-  ]);
 }

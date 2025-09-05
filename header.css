@@ -141,6 +141,7 @@
 }
 
 #nav_home:focus,
+#menuButton:focus,
 #widget_Navigation>div>ul.menuList>li:focus-within,
 #widget_Navigation>div>ul.menuList>li:focus-within>a {
   outline: none !important;
