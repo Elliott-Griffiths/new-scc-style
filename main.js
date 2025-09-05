@@ -393,6 +393,38 @@ function handleInitialisingEvent() {
     });
   })();
 
+  // --- OVERRIDE PRINT FUNCTION ------------------------------------------- \\
+
+  (() => {
+    const printButton = document.getElementById('dform_print');
+    const confirmationPage = document.getElementById('dform_page_complete');
+
+    if (printButton && confirmationPage) {
+      // Override the default action by removing the href attribute
+      printButton.removeAttribute('href');
+      
+      // Add a custom event listener
+      printButton.addEventListener('click', function(event) {
+        // Prevent the default browser action for the link
+        event.preventDefault();
+        
+        // Store the original body content
+        const originalBody = document.body.innerHTML;
+        
+        // Set the body's HTML to only the confirmation page content
+        document.body.innerHTML = confirmationPage.outerHTML;
+        
+        // Trigger the print dialog
+        window.print();
+        
+        // Restore the original body content after printing
+        setTimeout(() => {
+          document.body.innerHTML = originalBody;
+        }, 0); 
+      });
+    }
+  })();
+
   // --- HANDLE FILE UPLOAD ------------------------------------------------ \\
 
   // $(document).ajaxComplete(function (event, xhr, settings) {
