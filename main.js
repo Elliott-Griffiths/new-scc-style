@@ -3617,7 +3617,6 @@ function setProfileAddressDetails(targetPageId, kdf) {
     findOnMapElement = findOnMapElement.id.replace('dform_widget_html_', '');
   }
 
-  console.log(addressearchResults.querySelector('select'), manualAddressElement);
   hideShowMultipleElements([
     { name: setAddressButton, display: "hide" },
     { name: selectedAddressContainer, display: "show" },
