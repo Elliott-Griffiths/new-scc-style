@@ -4145,7 +4145,8 @@ function mapClick(evt) {
         });
 
         $("#map_container").removeClass("map_container_error");
-        if (graphic[0].layer.id === "scc_boundary") {
+        if (graphic && graphic.length > 0) {
+          if (graphic[0].layer && graphic[0].layer.id === "scc_boundary") {
           addPoint(streetMapView, evt.mapPoint, markerSymbol);
           $(".esriPopup").hide();
           mapPoint = evt.mapPoint;
@@ -4204,6 +4205,7 @@ function mapClick(evt) {
             latitude: mapY,
           });
         }
+      }
       }
     });
   }
