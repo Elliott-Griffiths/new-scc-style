@@ -1029,7 +1029,7 @@ function handleOnReadyEvent(_, kdf) {
   // --- HANDLE SET REPORTER ----------------------------------------------- \\
 
   // Check if customer set state is true
-  if (kdf.access === "agent" && kdf.profileData["profile-FullName"]) {
+  if (kdf.profileData["customerid"]) {
     property = formatTitleCase(kdf.profileData["profile-AddressNumber"]);
     streetName = formatTitleCase(kdf.profileData["profile-AddressLine1"]);
     fullAddress = `${formatTitleCase(property)} ${formatTitleCase(
@@ -1040,9 +1040,7 @@ function handleOnReadyEvent(_, kdf) {
       new Date(kdf.profileData["profile-DateOfBirth"]),
       fullAddress
     );
-  } else if (
-    kdf.access === "agent" &&
-    KDF.getVal("txt_full_address_about_you")
+  } else if (KDF.getVal("txt_full_address_about_you")
   ) {
     property = formatTitleCase(KDF.getVal("txt_property_about_you"));
     streetName = formatTitleCase(KDF.getVal("txt_street_name_about_you"));
