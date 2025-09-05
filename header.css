@@ -123,6 +123,7 @@
   width: var(--font-size-base);
   height: var(--font-size-base);
   line-height: var(--line-height);
+  transform: translateY(-2px) scale(1.2);
 }
 
 #nav_home {
@@ -147,6 +148,10 @@
   background: var(--c-focus-links) !important;
   border-bottom: 2px solid var(--c-greys-black) !important;
   text-decoration: none !important;
+}
+
+#nav_home:focus > span > svg > path {
+  fill: var(--c-greys-black);
 }
 
 #widget_Navigation>div>ul.menuList>li>a:focus,
