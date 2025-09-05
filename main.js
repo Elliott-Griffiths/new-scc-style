@@ -441,7 +441,7 @@ function handleOnReadyEvent(_, kdf) {
     defaultSelectedAddressMessage = document.getElementById('selected-address').textContent.trim();
   }
 
-  // --- SET ADDRESS IF ACCOUNT IUDENTIFIED --------------------------------- \\
+  // --- SET ADDRESS IF ACCOUNT IUDENTIFIED ---------------------------------- \\
 
   if (kdf.profileData['customerid'] && kdf.profileData['customerid'] !== "" 
     && kdf.profileData['profile-Postcode'] && kdf.profileData['profile-Postcode'] !== "") {
