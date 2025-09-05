@@ -523,7 +523,7 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
 
-  // setTimeout(() => {
+  setTimeout(() => {
   if (kdf.form.complete === "Y") {
     KDF.showPage("page_review");
     KDF.gotoPage("page_review");
@@ -553,7 +553,7 @@ function handleOnReadyEvent(_, kdf) {
       }
     }
   }
-  // }, 0);
+  }, 0);
 
   // --- HANDLE FORMAT TITLE CASE ------------------------------------------ \\
 
@@ -1305,7 +1305,7 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   KDF.hideMessages();
 
   // Get the name for the current page
-  $(`div[data-type="page"][data-pos="${currentpageid}"]`).each(function () {
+  $(`div[data-type="page"][data-pos="${targetpageid}"]`).each(function () {
     pageName = this.id.slice(11);
   });
 
@@ -1728,7 +1728,6 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       areaContact,
       officerContact,
     } = response.data;
-    console.log(response.data)
     const currentPageId = getCurrentPageId();
     const addressSelectionSection = document.querySelector(`#${currentPageId} .address-selection-section`);
     const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
