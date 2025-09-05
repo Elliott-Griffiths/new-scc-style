@@ -1,150 +1,196 @@
-/**
- * Dynamically builds and updates the bin collection cards and status banner.
- *
- * @param {object[]} collections - An array of objects, each containing bin collection data.
- * @param {string} uprn - The UPRN (Unique Property Reference Number) for the dynamic link.
- */
-function buildBinCards(collections, uprn) {
-  const container = document.querySelector('.waste-recycling-container');
-  if (!container) {
-    console.error("Container '.waste-recycling-container' not found.");
-    return;
+let initialProfileAddressLoad = false;
+
+if (kdf.profileData['customerid'] && kdf.profileData['customerid'] !== "" 
+ && kdf.profileData['profile-Postcode'] && kdf.profileData['profile-Postcode'] !== "") {
+  initialProfileAddressLoad = true;
+  $('#dform_widget_button_but_find_address_about_you').click();
+}
+
+if (
+  action === "search-local-address" ||
+  action === "search-national-address"
+) {
+  let targetPageId = getCurrentPageId();
+  if (initialProfileAddressLoad === true) {
+    initialProfileAddressLoad = false;
+    targetPageId = "dform_page_page_about_you";
+    setTimeout(function () {
+      setProfileAddressDetails(targetPageId, kdf);
+    }, 0);
   }
 
-  // Clear any existing cards
-  container.innerHTML = '';
+  if (action === "search-local-address") {
+    addressSearchType[targetPageId] = "local";
+  }
+  if (action === "search-national-address") {
+    addressSearchType[targetPageId] = "national";
+  }
 
-  // Sort collections by date
-  collections.sort((a, b) => new Date(a.due) - new Date(b.due));
-
-  // Get today's date at midnight for accurate comparison
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  // Helper function to format the date
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long'
-    };
-    return date.toLocaleDateString('en-GB', options);
-  };
-  
-  const binTypeMap = {
-    'Black Bin': 'Non Recyclable Waste',
-    'Blue Bin': 'Paper and card',
-    'Green Bin': 'Garden Waste',
-  };
-
-  const upcomingCollections = collections.filter(collection => {
-      const collectionDate = new Date(collection.due);
-      collectionDate.setHours(0, 0, 0, 0);
-      return collectionDate.getTime() >= today.getTime();
+  const { propertySearchResult } = response.data;
+  // if (propertySearchResult.length > 0) {
+  const formattedSearchResult = propertySearchResult.map((addressLine) => {
+    // Create a copy to avoid mutating the original object
+    const newAddressLine = { ...addressLine };
+    const parts = newAddressLine.label.split(",");
+    newAddressLine.label =
+      formatTitleCase(parts[0]) + "," + parts.slice(1).join(",");
+    return newAddressLine;
   });
+  setValuesToInputFields([
+    { alias: "searchResult", value: formattedSearchResult },
+  ]);
 
-  // --- Today Card ---
-  const todayCard = document.createElement('div');
-  todayCard.className = 'card today';
-  const todayHeader = document.createElement('h2');
-  todayHeader.textContent = 'Today';
-  todayCard.appendChild(todayHeader);
-  const todayDetails = document.createElement('div');
-  todayDetails.className = 'details';
+  const numberOfResults = propertySearchResult ? propertySearchResult.length : 0;
 
-  const todayCollection = upcomingCollections.find(c => {
-      const collectionDate = new Date(c.due);
-      collectionDate.setHours(0, 0, 0, 0);
-      return collectionDate.getTime() === today.getTime();
-  });
+  const searchInput = document.querySelector(`#${targetPageId} input[data-customalias="postcode"]`);
+  let searchButton = document.querySelector(`#${targetPageId} .address-search-btn`);
 
-  if (todayCollection) {
-    // Scenario 1: Collection today
-    const formattedDate = formatDate(todayCollection.due);
-    todayDetails.innerHTML = `
-      <p class="date">${formattedDate}</p>
-      <p class="bin">${todayCollection.bin}</p>
-      <p class="type">${binTypeMap[todayCollection.bin]}</p>
-    `;
-  } else {
-    // Scenario 2: No collection today
-    const formattedDate = formatDate(today.toISOString());
-    todayDetails.innerHTML = `
-        <p class="date">${formattedDate}</p>
-        <p>You don't have a collection scheduled at your address.</p>
-    `;
-  }
-  todayCard.appendChild(todayDetails);
-  container.appendChild(todayCard);
-
-
-  // --- Next Collection Card ---
-  const nextCollectionCard = document.createElement('div');
-  nextCollectionCard.className = 'card next';
-  const nextHeader = document.createElement('h2');
-  nextHeader.textContent = 'Next collection';
-  nextCollectionCard.appendChild(nextHeader);
-  const nextDetails = document.createElement('div');
-  nextDetails.className = 'details';
-
-  let nextCollection;
-  if(todayCollection) {
-      // if there was a collection today, the next one is the second in the upcoming list
-      if(upcomingCollections.length > 1) {
-          nextCollection = upcomingCollections[1];
-      }
-  } else {
-      // if no collection today, the next one is the first in the upcoming list
-      if(upcomingCollections.length > 0) {
-        nextCollection = upcomingCollections[0];
-      }
-  }
-
-  if (nextCollection) {
-    const formattedDate = formatDate(nextCollection.due);
-    nextDetails.innerHTML = `
-      <p class="date">${formattedDate}</p>
-      <p class="bin">${nextCollection.bin}</p>
-      <p class="type">${binTypeMap[nextCollection.bin]}</p>
-    `;
-  } else {
-    nextDetails.innerHTML = `<p>No further collections scheduled.</p>`;
-  }
-  nextCollectionCard.appendChild(nextDetails);
-  container.appendChild(nextCollectionCard);
-
-  // Handle the status banner logic
-  const statusBanner = document.querySelector('.status-banner');
-  if (statusBanner) {
-    if (todayCollection) {
-      statusBanner.style.display = ''; // Show banner
-      const bannerLink = statusBanner.querySelector('a');
-      const bannerSpan = statusBanner.querySelector('span');
-      if (bannerSpan && bannerLink) {
-        const hasIssuesToday = todayCollection.issues === true;
-        if (hasIssuesToday) {
-          statusBanner.className = 'status-banner error';
-          bannerSpan.className = 'error';
-          bannerSpan.textContent = "Collections are delayed on your route due to a shortage of crew members";
-          bannerLink.textContent = "See all collection updates";
-          bannerLink.href = "https://www.sheffield.veolia.co.uk/service-alerts";
-        } else {
-          statusBanner.className = 'status-banner success';
-          bannerSpan.className = 'success';
-          bannerSpan.textContent = "There are currently no issues reported on your collection route";
-          bannerLink.textContent = "Report a missed collection";
-          bannerLink.href = "https://www.sheffield.gov.uk/bins-recycling-services/report-missed-collection";
-        }
-      }
-    } else {
-      statusBanner.style.display = 'none'; // Hide banner
+  const resultsList = document.querySelector(`#${targetPageId} .address-search-results`);
+  let resultsLabelId = null;
+  if (resultsList) {
+    const labelElement = resultsList.querySelector('label');
+    if (labelElement) {
+      resultsLabelId = labelElement.id;
     }
   }
 
-  // Update the calendar link with the UPRN
-  const calendarLink = document.querySelector('.calendar-link');
-  if (calendarLink && uprn) {
-    calendarLink.href = `https://wasteservices.sheffield.gov.uk/property/${uprn}/calendar`;
+  let manualAddressElement = document.querySelector(`#${targetPageId} .manual-address-container`);
+  let setAddressButton = document.querySelector(`#${targetPageId} .set-address-btn`);
+  const searchedPostcode = searchInput ? searchInput.value : '';
+
+  const resultsContent = `
+      ${numberOfResults} addresses found for <strong>${searchedPostcode}</strong>.
+      <button type="button" class="search-again-btn link-btn">Search again</button>
+    `;
+
+  if (resultsList && searchInput && searchButton) {
+    let searchStatusMessageElement = document.getElementById(resultsLabelId);
+    if (searchStatusMessageElement) {
+      searchStatusMessageElement.innerHTML = resultsContent;
+    }
+
+    let selectElement = resultsList.querySelector('select');
+    if (selectElement) {
+      selectElement.style.display = 'block'; // Shows the element
+    }
+
+    searchButton = searchButton.id.replace('dform_widget_button_', '');
+
+    if (manualAddressElement) {
+      manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+    }
+    if (setAddressButton) {
+      setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
+    }
+
+    hideShowMultipleElements([
+      { name: searchInput.name, display: "hide" },
+      { name: searchButton, display: "hide" },
+      { name: resultsList.dataset.name, display: "show" },
+      { name: manualAddressElement, display: "show" },
+      { name: setAddressButton, display: "show" },
+    ]);
   }
+}
+
+function setProfileAddressDetails(targetPageId, kdf) {
+  let {
+    'profile-AddressNumber': property,
+    'profile-AddressLine1': streetName,
+    'profile-AddressLine2': locality,
+    'profile-AddressLine4': city,
+    'profile-Postcode': postcode,
+  } = kdf.profileData;
+  let subProperty, buildingName, buildingNumber, fullAddress;
+
+  const addressSelectionSection = document.querySelector(`#${targetPageId} .address-selection-section`);
+  const selectedAddressSpan = document.querySelector(`#${targetPageId} #selected-address`);
+
+  const addressDataForDisplay = {
+    subProperty: subProperty ? formatTitleCase(subProperty) : '',
+    buildingName: buildingName ? formatTitleCase(buildingName) : '',
+    buildingNumber: buildingNumber ? formatTitleCase(buildingNumber) : '',
+    property: property ? formatTitleCase(property) : '',
+    streetName: streetName ? formatTitleCase(streetName) : '',
+    locality: locality ? formatTitleCase(locality) : '',
+    city: city ? formatTitleCase(city) : '',
+    postcode: postcode ? postcode.toUpperCase() : ''
+  };
+
+  const fullAddressDisplay = buildAddressMarkup(addressDataForDisplay);
+  let selectedAddressContainer = document.querySelector(`#${targetPageId} .selected-address-container`);
+  if (selectedAddressContainer) {
+    selectedAddressContainer.innerHTML = fullAddressDisplay;
+    selectedAddressContainer = selectedAddressContainer.id.replace('dform_widget_html_', '');
+  }
+
+  if (addressSelectionSection) {
+    addressSelectionSection.classList.add('dform_fieldsuccess');
+  }
+
+  if (selectedAddressSpan) {
+    const addressParts = Object.values(addressDataForDisplay)
+      .filter(Boolean)
+      .join(', ');
+    selectedAddressSpan.innerHTML = addressParts;
+    selectedAddressSpan.classList.remove('dform_validationMessage');
+  }
+
+  const addressearchResults = document.querySelector(`#${targetPageId} .address-search-results`);
+  let setAddressButton = document.querySelector(`#${targetPageId} .set-address-btn`);
+  if (setAddressButton) {
+    setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
+  }
+  const buttonContainer = document.querySelector(`#${targetPageId} .address-search-btn-container`);
+  let manualAddressElement = document.querySelector(`#${targetPageId} .manual-address-container`);
+  if (manualAddressElement) {
+    manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+  }
+
+  property = formatTitleCase(property);
+  streetName = formatTitleCase(streetName);
+  fullAddress = `${formatTitleCase(property)} ${formatTitleCase(
+    streetName
+  )}, ${city}, ${postcode}`;
+
+  setValuesToInputFields([
+    { alias: "property", value: property },
+    { alias: "streetName", value: streetName },
+    { alias: "city", value: city },
+    { alias: "postCode", value: postcode },
+    { alias: "fullAddress", value: fullAddress },
+  ]);
+
+  if (addressearchResults) {
+    const selectElement = addressearchResults.querySelector('select');
+    if (selectElement) {
+      selectElement.style.display = 'none'; // Hides the element
+      selectElement.classList.remove('dform_fielderror');
+    }
+    const validationMessage = addressearchResults?.querySelector('.dform_validationMessage');
+    if (validationMessage) {
+      validationMessage.style.display = "none";
+      validationMessage.textContent = "Select the address";
+    }
+  }
+
+  if (buttonContainer) {
+    buttonContainer.style.display = 'none'; // Hides the element
+  }
+
+  let findOnMapElement = document.querySelector(`#${targetPageId} .map-container`);
+  if (findOnMapElement) {
+    if (easting && northing) {
+      plotLocationOnMap(easting, northing);
+    }
+    findOnMapElement = findOnMapElement.id.replace('dform_widget_html_', '');
+  }
+
+  console.log(addressearchResults.querySelector('select'), manualAddressElement);
+  hideShowMultipleElements([
+    { name: setAddressButton, display: "hide" },
+    { name: selectedAddressContainer, display: "show" },
+    { name: manualAddressElement, display: "hide" },
+    { name: findOnMapElement, display: "hide" },
+  ]);
 }
