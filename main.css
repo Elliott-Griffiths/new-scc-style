@@ -242,6 +242,22 @@ body {
   }
 }
 
+
+#dform_container #dform_lock {
+  display: none;
+  z-index: 1001;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: var(--c-greys-white);
+  filter: alpha(Opacity=10);
+  opacity: 0.5;
+  padding-top: 0px;
+  font-weight: bold;
+}
+
 #dform_container #dform_lockMsg {
   z-index: 2000;
   padding: 0;
