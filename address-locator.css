@@ -232,3 +232,7 @@
 #dform_container #map_container .esri-search__clear-button {
     display: none !important;
 }
+
+#map_container > div.esri-view-root > div.esri-ui.calcite-theme-light > div.esri-ui-inner-container.esri-ui-manual-container > div.esri-component.esri-popup.esri-popup--aligned-top-center.esri-popup--shadow {
+    display: none !important;
+}
