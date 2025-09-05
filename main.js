@@ -398,29 +398,27 @@ function handleInitialisingEvent() {
   (() => {
     const printButton = document.getElementById('dform_print');
     const confirmationPage = document.getElementById('dform_page_complete');
-
+  
     if (printButton && confirmationPage) {
       // Override the default action by removing the href attribute
       printButton.removeAttribute('href');
-      
+  
       // Add a custom event listener
       printButton.addEventListener('click', function(event) {
         // Prevent the default browser action for the link
         event.preventDefault();
-        
-        // Store the original body content
-        const originalBody = document.body.innerHTML;
-        
-        // Set the body's HTML to only the confirmation page content
-        document.body.innerHTML = confirmationPage.outerHTML;
-        
+  
+        // Add a class to the body to trigger print-specific CSS
+        document.body.classList.add('print-mode');
+  
         // Trigger the print dialog
         window.print();
-        
-        // Restore the original body content after printing
+  
+        // Use a setTimeout to give the browser a moment to process before removing the class
+        // This is more reliable than the 'afterprint' event which isn't universally supported
         setTimeout(() => {
-          document.body.innerHTML = originalBody;
-        }, 0); 
+          document.body.classList.remove('print-mode');
+        }, 0);
       });
     }
   })();
