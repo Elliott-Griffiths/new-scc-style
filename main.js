@@ -1323,67 +1323,6 @@ function handleOnReadyEvent(_, kdf) {
     }
   });
 
-  // --- TYPE AHEAD SEARCH ------------------------------------------------- \\
-
-  function builldTypeAhead(inputName, listItems, listItemsOnly = true) {
-    const inputId = `dform_widget_${inputName}`;
-    const inputElement = document.getElementById(inputId);
-    if (!inputElement) {
-      console.error(`Input element with ID "${inputId}" not found.`);
-      return;
-    }
-
-    // Create a new div to wrap the input and button
-    const wrapper = document.createElement('div');
-    wrapper.className = 'input-wrapper';
-
-    // Insert the new wrapper before the input element
-    inputElement.parentNode.insertBefore(wrapper, inputElement);
-
-    // Move the input element into the new wrapper
-    wrapper.appendChild(inputElement);
-
-    // Datalist functionality
-    const datalistId = `${inputId}-datalist`;
-    let datalistElement = document.getElementById(datalistId);
-
-    if (!datalistElement) {
-      datalistElement = document.createElement('datalist');
-      datalistElement.id = datalistId;
-      inputElement.parentNode.appendChild(datalistElement);
-    }
-
-    datalistElement.innerHTML = '';
-    listItems.forEach(item => {
-      const option = document.createElement('option');
-      option.value = item;
-      datalistElement.appendChild(option);
-    });
-
-    inputElement.setAttribute('list', datalistId);
-
-    // Add pattern for validation (if listItemsOnly is true)
-    if (listItemsOnly) {
-      const escapedItems = listItems.map(item => item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-      const pattern = `^(${escapedItems.join('|')})$`;
-      inputElement.setAttribute('pattern', pattern);
-    }
-
-    // Add clear button functionality
-    const clearButton = document.createElement('button');
-    clearButton.type = 'button';
-    clearButton.className = 'clear-btn';
-    clearButton.textContent = 'Clear';
-
-    clearButton.addEventListener('click', () => {
-      inputElement.value = '';
-      inputElement.focus();
-    });
-
-    // Append the clear button to the new wrapper
-    wrapper.appendChild(clearButton);
-  }
-
   // --- HANDLE SIGN IN BUTTTON CLICK -------------------------------------- \\
 
   $('#dform_widget_button_but_next_sign_in').on('click', function () {
@@ -5515,6 +5454,67 @@ function getValidationMessageFromSession(id) {
       JSON.parse(sessionStorage.getItem("validationMessages")) || {};
     return validationMessages[id] || "Validation message not found";
   }
+}
+
+// --- TYPE AHEAD SEARCH ------------------------------------------------- \\
+
+function buildTypeAhead(inputName, listItems, listItemsOnly = true) {
+  const inputId = `dform_widget_${inputName}`;
+  const inputElement = document.getElementById(inputId);
+  if (!inputElement) {
+    console.error(`Input element with ID "${inputId}" not found.`);
+    return;
+  }
+
+  // Create a new div to wrap the input and button
+  const wrapper = document.createElement('div');
+  wrapper.className = 'input-wrapper';
+
+  // Insert the new wrapper before the input element
+  inputElement.parentNode.insertBefore(wrapper, inputElement);
+
+  // Move the input element into the new wrapper
+  wrapper.appendChild(inputElement);
+
+  // Datalist functionality
+  const datalistId = `${inputId}-datalist`;
+  let datalistElement = document.getElementById(datalistId);
+
+  if (!datalistElement) {
+    datalistElement = document.createElement('datalist');
+    datalistElement.id = datalistId;
+    inputElement.parentNode.appendChild(datalistElement);
+  }
+
+  datalistElement.innerHTML = '';
+  listItems.forEach(item => {
+    const option = document.createElement('option');
+    option.value = item;
+    datalistElement.appendChild(option);
+  });
+
+  inputElement.setAttribute('list', datalistId);
+
+  // Add pattern for validation (if listItemsOnly is true)
+  if (listItemsOnly) {
+    const escapedItems = listItems.map(item => item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const pattern = `^(${escapedItems.join('|')})$`;
+    inputElement.setAttribute('pattern', pattern);
+  }
+
+  // Add clear button functionality
+  const clearButton = document.createElement('button');
+  clearButton.type = 'button';
+  clearButton.className = 'clear-btn';
+  clearButton.textContent = 'Clear';
+
+  clearButton.addEventListener('click', () => {
+    inputElement.value = '';
+    inputElement.focus();
+  });
+
+  // Append the clear button to the new wrapper
+  wrapper.appendChild(clearButton);
 }
 
 // --- RELATED SERVIES ------------------------------------------------------ \\
