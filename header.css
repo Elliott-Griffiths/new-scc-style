@@ -182,7 +182,7 @@
 
 #dform_progressbar_sheffield {
   background: transparent;
-  margin-top: var(--spacing-md);
+  margin-block: var(--spacing-sm);
   transform: translateY(var(--spacing-xs));
 }
 
