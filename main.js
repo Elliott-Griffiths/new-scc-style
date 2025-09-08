@@ -1394,16 +1394,16 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
 
   let skipPages = 1;
   if (document.getElementById('dform_page_page_sign_in')) {
-    skipPages ++;
+    skipPages++;
   }
   displayBackButton(targetpageid > skipPages && pageName !== "complete" && kdf.form.complete !== "Y");
-  
+
   const controlElement = document.getElementById('dform_controls');
   if (controlElement) {
     const signInPage = document.getElementById('dform_page_page_sign_in');
     const progressBar = document.getElementById('dform_progressbar_sheffield');
     let showControls = false;
-  
+
     if (progressBar) {
       if (signInPage) {
         showControls = targetpageid >= 2;
@@ -3144,7 +3144,7 @@ function getAndSetReviewPageData() {
 
     // Build an array of page numbers from the active pages
     let relevantPages = [];
-    activeFormPages.each(function() {
+    activeFormPages.each(function () {
       const pageNumber = $(this).attr("data-pos");
       if (pageNumber) {
         relevantPages.push(pageNumber);
@@ -3153,7 +3153,7 @@ function getAndSetReviewPageData() {
 
     // Handle the case where the form is complete
     if (KDF.kdf().form.complete === "Y") {
-      relevantPages = $(".dform_page").not(excludedPages).map(function() {
+      relevantPages = $(".dform_page").not(excludedPages).map(function () {
         return $(this).attr("data-pos");
       }).get();
     }
@@ -3170,7 +3170,7 @@ function getAndSetReviewPageData() {
       formPages = $(".dform_page").not(excludedPages);
     }
 
-    formPages.each(function(i) {
+    formPages.each(function (i) {
       const pageNumber = $(this).attr("data-pos");
 
       if (relevantPages.indexOf(pageNumber) > -1) {
@@ -3182,7 +3182,7 @@ function getAndSetReviewPageData() {
 
         const pageFields = $(this)
           .find(".dform_widget_field")
-          .filter(function() {
+          .filter(function () {
             return $(this).css("display") === "block";
           });
 
@@ -3210,7 +3210,7 @@ function getAndSetReviewPageData() {
         const dl = $("<dl class='review-list'></dl>");
         let hasFields = false;
 
-        pageFields.each(function(field) {
+        pageFields.each(function (field) {
           const fieldType = $(this).attr("data-type");
           const fieldName = $(this).attr("data-name");
           const fieldClass = $(this).attr("class");
@@ -3276,7 +3276,7 @@ function getAndSetReviewPageData() {
               .append(`<dd class="answer">${fieldValue}</dd>`);
 
             if (KDF.kdf().form.complete !== "Y") {
-              const changeLink = $("<a href='#'>Change</a>").on("click", function(e) {
+              const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
                 e.preventDefault();
                 const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
                 if (buttonSet.is(":hidden")) {
@@ -3312,50 +3312,46 @@ function showCurrentProgress() {
   const srid = urlParams.get('srid');
 
   if (srid) {
-      // Find all active pages, excluding the review page itself.
-      const activePages = $('.dform_page[data-active="true"]').not('#dform_page_page_review');
-      const totalPages = $('.dform_page').not('#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete').length;
+    // Find all active pages, excluding the review page itself.
+    const activePages = $('.dform_page[data-active="true"]').not('#dform_page_page_review');
+    const totalPages = $('.dform_page').not('#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete').length;
 
-      // Calculate the completion percentage.
-      const completedPages = activePages.length;
-      const progressPercentage = (completedPages / totalPages) * 100;
-      const formattedPercentage = Math.min(progressPercentage, 100).toFixed(0);
+    // Calculate the completion percentage.
+    const completedPages = activePages.length;
+    const progressPercentage = (completedPages / totalPages) * 100;
+    const formattedPercentage = Math.min(progressPercentage, 100).toFixed(0);
 
-      // Get the application title from the first page's header (assuming it's consistent).
-      const applicationTitle = $('.dform_page .header2').first().text();
-      
-      // Define the HTML markup for the progress section.
-      const progressMarkup = `
-          <div class="current-progress-container" id="progress-header">
-              <h2 class="current-progress-heading">Current progress</h2>
-              <p>Your application is incomplete. Use this page to view your progress and answer the rest of the questions.</p>
-              <p class="progress-percentage">${formattedPercentage}% complete</p>
-              <h3>${applicationTitle}</h3>
-          </div>
-      `;
+    // Define the HTML markup for the progress section.
+    const progressMarkup = `
+      <div class="current-progress-container" id="progress-header">
+        <h2 class="current-progress-heading">Current progress</h2>
+        <p>Your application is incomplete. Use this page to view your progress and answer the rest of the questions.</p>
+        <p class="progress-percentage">${formattedPercentage}% complete</p>
+      </div>
+    `;
 
-      // Prepend the new markup to the correct container.
-      const reviewContentContainer = $('#dform_widget_html_ahtm_review_content');
-      if (reviewContentContainer.length) {
-          reviewContentContainer.prepend(progressMarkup);
+    // Prepend the new markup to the correct container.
+    const reviewContentContainer = $('#dform_widget_html_ahtm_review_content');
+    if (reviewContentContainer.length) {
+      reviewContentContainer.prepend(progressMarkup);
+    }
+
+    // Add the "Continue application" button.
+    const continueButton = `
+      <button type="button" class="dform_button primary" id="btn_continue_application">Continue application</button>
+    `;
+    reviewContentContainer.after(continueButton);
+
+    // Add a click handler to the button to navigate to the first incomplete page.
+    $('#btn_continue_application').on('click', function () {
+      // Find the first inactive page.
+      const firstIncompletePage = $('.dform_page[data-active="false"]').not('#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete').first();
+
+      if (firstIncompletePage.length) {
+        const pageName = firstIncompletePage.attr('id').split('dform_page_')[1];
+        KDF.gotoPage(pageName);
       }
-
-      // Add the "Continue application" button.
-      const continueButton = `
-          <button type="button" class="dform_button primary" id="btn_continue_application">Continue application</button>
-      `;
-      reviewContentContainer.after(continueButton);
-
-      // Add a click handler to the button to navigate to the first incomplete page.
-      $('#btn_continue_application').on('click', function() {
-          // Find the first inactive page.
-          const firstIncompletePage = $('.dform_page[data-active="false"]').not('#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete').first();
-          
-          if (firstIncompletePage.length) {
-              const pageName = firstIncompletePage.attr('id').split('dform_page_')[1];
-              KDF.gotoPage(pageName);
-          }
-      });
+    });
   }
 }
 
