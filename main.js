@@ -5458,63 +5458,80 @@ function getValidationMessageFromSession(id) {
 
 // --- TYPE AHEAD SEARCH ------------------------------------------------- \\
 
-function buildTypeAhead(inputName, listItems, listItemsOnly = true) {
+async function createDatalist(inputName, listItems, listItemsOnly = true) {
   const inputId = `dform_widget_${inputName}`;
   const inputElement = document.getElementById(inputId);
   if (!inputElement) {
-    console.error(`Input element with ID "${inputId}" not found.`);
-    return;
+      console.error(`Input element with ID "${inputId}" not found.`);
+      return;
   }
 
-  // Create a new div to wrap the input and button
+  // Create a new div to wrap the input, icon, and button
   const wrapper = document.createElement('div');
   wrapper.className = 'input-wrapper';
-
+  
   // Insert the new wrapper before the input element
   inputElement.parentNode.insertBefore(wrapper, inputElement);
-
+  
   // Move the input element into the new wrapper
   wrapper.appendChild(inputElement);
+
+  // Dynamically fetch and add the SVG icon
+  try {
+      const response = await fetch('./icons/search-black.svg');
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const svgString = await response.text();
+      const parser = new DOMParser();
+      const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+      const svgElement = svgDoc.documentElement;
+      
+      svgElement.className = 'search-icon';
+      wrapper.appendChild(svgElement);
+  } catch (error) {
+      console.error('Could not load search icon:', error);
+  }
+
+  // Add Clear Button Functionality
+  const clearButton = document.createElement('button');
+  clearButton.type = 'button';
+  clearButton.className = 'clear-button';
+  clearButton.textContent = 'Clear';
+
+  clearButton.addEventListener('click', () => {
+      inputElement.value = '';
+      inputElement.focus();
+  });
+
+  // Append the clear button to the new wrapper
+  wrapper.appendChild(clearButton);
 
   // Datalist functionality
   const datalistId = `${inputId}-datalist`;
   let datalistElement = document.getElementById(datalistId);
 
   if (!datalistElement) {
-    datalistElement = document.createElement('datalist');
-    datalistElement.id = datalistId;
-    inputElement.parentNode.appendChild(datalistElement);
+      datalistElement = document.createElement('datalist');
+      datalistElement.id = datalistId;
+      inputElement.parentNode.appendChild(datalistElement);
   }
-
+  
   datalistElement.innerHTML = '';
   listItems.forEach(item => {
-    const option = document.createElement('option');
-    option.value = item;
-    datalistElement.appendChild(option);
+      const option = document.createElement('option');
+      option.value = item;
+      datalistElement.appendChild(option);
   });
 
   inputElement.setAttribute('list', datalistId);
 
   // Add pattern for validation (if listItemsOnly is true)
   if (listItemsOnly) {
-    const escapedItems = listItems.map(item => item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-    const pattern = `^(${escapedItems.join('|')})$`;
-    inputElement.setAttribute('pattern', pattern);
+      const escapedItems = listItems.map(item => item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const pattern = `^(${escapedItems.join('|')})$`;
+      inputElement.setAttribute('pattern', pattern);
   }
-
-  // Add clear button functionality
-  const clearButton = document.createElement('button');
-  clearButton.type = 'button';
-  clearButton.className = 'clear-btn';
-  clearButton.textContent = 'Clear';
-
-  clearButton.addEventListener('click', () => {
-    inputElement.value = '';
-    inputElement.focus();
-  });
-
-  // Append the clear button to the new wrapper
-  wrapper.appendChild(clearButton);
 }
 
 // --- RELATED SERVIES ------------------------------------------------------ \\
