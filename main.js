@@ -3348,12 +3348,12 @@ function getAndSetReviewPageData() {
   const reviewPageIsVisible = $("#dform_page_page_review:visible").length > 0;
 
   if (reviewPageIsVisible) {
-    // Find all visible form pages except the review page
-    const visibleFormPages = $('.dform_page:visible').not('#dform_page_page_review');
+    // Find all active form pages by the data-active attribute, excluding the review page
+    const activeFormPages = $('.dform_page[data-active="true"]').not('#dform_page_page_review');
     
-    // Build an array of page numbers from the visible pages
+    // Build an array of page numbers from the active pages
     let relevantPages = [];
-    visibleFormPages.each(function() {
+    activeFormPages.each(function() {
         const pageNumber = $(this).attr("data-pos");
         if (pageNumber) {
             relevantPages.push(pageNumber);
@@ -3386,6 +3386,7 @@ function getAndSetReviewPageData() {
         const pageId = $(this).attr("id");
         const pageName = pageId.split("dform_page_")[1];
 
+        // This is crucial: make sure the page is displayed so its contents can be processed
         KDF.showPage(pageName);
 
         const pageFields = $(this)
