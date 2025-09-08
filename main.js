@@ -2118,7 +2118,7 @@ function displayBackButton(show) {
       controlContainer.style.display = "flex";
       backButton.style.display = "flex";
     } else {
-      if (pageName === "complete" && kdf.form.complete === "Y") {
+      if (pageName === "complete" && KDF.kdf().form.complete === "Y") {
         controlContainer.style.display = "flex";
       } else {
         controlContainer.style.display = "none";
