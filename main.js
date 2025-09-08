@@ -1392,13 +1392,19 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
     KDF.setVal("txt_finish_date_and_time", formatDateTime().utc);
   }
 
+  let skipPages = 1;
+  if (document.getElementById('dform_page_page_sign_in')) {
+    skipPages ++;
+  }
+  displayBackButton(targetpageid > skipPages && pageName !== "complete" && kdf.form.complete !== "Y");
+  
+  if (document.getElementById('dform_progressbar_sheffield')) {
+    skipPages ++;
+  }
   const controlElement = document.getElementById('dform_controls');
   if (controlElement) {
-    controlElement.style.display = targetpageid > 2 ? "flex" : "none";
+    controlElement.style.display = targetpageid > skipPages ? "flex" : "none";
   }
-
-  // Toggle back button visibility
-  displayBackButton(targetpageid > 2 && pageName !== "complete" && kdf.form.complete !== "Y");
 
   getAndSetReviewPageData();
 
