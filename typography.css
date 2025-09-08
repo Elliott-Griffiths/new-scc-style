@@ -35,11 +35,12 @@ h6,
   font-weight: var(--font-weight-semibold);
 }
 
-#dform_container .make-header > div > label,
+/* #dform_container .make-header > div > label,
 #dform_container .make-header fieldset.radiogroup > legend,
 #dform_container .make-header fieldset.checkboxgroup > legend {
-  margin-top: var(--spacing-xs) !important;
-}
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+} */
 
 #dform_container .date-field > div > label,
 #dform_container .time-field > div > label {
@@ -51,16 +52,16 @@ h1,
 #dform_container h1,
 #dform_container .header1,
 #dform_container fieldset.area > legend,
-#dform_container div .header2,
-#dform_container .make-header > div > label,
-#dform_container .make-header fieldset.radiogroup > legend,
-#dform_container .make-header fieldset.checkboxgroup > legend {
+#dform_container div .header2 {
   font-size: var(--font-size-xxxxl);
 }
 h2,
 .header2,
 #dform_container h2,
-#dform_container .header2 {
+#dform_container .header2,
+#dform_container .make-header > div > label,
+#dform_container .make-header fieldset.radiogroup > legend,
+#dform_container .make-header fieldset.checkboxgroup > legend {
   font-size: var(--font-size-xxxl);
 }
 h3,
