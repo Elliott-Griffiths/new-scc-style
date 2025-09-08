@@ -3311,7 +3311,7 @@ function showCurrentProgress() {
   const urlParams = new URLSearchParams(window.location.search);
   const srid = urlParams.get('srid');
 
-  if (srid) {
+  if (srid && KDF.kdf().form.complete !== "Y") {
     // Find all active pages, excluding the review page itself.
     const activePages = $('.dform_page[data-active="true"]').not('#dform_page_page_review');
     const totalPages = $('.dform_page').not('#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete').length;
