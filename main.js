@@ -2110,11 +2110,14 @@ function handleFomComplate(event, kdf) {
 // --- DISPLAY BACK BUTTON ------------------------------------------------ \\
 
 function displayBackButton(show) {
+  const controlContainer = document.getElementById("dform_control_buttons");
   const backButton = document.getElementById("dform_widget_button_but_back");
   if (backButton) {
     if (show) {
+      controlContainer.display = "block";
       backButton.style.display = "flex";
     } else {
+      controlContainer.display = "none";
       backButton.style.display = "none";
     }
   } else {
