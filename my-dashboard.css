@@ -327,11 +327,11 @@
   align-items: center;
   line-height: var(--line-height);
   color: var(--c-core-brand-secondary);
+  font-weight: var(--font-weight-semibold);
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card.next p {
   color: var(--c-brand-accents-teal);
-  font-weight: var(--font-weight-semibold);
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card.today {
