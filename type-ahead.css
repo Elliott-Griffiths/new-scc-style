@@ -40,8 +40,10 @@
 }
 
 #dform_container .dform_widget_type_text .input-wrapper svg {
-  width: 48px;
-  height: 30px;
   grid-row: 1 / 2;
   grid-column: 2 / 3;
+  margin-right: 2px;
+  width: 48px;
+  height: 40px;
+  background: var(--c-greys-white);
 }
