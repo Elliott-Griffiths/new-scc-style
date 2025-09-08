@@ -3136,6 +3136,8 @@ function getAndSetReviewPageData() {
   const reviewPageIsVisible = $("#dform_page_page_review:visible").length > 0;
 
   if (reviewPageIsVisible) {
+    showCurrentProgress();
+
     // Find all active form pages, excluding the review, declaration, and complete pages
     const excludedPages = '#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete, #dform_page_page_core_fields, #dform_page_page_core_confirm_fields';
     const activeFormPages = $('.dform_page[data-active="true"]').not(excludedPages);
@@ -3274,8 +3276,6 @@ function getAndSetReviewPageData() {
               .append(`<dd class="answer">${fieldValue}</dd>`);
 
             if (KDF.kdf().form.complete !== "Y") {
-              showCurrentProgress();
-              
               const changeLink = $("<a href='#'>Change</a>").on("click", function(e) {
                 e.preventDefault();
                 const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
