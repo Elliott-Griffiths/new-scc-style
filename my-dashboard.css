@@ -241,7 +241,7 @@
 
 /* WASTE AND today */
 
-.dform_section_box_waste_and_today fieldset>legend::before {
+.dform_section_box_waste_and_recycling fieldset>legend::before {
   content: url(./icons/recycle.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
