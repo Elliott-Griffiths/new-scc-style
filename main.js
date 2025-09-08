@@ -3137,7 +3137,7 @@ function getAndSetReviewPageData() {
 
   if (reviewPageIsVisible) {
     // Find all active form pages, excluding the review, declaration, and complete pages
-    const excludedPages = '#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete';
+    const excludedPages = '#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete, #dform_page_page_core_fields, #dform_page_page_core_confirm_fields';
     const activeFormPages = $('.dform_page[data-active="true"]').not(excludedPages);
 
     // Build an array of page numbers from the active pages
