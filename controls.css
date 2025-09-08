@@ -17,7 +17,7 @@
   padding-block: 0.625rem !important;
   clear: unset;
   width: 100%;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
