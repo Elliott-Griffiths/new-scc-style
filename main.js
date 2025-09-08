@@ -1398,12 +1398,24 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   }
   displayBackButton(targetpageid > skipPages && pageName !== "complete" && kdf.form.complete !== "Y");
   
-  if (document.getElementById('dform_progressbar_sheffield')) {
-    skipPages ++;
-  }
   const controlElement = document.getElementById('dform_controls');
   if (controlElement) {
-    controlElement.style.display = targetpageid > skipPages ? "flex" : "none";
+    const progressBar = document.getElementById('dform_progressbar_sheffield');
+    let showControls = false;
+  
+    if (progressBar) {
+      if (signInPage) {
+        showControls = targetpageid >= 2;
+      } else {
+        showControls = targetpageid >= 1;
+      }
+    }
+
+    if (!progressBar && targetpageid > skipPages) {
+      showControls = true;
+    }
+
+    controlElement.style.display = showControls ? "flex" : "none";
   }
 
   getAndSetReviewPageData();
