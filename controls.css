@@ -161,8 +161,8 @@
 #dform_control_buttons #dform_save:hover,
 #dform_control_buttons #dform_close:hover {
   background: transparent !important;
-  color: var(--c-brand-accents-teal);
-  text-decoration-thickness: 2px;
+  color: var(--c-brand-accents-teal) !important;
+  text-decoration-thickness: 2px !important;
 }
 
 #NavigationAreaInSingleColumnTemplate button.back-btn:focus,
@@ -172,7 +172,7 @@
 #dform_control_buttons #dform_save:focus,
 #dform_control_buttons #dform_close:focus {
   color: var(--c-greys-black) !important;
-  background: var(--c-focus-links);
+  background: var(--c-focus-links) !important;
   text-decoration: none !important;
   border-radius: unset !important;
   outline: none;
