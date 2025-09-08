@@ -1400,6 +1400,7 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   
   const controlElement = document.getElementById('dform_controls');
   if (controlElement) {
+    const signInPage = document.getElementById('dform_page_page_sign_in');
     const progressBar = document.getElementById('dform_progressbar_sheffield');
     let showControls = false;
   
