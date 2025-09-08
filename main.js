@@ -3251,6 +3251,7 @@ function getAndSetReviewPageData() {
           const fieldType = $(pageFields[field]).attr("data-type");
           const fieldName = $(pageFields[field]).attr("data-name");
           const fieldClass = $(pageFields[field]).attr("class");
+          console.log(fieldType, fieldName, fieldClass);
           let fieldLabel = "";
           let fieldValue = "Not answered";
 
