@@ -5458,7 +5458,7 @@ function getValidationMessageFromSession(id) {
 
 // --- TYPE AHEAD SEARCH ------------------------------------------------- \\
 
-function createDatalist(inputName, listItems, listItemsOnly = true) {
+function buildTypeAhead(inputName, listItems, listItemsOnly = true) {
   const inputId = `dform_widget_${inputName}`;
   const inputElement = document.getElementById(inputId);
   if (!inputElement) {
