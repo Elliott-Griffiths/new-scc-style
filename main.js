@@ -2118,7 +2118,11 @@ function displayBackButton(show) {
       controlContainer.style.display = "flex";
       backButton.style.display = "flex";
     } else {
-      controlContainer.style.display = "none";
+      if (pageName === "complete" && kdf.form.complete === "Y") {
+        controlContainer.style.display = "flex";
+      } else {
+        controlContainer.style.display = "none";
+      }
       backButton.style.display = "none";
     }
   } else {
