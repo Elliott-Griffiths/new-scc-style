@@ -1372,7 +1372,7 @@ function handleOnReadyEvent(_, kdf) {
     // Add clear button functionality
     const clearButton = document.createElement('button');
     clearButton.type = 'button';
-    clearButton.className = 'clear-button';
+    clearButton.className = 'clear-btn';
     clearButton.textContent = 'Clear';
 
     clearButton.addEventListener('click', () => {

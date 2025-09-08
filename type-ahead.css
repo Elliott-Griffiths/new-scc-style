@@ -1,0 +1,19 @@
+#dform_container .dform_widget_type_text .input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#dform_container .dform_widget_type_text .input-wrapper .clear-btn {
+  background: var(--c-greys-white);
+  color: var(--c-core-brand-primary-darken);
+  padding: var(--spacing-xs);
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+}
+
+#dform_container .dform_widget_type_text .input-wrapper .clear-btn:hover {
+  color: var(--c-brand-accents-teal);
+  border-color: var(--c-brand-accents-teal);
+}
