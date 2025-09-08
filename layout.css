@@ -60,8 +60,8 @@
   padding-left: var(--spacing-md) !important;
   border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal) !important;
 }
-
+/* 
 #form > #content,
 #form > #content #dform_control_buttons {
   padding-top: 0 !important;
-}
+} */
