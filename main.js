@@ -402,29 +402,29 @@ function handleInitialisingEvent() {
     if (printButton && confirmationPage) {
       // Override the default action by removing the href attribute
       printButton.removeAttribute('href');
-      
+
       // Add a custom event listener
-      printButton.addEventListener('click', function(event) {
+      printButton.addEventListener('click', function (event) {
         // Prevent the default browser action for the link
         event.preventDefault();
-        
+
         // Store the original body content
         const originalBody = document.body.innerHTML;
-        
+
         // Set the body's HTML to only the confirmation page content
         document.body.innerHTML = confirmationPage.outerHTML;
-        
+
         // Trigger the print dialog
         window.print();
-        
+
         // Restore the original body content after printing
         setTimeout(() => {
           document.body.innerHTML = originalBody;
-        }, 0); 
+        }, 0);
       });
     }
   })();
-  
+
   // --- HANDLE FILE UPLOAD ------------------------------------------------ \\
 
   // $(document).ajaxComplete(function (event, xhr, settings) {
@@ -475,11 +475,11 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- SET ADDRESS IF ACCOUNT IUDENTIFIED ---------------------------------- \\
 
-  if (kdf.profileData['customerid'] && kdf.profileData['customerid'] !== "" 
+  if (kdf.profileData['customerid'] && kdf.profileData['customerid'] !== ""
     && kdf.profileData['profile-Postcode'] && kdf.profileData['profile-Postcode'] !== "") {
-     initialProfileAddressLoad = true;
-     $('#dform_widget_button_but_find_address_about_you').click();
-   }
+    initialProfileAddressLoad = true;
+    $('#dform_widget_button_but_find_address_about_you').click();
+  }
 
   // --- ADD CONTENT TO WHY WE NEED DATE OF BIRTH -------------------------- \\
 
@@ -565,35 +565,35 @@ function handleOnReadyEvent(_, kdf) {
   // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
 
   setTimeout(() => {
-  if (kdf.form.complete === "Y") {
-    KDF.showPage("page_review");
-    KDF.gotoPage("page_review");
-    if (kdf.params.viewmode === "R") {
-      KDF.makeReadonly();
-      $(".review-page-edit-button").remove();
-      $('.dform_section_box_review div[data-type="buttonset"]').remove();
-    } else {
-      // use stored page array when case management
-      if (
-        !KDF.kdf().form.name.startsWith("cm_") &&
-        !KDF.kdf().form.name.endsWith("_cm")
-      ) {
-        KDF.makeReadonly();
-        $(".review-page-edit-button").remove();
-        $('.dform_section_box_review div[data-type="buttonset"]').remove();
-      }
-    }
-  } else {
-    if (kdf.form.caseid && kdf.form.ref) {
+    if (kdf.form.complete === "Y") {
       KDF.showPage("page_review");
       KDF.gotoPage("page_review");
       if (kdf.params.viewmode === "R") {
         KDF.makeReadonly();
         $(".review-page-edit-button").remove();
         $('.dform_section_box_review div[data-type="buttonset"]').remove();
+      } else {
+        // use stored page array when case management
+        if (
+          !KDF.kdf().form.name.startsWith("cm_") &&
+          !KDF.kdf().form.name.endsWith("_cm")
+        ) {
+          KDF.makeReadonly();
+          $(".review-page-edit-button").remove();
+          $('.dform_section_box_review div[data-type="buttonset"]').remove();
+        }
+      }
+    } else {
+      if (kdf.form.caseid && kdf.form.ref) {
+        KDF.showPage("page_review");
+        KDF.gotoPage("page_review");
+        if (kdf.params.viewmode === "R") {
+          KDF.makeReadonly();
+          $(".review-page-edit-button").remove();
+          $('.dform_section_box_review div[data-type="buttonset"]').remove();
+        }
       }
     }
-  }
   }, 0);
 
   // --- HANDLE FORMAT TITLE CASE ------------------------------------------ \\
@@ -1323,6 +1323,67 @@ function handleOnReadyEvent(_, kdf) {
     }
   });
 
+  // --- TYPE AHEAD SEARCH ------------------------------------------------- \\
+
+  function builldTypeAhead(inputName, listItems, listItemsOnly = true) {
+    const inputId = `dform_widget_${inputName}`;
+    const inputElement = document.getElementById(inputId);
+    if (!inputElement) {
+      console.error(`Input element with ID "${inputId}" not found.`);
+      return;
+    }
+
+    // Create a new div to wrap the input and button
+    const wrapper = document.createElement('div');
+    wrapper.className = 'input-wrapper';
+
+    // Insert the new wrapper before the input element
+    inputElement.parentNode.insertBefore(wrapper, inputElement);
+
+    // Move the input element into the new wrapper
+    wrapper.appendChild(inputElement);
+
+    // Datalist functionality
+    const datalistId = `${inputId}-datalist`;
+    let datalistElement = document.getElementById(datalistId);
+
+    if (!datalistElement) {
+      datalistElement = document.createElement('datalist');
+      datalistElement.id = datalistId;
+      inputElement.parentNode.appendChild(datalistElement);
+    }
+
+    datalistElement.innerHTML = '';
+    listItems.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item;
+      datalistElement.appendChild(option);
+    });
+
+    inputElement.setAttribute('list', datalistId);
+
+    // Add pattern for validation (if listItemsOnly is true)
+    if (listItemsOnly) {
+      const escapedItems = listItems.map(item => item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const pattern = `^(${escapedItems.join('|')})$`;
+      inputElement.setAttribute('pattern', pattern);
+    }
+
+    // Add clear button functionality
+    const clearButton = document.createElement('button');
+    clearButton.type = 'button';
+    clearButton.className = 'clear-button';
+    clearButton.textContent = 'Clear';
+
+    clearButton.addEventListener('click', () => {
+      inputElement.value = '';
+      inputElement.focus();
+    });
+
+    // Append the clear button to the new wrapper
+    wrapper.appendChild(clearButton);
+  }
+
   // --- HANDLE SIGN IN BUTTTON CLICK -------------------------------------- \\
 
   $('#dform_widget_button_but_next_sign_in').on('click', function () {
@@ -1661,27 +1722,27 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
   if (
     action === "search-local-address" ||
     action === "search-national-address"
-  ) {    
+  ) {
     let targetPageId = getCurrentPageId();
     if (targetPageId === 'dform_page_page_about_you') {
-      KDF.setWidgetRequired('sel_search_results_about_you');  
+      KDF.setWidgetRequired('sel_search_results_about_you');
     }
     if (initialProfileAddressLoad === true) {
       initialProfileAddressLoad = false;
       targetPageId = "dform_page_page_about_you";
       setTimeout(function () {
         setProfileAddressDetails(targetPageId, kdf);
-        KDF.setWidgetNotRequired('sel_search_results_about_you');  
+        KDF.setWidgetNotRequired('sel_search_results_about_you');
       }, 0);
     }
-  
+
     if (action === "search-local-address") {
       addressSearchType[targetPageId] = "local";
     }
     if (action === "search-national-address") {
       addressSearchType[targetPageId] = "national";
     }
-  
+
     const { propertySearchResult } = response.data;
     // if (propertySearchResult.length > 0) {
     const formattedSearchResult = propertySearchResult.map((addressLine) => {
@@ -1695,12 +1756,12 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     setValuesToInputFields([
       { alias: "searchResult", value: formattedSearchResult },
     ]);
-  
+
     const numberOfResults = propertySearchResult ? propertySearchResult.length : 0;
-  
+
     const searchInput = document.querySelector(`#${targetPageId} input[data-customalias="postcode"]`);
     let searchButton = document.querySelector(`#${targetPageId} .address-search-btn`);
-  
+
     const resultsList = document.querySelector(`#${targetPageId} .address-search-results`);
     let resultsLabelId = null;
     if (resultsList) {
@@ -1709,36 +1770,36 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
         resultsLabelId = labelElement.id;
       }
     }
-  
+
     let manualAddressElement = document.querySelector(`#${targetPageId} .manual-address-container`);
     let setAddressButton = document.querySelector(`#${targetPageId} .set-address-btn`);
     const searchedPostcode = searchInput ? searchInput.value : '';
-  
+
     const resultsContent = `
         ${numberOfResults} addresses found for <strong>${searchedPostcode}</strong>.
         <button type="button" class="search-again-btn link-btn">Search again</button>
       `;
-  
+
     if (resultsList && searchInput && searchButton) {
       let searchStatusMessageElement = document.getElementById(resultsLabelId);
       if (searchStatusMessageElement) {
         searchStatusMessageElement.innerHTML = resultsContent;
       }
-  
+
       let selectElement = resultsList.querySelector('select');
       if (selectElement) {
         selectElement.style.display = 'block'; // Shows the element
       }
-  
+
       searchButton = searchButton.id.replace('dform_widget_button_', '');
-  
+
       if (manualAddressElement) {
         manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
       }
       if (setAddressButton) {
         setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
       }
-  
+
       hideShowMultipleElements([
         { name: searchInput.name, display: "hide" },
         { name: searchButton, display: "hide" },
@@ -4337,19 +4398,19 @@ function mapClick(evt) {
             zoom: 18,
           });
         }
-        
+
         let foundFeatureGraphic = null;
         let sccBoundaryClicked = false;
 
         if (graphic && graphic.length > 0) {
-            graphic.forEach(function (arrayItem) {
-                if (arrayItem.layer && arrayItem.layer.id === "scc_boundary") {
-                    sccBoundaryClicked = true;
-                } else if (arrayItem.layer && arrayItem.layer.id !== "scc_boundary" && !foundFeatureGraphic) {
-                    // Prioritize and save the first non-boundary graphic found
-                    foundFeatureGraphic = arrayItem;
-                }
-            });
+          graphic.forEach(function (arrayItem) {
+            if (arrayItem.layer && arrayItem.layer.id === "scc_boundary") {
+              sccBoundaryClicked = true;
+            } else if (arrayItem.layer && arrayItem.layer.id !== "scc_boundary" && !foundFeatureGraphic) {
+              // Prioritize and save the first non-boundary graphic found
+              foundFeatureGraphic = arrayItem;
+            }
+          });
         }
 
         if (foundFeatureGraphic) {
