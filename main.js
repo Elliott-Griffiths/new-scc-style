@@ -2114,10 +2114,10 @@ function displayBackButton(show) {
   const backButton = document.getElementById("dform_widget_button_but_back");
   if (backButton) {
     if (show) {
-      controlContainer.display = "flex";
+      controlContainer.style.display = "flex";
       backButton.style.display = "flex";
     } else {
-      controlContainer.display = "none";
+      controlContainer.style.display = "none";
       backButton.style.display = "none";
     }
   } else {
