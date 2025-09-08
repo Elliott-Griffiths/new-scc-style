@@ -154,6 +154,7 @@
   transform: translateY(2px);
 }
 
+#dform_container, #dform_widget_button_but_back,
 #NavigationAreaInSingleColumnTemplate button.back-btn:hover>.back-btn--text,
 #dform_container button.back-btn:hover>.back-btn--text,
 #dform_control_buttons #dform_print:hover,
