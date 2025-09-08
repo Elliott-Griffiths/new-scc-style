@@ -35,12 +35,11 @@ h6,
   font-weight: var(--font-weight-semibold);
 }
 
-/* #dform_container .make-header > div > label,
 #dform_container .make-header fieldset.radiogroup > legend,
 #dform_container .make-header fieldset.checkboxgroup > legend {
-  margin-top: var(--spacing-lg);
-  margin-bottom: var(--spacing-sm);
-} */
+  margin-top: 0;
+  padding-top: var(--spacing-lg);
+}
 
 #dform_container .date-field > div > label,
 #dform_container .time-field > div > label {
