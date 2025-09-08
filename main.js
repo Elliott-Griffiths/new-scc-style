@@ -3132,251 +3132,40 @@ function getValueFromAlias(pageId, alias) {
 }
 
 // Function to get and set data for the review page
-// function getAndSetReviewPageData() {
-//   // Find the currently active form page
-//   const activeFormPage = $('.dform_page[data-active="true"]:visible');
-//   // Get the page number of the current form page
-//   const thisPageNumber = activeFormPage.attr("data-pos");
-
-//   // Add the current page number to the user's history
-//   formUserPath.push(thisPageNumber);
-
-//   // Check if the review page is currently visible
-//   const reviewPageIsVisible = $("#dform_page_page_review:visible").length > 0;
-
-//   // Reverse the user's path to look back at the visited pages
-//   const formUserPathReversed = [...formUserPath].reverse();
-//   const relevantPagesReversed = [];
-
-//   // Determine relevant pages by looking back from the review page
-//   for (let i = 0; i < formUserPathReversed.length - 1; i++) {
-//     if (
-//       parseInt(formUserPathReversed[i]) > parseInt(formUserPathReversed[i + 1])
-//     ) {
-//       relevantPagesReversed.push(formUserPathReversed[i + 1]);
-//     } else {
-//       formUserPathReversed.splice(i + 1, 1);
-//       i--;
-//     }
-//   }
-
-//   // Reverse the relevant pages to the correct order
-//   let relevantPages = [];
-
-//   if (KDF.kdf().form.complete === "Y") {
-//     // use stored page array when complete
-//     relevantPages = KDF.getVal("txt_pages").split(",");
-//   } else {
-//     if (
-//       KDF.kdf().form.name.startsWith("cm_") ||
-//       KDF.kdf().form.name.endsWith("_cm")
-//     ) {
-//       // use stored page array when case management
-//       relevantPages = KDF.getVal("txt_pages").split(",");
-//     } else if (
-//       KDF.kdf().form.caseid &&
-//       KDF.getVal("txt_resume_form") === "true"
-//     ) {
-//       // use stored page array when resumed
-//       relevantPages = KDF.getVal("txt_pages").split(",");
-//       if (reviewPageIsVisible) {
-//         // check for review page due to page changes
-//         KDF.setVal("txt_resume_form", "false"); // to prevent coming back down the resume path and construct page array
-//       }
-//     } else {
-//       // construct page array
-//       relevantPages = [...relevantPagesReversed].reverse();
-//       KDF.setVal("txt_pages", relevantPages.join(","));
-//     }
-//   }
-
-//   if (reviewPageIsVisible) {
-//     // Clear the review content HTML
-//     $("#review-page-content-container").html("");
-
-//     // Find all form pages except the review page
-//     let formPages = $('.dform_page[data-active="true"]').not(
-//       "#dform_page_page_review"
-//     );
-//     // Picking up all pages encase form rules rehide them on reload
-//     if (KDF.kdf().form.complete === "Y") {
-//       formPages = $(".dform_page").not("#dform_page_page_review");
-//     }
-
-//     formPages.each(function (i) {
-//       const pageNumber = $(this).attr("data-pos");
-
-//       if (relevantPages.indexOf(pageNumber) > -1) {
-//         const pageId = $(formPages[i]).attr("id");
-//         const pageName = pageId.split("dform_page_")[1];
-
-//         KDF.showPage(pageName);
-
-//         const pageFields = $(formPages[i])
-//           .find(".dform_widget_field")
-//           .filter(function () {
-//             return $(this).css("display") === "block";
-//           });
-
-//         // If there are no visible fields, skip adding the section entirely
-//         if (!pageFields.length) {
-//           return; // Skip to next page
-//         }
-
-//         const contentDivId = `review-page-content--${pageName}`;
-//         let contentDiv = $("#" + contentDivId);
-
-//         if (!contentDiv.length) {
-//           $("#review-page-content-container").append(
-//             `<section class="review-page-content-section" id="${contentDivId}" aria-labelledby="review-header-${pageName}"></section>`
-//           );
-//           contentDiv = $("#" + contentDivId);
-//         } else {
-//           contentDiv.empty();
-//         }
-
-//         // Header with page title only
-//         const headerContainer = $('<div class="review-page-header-container"></div>');
-//         const pageHeader = $(formPages[i]).find(".header2").text();
-//         headerContainer.append(`<h3 id="review-header-${pageName}">${pageHeader}</h3>`);
-//         contentDiv.append(headerContainer);
-
-//         // Create <dl> for Q/A pairs
-//         const dl = $("<dl class='review-list'></dl>");
-
-//         // Track if we actually append any fields
-//         let hasFields = false;
-
-//         pageFields.each(function (field) {
-//           const fieldType = $(pageFields[field]).attr("data-type");
-//           const fieldName = $(pageFields[field]).attr("data-name");
-//           const fieldClass = $(pageFields[field]).attr("class");
-//           let fieldLabel = "";
-//           let fieldValue = "Not answered";
-
-//           function getLegendText(classSelector) {
-//             const parentElement = $(`.container[data-name="${fieldName}"]`).length
-//               ? $(`.container[data-name="${fieldName}"]`)
-//               : $(`.container.dform_widget_${fieldName}`);
-
-//             if (parentElement.length) {
-//               return parentElement.find(`.${classSelector} legend`).text();
-//             }
-//           }
-
-//           if (fieldType === "select") {
-//             if (fieldName.startsWith("sel_search_results_")) {
-//               fieldLabel = "Selected address";
-//               fieldValue = getValueFromAlias(pageId, "fullAddress");
-//             } else {
-//               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-//               fieldValue = KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
-//             }
-//           } else if (fieldType === "radio") {
-//             fieldLabel = getLegendText("radiogroup");
-//             fieldValue = KDF.getVal(fieldName);
-//           } else if (fieldType === "multicheckbox") {
-//             fieldLabel = getLegendText("checkboxgroup");
-//             fieldValue = `<br/>${KDF.getVal(fieldName).join("<br>")}`;
-//           } else if (fieldType === "date") {
-//             fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-//             fieldValue = formatDateTime(KDF.getVal(fieldName)).uk.date;
-//           } else if (fieldType === "file") {
-//             fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-//             fieldValue = KDF.getVal(fieldName.replace("file_", "txt_file_name_"));
-//             const filePath = KDF.getVal(fieldName.replace("file_", "txt_file_path_"));
-//             if (KDF.kdf().access === "agent" && filePath) {
-//               fieldValue = `<a href="${filePath}" target="_blank">${fieldValue}</a>`;
-//             }
-//           } else {
-//             if (fieldClass.indexOf("currency") !== -1) {
-//               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-//               fieldValue = `£${KDF.getVal(fieldName)}`;
-//             } else if (fieldClass.indexOf("address-search") !== -1) {
-//               fieldLabel = "Selected address";
-//               fieldValue = getValueFromAlias(pageId, "fullAddress");
-//             } else if (/\b(property|street-name|city|postcode)\b/.test(fieldClass)) {
-//               fieldLabel = false;
-//               fieldValue = "";
-//             } else {
-//               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-//               fieldValue = KDF.getVal(fieldName);
-//             }
-//           }
-          
-//           if (fieldLabel) {
-//             if (!fieldValue || fieldValue === "" || fieldValue === null || fieldValue === undefined) {
-//               fieldValue = fieldType === "file" ? "Not uploaded" : "Not answered";
-//             }
-
-//             // Create the review item container
-//             const reviewItem = $("<div class='review-item'></div>")
-//               .append(`<dt class="question">${fieldLabel}</dt>`)
-//               .append(`<dd class="answer">${fieldValue}</dd>`);
-
-//             // Only add the change link if the form is not complete
-//             if (KDF.kdf().form.complete !== "Y") {
-//               const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
-//                 e.preventDefault();
-//                 const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
-//                 if (buttonSet.is(":hidden")) {
-//                   buttonSet.show();
-//                 }
-//                 KDF.gotoPage(pageName, true, true, true);
-//               });
-//               reviewItem.append($("<dd class='action'></dd>").append(changeLink));
-//             }
-
-//             dl.append(reviewItem);
-//             hasFields = true;
-//           }
-
-//         });
-
-//         // Only append the section if we found at least one field with a label
-//         if (hasFields) {
-//           contentDiv.append(dl);
-//         } else {
-//           contentDiv.remove();
-//         }
-//       }
-//     });
-//   }
-// }
-// Function to get and set data for the review page
 function getAndSetReviewPageData() {
   const reviewPageIsVisible = $("#dform_page_page_review:visible").length > 0;
 
   if (reviewPageIsVisible) {
-    // Find all active form pages by the data-active attribute, excluding the review page
-    const activeFormPages = $('.dform_page[data-active="true"]').not('#dform_page_page_review');
-    
+    // Find all active form pages, excluding the review, declaration, and complete pages
+    const excludedPages = '#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete';
+    const activeFormPages = $('.dform_page[data-active="true"]').not(excludedPages);
+
     // Build an array of page numbers from the active pages
     let relevantPages = [];
     activeFormPages.each(function() {
-        const pageNumber = $(this).attr("data-pos");
-        if (pageNumber) {
-            relevantPages.push(pageNumber);
-        }
+      const pageNumber = $(this).attr("data-pos");
+      if (pageNumber) {
+        relevantPages.push(pageNumber);
+      }
     });
 
     // Handle the case where the form is complete
     if (KDF.kdf().form.complete === "Y") {
-        relevantPages = $(".dform_page").not("#dform_page_page_review").map(function() {
-            return $(this).attr("data-pos");
-        }).get();
+      relevantPages = $(".dform_page").not(excludedPages).map(function() {
+        return $(this).attr("data-pos");
+      }).get();
     }
-    
+
     // Store the constructed page array
     KDF.setVal("txt_pages", relevantPages.join(","));
 
     // Clear the review content HTML
     $("#review-page-content-container").html("");
 
-    // Find all form pages based on completion status
-    let formPages = $('.dform_page[data-active="true"]').not("#dform_page_page_review");
+    // Find all form pages based on completion status, excluding the same pages
+    let formPages = $('.dform_page[data-active="true"]').not(excludedPages);
     if (KDF.kdf().form.complete === "Y") {
-      formPages = $(".dform_page").not("#dform_page_page_review");
+      formPages = $(".dform_page").not(excludedPages);
     }
 
     formPages.each(function(i) {
@@ -3386,7 +3175,7 @@ function getAndSetReviewPageData() {
         const pageId = $(this).attr("id");
         const pageName = pageId.split("dform_page_")[1];
 
-        // This is crucial: make sure the page is displayed so its contents can be processed
+        // Ensure the page is displayed so its contents can be processed
         KDF.showPage(pageName);
 
         const pageFields = $(this)
