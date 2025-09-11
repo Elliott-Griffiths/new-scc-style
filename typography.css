@@ -24,17 +24,21 @@ h6,
 #dform_container .header6,
 #dform_container fieldset.area > legend,
 #dform_container div .header2,
-#dform_container .make-header label,
+#dform_container .make-header > div > label,
 #dform_container .make-header fieldset.radiogroup > legend,
-#dform_container .make-header fieldset.checkboxgroup > legend,
-#dform_container .date-field > div > label,
-#dform_container .time-field > div > label {
+#dform_container .make-header fieldset.checkboxgroup > legend {
   font-family: var(--font-family);
   color: var(--c-core-brand-primary-darken);
   margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-sm);
   line-height: var(--line-height);
   font-weight: var(--font-weight-semibold);
+}
+
+#dform_container .make-header fieldset.radiogroup > legend,
+#dform_container .make-header fieldset.checkboxgroup > legend {
+  margin-top: 0;
+  padding-top: var(--spacing-lg);
 }
 
 #dform_container .date-field > div > label,
@@ -47,18 +51,16 @@ h1,
 #dform_container h1,
 #dform_container .header1,
 #dform_container fieldset.area > legend,
-#dform_container div .header2,
-#dform_container .make-header label,
-#dform_container .make-header fieldset.radiogroup > legend,
-#dform_container .make-header fieldset.checkboxgroup > legend,
-#dform_container .date-field > div > label,
-#dform_container .time-field > div > label {
+#dform_container div .header2 {
   font-size: var(--font-size-xxxxl);
 }
 h2,
 .header2,
 #dform_container h2,
-#dform_container .header2 {
+#dform_container .header2,
+#dform_container .make-header > div > label,
+#dform_container .make-header fieldset.radiogroup > legend,
+#dform_container .make-header fieldset.checkboxgroup > legend {
   font-size: var(--font-size-xxxl);
 }
 h3,
@@ -66,7 +68,6 @@ h3,
 #dform_container h3,
 #dform_container .header3 {
   font-size: var(--font-size-xxl);
-  color: var(--c-brand-accents-teal);
 }
 h4,
 .header4,
@@ -97,8 +98,10 @@ ol,
 #dform_container ol,
 li,
 #dform_container li,
-#dform_container address {
-  margin: var(--spacing-sm) 0;
+#dform_container address,
+time,
+#dform_container {
+  margin: 0 0 var(--spacing-sm);
   min-height: 1.5rem;
   font-family: var(--font-family);
   font-size: var(--font-size-base);
@@ -115,17 +118,40 @@ a,
   text-underline-offset: 0.25rem;
 }
 
-a:hover,
-#dform_container a:hover {
+a.secondary-link,
+#dform_container a.secondary-link {
+  color: var(--c-brand-accents-teal);
   text-decoration: underline;
-  text-decoration-color: var(--c-core-brand-accent-1-darken);
+  text-underline-offset: 0.25rem;
 }
 
-a:focus,
-#dform_container a:focus {
-  outline: 2px solid var(--c-focus-links);
-  outline-offset: 2px;
-  color: var(--c-focus-links);
+a:hover,
+#dform_container a:hover {
+  color: var(--c-brand-accents-teal);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+a.secondary-link:hover,
+#dform_container a.secondary-link:hover {
+  color: var(--c-greys-black);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+a:focus, 
+#dform_container a:focus,
+a.secondary-link:focus,
+#dform_container a.secondary-link:focus,
+a:active, 
+#dform_container a:active,
+a.secondary-link:active,
+#dform_container a.secondary-link:active {
+  outline: none !important;
+  color: var(--c-greys-black);
+  background: var(--c-focus-links);
+  border-bottom: 2px solid var(--c-greys-black);
+  text-decoration: none;
 }
 
 ul,
@@ -156,14 +182,14 @@ li,
 #dform_container fieldset.area > legend,
 #dform_container fieldset.box > legend,
 #dform_container fieldset.searchwidget > legend {
-  margin: unset;
-  padding: unset;
   font-family: var(--font-family);
+  color: var(--c-core-brand-primary-darken);
+  padding-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-xxl);
-  font-style: normal;
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-heading);
-  color: var(--c-brand-accents-teal);
+  color: var(--c-core-brand-primary-darken);
   background: transparent;
 }
 
@@ -173,11 +199,13 @@ li,
 #dform_container .dform_widget_type_checkbox label,
 #dform_container fieldset.radiogroup > legend,
 #dform_container fieldset.checkboxgroup > legend {
+  margin-bottom: 0;
+  padding: 0;
   display: inline-block;
   font-family: var(--font-family);
   font-size: var(--font-size-xl);
   line-height: var(--line-height-body);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-500);
   color: var(--c-core-brand-primary-darken);
   vertical-align: unset;
   background: transparent;

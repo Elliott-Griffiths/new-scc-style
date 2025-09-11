@@ -1,47 +1,68 @@
 .page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .header > .service-header-bar,
-  #widget_Navigation > div,
-  #dform_controls,
-  #dform_pageholder,
-  #dform_container .dform_message,
-  #FooterAreaInSingleColumnNoNavigationTemplate {
-    margin: 0 auto;
-    width: clamp(var(--min-content-width), auto, var(--max-content-width));
-    padding: var(--spacing-sm) clamp(20px, 10vw, 146px) !important;
-  }
-  
-  #dform_pageholder {
-    padding-block: 0;
-  }
-  
-  #dform_container .dform_message {
-    padding: var(--spacing-lg) clamp(20px, 10vw, 146px) !important;
-  }
-  
-  .content {
-    flex-grow: 1;
-    margin: unset;
-    padding: unset;
-  }
-  
-  #dform_container,
-  #dform_control_buttons > ul > li:nth-child(1) {
-    margin: unset;
-    padding: unset;
-  }
-  
-  #dform_container .container .area .box {
-    max-width: 47.6875rem;
-  }
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-  #dform_container .container .area .box.conditional > div {
-    padding-left: var(--spacing-md) !important;
-    border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal) !important;
-  }
+.header>.service-header-bar,
+#widget_Navigation>div,
+#dform_controls,
+#dform_pageholder,
+#dform_container .dform_message,
+#FooterAreaInSingleColumnNoNavigationTemplate,
+#dform_pagenav {
+  float: unset !important;
+  margin: 0 auto !important;
+  width: auto !important;
+  max-width: 87.5rem !important;
+  padding: var(--spacing-sm) clamp(15px, 5vw, 131px) !important;
+}
 
-  
+#dform_pageholder {
+  padding-block: 0;
+}
+
+#dform_container .dform_message {
+  padding: var(--spacing-sm) clamp(15px, 5vw, 131px) !important;
+}
+
+.le-request-form-details #dform_controls,
+.le-request-form-details #dform_pageholder {
+  padding: 0 !important;
+}
+
+.content {
+  flex-grow: 1;
+  margin: unset;
+  padding: unset;
+}
+
+#dform_container,
+#dform_control_buttons>ul>li:nth-child(1) {
+  margin: unset;
+  padding: unset;
+}
+
+#dform_container .dform_widget_field,
+#dform_container .dform_widget_type_html {
+  margin-block: var(--spacing-md);
+}
+
+#dform_container .make-header {
+  margin-top: 0 !important;
+}
+
+#dform_container .container .area .box {
+  max-width: 47.6875rem;
+}
+
+#dform_container .container .area .box.conditional>div {
+  padding-left: var(--spacing-md) !important;
+  border-left: solid var(--spacing-xxs) var(--c-brand-accents-teal) !important;
+}
+
+#form > #content {
+  padding-top: 0 !important;
+}
+
+/* #form > #content #dform_control_buttons  */

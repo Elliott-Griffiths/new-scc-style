@@ -13,12 +13,24 @@
   background: var(--c-brand-accents-teal);
 }
 
-#dform_container .dform_success {
+#dform_container .dform_infoMessage_outer {
+  background: var(--c-brand-accents-teal);
+}
+
+#dform_container .dform_success,
+#dform_container .dform_successMessage_outer {
   background: var(--c-alerts-success);
 }
 
-#dform_container .dform_error {
+#dform_container .dform_error,
+#dform_container .dform_errorMessage_outer {
   background: var(--c-alerts-danger);
+}
+
+#dform_container .dform_warning,
+#dform_container .dform_warningMessage_outer {
+  color: var(--c-greys-black);
+  background: var(--c-alerts-warning);
 }
 
 #dform_container .dform_success:before,
@@ -34,14 +46,17 @@
 }
 
 #dform_container .dform_success:before {
-  content: url(./icons/circle-check-success.svg);
+  content: url(./icons/circle-check-success-white.svg);
 }
 
-#dform_container .dform_info:before,
-#dform_container .dform_warning:before {
-  content: url(./icons/circle-info-primary-darkened.svg);
+#dform_container .dform_info:before {
+  content: url(./icons/circle-info-white.svg);
 }
 
 #dform_container .dform_error:before {
-  content: url(./icons/triangle-exclamation-danger.svg);
+  content: url(./icons/triangle-exclamation-danger-white.svg);
+}
+
+#dform_container .dform_warning:before {
+  content: url(./icons/triangle-exclamation-danger-black.svg);
 }

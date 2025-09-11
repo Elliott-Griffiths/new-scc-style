@@ -1,3 +1,107 @@
+// (function() {
+//     // Define an array of message element IDs to observe
+//     const messageElementIds = [
+//         'dform_infoMessage',
+//         'dform_errorMessage',
+//         'dform_successMessage',
+//         'dform_warningMessage'
+//     ];
+
+//     // Function to apply the new outer container structure
+//     function applyOuterContainerStructure(originalMessageElement) {
+//         let outerContainer = originalMessageElement.closest('.dform_message_outer_container');
+
+//         // If the outer container doesn't exist, create and wrap
+//         if (!outerContainer) {
+//             outerContainer = document.createElement('div');
+//             outerContainer.classList.add('dform_message_outer_container');
+//             // Add a class specific to the message type for styling in CSS (e.g., dform_infoMessage_outer)
+//             outerContainer.classList.add(`${originalMessageElement.id}_outer`);
+
+//             // Insert the outer container before the original message div
+//             originalMessageElement.parentNode.insertBefore(outerContainer, originalMessageElement);
+
+//             // Move the original message div inside the new outer container
+//             outerContainer.appendChild(originalMessageElement);
+//         }
+
+//         // Ensure the outer container is visible if the inner message is visible
+//         if (outerContainer.style.display === 'none') {
+//             outerContainer.style.display = ''; // Reset display to show it
+//         }
+//     }
+
+//     // Function to hide the custom outer container
+//     function hideOuterContainerStructure(originalMessageElement) {
+//         const outerContainer = originalMessageElement.closest('.dform_message_outer_container');
+//         if (outerContainer && outerContainer.style.display !== 'none') {
+//             outerContainer.style.display = 'none'; // Hide the entire custom banner
+//             console.log(`Custom outer container for ${originalMessageElement.id} hidden.`);
+//         }
+//     }
+
+//     // Iterate over each message element ID to set up observers
+//     messageElementIds.forEach(id => {
+//         const targetMessageDiv = document.getElementById(id);
+
+//         if (!targetMessageDiv) {
+//             console.warn(`Target element #${id} not found. MutationObserver not attached for this element.`);
+//             return;
+//         }
+
+//         // Options for the observer (what to look for)
+//         const observerConfig = {
+//             attributes: true, // Observe attribute changes
+//             attributeFilter: ['style'] // Specifically observe changes to the 'style' attribute
+//         };
+
+//         // Callback function for this specific observer
+//         const callback = function(mutationsList, observer) {
+//             for (const mutation of mutationsList) {
+//                 if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+//                     // Check if the 'display' style property is set to 'block' (or whatever makes it visible)
+//                     if (targetMessageDiv.style.display === 'block') {
+//                         console.log(`${id} is now displayed. Applying custom structure.`);
+//                         applyOuterContainerStructure(targetMessageDiv);
+//                     } else if (targetMessageDiv.style.display === 'none') {
+//                         console.log(`${id} is now hidden. Hiding custom banner.`);
+//                         hideOuterContainerStructure(targetMessageDiv);
+//                     } else {
+//                         // For other display states, check computed style if it's effectively hidden
+//                         if (window.getComputedStyle(targetMessageDiv).display === 'none') {
+//                              hideOuterContainerStructure(targetMessageDiv);
+//                         }
+//                     }
+//                 }
+//             }
+//         };
+
+//         // Create an observer instance linked to the callback function
+//         const observer = new MutationObserver(callback);
+
+//         // Start observing the target node for configured mutations
+//         observer.observe(targetMessageDiv, observerConfig);
+
+//         // Initial check in case the element is already displayed on page load
+//         if (targetMessageDiv.style.display === 'block') {
+//             console.log(`${id} is already displayed on load. Applying custom structure.`);
+//             applyOuterContainerStructure(targetMessageDiv);
+//         } else {
+//             // If it's already hidden on load, ensure our custom wrapper is also hidden if it somehow exists
+//             hideOuterContainerStructure(targetMessageDiv);
+//         }
+//     });
+
+// })();
+
+
+
+
+
+
+
+
+
 function logArguments(event, kdf, ...args) {
   console.group(event.type ? event.type : "event");
   console.log("event", event);
@@ -10,12 +114,21 @@ function logArguments(event, kdf, ...args) {
 
 // --- GLOBAL CONSTS AND VARIABLES ----------------------------------------- \\
 
+const { protocol, hostname } = window.location;
+const PORTAL_URL = `${protocol}//${hostname}/site/sheffield_dev`;
+
+let formattedTitle = "";
+
+let enableSave = false;
+let saveProgress = false;
 let customerState = false;
 
 let pageName = "";
 
+let initialProfileAddressLoad = false;
 let addressSearchType = {};
 let acceptGMSites = true;
+let defaultSelectedAddressMessage = "Choose a location on the map";
 
 const datePairs = [];
 
@@ -47,33 +160,47 @@ function handleInitialisingEvent() {
     })(window, document, "script", "dataLayer", "GTM-PBGBFQVW");
   }
 
+  // --- HANDLE SIGN IN PAGE ----------------------------------------------- \\
+  console.log(KDF.kdf().access, KDF.kdf().customerset, enableSave, KDF.kdf())
+  if (KDF.kdf().access === "citizen"
+    && KDF.kdf().customerset === "citizen_true") {
+    KDF.hidePage("page_sign_in");
+    KDF.setVal("rad_sign_in", "true");
+    if (enableSave) {
+      const buttons = document.querySelectorAll('button.success-btn');
+      const nextButtons = Array.from(buttons).filter(button => button.textContent.trim() === 'Next');
+      nextButtons.forEach(button => {
+        button.textContent = 'Save and continue';
+      });
+    }
+  }
+
   // --- ADD TAB TITLE AND ICON  ------------------------------------------- \\
 
   (() => {
-    // Set form title
-    const formTitle = document.getElementById("dform_widget_le_title").value;
+    const defaultServiceTitle = "My Account";
 
-    // Set document title
-    document.title = formTitle;
+    let finalServiceTitle = defaultServiceTitle;
 
-    // Update document title after a short delay to ensure it's set properly
-    setTimeout(() => {
-      document.title = formTitle;
-    }, 10);
-
-    // Update favicon
-    const favicon = document.querySelector("link[rel~='icon']");
-    if (favicon) {
-      favicon.href =
-        "https://www.sheffield.gov.uk/verint-files/SCC%20Favicon.png";
-    } else {
-      // If favicon element doesn't exist, create it and append to head
-      const newFavicon = document.createElement("link");
-      newFavicon.rel = "icon";
-      newFavicon.href =
-        "https://www.sheffield.gov.uk/verint-files/SCC%20Favicon.png";
-      document.head.appendChild(newFavicon);
+    const formTitle = document.getElementById("dform_widget_le_title");
+    if (formTitle && formTitle.value) {
+      finalServiceTitle = formTitle.value;
     }
+
+    const serviceLabel = document.getElementById("service-label");
+    if (serviceLabel) {
+      serviceLabel.textContent = finalServiceTitle;
+    }
+
+    document.title = finalServiceTitle;
+
+    let favicon = document.querySelector("link[rel='icon']");
+    if (!favicon) {
+      favicon = document.createElement("link");
+      favicon.rel = "icon";
+      document.head.appendChild(favicon);
+    }
+    favicon.href = "https://www.sheffield.gov.uk/verint-files/SCC%20Favicon.png";
   })();
 
   // --- APPLY CLASS WHEN SKIP IF FOCUSED  --------------------------------- \\
@@ -145,7 +272,8 @@ function handleInitialisingEvent() {
       console.error(".dform_section_box_core_case_fields element not found.");
     }
 
-    const controlButtons = document.getElementById("dform_control_buttons");
+    const targetElement = KDF.kdf().form.name === "cpe_my_profile" ? "NavigationAreaInSingleColumnTemplate" : "dform_control_buttons";
+    const controlButtons = document.getElementById(targetElement);
     if (controlButtons) {
       const visibleBackButtonHTML = `
       <button
@@ -163,6 +291,31 @@ function handleInitialisingEvent() {
       controlButtons.insertAdjacentHTML("afterbegin", visibleBackButtonHTML);
     } else {
       console.error("#dform_control_buttons element not found.");
+    }
+  })();
+
+  // --- AUPDATE PRNT BUTTON LABEL ----------------------------------------- \\
+
+  (() => {
+    const printButton = document.getElementById("dform_print");
+    if (printButton) {
+      printButton.textContent = "Print this page"
+    }
+  })();
+
+  // --- REPOSITIONING THE PAGE NAV ---------------------------------------- \\
+
+  (() => {
+    const pagenav = document.getElementById("dform_pagenav");
+    const controlButtons = document.getElementById("dform_control_buttons");
+    const backButton = document.getElementById("dform_widget_button_but_back");
+
+    if (pagenav && controlButtons && backButton) {
+      const spans = pagenav.querySelectorAll("li > span");
+      spans.forEach(span => {
+        span.textContent = '>';
+      });
+      backButton.insertAdjacentElement("afterend", pagenav);
     }
   })();
 
@@ -191,8 +344,8 @@ function handleInitialisingEvent() {
           const remainingChars = maxLength - textarea.value.length;
           characterCountDiv.textContent =
             remainingChars === 1
-              ? `${remainingChars} character remaining`
-              : `${remainingChars} characters remaining`;
+              ? `You have ${remainingChars} character remaining`
+              : `You have ${remainingChars} characters remaining`;
         });
 
         // Initial character count display
@@ -200,6 +353,76 @@ function handleInitialisingEvent() {
         characterCountDiv.textContent = `You have ${initialChars} characters remaining`;
       }
     });
+  })();
+
+  // --- ADD CURRECY SYMBOL ------------------------------------------------ \\
+
+  (() => {
+    const currencyWidgets = document.querySelectorAll('.dform_widget.currency');
+
+    currencyWidgets.forEach(widget => {
+      const inputElement = widget.querySelector('input[type="number"]');
+
+      if (inputElement) {
+        const inputParent = inputElement.parentElement;
+
+        if (inputParent) {
+          const computedStyles = getComputedStyle(inputElement);
+          const originalGridRow = computedStyles.gridRow;
+          const originalGridColumn = computedStyles.gridColumn;
+
+          const inputGroup = document.createElement('div');
+          inputGroup.classList.add('currency-input-group');
+
+          if (originalGridRow && originalGridRow !== 'auto' && originalGridRow !== 'initial' && originalGridRow !== 'unset') {
+            inputGroup.style.gridRow = originalGridRow;
+          }
+          if (originalGridColumn && originalGridColumn !== 'auto' && originalGridColumn !== 'initial' && originalGridColumn !== 'unset') {
+            inputGroup.style.gridColumn = originalGridColumn;
+          }
+
+          const currencySymbol = document.createElement('span');
+          currencySymbol.classList.add('currency-symbol');
+          currencySymbol.textContent = '£';
+
+          inputParent.insertBefore(inputGroup, inputElement);
+          inputGroup.appendChild(currencySymbol);
+          inputGroup.appendChild(inputElement);
+        }
+      }
+    });
+  })();
+
+  // --- OVERRIDE PRINT FUNCTION ------------------------------------------- \\
+
+  (() => {
+    const printButton = document.getElementById('dform_print');
+    const confirmationPage = document.getElementById('dform_page_complete');
+
+    if (printButton && confirmationPage) {
+      // Override the default action by removing the href attribute
+      printButton.removeAttribute('href');
+
+      // Add a custom event listener
+      printButton.addEventListener('click', function (event) {
+        // Prevent the default browser action for the link
+        event.preventDefault();
+
+        // Store the original body content
+        const originalBody = document.body.innerHTML;
+
+        // Set the body's HTML to only the confirmation page content
+        document.body.innerHTML = confirmationPage.outerHTML;
+
+        // Trigger the print dialog
+        window.print();
+
+        // Restore the original body content after printing
+        setTimeout(() => {
+          document.body.innerHTML = originalBody;
+        }, 0);
+      });
+    }
   })();
 
   // --- HANDLE FILE UPLOAD ------------------------------------------------ \\
@@ -244,6 +467,19 @@ function handleInitialisingEvent() {
 
 function handleOnReadyEvent(_, kdf) {
   customerState = kdf.customerset;
+  formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
+
+  if (document.getElementById('selected-address')) {
+    defaultSelectedAddressMessage = document.getElementById('selected-address').textContent.trim();
+  }
+
+  // --- SET ADDRESS IF ACCOUNT IUDENTIFIED ---------------------------------- \\
+
+  if (kdf.profileData['customerid'] && kdf.profileData['customerid'] !== ""
+    && kdf.profileData['profile-Postcode'] && kdf.profileData['profile-Postcode'] !== "") {
+    initialProfileAddressLoad = true;
+    $('#dform_widget_button_but_find_address_about_you').click();
+  }
 
   // --- ADD CONTENT TO WHY WE NEED DATE OF BIRTH -------------------------- \\
 
@@ -310,13 +546,13 @@ function handleOnReadyEvent(_, kdf) {
     }
   }
 
+  // --- SET FEEDBACK LINK ------------------------------------------------- \\
+
+  buildFormLink("give-feedback", "give_feedback_suggestion", true);
+
   // --- SET EQUALITIES LINK ----------------------------------------------- \\
 
-  const formattedTitle = KDF.getVal("le_title").replace(/\s+/g, "-");
-  $("#equality-btn").attr(
-    "href",
-    `https://sheffielddev.form.ukpreview.empro.verintcloudservices.com/form/auto/equalities_monitoring?formTitle=${formattedTitle}&channel=web`
-  );
+  //   buildFormLink("equalities-information", "equalities_monitoring", true);
 
   storeDefaultValidationMessages();
 
@@ -328,35 +564,37 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
 
-  if (kdf.form.complete === "Y") {
-    KDF.showPage("page_review");
-    KDF.gotoPage("page_review");
-    if (kdf.params.viewmode === "R") {
-      KDF.makeReadonly();
-      $(".review-page-edit-button").remove();
-      $('.dform_section_box_review div[data-type="buttonset"]').remove();
-    } else {
-      // use stored page array when case management
-      if (
-        !KDF.kdf().form.name.startsWith("cm_") &&
-        !KDF.kdf().form.name.endsWith("_cm")
-      ) {
-        KDF.makeReadonly();
-        $(".review-page-edit-button").remove();
-        $('.dform_section_box_review div[data-type="buttonset"]').remove();
-      }
-    }
-  } else {
-    if (kdf.form.caseid && kdf.form.ref) {
+  setTimeout(() => {
+    if (kdf.form.complete === "Y") {
       KDF.showPage("page_review");
       KDF.gotoPage("page_review");
       if (kdf.params.viewmode === "R") {
         KDF.makeReadonly();
         $(".review-page-edit-button").remove();
         $('.dform_section_box_review div[data-type="buttonset"]').remove();
+      } else {
+        // use stored page array when case management
+        if (
+          !KDF.kdf().form.name.startsWith("cm_") &&
+          !KDF.kdf().form.name.endsWith("_cm")
+        ) {
+          KDF.makeReadonly();
+          $(".review-page-edit-button").remove();
+          $('.dform_section_box_review div[data-type="buttonset"]').remove();
+        }
+      }
+    } else {
+      if (kdf.form.caseid && kdf.form.ref) {
+        KDF.showPage("page_review");
+        KDF.gotoPage("page_review");
+        if (kdf.params.viewmode === "R") {
+          KDF.makeReadonly();
+          $(".review-page-edit-button").remove();
+          $('.dform_section_box_review div[data-type="buttonset"]').remove();
+        }
       }
     }
-  }
+  }, 0);
 
   // --- HANDLE FORMAT TITLE CASE ------------------------------------------ \\
 
@@ -368,19 +606,6 @@ function handleOnReadyEvent(_, kdf) {
 
   $(".find-btn").on("click", function () {
     if ($(this).text() === "Find address") {
-      const currentPageId = getCurrentPageId();
-      const container = document.querySelector(
-        `#${currentPageId} .map-container`
-      );
-
-      if (container) {
-        container.classList.add("dform_hidden");
-      }
-      if ($(".geo-btn-container").find(".dform_validationMessage").length) {
-        $(".geo-btn-container")
-          .find(".dform_validationMessage")
-          .css("display", "none");
-      }
       resetAddressSearch();
       setRequiredStateByAlias("postcode", "required");
     }
@@ -394,61 +619,201 @@ function handleOnReadyEvent(_, kdf) {
   $(document).on("click", ".search-again-btn", function () {
     const currentPageId = getCurrentPageId();
     const searchInput = document.querySelector(`#${currentPageId} input[data-customalias="postcode"]`);
-    const searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
+    let searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
     const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
-    const setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
+    if (resultsList) {
+      resultsList.value = '';
+      KDF.setWidgetRequired(resultsList.id.replace('dform_widget_', ''));
+    }
+
+    let manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
+    if (manualAddressElement) {
+      const detailsElement = manualAddressElement.querySelector('.details-accordion');
+      if (detailsElement && detailsElement.hasAttribute('open')) {
+        detailsElement.removeAttribute('open');
+      }
+    }
+
+    let setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
 
     const buttonContainer = document.querySelector(`#${getCurrentPageId()} .address-search-btn-container`);
     if (buttonContainer) {
       buttonContainer.style.display = 'flex'; // Shows the element
     }
-    
-    const selectedAddressContainer = document.querySelector(`#${getCurrentPageId()} .selected-address-container`);
+
+    searchButton = searchButton.id.replace('dform_widget_button_', '');
+    if (manualAddressElement) {
+      manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+    }
+    setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
+
+    let selectedAddressContainer = document.querySelector(`#${getCurrentPageId()} .selected-address-container`);
+    if (selectedAddressContainer) {
+      selectedAddressContainer = selectedAddressContainer.id.replace('dform_widget_html_', '');
+    }
+
+    const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
+    if (selectedAddressSpan) {
+      selectedAddressSpan.textContent = defaultSelectedAddressMessage;
+    }
+
+    let mapCntainer = document.querySelector(`#${currentPageId} .map-container`);
+    if (mapCntainer) {
+      mapCntainer = mapCntainer.id.replace('dform_widget_html_', '');
+    }
 
     if (resultsList && searchInput && searchButton && selectedAddressContainer) {
       hideShowMultipleElements([
         { name: searchInput.name, display: "show" },
-        { name: searchButton.id.replace('dform_widget_button_', ''), display: "show" },
+        { name: searchButton, display: "show" },
         { name: resultsList.dataset.name, display: "hide" },
-        { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
-        { name: selectedAddressContainer.id.replace('dform_widget_html_', ''), display: "hide" },
+        { name: manualAddressElement, display: "hide" },
+        { name: setAddressButton, display: "hide" },
+        { name: selectedAddressContainer, display: "hide" },
+        { name: mapCntainer, display: "show" },
       ]);
 
       searchInput.focus();
     }
-    
+
     resetAddressSearch();
   });
 
-  // --- HANDLE MANUAL ADDRESS ENTRY --------------------------------------- \\
+  // --- HANDLE RE-SEARCH ADDRESS ------------------------------------------ \\
 
-  $(`.property, .street-name, .city, .postcode`).on("change", function () {
-    const fieldsArray = getValuesOfInputFields([
-      { alias: "property" },
-      { alias: "streetName" },
-      { alias: "city" },
-      { alias: "postCode" },
-    ]);
+  // The main click event handler
+  $(document).on("click", ".set-address-btn", function () {
+    const handleSearchResults = (currentPageId, buttonId) => {
+      const searchResultsContainer = document.querySelector(`#${currentPageId} .address-search-results`);
+      const searchResultsSelect = searchResultsContainer?.querySelector('select');
 
-    const fields = fieldsArray.reduce((field, item) => {
-      field[item.alias] = item.value;
-      return field;
-    }, {});
+      if (searchResultsSelect && searchResultsSelect.value) {
+        // A valid address was selected.
+        const action = addressSearchType === "national" ? "retrieve-national-address" : "retrieve-local-address";
+        KDF.customdata(action, buttonId, true, true, { propertyId: searchResultsSelect.value });
+        return true; // Return true to indicate success
+      } else if (searchResultsContainer) {
+        // No address was selected, so show the validation error.
+        const validationMessage = searchResultsContainer.querySelector('.dform_validationMessage');
+        if (validationMessage) {
+          validationMessage.style.display = 'block';
+        }
+        if (searchResultsSelect) {
+          searchResultsSelect.classList.add('dform_fielderror');
+        }
+        return false; // Return false to indicate failure
+      }
+      return false; // No search results container found
+    };
 
-    if (
-      !fields.property ||
-      !fields.streetName ||
-      !fields.city ||
-      !fields.postCode
-    ) {
-      return;
+    const currentPageId = getCurrentPageId();
+    const manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
+
+    // Check if the manual address form exists on the page
+    if (manualAddressElement) {
+      const detailsElement = manualAddressElement.querySelector('.details-accordion');
+
+      // Check if the manual address accordion is open
+      if (detailsElement && detailsElement.hasAttribute('open')) {
+        // Scenario 1: Manual form is open; validate its fields.
+        const searchResultsSelect = document.querySelector(`#${currentPageId} .address-search-results select`);
+        if (searchResultsSelect) {
+          searchResultsSelect.value = ''; // Clear selected value from search results
+          KDF.setWidgetNotRequired(searchResultsSelect.id.replace('dform_widget_', ''));
+        }
+
+        const addressFields = getValuesOfInputFields([
+          { alias: "property" },
+          { alias: "streetName" },
+          { alias: "city" },
+          { alias: "postCode" },
+        ]);
+
+        let allFieldsValid = true;
+        addressFields.forEach(field => {
+          const fieldContainer = document.querySelector(`[data-customalias="${field.alias}"]`)?.closest('.dform_widget_field');
+          const validationMessage = fieldContainer?.querySelector('.dform_validationMessage');
+          const inputElement = fieldContainer?.querySelector('input');
+
+          if (!field.value) {
+            allFieldsValid = false;
+            if (validationMessage) validationMessage.style.display = 'block';
+            if (inputElement) inputElement.classList.add('dform_fielderror');
+          } else {
+            if (validationMessage) validationMessage.style.display = 'none';
+            if (inputElement) inputElement.classList.remove('dform_fielderror');
+          }
+        });
+
+        if (allFieldsValid) {
+          const addressearchResults = document.querySelector(`#${currentPageId} .address-search-results`);
+          let setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
+          if (setAddressButton) {
+            setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
+          }
+
+          const buttonContainer = document.querySelector(`#${currentPageId} .address-search-btn-container`);
+          let manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
+          if (manualAddressElement) {
+            manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+          }
+
+          const addressDataForDisplay = {
+            property: addressFields.find(field => field.alias === 'property')?.value || '',
+            streetName: addressFields.find(field => field.alias === 'streetName')?.value || '',
+            city: addressFields.find(field => field.alias === 'city')?.value || '',
+            postcode: addressFields.find(field => field.alias === 'postCode')?.value || '',
+          };
+
+          const fullAddressDisplay = buildAddressMarkup(addressDataForDisplay);
+          let selectedAddressContainer = document.querySelector(`#${currentPageId} .selected-address-container`);
+          if (selectedAddressContainer) {
+            selectedAddressContainer.innerHTML = fullAddressDisplay;
+            selectedAddressContainer = selectedAddressContainer.id.replace('dform_widget_html_', '');
+          }
+
+          let fullAddress = '';
+          addressFields.forEach(field => {
+            if (field.value) {
+              if (field.alias === 'streetName' || field.alias === 'city') {
+                fullAddress += `${field.value}, `;
+              } else {
+                fullAddress += `${field.value} `;
+              }
+            }
+          });
+          fullAddress = fullAddress.trim();
+
+          setValuesToInputFields([
+            { alias: "fullAddress", value: fullAddress },
+          ]);
+
+          if (addressearchResults) {
+            const selectElement = addressearchResults.querySelector('select');
+            if (selectElement) {
+              selectElement.style.display = 'none'; // Hides the element
+            }
+          }
+
+          if (buttonContainer) {
+            buttonContainer.style.display = 'none'; // Hides the element
+          }
+
+          hideShowMultipleElements([
+            { name: setAddressButton, display: "hide" },
+            { name: selectedAddressContainer, display: "show" },
+            { name: manualAddressElement, display: "hide" },
+          ]);
+        }
+
+      } else {
+        // Scenario 2: Manual form is not open; validate the search results dropdown.
+        handleSearchResults(currentPageId, this.id);
+      }
+    } else {
+      // Scenario 3: The manual address container doesn't exist at all; validate search results.
+      handleSearchResults(currentPageId, this.id);
     }
-
-    const fullAddress = `${formatTitleCase(fields.property)} ${formatTitleCase(
-      fields.streetName
-    )}, ${fields.city.toUpperCase()}, ${fields.postCode.toUpperCase()}`;
-
-    setValuesToInputFields([{ alias: "fullAddress", value: fullAddress }]);
   });
 
   // --- HANDLE VEHICLE LOOKUP --------------------------------------------- \\
@@ -461,26 +826,7 @@ function handleOnReadyEvent(_, kdf) {
   // --- HANDLE FIND CURRENT LOCATION CLICK -------------------------------- \\
 
   $(".geo-btn").on("click", function () {
-    $(`.address-search`).find(".dform_validationMessage").hide();
-
-    const currentPageId = getCurrentPageId();
-    const container = document.querySelector(
-      `#${currentPageId} .map-container`
-    );
-
-    if (container) {
-      container.classList.add("dform_hidden");
-    }
-    resetAddressSearch();
-
     const $button = $(this);
-    const $container = $button.closest(".geo-btn-container");
-    const $validationMessage = $container.find(".dform_validationMessage");
-
-    // Hide the validation message if it's visible
-    if ($validationMessage.is(":visible")) {
-      $validationMessage.hide();
-    }
 
     // Proceed with geolocation retrieval
     if (navigator.geolocation) {
@@ -509,10 +855,10 @@ function handleOnReadyEvent(_, kdf) {
                   : "An unknown error occurred";
 
           const errorMessageHtml = `
-                      <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
-                          ${errorMessage}
-                      </div>
-                  `;
+            <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
+              ${errorMessage}
+            </div>
+          `;
 
           if (!$validationMessage.length) {
             $button.before(errorMessageHtml);
@@ -525,10 +871,10 @@ function handleOnReadyEvent(_, kdf) {
       const errorMessage = "Geolocation is not supported by this browser";
 
       const errorMessageHtml = `
-              <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
-                  ${errorMessage}
-              </div>
-          `;
+        <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
+          ${errorMessage}
+        </div>
+      `;
 
       if (!$validationMessage.length) {
         $button.before(errorMessageHtml);
@@ -573,116 +919,6 @@ function handleOnReadyEvent(_, kdf) {
   $(".locator-btn, .address-btn").click(function () {
     checkAddressHasBeenSet();
   });
-
-  function checkAddressHasBeenSet(action = "next page") {
-    const currentPageId = getCurrentPageId();
-    const fullAddress = document.querySelector(
-      `#${currentPageId} input[data-customalias="fullAddress"]`
-    );
-    const fullAddressHasValue = KDF.getVal(fullAddress.name) ? true : false;
-    const siteName = document.querySelector(
-      `#${currentPageId} input[data-customalias="siteName"]`
-    );
-    const siteCode = document.querySelector(
-      `#${currentPageId} input[data-customalias="siteCode"]`
-    );
-    if (fullAddressHasValue) {
-      if (siteName && siteCode) {
-        const siteNameHasValue = KDF.getVal(siteName.name) ? true : false;
-        const siteCodeHasValue = KDF.getVal(siteCode.name) ? true : false;
-        const validSiteCode = acceptGMSites
-          ? true
-          : KDF.getVal(siteCode.name).startsWith("344")
-            ? true
-            : false;
-        if (siteNameHasValue && siteCodeHasValue && validSiteCode) {
-          if (action === "submit") {
-            KDF.gotoPage("complete", true, true, false);
-          } else {
-            KDF.gotoNextPage();
-          }
-        } else {
-          const errorMessage = acceptGMSites
-            ? "Select a location inside the Sheffield area"
-            : "Slecte a public highway inside the Sheffield area";
-          $("#map_container").addClass("map_container_error");
-          if ($("#map_error").length == "0") {
-            $("#dform_widget_html_ahtm_map_container").prepend(
-              `<div id="map_error" class="dform_validationMessage" style="display: block;">${errorMessage}</div>`
-            );
-          }
-          KDF.setVal("ahtm_map_location_error", errorMessage);
-          KDF.showWidget("ahtm_map_location_error");
-        }
-      } else {
-        if (action === "submit") {
-          KDF.gotoPage("complete", true, true, false);
-        } else {
-          KDF.gotoNextPage();
-        }
-      }
-    } else {
-      const isMapContainerVisible = $("#map_container").is(":visible");
-      if (isMapContainerVisible) {
-        const errorMessage = acceptGMSites
-          ? "Select a location inside the Sheffield area"
-          : "Slecte a public highway inside the Sheffield area";
-        $("#map_container").addClass("map_container_error");
-        if ($("#map_error").length == "0") {
-          $("#dform_widget_html_ahtm_map_container").prepend(
-            `<div id="map_error" class="dform_validationMessage" style="display: block;">${errorMessage}</div>`
-          );
-        }
-        KDF.setVal("ahtm_map_location_error", errorMessage);
-        KDF.showWidget("ahtm_map_location_error");
-      } else {
-        const searchResult = document.querySelector(
-          `#${currentPageId} select[data-customalias="searchResult"]`
-        );
-        const isSearchResultVisible = $(`#${searchResult.id}`).is(":visible");
-        if (isSearchResultVisible) {
-          if ($(`#${searchResult.id}`).val() !== '' || $(`#${searchResult.id}`).val() !== 'Please select...') {
-            const setAddressButton = document.querySelector(
-              `#${currentPageId} .set-address-btn`
-            );
-            if (setAddressButton) {
-              setAddressButton.click();
-            } else {
-              document.querySelector(
-              `div[data-name="${searchResult.name}"] .dform_validationMessage`
-            ).style.display = "block";
-            }
-          } else {
-            document.querySelector(
-              `div[data-name="${searchResult.name}"] .dform_validationMessage`
-            ).style.display = "block";
-          }
-        } else {
-          const postcode = document.querySelector(
-            `#${currentPageId} input[data-customalias="postcode"]`
-          );
-          const postcodeHasValue = KDF.getVal(postcode.name) ? true : false;
-          if (postcodeHasValue) {
-            const findButton = document.querySelector(
-              `#${currentPageId} .find-btn`
-            );
-            if (findButton) {
-              findButton.click();
-            } else {
-              document.querySelector(
-                `div[data-name="${postcode.name}"] .dform_validationMessage`
-              ).style.display = "block";
-            }
-            findButton.click();
-          } else {
-            document.querySelector(
-              `div[data-name="${postcode.name}"] .dform_validationMessage`
-            ).style.display = "block";
-          }
-        }
-      }
-    }
-  }
 
   // --- HANDLE CUSTOM DATE ------------------------------------------------ \\
 
@@ -834,7 +1070,7 @@ function handleOnReadyEvent(_, kdf) {
   // --- HANDLE SET REPORTER ----------------------------------------------- \\
 
   // Check if customer set state is true
-  if (kdf.access === "agent" && kdf.profileData["profile-FullName"]) {
+  if (kdf.profileData["customerid"]) {
     property = formatTitleCase(kdf.profileData["profile-AddressNumber"]);
     streetName = formatTitleCase(kdf.profileData["profile-AddressLine1"]);
     fullAddress = `${formatTitleCase(property)} ${formatTitleCase(
@@ -845,9 +1081,7 @@ function handleOnReadyEvent(_, kdf) {
       new Date(kdf.profileData["profile-DateOfBirth"]),
       fullAddress
     );
-  } else if (
-    kdf.access === "agent" &&
-    KDF.getVal("txt_full_address_about_you")
+  } else if (KDF.getVal("txt_full_address_about_you")
   ) {
     property = formatTitleCase(KDF.getVal("txt_property_about_you"));
     streetName = formatTitleCase(KDF.getVal("txt_street_name_about_you"));
@@ -913,16 +1147,16 @@ function handleOnReadyEvent(_, kdf) {
   function createReviewSection(pageId, pageTitle, fields) {
     let statusCardHtml = `
       <div class="review-section">
-          <div class="review-content">
-              <div class="review-content-header">
-                  <h3>${pageTitle}</h3>
-                  <button type="button" class="go-to-page-btn" id="go-to-${pageId}">Edit</button>
-              </div>
-              ${fields
+        <div class="review-content">
+          <div class="review-content-header">
+            <h3>${pageTitle}</h3>
+            <button type="button" class="go-to-page-btn" id="go-to-${pageId}">Edit</button>
+          </div>
+      ${fields
         .map(
           (field) => `
-                    <p>${field.fieldlabel}: ${field.fieldValue}</p>
-                  `
+            <p>${field.fieldlabel}: ${field.fieldValue}</p>
+          `
         )
         .join("")}
           </div>
@@ -1088,19 +1322,26 @@ function handleOnReadyEvent(_, kdf) {
       KDF.showWarning("A customer has not been set.");
     }
   });
+
+  // --- HANDLE SIGN IN BUTTTON CLICK -------------------------------------- \\
+
+  $('#dform_widget_button_but_next_sign_in').on('click', function () {
+    if (KDF.getVal("rad_sign_in") === "true") {
+      window.location.href = `${PORTAL_URL}/account/${kdf.form.name}`;
+    } else {
+      KDF.gotoNextPage();
+    }
+  });
+
+  $('#dform_widget_button_but_view_my_requests').on('click', function () {
+    window.location.href = `${PORTAL_URL}/requests`;
+  });
 }
 
 // --- HANDLE ON PAGE CHANGE EVENT ----------------------------------------- \\
 
 function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   KDF.hideMessages();
-  // Toggle back button visibility
-  displayBackButton(targetpageid > 1 && kdf.form.complete !== "Y");
-
-  // Get the name for the current page
-  $(`div[data-type="page"][data-pos="${currentpageid}"]`).each(function () {
-    pageName = this.id.slice(11);
-  });
 
   // Get the name for the current page
   $(`div[data-type="page"][data-pos="${targetpageid}"]`).each(function () {
@@ -1108,6 +1349,12 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   });
 
   updateProgressBar(targetpageid);
+
+  if (enableSave && kdf.customerset === "citizen_true") {
+    if (targetpageid > 2 && pageName !== "complete" && kdf.form.complete !== "Y") {
+      KDF.saveQuiet();
+    }
+  }
 
   if (pageName === "page_about_you") {
     if (kdf.access === "agent" && !kdf.form.data?.num_reporter_obj_id) {
@@ -1133,7 +1380,6 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   if (pageName === "save") {
     KDF.setVal("txt_resume_form", "true");
     getAndSetReviewPageData();
-    showContactTeamPanel();
     KDF.save();
   }
 
@@ -1143,8 +1389,34 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
     } else {
       KDF.showWidget("ahtm_confirmation_email_send");
     }
-    showContactTeamPanel();
     KDF.setVal("txt_finish_date_and_time", formatDateTime().utc);
+  }
+
+  let skipPages = 1;
+  if (document.getElementById('dform_page_page_sign_in')) {
+    skipPages++;
+  }
+  displayBackButton(targetpageid > skipPages && pageName !== "complete" && kdf.form.complete !== "Y");
+
+  const controlElement = document.getElementById('dform_controls');
+  if (controlElement) {
+    const signInPage = document.getElementById('dform_page_page_sign_in');
+    const progressBar = document.getElementById('dform_progressbar_sheffield');
+    let showControls = false;
+
+    if (progressBar) {
+      if (signInPage) {
+        showControls = targetpageid >= 2;
+      } else {
+        showControls = targetpageid >= 1;
+      }
+    }
+
+    if (!progressBar && targetpageid > skipPages) {
+      showControls = true;
+    }
+
+    controlElement.style.display = showControls ? "flex" : "none";
   }
 
   getAndSetReviewPageData();
@@ -1353,46 +1625,46 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
   }
 
   // Check if the action is to check the map status
-  if (action === "check-map-status") {
-    // Spread the data object
-    const { isMapAvailable } = response.data;
+  // if (action === "check-map-status") {
+  //   // Spread the data object
+  //   const { isMapAvailable } = response.data;
 
-    // Select all elements with the class "map-icon"
-    const mapIcon = $(".map-icon");
+  //   // Select all elements with the class "map-icon"
+  //   const mapIcon = $(".map-icon");
 
-    // Check if the response data indicates unavailable maps
-    if (isMapAvailable === "false") {
-      // (Optional) Disable elements using native method (comment out if not used)
-      mapIcon.prop("disabled", true);
+  //   // Check if the response data indicates unavailable maps
+  //   if (isMapAvailable === "false") {
+  //     // (Optional) Disable elements using native method (comment out if not used)
+  //     mapIcon.prop("disabled", true);
 
-      // Set aria-disabled to true for accessibility
-      mapIcon.attr("aria-disabled", "true");
+  //     // Set aria-disabled to true for accessibility
+  //     mapIcon.attr("aria-disabled", "true");
 
-      // Add the "disabled" class for styling
-      mapIcon.addClass("disabled");
+  //     // Add the "disabled" class for styling
+  //     mapIcon.addClass("disabled");
 
-      // Show the "maps-unavailable-notice" element
-      $(".maps-unavailable-notice").show();
-    } else {
-      // (Optional) Enable elements using native method (comment out if not used)
-      mapIcon.prop("disabled", false);
+  //     // Show the "maps-unavailable-notice" element
+  //     $(".maps-unavailable-notice").show();
+  //   } else {
+  //     // (Optional) Enable elements using native method (comment out if not used)
+  //     mapIcon.prop("disabled", false);
 
-      // Set aria-disabled to false for accessibility
-      mapIcon.attr("aria-disabled", "false");
+  //     // Set aria-disabled to false for accessibility
+  //     mapIcon.attr("aria-disabled", "false");
 
-      // Remove the "disabled" class
-      mapIcon.removeClass("disabled");
+  //     // Remove the "disabled" class
+  //     mapIcon.removeClass("disabled");
 
-      // Hide the "maps-unavailable-notice" element
-      $(".maps-unavailable-notice").hide();
+  //     // Hide the "maps-unavailable-notice" element
+  //     $(".maps-unavailable-notice").hide();
 
-      if (KDF.kdf().access === "agent") {
-        $(
-          "#map_container > div.esri-view-root > div.esri-ui.calcite-theme-light > div.esri-ui-inner-container.esri-ui-corner-container > div.esri-ui-top-right.esri-ui-corner > div"
-        ).css("display", "inline-flex");
-      }
-    }
-  }
+  //     if (KDF.kdf().access === "agent") {
+  //       $(
+  //         "#map_container > div.esri-view-root > div.esri-ui.calcite-theme-light > div.esri-ui-inner-container.esri-ui-corner-container > div.esri-ui-top-right.esri-ui-corner > div"
+  //       ).css("display", "inline-flex");
+  //     }
+  //   }
+  // }
 
   if (action === "set-raised-by") {
     const { customerid } = response.data;
@@ -1409,84 +1681,90 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     action === "search-local-address" ||
     action === "search-national-address"
   ) {
-    if (action === "search-local-address")
-      addressSearchType[getCurrentPageId()] = "local";
-    if (action === "search-national-address")
-      addressSearchType[getCurrentPageId()] = "national";
+    let targetPageId = getCurrentPageId();
+    if (targetPageId === 'dform_page_page_about_you') {
+      KDF.setWidgetRequired('sel_search_results_about_you');
+    }
+    if (initialProfileAddressLoad === true) {
+      initialProfileAddressLoad = false;
+      targetPageId = "dform_page_page_about_you";
+      setTimeout(function () {
+        setProfileAddressDetails(targetPageId, kdf);
+        KDF.setWidgetNotRequired('sel_search_results_about_you');
+      }, 0);
+    }
+
+    if (action === "search-local-address") {
+      addressSearchType[targetPageId] = "local";
+    }
+    if (action === "search-national-address") {
+      addressSearchType[targetPageId] = "national";
+    }
 
     const { propertySearchResult } = response.data;
-    if (propertySearchResult.length > 0) {
-      const formattedSearchResult = propertySearchResult.map((addressLine) => {
-        // Create a copy to avoid mutating the original object
-        const newAddressLine = { ...addressLine };
-        const parts = newAddressLine.label.split(",");
-        newAddressLine.label =
-          formatTitleCase(parts[0]) + "," + parts.slice(1).join(",");
-        return newAddressLine;
-      });
-      setValuesToInputFields([
-        { alias: "searchResult", value: formattedSearchResult },
-      ]);
+    // if (propertySearchResult.length > 0) {
+    const formattedSearchResult = propertySearchResult.map((addressLine) => {
+      // Create a copy to avoid mutating the original object
+      const newAddressLine = { ...addressLine };
+      const parts = newAddressLine.label.split(",");
+      newAddressLine.label =
+        formatTitleCase(parts[0]) + "," + parts.slice(1).join(",");
+      return newAddressLine;
+    });
+    setValuesToInputFields([
+      { alias: "searchResult", value: formattedSearchResult },
+    ]);
 
-      const numberOfResults = propertySearchResult ? propertySearchResult.length : 0;
-      const currentPageId = getCurrentPageId();
+    const numberOfResults = propertySearchResult ? propertySearchResult.length : 0;
 
-      const searchInput = document.querySelector(`#${currentPageId} input[data-customalias="postcode"]`);
-      const searchButton = document.querySelector(`#${currentPageId} .address-search-btn`);
+    const searchInput = document.querySelector(`#${targetPageId} input[data-customalias="postcode"]`);
+    let searchButton = document.querySelector(`#${targetPageId} .address-search-btn`);
 
-      const resultsList = document.querySelector(`#${currentPageId} .address-search-results`);
-      let resultsLabelId = null;
-      if (resultsList) {
-        const labelElement = resultsList.querySelector('label');
-        if (labelElement) {
-          resultsLabelId = labelElement.id;
-        }
+    const resultsList = document.querySelector(`#${targetPageId} .address-search-results`);
+    let resultsLabelId = null;
+    if (resultsList) {
+      const labelElement = resultsList.querySelector('label');
+      if (labelElement) {
+        resultsLabelId = labelElement.id;
       }
-      const setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
+    }
 
-      const searchedPostcode = searchInput ? searchInput.value : '';
+    let manualAddressElement = document.querySelector(`#${targetPageId} .manual-address-container`);
+    let setAddressButton = document.querySelector(`#${targetPageId} .set-address-btn`);
+    const searchedPostcode = searchInput ? searchInput.value : '';
 
-      const resultsContent = `
+    const resultsContent = `
         ${numberOfResults} addresses found for <strong>${searchedPostcode}</strong>.
         <button type="button" class="search-again-btn link-btn">Search again</button>
       `;
 
-      if (resultsList && searchInput && searchButton) {
-        const searchStatusMessageElement = document.getElementById(resultsLabelId);
-        if (searchStatusMessageElement) {
-          searchStatusMessageElement.innerHTML = resultsContent;
-        }
-
-        const selectElement = resultsList.querySelector('select');
-        if (selectElement) {
-          selectElement.style.display = 'block'; // Shows the element
-        }
-        
-        hideShowMultipleElements([
-          { name: searchInput.name, display: "hide" },
-          { name: searchButton.id.replace('dform_widget_button_', ''), display: "hide" },
-          { name: resultsList.dataset.name, display: "show" },
-          { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "show" },
-        ]);
+    if (resultsList && searchInput && searchButton) {
+      let searchStatusMessageElement = document.getElementById(resultsLabelId);
+      if (searchStatusMessageElement) {
+        searchStatusMessageElement.innerHTML = resultsContent;
       }
-    } else {
-      const currentPageId = getCurrentPageId();
-      const postcodeInput = document.querySelector(
-        `#${currentPageId} input[data-customalias="postcode"]`
-      );
 
-      if (postcodeInput) {
-        const validationMessageElement = document.querySelector(
-          `div[data-name="${postcodeInput.name}"] .dform_validationMessage`
-        );
-
-        if (validationMessageElement) {
-          validationMessageElement.textContent =
-            getValidationMessageFromSession(postcodeInput.id);
-          validationMessageElement.style.display = "block";
-        }
+      let selectElement = resultsList.querySelector('select');
+      if (selectElement) {
+        selectElement.style.display = 'block'; // Shows the element
       }
-      showAddressFields();
+
+      searchButton = searchButton.id.replace('dform_widget_button_', '');
+
+      if (manualAddressElement) {
+        manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+      }
+      if (setAddressButton) {
+        setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
+      }
+
+      hideShowMultipleElements([
+        { name: searchInput.name, display: "hide" },
+        { name: searchButton, display: "hide" },
+        { name: resultsList.dataset.name, display: "show" },
+        { name: manualAddressElement, display: "show" },
+        { name: setAddressButton, display: "show" },
+      ]);
     }
   }
 
@@ -1522,20 +1800,21 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       areaContact,
       officerContact,
     } = response.data;
-    if (status == 400 && action === "retrieve-location-from-coordinates") {
-      const $button = $(".geo-btn");
-      const $container = $button.closest(".geo-btn-container");
-      const $validationMessage = $container.find(".dform_validationMessage");
-      const errorMessageHtml = `
-          <div class="dform_validationMessage" style="display: block; width: 100%; transform: translateY(12px);">
-            ${message}
-          </div>
-        `;
 
-      if (!$validationMessage.length) {
-        $button.before(errorMessageHtml);
-      } else {
-        $validationMessage.html(message).show();
+    console.log(action, response.data);
+    const currentPageId = getCurrentPageId();
+    const addressSelectionSection = document.querySelector(`#${currentPageId} .address-selection-section`);
+    const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
+
+    if (status == 400 && action === "retrieve-location-from-coordinates") {
+      if (addressSelectionSection) {
+        addressSelectionSection.classList.add('dform_fielderror');
+      }
+
+      if (selectedAddressSpan) {
+        selectedAddressSpan.textContent = message;
+        selectedAddressSpan.classList.add('dform_validationMessage');
+        selectedAddressSpan.style.display = 'block';
       }
       return;
     }
@@ -1552,22 +1831,40 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
     };
 
     const fullAddressDisplay = buildAddressMarkup(addressDataForDisplay);
-    const selectedAddressContainer = document.querySelector(`#${getCurrentPageId()} .selected-address-container`);
+    let selectedAddressContainer = document.querySelector(`#${currentPageId} .selected-address-container`);
     if (selectedAddressContainer) {
       selectedAddressContainer.innerHTML = fullAddressDisplay;
+      selectedAddressContainer = selectedAddressContainer.id.replace('dform_widget_html_', '');
     }
 
-    const addressearchResults = document.querySelector(`#${getCurrentPageId()} .address-search-results`);
-    const setAddressButton = document.querySelector(`#${getCurrentPageId()} .set-address-btn`);
-    const buttonContainer = document.querySelector(`#${getCurrentPageId()} .address-search-btn-container`);
+    if (addressSelectionSection) {
+      addressSelectionSection.classList.add('dform_fieldsuccess');
+    }
+
+    if (selectedAddressSpan) {
+      const addressParts = Object.values(addressDataForDisplay)
+        .filter(Boolean)
+        .join(', ');
+      selectedAddressSpan.innerHTML = addressParts;
+      selectedAddressSpan.classList.remove('dform_validationMessage');
+    }
+
+    const addressearchResults = document.querySelector(`#${currentPageId} .address-search-results`);
+    let setAddressButton = document.querySelector(`#${currentPageId} .set-address-btn`);
+    if (setAddressButton) {
+      setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
+    }
+    const buttonContainer = document.querySelector(`#${currentPageId} .address-search-btn-container`);
+    let manualAddressElement = document.querySelector(`#${currentPageId} .manual-address-container`);
+    if (manualAddressElement) {
+      manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+    }
 
     property = formatTitleCase(property);
     streetName = formatTitleCase(streetName);
     fullAddress = `${formatTitleCase(property)} ${formatTitleCase(
       streetName
     )}, ${city}, ${postcode}`;
-
-    // showHideInputFields([{ alias: "searchResult", display: false }]);
 
     setValuesToInputFields([
       { alias: "property", value: property },
@@ -1597,16 +1894,32 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       const selectElement = addressearchResults.querySelector('select');
       if (selectElement) {
         selectElement.style.display = 'none'; // Hides the element
+        selectElement.classList.remove('dform_fielderror');
+      }
+      const validationMessage = addressearchResults?.querySelector('.dform_validationMessage');
+      if (validationMessage) {
+        validationMessage.style.display = "none";
+        validationMessage.textContent = "Select the address";
       }
     }
-    
+
     if (buttonContainer) {
       buttonContainer.style.display = 'none'; // Hides the element
     }
 
+    let findOnMapElement = document.querySelector(`#${currentPageId} .map-container`);
+    if (findOnMapElement) {
+      if (easting && northing) {
+        plotLocationOnMap(easting, northing);
+      }
+      findOnMapElement = findOnMapElement.id.replace('dform_widget_html_', '');
+    }
+
     hideShowMultipleElements([
-      { name: setAddressButton.id.replace('dform_widget_button_', ''), display: "hide" },
-      { name: selectedAddressContainer.id.replace('dform_widget_html_', ''), display: "show" },
+      { name: setAddressButton, display: "hide" },
+      { name: selectedAddressContainer, display: "show" },
+      { name: manualAddressElement, display: "hide" },
+      { name: findOnMapElement, display: "hide" },
     ]);
   }
 
@@ -1745,6 +2058,8 @@ function handleFailedAction(event, action, xhr, settings, thrownError) {
 
 function handleFormSave(event, kdf) {
   KDF.hideMessages();
+
+  createAndInsertReferenceDisplay(kdf.form.caseid);
 }
 
 // --- HANDLE ON FAILED SAVE EVENT ---------------------------------------- \\
@@ -1756,23 +2071,58 @@ function handleFailedSave(event, kdf) {
 // --- HANDLE ON COMPLETE EVENT ------------------------------------------- \\
 
 function handleFomComplate(event, kdf) {
-  document.getElementById("form-title").textContent = "Confirmation";
-
   setTimeout(function () {
     KDF.hideMessages();
   }, 0);
 
-  $("#dform_progressbar_sheffield, #dform_ref_display").hide();
+  displayBackButton(false);
+
+  // createAndInsertReferenceDisplay(kdf.form.caseid);
+
+  setTimeout(function () {
+    const pagenav = document.getElementById("dform_pagenav");
+    if (pagenav) {
+      pagenav.style.setProperty('display', 'none', 'important');
+      const ul = pagenav.querySelector("#dform_navigation");
+      if (ul) {
+        ul.style.setProperty('display', 'none', 'important');
+      }
+    }
+  }, 0);
+
+  const printButton = document.getElementById("dform_print");
+  if (printButton) {
+    const controlButtonsList = document.querySelector('#dform_control_buttons > ul');
+    if (controlButtonsList) {
+      controlButtonsList.style.setProperty('display', 'block', 'important');
+    }
+    printButton.style.setProperty('display', 'inline-flex', 'important');
+  }
+
+  if (kdf.form.data.eml_address && kdf.form.data.eml_address !== "") {
+    KDF.showWidget("ahtm_confirmation_email");
+  }
+
+  if (kdf.access === "citizen" && kdf.customerset === "citizen_true") {
+    buildMyAccountLink(kdf.form.caseid);
+  }
 }
 
 // --- DISPLAY BACK BUTTON ------------------------------------------------ \\
 
 function displayBackButton(show) {
+  const controlContainer = document.getElementById("dform_control_buttons");
   const backButton = document.getElementById("dform_widget_button_but_back");
   if (backButton) {
     if (show) {
+      controlContainer.style.display = "flex";
       backButton.style.display = "flex";
     } else {
+      if (pageName === "complete" && KDF.kdf().form.complete === "Y") {
+        controlContainer.style.display = "flex";
+      } else {
+        controlContainer.style.display = "none";
+      }
       backButton.style.display = "none";
     }
   } else {
@@ -1994,7 +2344,7 @@ function checkPageProgress() {
     isValidationMessageVisible;
 
   // Call the disabledButtonToggle function based on the check
-  disabledButtonToggle(!shouldDisableButton);
+  //   disabledButtonToggle(!shouldDisableButton);
 }
 
 function disabledButtonToggle(enable) {
@@ -2029,6 +2379,7 @@ function disabledButtonToggle(enable) {
 
 // Function to set value to fields based on data-customalias attributes of inputs on the current page
 function setValuesToInputFields(aliasesAndValues) {
+  console.log('setValuesToInputFields', aliasesAndValues)
   const currentPageId = getCurrentPageId(); // Get the current page ID
 
   // Iterate over each custom alias and value pair
@@ -2177,14 +2528,14 @@ function resetAddressSearch(hideFields = true) {
     { alias: "northing", value: "" },
   ]);
   if (hideFields) {
-    showHideInputFields([
-      { alias: "searchResult", display: false },
-      { alias: "property", display: false },
-      { alias: "streetName", display: false },
-      { alias: "city", display: false },
-      { alias: "postCode", display: false },
-      { alias: "fullAddress", display: false },
-    ]);
+    // showHideInputFields([
+    //   { alias: "searchResult", display: false },
+    //   { alias: "property", display: false },
+    //   { alias: "streetName", display: false },
+    //   { alias: "city", display: false },
+    //   { alias: "postCode", display: false },
+    //   { alias: "fullAddress", display: false },
+    // ]);
   }
   // setSelectedAddress("", false);
 }
@@ -2192,13 +2543,13 @@ function resetAddressSearch(hideFields = true) {
 // --- SHOW ADDRESS FIELDS ------------------------------------------------- \\
 
 function showAddressFields() {
-  showHideInputFields([
-    { alias: "searchResult", display: false },
-    { alias: "property", display: true },
-    { alias: "streetName", display: true },
-    { alias: "city", display: true },
-    { alias: "postCode", display: true },
-  ]);
+  //   showHideInputFields([
+  //     { alias: "searchResult", display: false },
+  //     { alias: "property", display: true },
+  //     { alias: "streetName", display: true },
+  //     { alias: "city", display: true },
+  //     { alias: "postCode", display: true },
+  //   ]);
 }
 
 // --- RESER VEHICLE FIELDS ------------------------------------------------- \\
@@ -2336,7 +2687,10 @@ function checkDate(id, dd, mm, yy, element) {
   if (id.includes("_date_")) {
     txtFieldId = id.replace("_date_", "_txt_");
   }
+
   const baseMessage = getValidationMessageFromSession(txtFieldId);
+  let updatedMessage = baseMessage.replace("Enter ", "");
+  updatedMessage = updatedMessage.charAt(0).toUpperCase() + updatedMessage.slice(1);
 
   $(`#${id} .date-dd, #${id} .date-mm, #${id} .date-yy`).removeClass("dform_fielderror");
   $(`#${id}`).find(".dform_validationMessage").text(baseMessage).hide();
@@ -2355,28 +2709,28 @@ function checkDate(id, dd, mm, yy, element) {
     },
     {
       condition: !dd && !mm,
-      message: `${baseMessage} must include a day and month`,
+      message: `${updatedMessage} must include a day and month`,
       fields: ["date-dd", "date-mm"],
     },
     {
       condition: !dd && !yy,
-      message: `${baseMessage} must include a day and year`,
+      message: `${updatedMessage} must include a day and year`,
       fields: ["date-dd", "date-yy"],
     },
     {
       condition: activeField !== "dd" && !mm && !yy,
-      message: `${baseMessage} must include a month and year`,
+      message: `${updatedMessage} must include a month and year`,
       fields: ["date-mm", "date-yy"],
     },
-    { condition: !dd, message: `${baseMessage} must include a day`, fields: ["date-dd"] },
+    { condition: !dd, message: `${updatedMessage} must include a day`, fields: ["date-dd"] },
     {
       condition: activeField !== "dd" && !mm,
-      message: `${baseMessage} must include a month`,
+      message: `${updatedMessage} must include a month`,
       fields: ["date-mm"],
     },
     {
       condition: activeField !== "dd" && activeField !== "mm" && !yy,
-      message: `${baseMessage} must include a year`,
+      message: `${updatedMessage} must include a year`,
       fields: ["date-yy"],
     },
   ];
@@ -2401,7 +2755,7 @@ function checkDate(id, dd, mm, yy, element) {
   }
 
   if (dd && mm && yy) {
-    if (validDate(id, dd, mm, yy, activeField, baseMessage)) {
+    if (validDate(id, dd, mm, yy, activeField, baseMessage, updatedMessage)) {
       const date = `${yy.toString().padStart(4, "0")}-${mm
         .toString()
         .padStart(2, "0")}-${dd.toString().padStart(2, "0")}`;
@@ -2411,7 +2765,9 @@ function checkDate(id, dd, mm, yy, element) {
     } else {
       $(`#${id.replace("_date_", "_txt_")}`).val("");
       $(`#${id.replace("_date_", "_dt_")}`).val("");
-      $(`#${id} .date-dd, #${id} .date-mm, #${id} .date-yy`).addClass("dform_fielderror");
+      setTimeout(function () {
+        $(`#${id}`).find('.date-dd, .date-mm, .date-yy').addClass("dform_fielderror");
+      }, 0);
     }
   }
 }
@@ -2447,7 +2803,7 @@ function getYearLabel(years) {
   return years === 1 ? "year" : "years";
 }
 
-function validDate(id, day, month, year, activeField, baseMessage) {
+function validDate(id, day, month, year, activeField, baseMessage, updatedMessage) {
   const validationMsg = $(`#${id}`).find(".dform_validationMessage").text("").hide();
   const inputDate = new Date(year, month - 1, day);
 
@@ -2457,7 +2813,8 @@ function validDate(id, day, month, year, activeField, baseMessage) {
       inputDate.getMonth() + 1 !== month ||
       inputDate.getDate() !== day
     ) {
-      validationMsg.text(`${baseMessage} must be a real date`).show();
+      validationMsg.text(`${updatedMessage} must be a real date`).show();
+      $(`#${id} .${activeField}`).addClass("dform_fielderror");
       return false;
     }
   }
@@ -2470,8 +2827,8 @@ function validDate(id, day, month, year, activeField, baseMessage) {
     const yearsPast = today.getFullYear() - minDate.getFullYear();
     validationMsg.text(
       yearsPast > 0
-        ? `${baseMessage} cannot be more than ${yearsPast} ${getYearLabel(yearsPast)} in the past`
-        : `${baseMessage} must be today or in the future`
+        ? `${updatedMessage} cannot be more than ${yearsPast} ${getYearLabel(yearsPast)} in the past`
+        : `${updatedMessage} must be today or in the future`
     ).show();
     return false;
   }
@@ -2481,8 +2838,8 @@ function validDate(id, day, month, year, activeField, baseMessage) {
     const yearsFuture = maxDate.getFullYear() - today.getFullYear();
     validationMsg.text(
       yearsFuture > 0
-        ? `${baseMessage} cannot be more than ${yearsFuture} ${getYearLabel(yearsFuture)} in the future`
-        : `${baseMessage} must be today or in the past`
+        ? `${updatedMessage} cannot be more than ${yearsFuture} ${getYearLabel(yearsFuture)} in the future`
+        : `${updatedMessage} must be today or in the past`
     ).show();
     return false;
   }
@@ -2722,23 +3079,14 @@ function updateProgressBar(currentPageIndex) {
       if (percentage <= 0) {
         percentage = 0;
         childDiv.style.width = `max-content`;
-        childDiv.style.color = "var(--color-black)";
-        childDiv.style.background = "var(--color-empty-pb)";
-        parentDiv.style.background = "var(--color-background)";
       } else if (percentage >= 100) {
         percentage = 100;
-        childDiv.style.width = `${percentage}%`;
-        childDiv.style.color = "var(--color-white)";
-        childDiv.style.background = "var(--color-white)";
-        parentDiv.style.background = "var(--color-white)";
+        childDiv.style.width = `${percentage}% complete`;
       } else {
-        childDiv.style.width = `${percentage}%`;
-        childDiv.style.color = "var(--color-white)";
-        childDiv.style.background = "var(--color-primary)";
-        parentDiv.style.background = "var(--color-background)";
+        childDiv.style.width = `${percentage}% complete`;
       }
-      childDiv.textContent = `${percentage}%`;
-      childSpan.style.width = `${100 - percentage}%`;
+      childDiv.textContent = `${percentage}% complete`;
+      childSpan.style.width = `${100 - percentage}% complete`;
     }
   }
 }
@@ -2785,154 +3133,107 @@ function getValueFromAlias(pageId, alias) {
 
 // Function to get and set data for the review page
 function getAndSetReviewPageData() {
-  // Find the currently active form page
-  const activeFormPage = $('.dform_page[data-active="true"]:visible');
-  // Get the page number of the current form page
-  const thisPageNumber = activeFormPage.attr("data-pos");
-
-  // Add the current page number to the user's history
-  formUserPath.push(thisPageNumber);
-
-  // Check if the review page is currently visible
   const reviewPageIsVisible = $("#dform_page_page_review:visible").length > 0;
 
-  // Reverse the user's path to look back at the visited pages
-  const formUserPathReversed = [...formUserPath].reverse();
-  const relevantPagesReversed = [];
-
-  // Determine relevant pages by looking back from the review page
-  for (let i = 0; i < formUserPathReversed.length - 1; i++) {
-    if (
-      parseInt(formUserPathReversed[i]) > parseInt(formUserPathReversed[i + 1])
-    ) {
-      relevantPagesReversed.push(formUserPathReversed[i + 1]);
-    } else {
-      formUserPathReversed.splice(i + 1, 1);
-      i--;
-    }
-  }
-
-  // Reverse the relevant pages to the correct order
-  let relevantPages = [];
-
-  if (KDF.kdf().form.complete === "Y") {
-    // use stored page array when complete
-    relevantPages = KDF.getVal("txt_pages").split(",");
-  } else {
-    if (
-      KDF.kdf().form.name.startsWith("cm_") ||
-      KDF.kdf().form.name.endsWith("_cm")
-    ) {
-      // use stored page array when case management
-      relevantPages = KDF.getVal("txt_pages").split(",");
-    } else if (
-      KDF.kdf().form.caseid &&
-      KDF.getVal("txt_resume_form") === "true"
-    ) {
-      // use stored page array when resumed
-      relevantPages = KDF.getVal("txt_pages").split(",");
-      if (reviewPageIsVisible) {
-        // check for review page due to page changes
-        KDF.setVal("txt_resume_form", "false"); // to prevent coming back down the resume path and construct page array
-      }
-    } else {
-      // construct page array
-      relevantPages = [...relevantPagesReversed].reverse();
-      KDF.setVal("txt_pages", relevantPages.join(","));
-    }
-  }
-
   if (reviewPageIsVisible) {
+    showCurrentProgress();
+
+    // Find all active form pages, excluding the review, declaration, and complete pages
+    const excludedPages = '#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete, #dform_page_page_core_fields, #dform_page_page_core_confirm_fields';
+    const activeFormPages = $('.dform_page[data-active="true"]').not(excludedPages);
+
+    // Build an array of page numbers from the active pages
+    let relevantPages = [];
+    activeFormPages.each(function () {
+      const pageNumber = $(this).attr("data-pos");
+      if (pageNumber) {
+        relevantPages.push(pageNumber);
+      }
+    });
+
+    // Handle the case where the form is complete
+    if (KDF.kdf().form.complete === "Y") {
+      relevantPages = $(".dform_page").not(excludedPages).map(function () {
+        return $(this).attr("data-pos");
+      }).get();
+    }
+
+    // Store the constructed page array
+    KDF.setVal("txt_pages", relevantPages.join(","));
+
     // Clear the review content HTML
     $("#review-page-content-container").html("");
 
-    // Find all form pages except the review page
-    let formPages = $('.dform_page[data-active="true"]').not(
-      "#dform_page_page_review"
-    );
-    // Picking up all pages encase form rules rehide them on reload
+    // Find all form pages based on completion status, excluding the same pages
+    let formPages = $('.dform_page[data-active="true"]').not(excludedPages);
     if (KDF.kdf().form.complete === "Y") {
-      formPages = $(".dform_page").not("#dform_page_page_review");
+      formPages = $(".dform_page").not(excludedPages);
     }
 
     formPages.each(function (i) {
-      // Get the page number of the current form page
       const pageNumber = $(this).attr("data-pos");
 
-      // Check if the page is relevant and should be added to the review page
       if (relevantPages.indexOf(pageNumber) > -1) {
-        // Extract the page name from the element's ID
-        const pageId = $(formPages[i]).attr("id");
+        const pageId = $(this).attr("id");
         const pageName = pageId.split("dform_page_")[1];
 
+        // Ensure the page is displayed so its contents can be processed
         KDF.showPage(pageName);
-        const contentDivId = `review-page-content--${pageName}`;
 
-        // Create a container for the review page content (if it doesn't exist)
-        let contentDiv = $("#" + contentDivId);
-        if (!contentDiv.length) {
-          $("#review-page-content-container").append(
-            `<div class="review-page-content-section" id="${contentDivId}"></div>`
-          );
-          contentDiv = $("#" + contentDivId); // Re-select the newly created div
-        } else {
-          contentDiv.empty(); // Clear existing content if the page is re-rendered
-        }
-
-        // Create a container for the edit button and page header
-        const headerContainer = $('<div class="review-page-header-container"></div>');
-
-        // Create a button to allow editing of the page
-        const buttonHtml = `<button type="button" id="edit_button_${pageName}" class="review-page-edit-button">Edit</button>`;
-        headerContainer.append(buttonHtml);
-
-        // Get the page header text
-        const pageHeader = $(formPages[i]).find(".header2").text();
-        headerContainer.append(`<h3>${pageHeader}</h3>`);
-
-        // Append the header container to the content div
-        contentDiv.append(headerContainer);
-
-        // Attach a click event handler to the button (move it after button creation)
-        const button = headerContainer.find(".review-page-edit-button");
-        button.on("click", function () {
-          const buttonSet = $(
-            '.dform_section_box_review div[data-type="buttonset"]'
-          );
-          if (buttonSet.is(":hidden")) {
-            buttonSet.show();
-          }
-          KDF.gotoPage(pageName, true, true, true);
-        });
-
-        // Find all visible fields on the page
-        const pageFields = $(formPages[i])
+        const pageFields = $(this)
           .find(".dform_widget_field")
           .filter(function () {
             return $(this).css("display") === "block";
           });
 
+        if (!pageFields.length) {
+          return; // Skip to next page
+        }
+
+        const contentDivId = `review-page-content--${pageName}`;
+        let contentDiv = $("#" + contentDivId);
+
+        if (!contentDiv.length) {
+          $("#review-page-content-container").append(
+            `<section class="review-page-content-section" id="${contentDivId}" aria-labelledby="review-header-${pageName}"></section>`
+          );
+          contentDiv = $("#" + contentDivId);
+        } else {
+          contentDiv.empty();
+        }
+
+        const headerContainer = $('<div class="review-page-header-container"></div>');
+        const pageHeader = $(this).find(".header2").text();
+        headerContainer.append(`<h3 id="review-header-${pageName}">${pageHeader}</h3>`);
+        contentDiv.append(headerContainer);
+
+        const dl = $("<dl class='review-list'></dl>");
+        let hasFields = false;
+
         pageFields.each(function (field) {
-          const fieldType = $(pageFields[field]).attr("data-type");
-          const fieldName = $(pageFields[field]).attr("data-name");
-          const fieldClass = $(pageFields[field]).attr("class");
+          const fieldType = $(this).attr("data-type");
+          const fieldName = $(this).attr("data-name");
+          const fieldClass = $(this).attr("class");
           let fieldLabel = "";
-          let fieldValue = "";
+          let fieldValue = "Not answered";
 
           function getLegendText(classSelector) {
-            const parentElement = $(`.container[data-name="${fieldName}"]`)
-              .length
+            const parentElement = $(`.container[data-name="${fieldName}"]`).length
               ? $(`.container[data-name="${fieldName}"]`)
               : $(`.container.dform_widget_${fieldName}`);
-
             if (parentElement.length) {
               return parentElement.find(`.${classSelector} legend`).text();
             }
           }
+
           if (fieldType === "select") {
-            fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-            fieldValue =
-              KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
+            if (fieldName.startsWith("sel_search_results_")) {
+              fieldLabel = "Selected address";
+              fieldValue = getValueFromAlias(pageId, "fullAddress");
+            } else {
+              fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
+              fieldValue = KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
+            }
           } else if (fieldType === "radio") {
             fieldLabel = getLegendText("radiogroup");
             fieldValue = KDF.getVal(fieldName);
@@ -2944,12 +3245,8 @@ function getAndSetReviewPageData() {
             fieldValue = formatDateTime(KDF.getVal(fieldName)).uk.date;
           } else if (fieldType === "file") {
             fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
-            fieldValue = KDF.getVal(
-              fieldName.replace("file_", "txt_file_name_")
-            );
-            const filePath = KDF.getVal(
-              fieldName.replace("file_", "txt_file_path_")
-            );
+            fieldValue = KDF.getVal(fieldName.replace("file_", "txt_file_name_"));
+            const filePath = KDF.getVal(fieldName.replace("file_", "txt_file_path_"));
             if (KDF.kdf().access === "agent" && filePath) {
               fieldValue = `<a href="${filePath}" target="_blank">${fieldValue}</a>`;
             }
@@ -2958,11 +3255,9 @@ function getAndSetReviewPageData() {
               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
               fieldValue = `£${KDF.getVal(fieldName)}`;
             } else if (fieldClass.indexOf("address-search") !== -1) {
-              fieldLabel = "Address";
+              fieldLabel = "Selected address";
               fieldValue = getValueFromAlias(pageId, "fullAddress");
-            } else if (
-              /\b(property|street-name|city|postcode)\b/.test(fieldClass)
-            ) {
+            } else if (/\b(property|street-name|city|postcode)\b/.test(fieldClass)) {
               fieldLabel = false;
               fieldValue = "";
             } else {
@@ -2971,27 +3266,37 @@ function getAndSetReviewPageData() {
             }
           }
 
-          // Check if the field has a label
           if (fieldLabel) {
-            // Set a default value for optional fields that are visible but not answered
-            if (
-              fieldValue === "" ||
-              fieldValue === null ||
-              fieldValue === undefined
-            ) {
-              if (fieldType === "file") {
-                fieldValue = "Not uploaded";
-              } else {
-                fieldValue = "Not answered";
-              }
+            if (!fieldValue || fieldValue === "" || fieldValue === null || fieldValue === undefined) {
+              fieldValue = fieldType === "file" ? "Not uploaded" : "Not answered";
             }
 
-            // Append the field information to the review page content
-            $(`#${contentDivId}`).append(
-              `<p class="review-page-item"><span class="review-page-question-text">${fieldLabel}:</span> ${fieldValue}</p>`
-            );
+            const reviewItem = $("<div class='review-item'></div>")
+              .append(`<dt class="question">${fieldLabel}</dt>`)
+              .append(`<dd class="answer">${fieldValue}</dd>`);
+
+            if (KDF.kdf().form.complete !== "Y") {
+              const changeLink = $("<a href='#'>Change</a>").on("click", function (e) {
+                e.preventDefault();
+                const buttonSet = $('.dform_section_box_review div[data-type="buttonset"]');
+                if (buttonSet.is(":hidden")) {
+                  buttonSet.show();
+                }
+                KDF.gotoPage(pageName, true, true, true);
+              });
+              reviewItem.append($("<dd class='action'></dd>").append(changeLink));
+            }
+
+            dl.append(reviewItem);
+            hasFields = true;
           }
         });
+
+        if (hasFields) {
+          contentDiv.append(dl);
+        } else {
+          contentDiv.remove();
+        }
       }
     });
   }
@@ -3001,94 +3306,143 @@ function refreshReviewPage() {
   getAndSetReviewPageData();
 }
 
-// --- CONTACT TEAM PANEL --------------------------------------------------- \\
+function showCurrentProgress() {
+  // Check if the URL contains the 'srid' parameter to identify a resumed session.
+  const urlParams = new URLSearchParams(window.location.search);
+  const srid = urlParams.get('srid');
 
-function showContactTeamPanel() {
-  if (KDF.getVal("txt_contact_title")) {
-    const contactInfo = document.createElement("aside");
-    contactInfo.classList.add("contact-information");
+  if (srid && KDF.kdf().form.complete !== "Y") {
+    // Find all active pages, excluding the review page itself.
+    const activePages = $('.dform_page[data-active="true"]').not('#dform_page_page_review');
+    const totalPages = $('.dform_page').not('#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete').length;
 
-    const header = document.createElement("header");
-    const headerTitle = document.createElement("h2");
-    headerTitle.textContent = KDF.getVal("txt_contact_title");
-    header.appendChild(headerTitle);
+    // Calculate the completion percentage.
+    const completedPages = activePages.length;
+    const progressPercentage = (completedPages / totalPages) * 100;
+    const formattedPercentage = Math.min(progressPercentage, 100).toFixed(0);
 
-    const main = document.createElement("main");
-    main.classList.add("contact-details");
+    // Define the HTML markup for the progress section.
+    const progressMarkup = `
+      <div class="current-progress-container" id="progress-header">
+        <h2 class="current-progress-heading">Current progress</h2>
+        <p>Your application is incomplete. Use this page to view your progress and answer the rest of the questions.</p>
+        <p class="progress-percentage">${formattedPercentage}% complete</p>
+      </div>
+    `;
 
-    if (KDF.getVal("txt_contact_link")) {
-      const emailIcon = document.createElement("i");
-      emailIcon.classList.add("icon");
-      const emailIconSpan = document.createElement("span");
-      emailIconSpan.classList.add("icon-email");
-      emailIcon.appendChild(emailIconSpan);
-
-      const emailLink = document.createElement("a");
-      emailLink.href = KDF.getVal("txt_contact_link");
-      emailLink.textContent = "Ask us a question";
-
-      main.appendChild(emailIcon);
-      main.appendChild(emailLink);
+    // Prepend the new markup to the correct container.
+    const reviewContentContainer = $('#dform_widget_html_ahtm_review_content');
+    if (reviewContentContainer.length) {
+      reviewContentContainer.prepend(progressMarkup);
     }
 
-    if (KDF.getVal("tel_contact_number")) {
-      const phoneIcon = document.createElement("i");
-      phoneIcon.classList.add("icon");
-      const phoneIconSpan = document.createElement("span");
-      phoneIconSpan.classList.add("icon-phone");
-      phoneIcon.appendChild(phoneIconSpan);
+    // Add the "Continue application" button.
+    const continueButton = `
+      <button type="button" class="dform_button primary" id="btn_continue_application">Continue application</button>
+    `;
+    reviewContentContainer.after(continueButton);
 
-      const phoneLink = document.createElement("a");
-      phoneLink.href = `tel:${KDF.getVal("tel_contact_number")}`;
-      phoneLink.textContent = `${KDF.getVal("tel_contact_number").slice(
-        0,
-        4
-      )} ${KDF.getVal("tel_contact_number").slice(4, 7)} ${KDF.getVal(
-        "tel_contact_number"
-      ).slice(7, 11)}`;
-      main.appendChild(phoneIcon);
-      main.appendChild(phoneLink);
-    }
+    // Add a click handler to the button to navigate to the first incomplete page.
+    $('#btn_continue_application').on('click', function () {
+      // Find the first inactive page.
+      const firstIncompletePage = $('.dform_page[data-active="false"]').not('#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete').first();
 
-    if (KDF.getVal("txt_contact_address")) {
-      const locationIcon = document.createElement("i");
-      locationIcon.classList.add("icon");
-      locationIcon.classList.add("align-self");
-      const locationIconSpan = document.createElement("span");
-      locationIconSpan.classList.add("icon-location");
-      locationIcon.appendChild(locationIconSpan);
-
-      const address = document.createElement("p");
-      const addressString = KDF.getVal("txt_contact_address").replace(
-        /, /g,
-        "<br/>"
-      );
-      address.innerHTML = addressString;
-      main.appendChild(address);
-      main.appendChild(locationIcon);
-      main.appendChild(address);
-    }
-
-    const footer = document.createElement("footer");
-    const footerImg = document.createElement("img");
-    footerImg.src =
-      "https://www.sheffield.gov.uk/themes/custom/bbd_localgov/images/council-tax.jpeg";
-    footerImg.alt = "Footer Image";
-
-    footer.appendChild(footerImg);
-
-    contactInfo.appendChild(header);
-    contactInfo.appendChild(main);
-    contactInfo.appendChild(footer);
-
-    const target = document.querySelector(".title-container");
-    if (target) {
-      target.after(contactInfo);
-    } else {
-      //   console.error("Element with class title-container not found");
-    }
+      if (firstIncompletePage.length) {
+        const pageName = firstIncompletePage.attr('id').split('dform_page_')[1];
+        KDF.gotoPage(pageName);
+      }
+    });
   }
 }
+
+// --- CONTACT TEAM PANEL --------------------------------------------------- \\
+
+// function showContactTeamPanel() {
+//   if (KDF.getVal("txt_contact_title")) {
+//     const contactInfo = document.createElement("aside");
+//     contactInfo.classList.add("contact-information");
+
+//     const header = document.createElement("header");
+//     const headerTitle = document.createElement("h2");
+//     headerTitle.textContent = KDF.getVal("txt_contact_title");
+//     header.appendChild(headerTitle);
+
+//     const main = document.createElement("main");
+//     main.classList.add("contact-details");
+
+//     if (KDF.getVal("txt_contact_link")) {
+//       const emailIcon = document.createElement("i");
+//       emailIcon.classList.add("icon");
+//       const emailIconSpan = document.createElement("span");
+//       emailIconSpan.classList.add("icon-email");
+//       emailIcon.appendChild(emailIconSpan);
+
+//       const emailLink = document.createElement("a");
+//       emailLink.href = KDF.getVal("txt_contact_link");
+//       emailLink.textContent = "Ask us a question";
+
+//       main.appendChild(emailIcon);
+//       main.appendChild(emailLink);
+//     }
+
+//     if (KDF.getVal("tel_contact_number")) {
+//       const phoneIcon = document.createElement("i");
+//       phoneIcon.classList.add("icon");
+//       const phoneIconSpan = document.createElement("span");
+//       phoneIconSpan.classList.add("icon-phone");
+//       phoneIcon.appendChild(phoneIconSpan);
+
+//       const phoneLink = document.createElement("a");
+//       phoneLink.href = `tel:${KDF.getVal("tel_contact_number")}`;
+//       phoneLink.textContent = `${KDF.getVal("tel_contact_number").slice(
+//         0,
+//         4
+//       )} ${KDF.getVal("tel_contact_number").slice(4, 7)} ${KDF.getVal(
+//         "tel_contact_number"
+//       ).slice(7, 11)}`;
+//       main.appendChild(phoneIcon);
+//       main.appendChild(phoneLink);
+//     }
+
+//     if (KDF.getVal("txt_contact_address")) {
+//       const locationIcon = document.createElement("i");
+//       locationIcon.classList.add("icon");
+//       locationIcon.classList.add("align-self");
+//       const locationIconSpan = document.createElement("span");
+//       locationIconSpan.classList.add("icon-location");
+//       locationIcon.appendChild(locationIconSpan);
+
+//       const address = document.createElement("p");
+//       const addressString = KDF.getVal("txt_contact_address").replace(
+//         /, /g,
+//         "<br/>"
+//       );
+//       address.innerHTML = addressString;
+//       main.appendChild(address);
+//       main.appendChild(locationIcon);
+//       main.appendChild(address);
+//     }
+
+//     const footer = document.createElement("footer");
+//     const footerImg = document.createElement("img");
+//     footerImg.src =
+//       "https://www.sheffield.gov.uk/themes/custom/bbd_localgov/images/council-tax.jpeg";
+//     footerImg.alt = "Footer Image";
+
+//     footer.appendChild(footerImg);
+
+//     contactInfo.appendChild(header);
+//     contactInfo.appendChild(main);
+//     contactInfo.appendChild(footer);
+
+//     const target = document.querySelector(".title-container");
+//     if (target) {
+//       target.after(contactInfo);
+//     } else {
+//       //   console.error("Element with class title-container not found");
+//     }
+//   }
+// }
 
 // --- CHECK CASE PROGRESS -------------------------------------------------- \\
 
@@ -3099,6 +3453,218 @@ function closeCase() {
   KDF.customdata("close-case", "_KDF_complete", true, true, {
     caseNote: `${KDF.getVal("sel_closure_reason")}: ${noteDetails}`,
   });
+}
+
+// --- ADDRESS FUNCTIONS ---------------------------------------------------- \\
+
+function checkAddressHasBeenSet(action = "next page") {
+  const currentPageId = getCurrentPageId();
+  const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
+  const fullAddress = document.querySelector(
+    `#${currentPageId} input[data-customalias="fullAddress"]`
+  );
+  const fullAddressHasValue = KDF.getVal(fullAddress.name) ? true : false;
+  const siteName = document.querySelector(
+    `#${currentPageId} input[data-customalias="siteName"]`
+  );
+  const siteCode = document.querySelector(
+    `#${currentPageId} input[data-customalias="siteCode"]`
+  );
+  if (fullAddressHasValue) {
+    if (siteName && siteCode) {
+      const siteNameHasValue = KDF.getVal(siteName.name) ? true : false;
+      const siteCodeHasValue = KDF.getVal(siteCode.name) ? true : false;
+      const validSiteCode = acceptGMSites
+        ? true
+        : KDF.getVal(siteCode.name).startsWith("344")
+          ? true
+          : false;
+      if (siteNameHasValue && siteCodeHasValue && validSiteCode) {
+        if (action === "submit") {
+          KDF.gotoPage("complete", true, true, false);
+        } else {
+          KDF.gotoNextPage();
+        }
+      } else {
+        const errorMessage = acceptGMSites
+          ? defaultSelectedAddressMessage
+          : "Choose a location on the public highway";
+        if (selectedAddressSpan) {
+          selectedAddressSpan.textContent = errorMessage;
+          selectedAddressSpan.classList.add('dform_validationMessage');
+          selectedAddressSpan.style.display = 'block';
+        }
+        $("#map_container").addClass("map_container_error");
+      }
+    } else {
+      if (action === "submit") {
+        KDF.gotoPage("complete", true, true, false);
+      } else {
+        KDF.gotoNextPage();
+      }
+    }
+  } else {
+    const mapElement = document.querySelector(`#${currentPageId} .map-container`);
+
+    // Check if the map element exists on the page
+    if (mapElement) {
+      const detailsElement = mapElement.querySelector('.details-accordion');
+
+      // Check if the map accordion is open
+      if (detailsElement && detailsElement.hasAttribute('open')) {
+
+        // const isMapContainerVisible = $("#map_container").is(":visible");
+        const errorMessage = acceptGMSites
+          ? defaultSelectedAddressMessage
+          : "Choose a location on the public highway";
+        if (selectedAddressSpan) {
+          selectedAddressSpan.textContent = errorMessage;
+          selectedAddressSpan.classList.add('dform_validationMessage');
+          selectedAddressSpan.style.display = 'block';
+        }
+        $("#map_container").addClass("map_container_error");
+      }
+    } else {
+      const searchResult = document.querySelector(
+        `#${currentPageId} select[data-customalias="searchResult"]`
+      );
+
+      const isSearchResultVisible = searchResult.offsetParent !== null;
+      if (isSearchResultVisible) {
+        const searchResultContainer = searchResult.closest('.dform_widget_field');
+        const validationMessage = searchResultContainer?.querySelector('.dform_validationMessage');
+        const selectedValue = searchResult.value;
+        let message = "Select the address";
+
+        if (selectedValue !== '' && selectedValue !== 'Please select...') {
+          const message = "Click use this address";
+        }
+        if (validationMessage) {
+          validationMessage.style.display = "block";
+          validationMessage.textContent = message;
+        }
+        searchResult.classList.add('dform_fielderror');
+      } else {
+        const postcode = document.querySelector(
+          `#${currentPageId} input[data-customalias="postcode"]`
+        );
+        const postcodeContainer = postcode?.closest('.dform_widget_field');
+        const validationMessage = postcodeContainer?.querySelector('.dform_validationMessage');
+        const postcodeHasValue = postcode ? KDF.getVal(postcode.name) : false;
+        let message = "Enter the postcode";
+        if (postcodeHasValue) {
+          message = "Click find address";
+        }
+        if (validationMessage) {
+          validationMessage.style.display = "block";
+          validationMessage.textContent = message;
+        }
+        postcode?.classList.add('dform_fielderror');
+      }
+
+    }
+  }
+}
+
+function setProfileAddressDetails(targetPageId, kdf) {
+  let {
+    'profile-AddressNumber': property,
+    'profile-AddressLine1': streetName,
+    'profile-AddressLine2': locality,
+    'profile-AddressLine4': city,
+    'profile-Postcode': postcode,
+  } = kdf.profileData;
+  let subProperty, buildingName, buildingNumber, fullAddress;
+
+  const addressSelectionSection = document.querySelector(`#${targetPageId} .address-selection-section`);
+  const selectedAddressSpan = document.querySelector(`#${targetPageId} #selected-address`);
+
+  const addressDataForDisplay = {
+    subProperty: subProperty ? formatTitleCase(subProperty) : '',
+    buildingName: buildingName ? formatTitleCase(buildingName) : '',
+    buildingNumber: buildingNumber ? formatTitleCase(buildingNumber) : '',
+    property: property ? formatTitleCase(property) : '',
+    streetName: streetName ? formatTitleCase(streetName) : '',
+    locality: locality ? formatTitleCase(locality) : '',
+    city: city ? formatTitleCase(city) : '',
+    postcode: postcode ? postcode.toUpperCase() : ''
+  };
+
+  const fullAddressDisplay = buildAddressMarkup(addressDataForDisplay);
+  let selectedAddressContainer = document.querySelector(`#${targetPageId} .selected-address-container`);
+  if (selectedAddressContainer) {
+    selectedAddressContainer.innerHTML = fullAddressDisplay;
+    selectedAddressContainer = selectedAddressContainer.id.replace('dform_widget_html_', '');
+  }
+
+  if (addressSelectionSection) {
+    addressSelectionSection.classList.add('dform_fieldsuccess');
+  }
+
+  if (selectedAddressSpan) {
+    const addressParts = Object.values(addressDataForDisplay)
+      .filter(Boolean)
+      .join(', ');
+    selectedAddressSpan.innerHTML = addressParts;
+    selectedAddressSpan.classList.remove('dform_validationMessage');
+  }
+
+  const addressearchResults = document.querySelector(`#${targetPageId} .address-search-results`);
+  let setAddressButton = document.querySelector(`#${targetPageId} .set-address-btn`);
+  if (setAddressButton) {
+    setAddressButton = setAddressButton.id.replace('dform_widget_button_', '');
+  }
+  const buttonContainer = document.querySelector(`#${targetPageId} .address-search-btn-container`);
+  let manualAddressElement = document.querySelector(`#${targetPageId} .manual-address-container`);
+  if (manualAddressElement) {
+    manualAddressElement = manualAddressElement.id.replace('dform_widget_html_', '');
+  }
+
+  property = formatTitleCase(property);
+  streetName = formatTitleCase(streetName);
+  fullAddress = `${formatTitleCase(property)} ${formatTitleCase(
+    streetName
+  )}, ${city}, ${postcode}`;
+
+  setValuesToInputFields([
+    { alias: "property", value: property },
+    { alias: "streetName", value: streetName },
+    { alias: "city", value: city },
+    { alias: "postCode", value: postcode },
+    { alias: "fullAddress", value: fullAddress },
+  ]);
+
+  if (addressearchResults) {
+    const selectElement = addressearchResults.querySelector('select');
+    if (selectElement) {
+      selectElement.style.display = 'none'; // Hides the element
+      selectElement.classList.remove('dform_fielderror');
+    }
+    const validationMessage = addressearchResults?.querySelector('.dform_validationMessage');
+    if (validationMessage) {
+      validationMessage.style.display = "none";
+      validationMessage.textContent = "Select the address";
+    }
+  }
+
+  if (buttonContainer) {
+    buttonContainer.style.display = 'none'; // Hides the element
+  }
+
+  let findOnMapElement = document.querySelector(`#${targetPageId} .map-container`);
+  if (findOnMapElement) {
+    if (easting && northing) {
+      plotLocationOnMap(easting, northing);
+    }
+    findOnMapElement = findOnMapElement.id.replace('dform_widget_html_', '');
+  }
+
+  hideShowMultipleElements([
+    { name: setAddressButton, display: "hide" },
+    { name: selectedAddressContainer, display: "show" },
+    { name: manualAddressElement, display: "hide" },
+    { name: findOnMapElement, display: "hide" },
+  ]);
 }
 
 // --- MAP FUNCTIONS -------------------------------------------------------- \\
@@ -3146,10 +3712,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "6",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/6",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "1",
@@ -3158,10 +3721,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "24",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/24",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "2",
@@ -3170,10 +3730,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "0",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/0",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "3",
@@ -3182,10 +3739,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "41",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/41",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "4",
@@ -3194,10 +3748,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "2",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/2",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "5",
@@ -3206,10 +3757,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "3",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/3",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "6",
@@ -3218,10 +3766,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "4",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/4",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "7",
@@ -3230,10 +3775,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "5",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/5",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "8",
@@ -3242,10 +3784,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "7",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/7",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "9",
@@ -3254,10 +3793,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "8",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/8",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "10",
@@ -3266,10 +3802,7 @@ var vmap_config = {
       layer_type: "Display",
       layerid: "27",
       url: "https://utility.arcgis.com/usrsvcs/servers/25557d31a8ba43408a6ad3a0495aa290/rest/services/AGOL/Verint_PublicFaultReporting/MapServer/27",
-      popup: {
-        title: "",
-        content: popupContent,
-      },
+      popup: {},
     },
     {
       number: "11",
@@ -3416,7 +3949,7 @@ function initialize_map(map_param) {
           exactMatch: false,
           outFields: ["*"],
           name: "Sheffield Search",
-          placeholder: "Search within Sheffield",
+          placeholder: "",
           filter: {
             geometry: sheffieldExtent,
           },
@@ -3473,6 +4006,13 @@ function initialize_map(map_param) {
 
     groupLayer = layerGroup;
   });
+
+  // setTimeout(() => {
+  //   const searchInput = document.querySelector('.esri-search__input');
+  //   if (searchInput) {
+  //     searchInput.placeholder = "";
+  //   }
+  // }, 0);
 }
 
 function do_KDF_mapReady_esriMap(map, positionLayer) {
@@ -3527,6 +4067,192 @@ function do_KDF_mapReady_esriMap(map, positionLayer) {
   }
 }
 
+// function mapClick(evt) {
+//   KDF.setVal("txt_site_name", "");
+//   KDF.setVal("txt_site_code", "");
+//   KDF.setVal("txt_feature_name", "");
+//   KDF.setVal("txt_feature_type", "");
+//   KDF.setVal("txt_responsibility", "");
+//   KDF.setVal("txt_prestige", "");
+//   setValuesToInputFields([
+//     { alias: "property", value: "" },
+//     { alias: "streetName", value: "" },
+//     { alias: "city", value: "" },
+//     { alias: "postCode", value: "" },
+//     { alias: "fullAddress", value: "" },
+//     { alias: "uprn", value: "" },
+//     { alias: "usrn", value: "" },
+//     { alias: "siteName", value: "" },
+//     { alias: "siteCode", value: "" },
+//   ]);
+//   // setSelectedAddress("", "hide");
+//   const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
+//   if (selectedAddressSpan) {
+//     selectedAddressSpan.textContent = defaultSelectedAddressMessage;
+//     selectedAddressSpan.classList.remove('dform_validationMessage');
+//   }
+
+//   $(".esriPopup").hide();
+//   if (KDF.kdf().form.complete !== "Y" || KDF.kdf().viewmode === "U") {
+//     selectedLocation = "";
+//     KDF.setVal("le_gis_lat", "");
+//     KDF.setVal("le_gis_lon", "");
+//     KDF.setVal("le_gis_latgeo", "");
+//     KDF.setVal("le_gis_longeo", "");
+//     KDF.setVal("txta_location_address", "");
+//     KDF.hideWidget("ahtm_map_location_error");
+//     var screenPoint = {
+//       x: evt.x,
+//       y: evt.y,
+//     };
+//     streetMapView.hitTest(screenPoint).then(function (response) {
+//       let graphic = response.results;
+//       selectedLocation = evt.mapPoint;
+//       var source = new proj4.Proj("SR-ORG:7483");
+//       var dest = new proj4.Proj("EPSG:27700");
+//       var dest4326 = new proj4.Proj("EPSG:4326");
+//       // var convertPointP4 = new proj4.Point(
+//       //   selectedLocation.x,
+//       //   selectedLocation.y
+//       // );
+//       // var convertPoint4326 = new proj4.Point(
+//       //   selectedLocation.x,
+//       //   selectedLocation.y
+//       // );
+//       var convertPointP4 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
+//       var convertPoint4326 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
+
+//       proj4.transform(source, dest, convertPointP4);
+//       proj4.transform(source, dest4326, convertPoint4326);
+//       KDF.setVal("le_gis_lon", convertPoint4326.x.toString());
+//       KDF.setVal("le_gis_lat", convertPoint4326.y.toString());
+//       mapX = convertPointP4.x.toString();
+//       mapY = convertPointP4.y.toString();
+
+//       var mapX_4326 = convertPoint4326.x.toString();
+//       var mapY_4326 = convertPoint4326.y.toString();
+
+//       store_layer_attr.main_attribute = {};
+//       store_layer_attr.background_attribute = {};
+
+//       if (!withinSccCheck(convertPointP4)) {
+//         if (selectedAddressSpan) {
+//           selectedAddressSpan.textContent = "Choose a location inside the Sheffield area";
+//           selectedAddressSpan.classList.add('dform_validationMessage');
+//           selectedAddressSpan.style.display = 'block';
+//         }
+//         $("#map_container").addClass("map_container_error");
+//         // if ($("#map_error").length == "0") {
+//         //   $("#dform_widget_html_ahtm_map_container").prepend(
+//         //     '<div id="map_error" class="dform_validationMessage" style="display: block;">Select a location inside Sheffield area</div>'
+//         //   );
+//         // }
+//         // KDF.setVal(
+//         //   "ahtm_map_location_error",
+//         //   "Select a location inside the Sheffield area"
+//         // );
+//         // KDF.showWidget("ahtm_map_location_error");
+//         //clear location information when out of our area
+//         selectedLocation = "";
+//         KDF.setVal("le_gis_lat", "");
+//         KDF.setVal("le_gis_lon", "");
+//         KDF.setVal("le_gis_latgeo", "");
+//         KDF.setVal("le_gis_longeo", "");
+//         KDF.setVal("txta_location", "");
+//         KDF.setVal("txt_site_name", "");
+//         KDF.setVal("txt_location_UPRN", "");
+//         KDF.setVal("txt_location_USRN", "");
+
+//         $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_mapOutsideBoundary", [
+//           null,
+//         ]);
+//       } else {
+//         // $("#map_error").remove();
+//         if (streetMapView.zoom >= 18) {
+//           streetMapView.goTo({
+//             center: evt.mapPoint,
+//           });
+//         } else if (streetMapView.zoom < 18) {
+//           streetMapView.goTo({
+//             center: evt.mapPoint,
+//             zoom: 18,
+//           });
+//         }
+
+//         KDF.customdata("gis_background_layer", "mapClick", true, true, {
+//           url: vmap_config.consolidated_layer_url,
+//           longitude: mapX,
+//           latitude: mapY,
+//           distance: 20,
+//         });
+
+//         $("#map_container").removeClass("map_container_error");
+//         if (graphic && graphic.length > 0) {
+//           if (graphic[0].layer && graphic[0].layer.id === "scc_boundary") {
+//           addPoint(streetMapView, evt.mapPoint, markerSymbol);
+//           $(".esriPopup").hide();
+//           mapPoint = evt.mapPoint;
+//           addPoint(streetMapView, mapPoint, markerSymbol);
+
+//           mapX = convertPointP4.x.toString();
+//           mapY = convertPointP4.y.toString();
+//           KDF.setVal("le_gis_lon", mapX_4326);
+//           KDF.setVal("le_gis_lat", mapY_4326);
+//           setValuesToInputFields([
+//             { alias: "easting", value: mapX },
+//             { alias: "northing", value: mapY },
+//           ]);
+//           KDF.customdata("reverse_geocode_osmap", "mapClick", true, true, {
+//             longitude: mapX,
+//             latitude: mapY,
+//           });
+
+//           if (vmap_config.mapClickType == "Background") {
+//             KDF.customdata("feature_layer_request", "mapClick", true, true, {
+//               url: vmap_config.featureLayers[BG_layer].url,
+//               longitude: mapX,
+//               latitude: mapY,
+//               distance: "5",
+//             });
+//           }
+
+//           $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
+//             null,
+//           ]);
+//         } else {
+//           streetMapPositionLayer.removeAll();
+//           var layerAttributes;
+//           var layerName;
+//           graphic.forEach(function (arrayItem) {
+//             if (arrayItem.layer.id !== "scc_boundary") {
+//               layerAttributes = arrayItem.graphic.attributes;
+//               layerName = arrayItem.layer.id.toString();
+//             }
+//           });
+
+//           mapX = convertPointP4.x.toString();
+//           mapY = convertPointP4.y.toString();
+//           KDF.setVal("le_gis_lon", mapX_4326);
+//           KDF.setVal("le_gis_lat", mapY_4326);
+
+//           store_layer_attr.main_attribute = {};
+//           store_layer_attr.main_attribute = layerAttributes;
+//           store_layer_attr.main_attribute.layername = layerName;
+//           setValuesToInputFields([
+//             { alias: "easting", value: mapX },
+//             { alias: "northing", value: mapY },
+//           ]);
+//           KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
+//             longitude: mapX,
+//             latitude: mapY,
+//           });
+//         }
+//       }
+//       }
+//     });
+//   }
+// }
+
 function mapClick(evt) {
   KDF.setVal("txt_site_name", "");
   KDF.setVal("txt_site_code", "");
@@ -3546,6 +4272,11 @@ function mapClick(evt) {
     { alias: "siteCode", value: "" },
   ]);
   // setSelectedAddress("", "hide");
+  const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
+  if (selectedAddressSpan) {
+    selectedAddressSpan.textContent = defaultSelectedAddressMessage;
+    selectedAddressSpan.classList.remove('dform_validationMessage');
+  }
 
   $(".esriPopup").hide();
   if (KDF.kdf().form.complete !== "Y" || KDF.kdf().viewmode === "U") {
@@ -3566,14 +4297,8 @@ function mapClick(evt) {
       var source = new proj4.Proj("SR-ORG:7483");
       var dest = new proj4.Proj("EPSG:27700");
       var dest4326 = new proj4.Proj("EPSG:4326");
-      var convertPointP4 = new proj4.Point(
-        selectedLocation.x,
-        selectedLocation.y
-      );
-      var convertPoint4326 = new proj4.Point(
-        selectedLocation.x,
-        selectedLocation.y
-      );
+      var convertPointP4 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
+      var convertPoint4326 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
 
       proj4.transform(source, dest, convertPointP4);
       proj4.transform(source, dest4326, convertPoint4326);
@@ -3589,17 +4314,12 @@ function mapClick(evt) {
       store_layer_attr.background_attribute = {};
 
       if (!withinSccCheck(convertPointP4)) {
-        $("#map_container").addClass("map_container_error");
-        if ($("#map_error").length == "0") {
-          $("#dform_widget_html_ahtm_map_container").prepend(
-            '<div id="map_error" class="dform_validationMessage" style="display: block;">Select a location inside Sheffield area</div>'
-          );
+        if (selectedAddressSpan) {
+          selectedAddressSpan.textContent = "Choose a location inside the Sheffield area";
+          selectedAddressSpan.classList.add('dform_validationMessage');
+          selectedAddressSpan.style.display = 'block';
         }
-        KDF.setVal(
-          "ahtm_map_location_error",
-          "Select a location inside the Sheffield area"
-        );
-        KDF.showWidget("ahtm_map_location_error");
+        $("#map_container").addClass("map_container_error");
         //clear location information when out of our area
         selectedLocation = "";
         KDF.setVal("le_gis_lat", "");
@@ -3615,7 +4335,8 @@ function mapClick(evt) {
           null,
         ]);
       } else {
-        $("#map_error").remove();
+        $("#map_container").removeClass("map_container_error");
+
         if (streetMapView.zoom >= 18) {
           streetMapView.goTo({
             center: evt.mapPoint,
@@ -3627,15 +4348,44 @@ function mapClick(evt) {
           });
         }
 
-        KDF.customdata("gis_background_layer", "mapClick", true, true, {
-          url: vmap_config.consolidated_layer_url,
-          longitude: mapX,
-          latitude: mapY,
-          distance: 20,
-        });
+        let foundFeatureGraphic = null;
+        let sccBoundaryClicked = false;
 
-        $("#map_container").removeClass("map_container_error");
-        if (graphic[0].layer.id === "scc_boundary") {
+        if (graphic && graphic.length > 0) {
+          graphic.forEach(function (arrayItem) {
+            if (arrayItem.layer && arrayItem.layer.id === "scc_boundary") {
+              sccBoundaryClicked = true;
+            } else if (arrayItem.layer && arrayItem.layer.id !== "scc_boundary" && !foundFeatureGraphic) {
+              // Prioritize and save the first non-boundary graphic found
+              foundFeatureGraphic = arrayItem;
+            }
+          });
+        }
+
+        if (foundFeatureGraphic) {
+          // A specific feature (non-boundary) was clicked
+          streetMapPositionLayer.removeAll();
+          const layerAttributes = foundFeatureGraphic.graphic.attributes;
+          const layerName = foundFeatureGraphic.layer.id.toString();
+
+          mapX = convertPointP4.x.toString();
+          mapY = convertPointP4.y.toString();
+          KDF.setVal("le_gis_lon", mapX_4326);
+          KDF.setVal("le_gis_lat", mapY_4326);
+
+          store_layer_attr.main_attribute = {};
+          store_layer_attr.main_attribute = layerAttributes;
+          store_layer_attr.main_attribute.layername = layerName;
+          setValuesToInputFields([
+            { alias: "easting", value: mapX },
+            { alias: "northing", value: mapY },
+          ]);
+          KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
+            longitude: mapX,
+            latitude: mapY,
+          });
+        } else {
+          // Only the boundary or no feature was clicked, handle as a general location click
           addPoint(streetMapView, evt.mapPoint, markerSymbol);
           $(".esriPopup").hide();
           mapPoint = evt.mapPoint;
@@ -3662,37 +4412,9 @@ function mapClick(evt) {
               distance: "5",
             });
           }
-
           $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
             null,
           ]);
-        } else {
-          streetMapPositionLayer.removeAll();
-          var layerAttributes;
-          var layerName;
-          graphic.forEach(function (arrayItem) {
-            if (arrayItem.layer.id !== "scc_boundary") {
-              layerAttributes = arrayItem.graphic.attributes;
-              layerName = arrayItem.layer.id.toString();
-            }
-          });
-
-          mapX = convertPointP4.x.toString();
-          mapY = convertPointP4.y.toString();
-          KDF.setVal("le_gis_lon", mapX_4326);
-          KDF.setVal("le_gis_lat", mapY_4326);
-
-          store_layer_attr.main_attribute = {};
-          store_layer_attr.main_attribute = layerAttributes;
-          store_layer_attr.main_attribute.layername = layerName;
-          setValuesToInputFields([
-            { alias: "easting", value: mapX },
-            { alias: "northing", value: mapY },
-          ]);
-          KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
-            longitude: mapX,
-            latitude: mapY,
-          });
         }
       }
     });
@@ -3943,8 +4665,14 @@ function do_KDF_Custom_esriMap(action, response) {
         // { alias: "easting", value: easting },
         // { alias: "northing", value: northing },
       ]);
+
+      const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
+      if (selectedAddressSpan) {
+        selectedAddressSpan.textContent = fullAddress;
+      }
+
       // setSelectedAddress(fullAddress, "show");
-      $(".popup").text(streetName);
+      // $(".popup").text(streetName);
       setRequiredStateByAlias("postcode", "not required");
     }
   }
@@ -4205,6 +4933,51 @@ function fetchSccRing() {
         });
       });
     },
+  });
+}
+
+function plotLocationOnMap(easting, northing) {
+  require([
+    "esri/geometry/Point",
+    "esri/geometry/projection"
+  ], function (Point, projection) {
+
+    // Create OSGB point
+    const osgbPoint = new Point({
+      x: parseFloat(easting),
+      y: parseFloat(northing),
+      spatialReference: { wkid: 27700 }
+    });
+
+    // Project to Web Mercator (map’s spatial reference)
+    projection.load().then(function () {
+      const wmPoint = projection.project(osgbPoint, streetMapView.spatialReference);
+
+      // Zoom to location
+      streetMapView.goTo({ center: wmPoint, zoom: 18 }).then(() => {
+
+        // Convert to screen coordinates
+        const screenPoint = streetMapView.toScreen(wmPoint);
+
+        // Build a realistic fake event
+        const fakeEvt = {
+          type: "click",
+          pointerType: "mouse",
+          button: 0,
+          buttons: 0,
+          x: screenPoint.x,
+          y: screenPoint.y,
+          screenPoint: { x: screenPoint.x, y: screenPoint.y },
+          mapPoint: wmPoint,
+          native: { isTrusted: true },
+          timestamp: performance.now(),
+          cancelable: false
+        };
+
+        // Trigger mapClick like a real click
+        mapClick(fakeEvt);
+      });
+    });
   });
 }
 
@@ -4693,6 +5466,106 @@ function getValidationMessageFromSession(id) {
   }
 }
 
+// --- TYPE AHEAD SEARCH ------------------------------------------------- \\
+
+function buildTypeAhead(inputName, listItems, listItemsOnly = true) {
+  const inputId = `dform_widget_${inputName}`;
+  const inputElement = document.getElementById(inputId);
+  if (!inputElement) {
+    console.error(`Input element with ID "${inputId}" not found.`);
+    return;
+  }
+
+  // Create a new div to wrap the input, icon, and button
+  const wrapper = document.createElement('div');
+  wrapper.className = 'input-wrapper';
+
+  // Insert the new wrapper before the input element
+  inputElement.parentNode.insertBefore(wrapper, inputElement);
+
+  // Move the input element into the new wrapper
+  wrapper.appendChild(inputElement);
+
+  // Create and add the magnifying glass SVG icon
+  const searchIconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  searchIconSvg.setAttribute('viewBox', '0 0 640 640');
+  searchIconSvg.className = 'search-icon';
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('fill', 'currentColor');
+  path.setAttribute('d', 'M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z');
+
+  searchIconSvg.appendChild(path);
+  wrapper.appendChild(searchIconSvg);
+
+  // Add Clear Button functionality
+  const clearButton = document.createElement('button');
+  clearButton.type = 'button';
+  clearButton.className = 'clear-btn';
+  clearButton.textContent = 'Clear';
+
+  clearButton.addEventListener('click', () => {
+    inputElement.value = '';
+    inputElement.focus();
+    // Remove validation state on clear
+    inputElement.classList.remove('dform_fielderror');
+    const validationMessage = inputElement.parentNode.querySelector('.dform_validationMessage');
+    if (validationMessage) {
+      validationMessage.remove();
+    }
+  });
+
+  wrapper.appendChild(clearButton);
+
+  // Datalist functionality
+  const datalistId = `${inputId}-datalist`;
+  let datalistElement = document.getElementById(datalistId);
+
+  if (!datalistElement) {
+    datalistElement = document.createElement('datalist');
+    datalistElement.id = datalistId;
+    inputElement.parentNode.appendChild(datalistElement);
+  }
+
+  datalistElement.innerHTML = '';
+  listItems.forEach(item => {
+    const option = document.createElement('option');
+    option.value = item;
+    datalistElement.appendChild(option);
+  });
+
+  inputElement.setAttribute('list', datalistId);
+
+  // Re-implement validation with a change event listener for robustness
+  if (listItemsOnly) {
+    inputElement.addEventListener('change', () => {
+      const inputValue = inputElement.value;
+      const normalizedInput = inputValue.trim().toLowerCase();
+      const normalizedList = listItems.map(item => item.trim().toLowerCase());
+      const isValid = normalizedList.includes(normalizedInput);
+
+      const parentContainer = inputElement.closest('.dform_widget');
+
+      if (!isValid && inputValue !== '') {
+        inputElement.classList.add('dform_fielderror');
+        let validationMessage = parentContainer.querySelector('.dform_validationMessage');
+        if (!validationMessage) {
+          validationMessage = document.createElement('div');
+          validationMessage.classList.add('dform_validationMessage');
+          validationMessage.textContent = 'Please select a value from the list.';
+          parentContainer.appendChild(validationMessage);
+        }
+      } else {
+        inputElement.classList.remove('dform_fielderror');
+        const validationMessage = parentContainer.querySelector('.dform_validationMessage');
+        if (validationMessage) {
+          validationMessage.remove();
+        }
+      }
+    });
+  }
+}
+
 // --- RELATED SERVIES ------------------------------------------------------ \\
 
 /**
@@ -4837,3 +5710,105 @@ function buildAddressMarkup(addressData) {
     </address>
   `;
 }
+
+// --- BUILD REFERENCE ELEMENT ---------------------------------------------- \\
+
+/**
+ * Creates and inserts a new dynamic reference display element.
+ * It assumes the provided reference value is already in the desired format.
+ * @param {string} referenceValue - The dynamic value to be displayed.
+ */
+function createAndInsertReferenceDisplay(referenceValue) {
+  // Get the parent container and the target insertion point (the #skip div)
+  const controlButtons = document.getElementById("dform_control_buttons");
+  const skipElement = controlButtons ? controlButtons.querySelector("#skip") : null;
+
+  // Safely proceed only if both elements exist and a value is provided
+  if (!controlButtons || !skipElement || !referenceValue) {
+    console.error("Could not find required DOM elements or the reference value is missing.");
+    return;
+  }
+
+  // Check if the new wrapper element already exists to avoid duplicates
+  const existingWrapper = document.getElementById("case-display-wrapper");
+  if (existingWrapper) {
+    // If it exists, just update the reference value inside it
+    const referenceSpan = document.getElementById("case-reference-display");
+    if (referenceSpan) {
+      referenceSpan.textContent = referenceValue;
+    }
+    return;
+  }
+
+  // Create the new parent wrapper element
+  const newWrapper = document.createElement("div");
+  newWrapper.id = "case-display-wrapper";
+  newWrapper.className = "case-display-wrapper";
+  newWrapper.innerHTML = `
+    Reference: <span id="case-reference-display" class="case-reference-display">${referenceValue}</span>
+  `;
+
+  // Insert the new wrapper element just after the #skip div
+  skipElement.insertAdjacentElement("afterend", newWrapper);
+}
+
+// --- BUILD MY ACCOUNT LINK ------------------------------------------------ \\
+
+/**
+ * Builds and updates the href for the 'Check your application status' link.
+ * @param {string} referenceNumber - The SRID to be inserted into the link.
+ */
+function buildMyAccountLink(referenceNumber) {
+  // Find the existing link element by its ID.
+  const linkElement = document.getElementById("my-account-request");
+
+  if (!linkElement) {
+    console.error("The link element with id 'my-account-request' could not be found.");
+    return;
+  }
+
+  // Construct the new URL using the base URL and reference number.
+  const newHref = `${PORTAL_URL}/requests?srid=${referenceNumber}`;
+
+  // Update the href attribute of the existing link.
+  linkElement.setAttribute('href', newHref);
+
+  KDF.showWidget("ahtm_confirmation_account");
+}
+
+/**
+ * Builds and updates the href for a given feedback link using the global formattedTitle.
+ * @param {string} formName - The name of the form to build the URL for (e.g., 'equalities_monitoring').
+ */
+function buildFormLink(id, formName, includeFormTitle = false) {
+  // Build the ID of the element to find based on the form name
+  const linkElement = document.getElementById(id);
+
+  if (!linkElement) {
+    console.error(`The link element with id '${id}' could not be found.`);
+    return;
+  }
+
+  // Conditionally add the formTitle part to the URL
+  const titleParameter = includeFormTitle ? `?formTitle=${KDF.getVal("le_title").replace(/\s+/g, "-")}` : '';
+  const newHref = `${PORTAL_URL}//${hostname}/form/${formName}${titleParameter}`;
+
+  // Update the href attribute
+  linkElement.setAttribute('href', newHref);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
