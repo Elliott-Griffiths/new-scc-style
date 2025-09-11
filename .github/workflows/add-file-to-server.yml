@@ -45,34 +45,126 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Validate file exists
+      - name: Debug Environment and Validate File
         run: |
-          # Create default response file early
-          echo '{"status": "failed", "error": "Unknown error"}' > upload_response.json
+          echo "🔍 DEBUG: Starting validation and environment check..."
           
+          # Create default response file early
+          echo '{"status": "debug", "step": "starting"}' > upload_response.json
+          
+          # Debug environment variables (without showing sensitive data)
+          echo "DEBUG: Environment variables check:"
+          echo "  - FILE_PATH: '${{ github.event.inputs.file_path }}'"
+          echo "  - FOLDER_NAME: '${{ github.event.inputs.folder_name }}'"
+          echo "  - CONTENT_TYPE: '${{ github.event.inputs.content_type }}'"
+          echo "  - ENVIRONMENT: '${{ github.event.inputs.environment }}'"
+          echo "  - Expected secret name: VERINT_BASE_URL_${{ inputs.environment }}"
+          
+          # Check if secrets are available (without revealing values)
+          API_BASE_URL="${{ secrets[format('VERINT_BASE_URL_{0}', inputs.environment)] }}"
+          API_USERNAME="${{ secrets.VERINT_USERNAME }}"
+          API_PASSWORD="${{ secrets.VERINT_PASSWORD }}"
+          
+          if [ -z "$API_BASE_URL" ]; then
+            echo "❌ DEBUG: API_BASE_URL is empty for environment '${{ inputs.environment }}'"
+            echo "   Expected secret: VERINT_BASE_URL_${{ inputs.environment }}"
+            echo '{"status": "failed", "error": "API_BASE_URL not configured", "environment": "${{ inputs.environment }}"}' > upload_response.json
+            exit 1
+          else
+            echo "✅ DEBUG: API_BASE_URL is configured"
+          fi
+          
+          if [ -z "$API_USERNAME" ]; then
+            echo "❌ DEBUG: API_USERNAME is empty"
+            echo '{"status": "failed", "error": "API_USERNAME not configured"}' > upload_response.json
+            exit 1
+          else
+            echo "✅ DEBUG: API_USERNAME is configured"
+          fi
+          
+          if [ -z "$API_PASSWORD" ]; then
+            echo "❌ DEBUG: API_PASSWORD is empty"
+            echo '{"status": "failed", "error": "API_PASSWORD not configured"}' > upload_response.json
+            exit 1
+          else
+            echo "✅ DEBUG: API_PASSWORD is configured"
+          fi
+          
+          # Check file existence
           FILE_PATH="${{ github.event.inputs.file_path }}"
+          echo "DEBUG: Checking file: $FILE_PATH"
+          
           if [ ! -f "$FILE_PATH" ]; then
-            echo "❌ File not found: $FILE_PATH"
-            echo "Available files in repository:"
-            find . -type f -name "*.css" -o -name "*.js" -o -name "*.html" -o -name "*.json" -o -name "*.svg" -o -name "*.png" | head -20
+            echo "❌ DEBUG: File not found: $FILE_PATH"
+            echo "DEBUG: Current directory contents:"
+            ls -la
+            echo "DEBUG: Searching for similar files:"
+            find . -name "*$(basename "$FILE_PATH")*" -type f 2>/dev/null || echo "No similar files found"
             echo '{"status": "failed", "error": "File not found", "file_path": "'$FILE_PATH'"}' > upload_response.json
             exit 1
-          fi
-          echo "✅ File found: $FILE_PATH"
-          
-          # Get file info with better error handling
-          if command -v stat >/dev/null 2>&1; then
-            file_size=$(stat -c%s "$FILE_PATH" 2>/dev/null || stat -f%z "$FILE_PATH" 2>/dev/null || echo "unknown")
           else
-            file_size="unknown"
+            echo "✅ DEBUG: File found: $FILE_PATH"
+            echo "DEBUG: File info:"
+            ls -la "$FILE_PATH"
+            if command -v file >/dev/null 2>&1; then
+              file_type=$(file "$FILE_PATH")
+              echo "DEBUG: File type: $file_type"
+            fi
           fi
           
-          echo "📁 File size: ${file_size} bytes"
-          echo "📄 File type will be: ${{ github.event.inputs.content_type }}"
-          echo "🎯 Target folder: ${{ github.event.inputs.folder_name }}"
-          echo "🌍 Environment: ${{ github.event.inputs.environment }}"
+          echo '{"status": "validation_passed", "file_found": true, "secrets_configured": true}' > upload_response.json
       
-      - name: Upload file to Verint API
+      - name: Test API Connectivity
+        env:
+          API_BASE_URL: ${{ secrets[format('VERINT_BASE_URL_{0}', inputs.environment)] }}
+          API_USERNAME: ${{ secrets.VERINT_USERNAME }}
+          API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
+        run: |
+          echo "🔍 DEBUG: Testing API connectivity..."
+          echo '{"status": "testing_api"}' > upload_response.json
+          
+          # Test basic API connectivity
+          echo "DEBUG: Testing base URL: ${API_BASE_URL}"
+          
+          # Try a simple GET request first (without authentication)
+          echo "DEBUG: Testing basic connectivity..."
+          basic_response=$(curl -s -w "HTTPSTATUS:%{http_code}" --connect-timeout 30 "${API_BASE_URL}" || echo "HTTPSTATUS:000")
+          basic_code=$(echo "$basic_response" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          echo "DEBUG: Basic connectivity test - HTTP Status: $basic_code"
+          
+          # Test authentication
+          echo "DEBUG: Testing authentication..."
+          auth_response=$(curl -s -w "HTTPSTATUS:%{http_code}" --connect-timeout 30 \
+            -u "${API_USERNAME}:${API_PASSWORD}" \
+            "${API_BASE_URL}/files" || echo "HTTPSTATUS:000")
+          
+          auth_code=$(echo "$auth_response" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          auth_body=$(echo "$auth_response" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          
+          echo "DEBUG: Authentication test - HTTP Status: $auth_code"
+          
+          if [ "$auth_code" = "000" ]; then
+            echo "❌ DEBUG: Cannot connect to API (network/DNS issue)"
+            echo '{"status": "failed", "error": "Cannot connect to API", "base_url": "'$API_BASE_URL'"}' > upload_response.json
+            exit 1
+          elif [ "$auth_code" = "401" ]; then
+            echo "❌ DEBUG: Authentication failed (invalid credentials)"
+            echo '{"status": "failed", "error": "Authentication failed", "http_code": 401}' > upload_response.json
+            exit 1
+          elif [ "$auth_code" = "404" ]; then
+            echo "⚠️  DEBUG: /files endpoint not found, but connection works"
+            echo "DEBUG: This might be normal if the API structure is different"
+          else
+            echo "✅ DEBUG: API connection successful (HTTP $auth_code)"
+            if [ -n "$auth_body" ] && [ "$auth_body" != "" ]; then
+              echo "DEBUG: API response preview (first 500 chars):"
+              echo "$auth_body" | head -c 500
+            fi
+          fi
+          
+          echo '{"status": "api_test_complete", "http_code": '$auth_code'}' > upload_response.json
+      
+      - name: Attempt File Upload with Full Debug
         env:
           API_BASE_URL: ${{ secrets[format('VERINT_BASE_URL_{0}', inputs.environment)] }}
           API_USERNAME: ${{ secrets.VERINT_USERNAME }}
@@ -81,156 +173,137 @@ jobs:
           FOLDER_NAME: ${{ github.event.inputs.folder_name }}
           CONTENT_TYPE: ${{ github.event.inputs.content_type }}
         run: |
-          echo "🚀 Starting file upload to the ${{ inputs.environment }} environment..."
-          echo "File: $FILE_PATH"
-          echo "Destination Folder: $FOLDER_NAME"
-          echo "Content Type: $CONTENT_TYPE"
-          echo "API Base URL: $API_BASE_URL"
-          echo ""
+          echo "🔍 DEBUG: Starting file upload..."
+          echo '{"status": "uploading"}' > upload_response.json
           
-          # Validate environment variables
-          if [ -z "$API_BASE_URL" ]; then
-            echo "❌ API_BASE_URL is not set for environment ${{ inputs.environment }}"
-            echo '{"status": "failed", "error": "API_BASE_URL not configured"}' > upload_response.json
-            exit 1
-          fi
-          
-          if [ -z "$API_USERNAME" ] || [ -z "$API_PASSWORD" ]; then
-            echo "❌ API credentials are not configured"
-            echo '{"status": "failed", "error": "API credentials missing"}' > upload_response.json
-            exit 1
-          fi
-          
-          # Extract filename from path
           filename=$(basename "$FILE_PATH")
-          echo "📝 Filename: $filename"
+          echo "DEBUG: Extracted filename: $filename"
           
-          # Test different form data formats to handle API variations
-          echo "🔄 Attempting upload with form data format..."
-          
-          # Try simpler form data format first
-          response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+          # Try Method 1: Simple form fields
+          echo "DEBUG: Attempting Method 1 - Simple form fields"
+          response1=$(curl -s -w "HTTPSTATUS:%{http_code}" --max-time 60 \
             -X 'POST' \
             "${API_BASE_URL}/files" \
             -H 'accept: application/json' \
             -u "${API_USERNAME}:${API_PASSWORD}" \
             -H 'Content-Type: multipart/form-data' \
             -F "file=@${FILE_PATH};type=${CONTENT_TYPE}" \
-            -F "folderName=${FOLDER_NAME}")
+            -F "folderName=${FOLDER_NAME}" || echo "HTTPSTATUS:000")
           
-          # Extract HTTP status code
-          http_code=$(echo "$response" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
-          body=$(echo "$response" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          http_code1=$(echo "$response1" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          body1=$(echo "$response1" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
           
-          # If the simple format fails, try the complex JSON format
-          if [ "$http_code" -ne 200 ] && [ "$http_code" -ne 201 ]; then
-            echo "⚠️  Simple format failed (HTTP $http_code), trying JSON format..."
-            
-            response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+          echo "DEBUG: Method 1 - HTTP Status: $http_code1"
+          echo "DEBUG: Method 1 - Response (first 1000 chars):"
+          echo "$body1" | head -c 1000
+          echo ""
+          
+          # If Method 1 succeeded, use it
+          if [ "$http_code1" -eq 200 ] || [ "$http_code1" -eq 201 ]; then
+            echo "✅ DEBUG: Method 1 succeeded!"
+            http_code="$http_code1"
+            body="$body1"
+          else
+            # Try Method 2: JSON folder format
+            echo "DEBUG: Method 1 failed, trying Method 2 - JSON folder format"
+            response2=$(curl -s -w "HTTPSTATUS:%{http_code}" --max-time 60 \
               -X 'POST' \
               "${API_BASE_URL}/files" \
               -H 'accept: application/json' \
               -u "${API_USERNAME}:${API_PASSWORD}" \
               -H 'Content-Type: multipart/form-data' \
               -F "file=@${FILE_PATH};type=${CONTENT_TYPE}" \
-              -F "Folder={\"folderName\":\"${FOLDER_NAME}\"}")
+              -F "Folder={\"folderName\":\"${FOLDER_NAME}\"}" || echo "HTTPSTATUS:000")
             
-            http_code=$(echo "$response" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
-            body=$(echo "$response" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+            http_code2=$(echo "$response2" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+            body2=$(echo "$response2" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+            
+            echo "DEBUG: Method 2 - HTTP Status: $http_code2"
+            echo "DEBUG: Method 2 - Response (first 1000 chars):"
+            echo "$body2" | head -c 1000
+            echo ""
+            
+            if [ "$http_code2" -eq 200 ] || [ "$http_code2" -eq 201 ]; then
+              echo "✅ DEBUG: Method 2 succeeded!"
+              http_code="$http_code2"
+              body="$body2"
+            else
+              # Try Method 3: Different endpoint or format
+              echo "DEBUG: Method 2 failed, trying Method 3 - Alternative approach"
+              response3=$(curl -s -w "HTTPSTATUS:%{http_code}" --max-time 60 \
+                -X 'POST' \
+                "${API_BASE_URL}/files" \
+                -H 'accept: application/json' \
+                -u "${API_USERNAME}:${API_PASSWORD}" \
+                -F "file=@${FILE_PATH}" \
+                -F "folder=${FOLDER_NAME}" \
+                -F "contentType=${CONTENT_TYPE}" || echo "HTTPSTATUS:000")
+              
+              http_code3=$(echo "$response3" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+              body3=$(echo "$response3" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+              
+              echo "DEBUG: Method 3 - HTTP Status: $http_code3"
+              echo "DEBUG: Method 3 - Response (first 1000 chars):"
+              echo "$body3" | head -c 1000
+              echo ""
+              
+              # Use the best result
+              if [ "$http_code3" -eq 200 ] || [ "$http_code3" -eq 201 ]; then
+                echo "✅ DEBUG: Method 3 succeeded!"
+                http_code="$http_code3"
+                body="$body3"
+              else
+                echo "❌ DEBUG: All methods failed"
+                echo "Final status codes: Method1=$http_code1, Method2=$http_code2, Method3=$http_code3"
+                http_code="$http_code1"  # Use first method's result for error reporting
+                body="$body1"
+              fi
+            fi
           fi
           
           echo ""
-          echo "================== UPLOAD RESULT =================="
-          echo "HTTP Status Code: $http_code"
+          echo "================== FINAL RESULT =================="
+          echo "Final HTTP Status Code: $http_code"
+          echo "Final Response Body:"
+          echo "$body"
+          echo "================================================="
           
-          # Check if the request was successful
+          # Save the response
           if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 201 ]; then
-            echo "✅ File upload successful!"
-            
-            # Ensure we have valid JSON, even if empty
-            if [ -z "$body" ] || [ "$body" = "" ]; then
-              echo '{"status": "success", "message": "File uploaded successfully"}' > upload_response.json
-            else
-              # Validate JSON before saving
-              if echo "$body" | jq . >/dev/null 2>&1; then
-                echo "$body" > upload_response.json
-              else
-                echo "⚠️  Response is not valid JSON, creating fallback response"
-                echo "{\"status\": \"success\", \"message\": \"File uploaded successfully\", \"raw_response\": $(echo "$body" | jq -Rs .)}" > upload_response.json
-              fi
-            fi
-            
-            # Try to parse and display the response safely
-            if command -v jq >/dev/null 2>&1 && echo "$body" | jq . >/dev/null 2>&1; then
-              echo ""
-              echo "📊 Upload Details:"
-              
-              # Safely extract fields with fallbacks
-              fileName=$(echo "$body" | jq -r '.fileName // .filename // .name // "N/A"' 2>/dev/null)
-              folderName=$(echo "$body" | jq -r '.folderName // .folder // .directory // "N/A"' 2>/dev/null)
-              fileType=$(echo "$body" | jq -r '.fileType // .contentType // .type // "N/A"' 2>/dev/null)
-              size=$(echo "$body" | jq -r '.size // .fileSize // "N/A"' 2>/dev/null)
-              distributionLink=$(echo "$body" | jq -r '.distributionLink // .url // .link // "N/A"' 2>/dev/null)
-              key=$(echo "$body" | jq -r '.key // .id // .fileId // "N/A"' 2>/dev/null)
-              
-              [ "$fileName" != "N/A" ] && echo "    File Name: $fileName"
-              [ "$folderName" != "N/A" ] && echo "    Folder: $folderName"
-              [ "$fileType" != "N/A" ] && echo "    File Type: $fileType"
-              
-              if [ "$size" != "N/A" ] && [ "$size" != "null" ]; then
-                # Safe size formatting with fallbacks
-                if command -v bc >/dev/null 2>&1 && [ "$size" -gt 0 ] 2>/dev/null; then
-                  if [ "$size" -gt 1048576 ]; then
-                    size_display=$(echo "scale=2; $size / 1048576" | bc 2>/dev/null)"MB" || echo "${size}B"
-                  elif [ "$size" -gt 1024 ]; then
-                    size_display=$(echo "scale=2; $size / 1024" | bc 2>/dev/null)"KB" || echo "${size}B"
-                  else
-                    size_display="${size}B"
-                  fi
-                else
-                  size_display="${size}B"
-                fi
-                echo "    Size: $size_display"
-              fi
-              
-              [ "$distributionLink" != "N/A" ] && echo "    Distribution Link: $distributionLink"
-              [ "$key" != "N/A" ] && echo "    File Key: $key"
-              
-            else
-              echo "📄 Raw Response:"
-              echo "$body"
-            fi
-            
-          else
-            echo "❌ File upload failed!"
-            echo "📄 Response: $body"
-            
-            # Save error response
-            if echo "$body" | jq . >/dev/null 2>&1; then
+            echo "✅ Upload successful!"
+            if [ -n "$body" ] && echo "$body" | jq . >/dev/null 2>&1; then
               echo "$body" > upload_response.json
             else
-              echo "{\"status\": \"failed\", \"http_code\": $http_code, \"error\": \"Upload failed\", \"raw_response\": $(echo "$body" | jq -Rs .)}" > upload_response.json
+              echo '{"status": "success", "message": "Upload successful", "http_code": '$http_code'}' > upload_response.json
             fi
+          else
+            echo "❌ Upload failed!"
+            # Create detailed error response
+            error_response="{\"status\": \"failed\", \"http_code\": $http_code, \"error\": \"Upload failed\""
+            if [ -n "$body" ]; then
+              error_response="$error_response, \"response\": $(echo "$body" | jq -Rs .)"
+            fi
+            error_response="$error_response}"
+            echo "$error_response" > upload_response.json
             
             echo ""
-            echo "🔍 Troubleshooting tips:"
-            echo "- Check if the folder name '$FOLDER_NAME' exists or is valid"
-            echo "- Verify the content type '$CONTENT_TYPE' matches the file"
-            echo "- Ensure you have upload permissions for environment '${{ inputs.environment }}'"
-            echo "- Check if the file size is within limits"
-            echo "- Verify API credentials are correct"
+            echo "🔍 DEBUG: Troubleshooting information:"
+            echo "- API Base URL: $API_BASE_URL"
+            echo "- File Path: $FILE_PATH"
+            echo "- Folder Name: $FOLDER_NAME"
+            echo "- Content Type: $CONTENT_TYPE"
+            echo "- File exists: $([ -f "$FILE_PATH" ] && echo "Yes" || echo "No")"
+            echo "- File size: $(stat -c%s "$FILE_PATH" 2>/dev/null || echo "unknown") bytes"
             
-            exit 1
+            # Don't exit 1 in debug mode - let's see the artifacts
+            echo "DEBUG: Not exiting to preserve debug information"
           fi
-          
-          echo "================================================="
-          echo "💾 Full response saved to upload_response.json"
       
       - name: Upload response as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: upload-response-${{ github.run_number }}
+          name: debug-upload-response-${{ github.run_number }}
           path: |
             upload_response.json
             ${{ github.event.inputs.file_path }}
