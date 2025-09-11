@@ -1,0 +1,237 @@
+name: Add File to Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      file_path:
+        description: 'Path to file in repository (e.g., styles/main.css)'
+        required: true
+        type: string
+      folder_name:
+        description: 'Select the destination folder name'
+        required: true
+        type: choice
+        default: 'icons'
+        options:
+          - styles
+          - scripts
+          - images
+          - icons
+      content_type:
+        description: 'Select the file content type'
+        required: true
+        type: choice
+        default: 'image/svg+xml'
+        options:
+          - text/plain
+          - text/css
+          - image/svg+xml
+          - image/png
+      environment:
+        description: 'Select the target environment'
+        required: true
+        type: choice
+        default: 'dev'
+        options:
+          - dev
+          - qa
+          - prod
+
+jobs:
+  upload-file:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Validate file exists
+        run: |
+          # Create default response file early
+          echo '{"status": "failed", "error": "Unknown error"}' > upload_response.json
+          
+          FILE_PATH="${{ github.event.inputs.file_path }}"
+          if [ ! -f "$FILE_PATH" ]; then
+            echo "❌ File not found: $FILE_PATH"
+            echo "Available files in repository:"
+            find . -type f -name "*.css" -o -name "*.js" -o -name "*.html" -o -name "*.json" -o -name "*.svg" -o -name "*.png" | head -20
+            echo '{"status": "failed", "error": "File not found", "file_path": "'$FILE_PATH'"}' > upload_response.json
+            exit 1
+          fi
+          echo "✅ File found: $FILE_PATH"
+          
+          # Get file info with better error handling
+          if command -v stat >/dev/null 2>&1; then
+            file_size=$(stat -c%s "$FILE_PATH" 2>/dev/null || stat -f%z "$FILE_PATH" 2>/dev/null || echo "unknown")
+          else
+            file_size="unknown"
+          fi
+          
+          echo "📁 File size: ${file_size} bytes"
+          echo "📄 File type will be: ${{ github.event.inputs.content_type }}"
+          echo "🎯 Target folder: ${{ github.event.inputs.folder_name }}"
+          echo "🌍 Environment: ${{ github.event.inputs.environment }}"
+      
+      - name: Upload file to Verint API
+        env:
+          API_BASE_URL: ${{ secrets[format('VERINT_BASE_URL_{0}', inputs.environment)] }}
+          API_USERNAME: ${{ secrets.VERINT_USERNAME }}
+          API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
+          FILE_PATH: ${{ github.event.inputs.file_path }}
+          FOLDER_NAME: ${{ github.event.inputs.folder_name }}
+          CONTENT_TYPE: ${{ github.event.inputs.content_type }}
+        run: |
+          echo "🚀 Starting file upload to the ${{ inputs.environment }} environment..."
+          echo "File: $FILE_PATH"
+          echo "Destination Folder: $FOLDER_NAME"
+          echo "Content Type: $CONTENT_TYPE"
+          echo "API Base URL: $API_BASE_URL"
+          echo ""
+          
+          # Validate environment variables
+          if [ -z "$API_BASE_URL" ]; then
+            echo "❌ API_BASE_URL is not set for environment ${{ inputs.environment }}"
+            echo '{"status": "failed", "error": "API_BASE_URL not configured"}' > upload_response.json
+            exit 1
+          fi
+          
+          if [ -z "$API_USERNAME" ] || [ -z "$API_PASSWORD" ]; then
+            echo "❌ API credentials are not configured"
+            echo '{"status": "failed", "error": "API credentials missing"}' > upload_response.json
+            exit 1
+          fi
+          
+          # Extract filename from path
+          filename=$(basename "$FILE_PATH")
+          echo "📝 Filename: $filename"
+          
+          # Test different form data formats to handle API variations
+          echo "🔄 Attempting upload with form data format..."
+          
+          # Try simpler form data format first
+          response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+            -X 'POST' \
+            "${API_BASE_URL}/files" \
+            -H 'accept: application/json' \
+            -u "${API_USERNAME}:${API_PASSWORD}" \
+            -H 'Content-Type: multipart/form-data' \
+            -F "file=@${FILE_PATH};type=${CONTENT_TYPE}" \
+            -F "folderName=${FOLDER_NAME}")
+          
+          # Extract HTTP status code
+          http_code=$(echo "$response" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          body=$(echo "$response" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          
+          # If the simple format fails, try the complex JSON format
+          if [ "$http_code" -ne 200 ] && [ "$http_code" -ne 201 ]; then
+            echo "⚠️  Simple format failed (HTTP $http_code), trying JSON format..."
+            
+            response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+              -X 'POST' \
+              "${API_BASE_URL}/files" \
+              -H 'accept: application/json' \
+              -u "${API_USERNAME}:${API_PASSWORD}" \
+              -H 'Content-Type: multipart/form-data' \
+              -F "file=@${FILE_PATH};type=${CONTENT_TYPE}" \
+              -F "Folder={\"folderName\":\"${FOLDER_NAME}\"}")
+            
+            http_code=$(echo "$response" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+            body=$(echo "$response" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          fi
+          
+          echo ""
+          echo "================== UPLOAD RESULT =================="
+          echo "HTTP Status Code: $http_code"
+          
+          # Check if the request was successful
+          if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 201 ]; then
+            echo "✅ File upload successful!"
+            
+            # Ensure we have valid JSON, even if empty
+            if [ -z "$body" ] || [ "$body" = "" ]; then
+              echo '{"status": "success", "message": "File uploaded successfully"}' > upload_response.json
+            else
+              # Validate JSON before saving
+              if echo "$body" | jq . >/dev/null 2>&1; then
+                echo "$body" > upload_response.json
+              else
+                echo "⚠️  Response is not valid JSON, creating fallback response"
+                echo "{\"status\": \"success\", \"message\": \"File uploaded successfully\", \"raw_response\": $(echo "$body" | jq -Rs .)}" > upload_response.json
+              fi
+            fi
+            
+            # Try to parse and display the response safely
+            if command -v jq >/dev/null 2>&1 && echo "$body" | jq . >/dev/null 2>&1; then
+              echo ""
+              echo "📊 Upload Details:"
+              
+              # Safely extract fields with fallbacks
+              fileName=$(echo "$body" | jq -r '.fileName // .filename // .name // "N/A"' 2>/dev/null)
+              folderName=$(echo "$body" | jq -r '.folderName // .folder // .directory // "N/A"' 2>/dev/null)
+              fileType=$(echo "$body" | jq -r '.fileType // .contentType // .type // "N/A"' 2>/dev/null)
+              size=$(echo "$body" | jq -r '.size // .fileSize // "N/A"' 2>/dev/null)
+              distributionLink=$(echo "$body" | jq -r '.distributionLink // .url // .link // "N/A"' 2>/dev/null)
+              key=$(echo "$body" | jq -r '.key // .id // .fileId // "N/A"' 2>/dev/null)
+              
+              [ "$fileName" != "N/A" ] && echo "    File Name: $fileName"
+              [ "$folderName" != "N/A" ] && echo "    Folder: $folderName"
+              [ "$fileType" != "N/A" ] && echo "    File Type: $fileType"
+              
+              if [ "$size" != "N/A" ] && [ "$size" != "null" ]; then
+                # Safe size formatting with fallbacks
+                if command -v bc >/dev/null 2>&1 && [ "$size" -gt 0 ] 2>/dev/null; then
+                  if [ "$size" -gt 1048576 ]; then
+                    size_display=$(echo "scale=2; $size / 1048576" | bc 2>/dev/null)"MB" || echo "${size}B"
+                  elif [ "$size" -gt 1024 ]; then
+                    size_display=$(echo "scale=2; $size / 1024" | bc 2>/dev/null)"KB" || echo "${size}B"
+                  else
+                    size_display="${size}B"
+                  fi
+                else
+                  size_display="${size}B"
+                fi
+                echo "    Size: $size_display"
+              fi
+              
+              [ "$distributionLink" != "N/A" ] && echo "    Distribution Link: $distributionLink"
+              [ "$key" != "N/A" ] && echo "    File Key: $key"
+              
+            else
+              echo "📄 Raw Response:"
+              echo "$body"
+            fi
+            
+          else
+            echo "❌ File upload failed!"
+            echo "📄 Response: $body"
+            
+            # Save error response
+            if echo "$body" | jq . >/dev/null 2>&1; then
+              echo "$body" > upload_response.json
+            else
+              echo "{\"status\": \"failed\", \"http_code\": $http_code, \"error\": \"Upload failed\", \"raw_response\": $(echo "$body" | jq -Rs .)}" > upload_response.json
+            fi
+            
+            echo ""
+            echo "🔍 Troubleshooting tips:"
+            echo "- Check if the folder name '$FOLDER_NAME' exists or is valid"
+            echo "- Verify the content type '$CONTENT_TYPE' matches the file"
+            echo "- Ensure you have upload permissions for environment '${{ inputs.environment }}'"
+            echo "- Check if the file size is within limits"
+            echo "- Verify API credentials are correct"
+            
+            exit 1
+          fi
+          
+          echo "================================================="
+          echo "💾 Full response saved to upload_response.json"
+      
+      - name: Upload response as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-response-${{ github.run_number }}
+          path: |
+            upload_response.json
+            ${{ github.event.inputs.file_path }}
+          retention-days: 30
