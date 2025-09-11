@@ -1,4 +1,4 @@
-name: Replace Server File - Fixed with Debug
+name: Replace File on Server
 
 on:
   workflow_dispatch:
