@@ -75,7 +75,7 @@
 
 #dform_container .success-panel:before,
 .success-panel:before {
-  content: url(./icons/circle-check-success.svg);
+  content: url(../icons/circle-check-success.svg);
   color: var(--c-core-brand-primary-darken);
   width: var(--font-size-xxxxl);
   line-height: var(--line-height);
@@ -86,7 +86,7 @@
 .alert-panel:before,
 #dform_container .alert-panel--ineligible:before,
 .alert-panel--ineligible:before  {
-  content: url(./icons/triangle-exclamation-danger.svg);
+  content: url(../icons/triangle-exclamation-danger.svg);
   color: var(--c-core-brand-accent-1-darken);
   width: var(--font-size-xxxxl);
   line-height: var(--line-height);
@@ -95,7 +95,7 @@
 
 #dform_container .info-panel:before,
 .info-panel:before {
-  content: url(./icons/circle-info-primary-darkened.svg);
+  content: url(../icons/circle-info-primary-darkened.svg);
   color: var(--c-core-brand-primary-darken);
   width: var(--font-size-xxxxl);
   line-height: var(--line-height);

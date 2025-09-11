@@ -124,7 +124,7 @@
 
 #NavigationAreaInSingleColumnTemplate button.back-btn::before,
 #dform_container button.back-btn::before {
-  content: url(./icons/arrow-right-primary-darkened.svg);
+  content: url(../icons/arrow-right-primary-darkened.svg);
   transform: rotate(180deg);
   width: var(--font-size-base);
   line-height: var(--line-height);
@@ -144,7 +144,7 @@
 }
 
 #dform_container #dform_print::before {
-  content: url(./icons/sheffield-action-icons-black/PRINT.svg);
+  content: url(../icons/sheffield-action-icons-black/PRINT.svg);
   width: var(--font-size-base);
   line-height: var(--line-height);
   transform: translateY(2px);
@@ -182,7 +182,7 @@
 
 #NavigationAreaInSingleColumnTemplate button.back-btn:focus::before,
 #dform_container button.back-btn:focus::before {
-  content: url(./icons/arrow-right-black.svg);
+  content: url(../icons/arrow-right-black.svg);
 }
 
 #NavigationAreaInSingleColumnTemplate button.back-btn:focus>.back-btn--text,

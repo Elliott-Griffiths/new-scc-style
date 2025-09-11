@@ -84,18 +84,18 @@
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button::after {
-  content: url(./icons/arrow-right-primary-darkened.svg);
+  content: url(../icons/arrow-right-primary-darkened.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button:hover::after {
-  content: url(./icons/arrow-right-white.svg);
+  content: url(../icons/arrow-right-white.svg);
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button:focus::after {
-  content: url(./icons/arrow-right-black.svg) !important;
+  content: url(../icons/arrow-right-black.svg) !important;
 }
 
 #dform_container #location-results {
@@ -106,7 +106,7 @@
 /* MOST POPULAR */
 
 .dform_section_box_most_popular fieldset>legend::before {
-  content: url(./icons/thumb-up.svg);
+  content: url(../icons/thumb-up.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
@@ -192,7 +192,7 @@
 
   width: var(--font-size-sm);
   height: var(--font-size-sm);
-  background-image: url('./icons/arrow-right-white.svg');
+  background-image: url(./icons/arrow-right-white.svg);
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -208,7 +208,7 @@
 }
 
 #dform_container .dashboard-details-container .card a.button::after {
-  content: url(./icons/chevron-right-white.svg);
+  content: url(../icons/chevron-right-white.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
@@ -227,11 +227,11 @@
 }
 
 #dform_container .dashboard-details-container .card a.button:hover::after {
-  content: url(./icons/chevron-right-teal.svg);
+  content: url(../icons/chevron-right-teal.svg);
 }
 
 #dform_container .dashboard-details-container .card a.button:focus::after {
-  content: url(./icons/chevron-right-black.svg) !important;
+  content: url(../icons/chevron-right-black.svg) !important;
 }
 
 #dform_container .dashboard-details-container .card p span,
@@ -242,7 +242,7 @@
 /* WASTE AND today */
 
 .dform_section_box_waste_and_recycling fieldset>legend::before {
-  content: url(./icons/recycle.svg);
+  content: url(../icons/recycle.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
@@ -292,14 +292,14 @@
 }
 
 #dform_container .dashboard-details-container p.status-banner span.success::before {
-  content: url(./icons/circle-check-success.svg);
+  content: url(../icons/circle-check-success.svg);
   width: var(--font-size-base);
   height: var(--font-size-base);
   line-height: var(--line-height);
 }
 
 #dform_container .dashboard-details-container p.status-banner span.error::before {
-  content: url(./icons/triangle-exclamation-danger.svg);
+  content: url(../icons/triangle-exclamation-danger.svg);
   width: var(--font-size-base);
   height: var(--font-size-base);
   line-height: var(--line-height);
@@ -376,29 +376,29 @@
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.date::before,
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.bin::before,
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.type::before {
-  content: url(./icons/arrow-right-primary-darkened.svg);
+  content: url(../icons/arrow-right-primary-darkened.svg);
   width: var(--font-size-base);
   height: var(--font-size-base);
   line-height: var(--line-height);
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.date::before {
-  content: url(./icons/calendar-brand-secondary.svg);
+  content: url(../icons/calendar-brand-secondary.svg);
   transform: scale(1.4);
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.bin::before {
-  content: url(./icons/trash-can-brand-secondary.svg);
+  content: url(../icons/trash-can-brand-secondary.svg);
   transform: scale(1.3);
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.type::before {
-  content: url(./icons/circle-check-success-brand-secondary.svg);
+  content: url(../icons/circle-check-success-brand-secondary.svg);
   transform: scale(1.2);
 }
 
 #dform_container .dashboard-details-container a.calendar-link::after {
-  content: url(./icons/arrow-right-primary-darkened.svg);
+  content: url(../icons/arrow-right-primary-darkened.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
@@ -407,7 +407,7 @@
 /* YOUR NEAREST */
 
 .dform_section_box_your_nearest fieldset>legend::before {
-  content: url(./icons/location-purple.svg);
+  content: url(../icons/location-purple.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
@@ -481,7 +481,7 @@
 }
 
 #dform_container .dashboard-details-container .your-nearest-container .card .location a.map-link::before {
-  content: url(./icons/location-primary-darkened.svg);
+  content: url(../icons/location-primary-darkened.svg);
   width: var(--font-size-base);
   height: var(--font-size-base);
   line-height: var(--line-height);
@@ -490,7 +490,7 @@
 /* CONTACTS IN YOUR AREA */
 
 .dform_section_box_contacts_in_your_area fieldset>legend::before {
-  content: url(./icons/book.svg);
+  content: url(../icons/book.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
@@ -529,7 +529,7 @@
 /* OTHER LINKS */
 
 .dform_section_box_other_links fieldset>legend::before {
-  content: url(./icons/links.svg);
+  content: url(../icons/links.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
@@ -565,7 +565,7 @@
 }
 
 #dform_container .dashboard-details-container ul.other-links li a::before {
-  content: url(./icons/arrow-right-primary-darkened.svg);
+  content: url(../icons/arrow-right-primary-darkened.svg);
   height: unset;
   justify-content: unset;
   align-items: unset;

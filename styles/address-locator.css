@@ -64,7 +64,7 @@
 }
 
 #dform_container button.link-btn.locator-icon::before {
-    content: url(./icons/location-primary-darkened.svg);
+    content: url(../icons/location-primary-darkened.svg);
     align-items: center;
     justify-content: center;
     height: var(--font-size-xs);

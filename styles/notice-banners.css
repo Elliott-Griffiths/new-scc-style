@@ -46,17 +46,17 @@
 }
 
 #dform_container .dform_success:before {
-  content: url(./icons/circle-check-success-white.svg);
+  content: url(../icons/circle-check-success-white.svg);
 }
 
 #dform_container .dform_info:before {
-  content: url(./icons/circle-info-white.svg);
+  content: url(../icons/circle-info-white.svg);
 }
 
 #dform_container .dform_error:before {
-  content: url(./icons/triangle-exclamation-danger-white.svg);
+  content: url(../icons/triangle-exclamation-danger-white.svg);
 }
 
 #dform_container .dform_warning:before {
-  content: url(./icons/triangle-exclamation-danger-black.svg);
+  content: url(../icons/triangle-exclamation-danger-black.svg);
 }

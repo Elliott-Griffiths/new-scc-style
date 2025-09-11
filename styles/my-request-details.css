@@ -47,14 +47,14 @@
 }
 
 .le-request-list-link a::before {
-  content: url(./icons/arrow-right-primary-darkened.svg);
+  content: url(../icons/arrow-right-primary-darkened.svg);
   transform: rotate(180deg);
   width: var(--font-size-base);
   line-height: var(--line-height);
 }
 
 .le-request-list-link a:focus::before {
-  content: url(./icons/arrow-right-black.svg);
+  content: url(../icons/arrow-right-black.svg);
 }
 
 .le-content .le-request-list-link .le-request-label {

@@ -106,18 +106,18 @@
 .dform_section_box_account fieldset>legend::before,
 .dform_section_box_secure_details fieldset>legend::before,
 .dform_section_box_my_details fieldset>legend::before {
-  content: url(./icons/gear.svg);
+  content: url(../icons/gear.svg);
   width: var(--font-size-xxxl);
   height: var(--font-size-xxxl);
   line-height: var(--line-height);
 }
 
 .dform_section_box_secure_details fieldset>legend::before {
-  content: url(./icons/lock.svg);
+  content: url(../icons/lock.svg);
 }
 
 .dform_section_box_my_details fieldset>legend::before {
-  content: url(./icons/user.svg);
+  content: url(../icons/user.svg);
 }
 
 #dform_container .dform_section_box_more_services .services-list a,
@@ -137,7 +137,7 @@
 }
 
 #dform_container #see-all-services::before {
-  content: url(./icons/arrow-right-primary-darkened.svg);
+  content: url(../icons/arrow-right-primary-darkened.svg);
   height: unset;
   justify-content: unset;
   align-items: unset;
@@ -161,7 +161,7 @@
 }
 
 #dform_container #see-all-services:focus::before {
-  content: url(./icons/arrow-right-black.svg);
+  content: url(../icons/arrow-right-black.svg);
 }
 
 #dform_container #dform_widget_button_but_delete_account {

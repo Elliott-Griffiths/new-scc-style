@@ -122,7 +122,7 @@
 }
 
 #dform_container button.action-link-btn::before {
-  content: url(./icons/arrow-right-primary-darkened.svg);
+  content: url(../icons/arrow-right-primary-darkened.svg);
   align-items: center;
   justify-content: center;
   height: var(--field-height-md);
@@ -211,6 +211,6 @@
 }
 
 #dform_container button.action-link-btn:focus::before {
-  content: url(./icons/arrow-right-focus-link.svg);
+  content: url(../icons/arrow-right-focus-link.svg);
   background: var(--c-greys-black);
 }
