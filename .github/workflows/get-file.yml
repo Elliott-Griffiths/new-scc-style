@@ -6,7 +6,6 @@ on:
       query:
         description: 'Search query'
         required: false
-        default: 'index'
         type: string
       environment:
         description: 'Select the target environment'
@@ -15,7 +14,7 @@ on:
         default: 'dev'
         options:
           - dev
-          - uat
+          - qa
           - prod
 
 jobs:
