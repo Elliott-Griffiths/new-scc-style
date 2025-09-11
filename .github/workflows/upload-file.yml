@@ -21,11 +21,11 @@ on:
         description: 'Select the fFile content type'
         required: true
         type: choice
-        default: 'text/plain'
+        default: 'image/svg+xml'
         options:
           - text/plain
           - text/css
-          - image/svg
+          - image/svg+xml
           - image/png
       environment:
         description: 'Select the target environment'
