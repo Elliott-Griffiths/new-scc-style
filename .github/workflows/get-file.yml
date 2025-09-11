@@ -1,7 +1,6 @@
 name: Get File
 
 on:
-  # Trigger the workflow manually from GitHub UI
   workflow_dispatch:
     inputs:
       start:
@@ -16,67 +15,70 @@ on:
         description: 'Search query'
         required: false
         default: 'index'
-  
-  # Or trigger on push to main branch
-  # push:
-  #   branches: [ main ]
+      environment:
+        description: 'Select the target environment'
+        required: true
+        type: choice
+        default: 'dev'
+        options:
+          - dev
+          - uat
+          - prod
 
 jobs:
   call-api:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    
-    - name: Call Verint API
-      env:
-        API_BASE_URL: https://sheffielddev.resources.ukpreview.empro.verintcloudservices.com
-        # Store credentials in GitHub Secrets (recommended)
-        API_USERNAME: ${{ secrets.VERINT_USERNAME }}
-        API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
-      run: |
-        # Set default values if inputs are not provided
-        START="${{ github.event.inputs.start || '0' }}"
-        PAGE_SIZE="${{ github.event.inputs.page_size || '10' }}"
-        QUERY="${{ github.event.inputs.query || 'index' }}"
-        
-        echo "Making API call with parameters:"
-        echo "Start: $START"
-        echo "Page Size: $PAGE_SIZE"
-        echo "Query: $QUERY"
-        echo "Username: $API_USERNAME"
-        
-        # Make the API call using username:password authentication
-        response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
-          -X 'GET' \
-          "${API_BASE_URL}/files?start=${START}&page_size=${PAGE_SIZE}&query=${QUERY}" \
-          -H 'accept: application/json' \
-          -u "${API_USERNAME}:${API_PASSWORD}")
-        
-        # Extract HTTP status code
-        http_code=$(echo $response | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
-        
-        # Extract response body
-        body=$(echo $response | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
-        
-        echo "HTTP Status Code: $http_code"
-        echo "Response Body: $body"
-        
-        # Check if the request was successful
-        if [ $http_code -eq 200 ]; then
-          echo "✅ API call successful!"
-          echo "Response saved to api_response.json"
-          echo "$body" > api_response.json
-        else
-          echo "❌ API call failed with status code: $http_code"
-          exit 1
-        fi
-    
-    - name: Upload response as artifact
-      if: success()
-      uses: actions/upload-artifact@v4
-      with:
-        name: api-response
-        path: api_response.json
-        retention-days: 7
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Call Verint API
+        env:
+          API_BASE_URL: ${{ secrets[format('VERINT_BASE_URL_{0}', inputs.environment)] }}
+          API_USERNAME: ${{ secrets.VERINT_USERNAME }}
+          API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
+        run: |
+          # Set default values if inputs are not provided
+          START="${{ github.event.inputs.start || '0' }}"
+          PAGE_SIZE="${{ github.event.inputs.page_size || '10' }}"
+          QUERY="${{ github.event.inputs.query || 'index' }}"
+          
+          echo "Making API call to the ${{ inputs.environment }} environment with parameters:"
+          echo "Start: $START"
+          echo "Page Size: $PAGE_SIZE"
+          echo "Query: $QUERY"
+          
+          # Make the API call using username:password authentication
+          response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+            -X 'GET' \
+            "${API_BASE_URL}/files?start=${START}&page_size=${PAGE_SIZE}&query=${QUERY}" \
+            -H 'accept: application/json' \
+            -u "${API_USERNAME}:${API_PASSWORD}")
+          
+          # Extract HTTP status code
+          http_code=$(echo $response | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          
+          # Extract response body
+          body=$(echo $response | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          
+          echo "HTTP Status Code: $http_code"
+          echo "Response Body: $body"
+          
+          # Check if the request was successful
+          if [ $http_code -eq 200 ]; then
+            echo "✅ API call successful!"
+            echo "Response saved to api_response.json"
+            echo "$body" > api_response.json
+          else
+            echo "❌ API call failed with status code: $http_code"
+            exit 1
+          fi
+      
+      - name: Upload response as artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-response
+          path: api_response.json
+          retention-days: 7
