@@ -1,0 +1,181 @@
+name: Replace Server File
+
+on:
+  workflow_dispatch:
+    inputs:
+      file_path:
+        description: 'Path to file in repository (e.g., scripts/main.js)'
+        required: true
+        type: string
+      content_type:
+        description: 'Select the file content type'
+        required: true
+        type: choice
+        default: 'text/plain'
+        options:
+          - text/plain
+          - text/css
+          - image/svg+xml
+          - image/png
+      environment:
+        description: 'Select the target environment'
+        required: true
+        type: choice
+        default: 'dev'
+        options:
+          - dev
+          - qa
+          - prod
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Get file key and update file
+        env:
+          API_BASE_URL: ${{ secrets[format('VERINT_BASE_URL_{0}', inputs.environment)] }}
+          API_USERNAME: ${{ secrets.VERINT_USERNAME }}
+          API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
+          FILE_PATH: ${{ github.event.inputs.file_path }}
+          CONTENT_TYPE: ${{ github.event.inputs.content_type }}
+        run: |
+          # Create a default response file in case of early exit
+          echo '{"status": "failed", "error": "Unknown error"}' > update_response.json
+          
+          # 1. Validate that the local file exists
+          FULL_PATH="${FILE_PATH}"
+          if [ ! -f "$FULL_PATH" ]; then
+            echo "❌ Local file not found: $FULL_PATH"
+            echo '{"status": "failed", "error": "Local file not found"}' > update_response.json
+            exit 1
+          fi
+          
+          # 2. Parse filename and folder more carefully
+          FILENAME=$(basename "$FULL_PATH")
+          DIR_PATH=$(dirname "$FULL_PATH")
+          
+          # Handle root directory case
+          if [ "$DIR_PATH" = "." ]; then
+            FOLDER_NAME=""
+            echo "File is in root directory"
+          else
+            FOLDER_NAME=$(basename "$DIR_PATH")
+          fi
+
+          echo "Attempting to match on API with:"
+          echo "  - Filename: '$FILENAME'"
+          echo "  - Folder Name: '$FOLDER_NAME'"
+          echo "  - Full Path: '$FULL_PATH'"
+
+          # 3. Call the GET /files API to find the file key
+          echo "Making API GET request to find the file..."
+          response_get=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+            -u "${API_USERNAME}:${API_PASSWORD}" \
+            "${API_BASE_URL}/files?query=${FILENAME}")
+          
+          # Extract HTTP status for GET request
+          get_http_code=$(echo "$response_get" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          get_body=$(echo "$response_get" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          
+          echo "GET API HTTP Status: $get_http_code"
+          
+          if [ "$get_http_code" -ne 200 ]; then
+            echo "❌ Failed to query files from API"
+            echo "Response: $get_body"
+            echo "{\"status\": \"failed\", \"error\": \"API query failed\", \"http_code\": $get_http_code}" > update_response.json
+            exit 1
+          fi
+          
+          echo "API GET response:"
+          echo "$get_body"
+          
+          # More robust file key extraction with better error handling
+          if [ -n "$FOLDER_NAME" ]; then
+            # Try to match both filename and folder
+            FILE_KEY=$(echo "$get_body" | jq -r --arg filename "$FILENAME" --arg foldername "$FOLDER_NAME" '
+              if type == "object" and has("collection") then
+                .collection[] | select(.fileName == $filename and .folderName == $foldername) | .key
+              elif type == "array" then
+                .[] | select(.fileName == $filename and .folderName == $foldername) | .key
+              else
+                empty
+              end' 2>/dev/null || echo "")
+          else
+            # Try to match just filename for root directory files
+            FILE_KEY=$(echo "$get_body" | jq -r --arg filename "$FILENAME" '
+              if type == "object" and has("collection") then
+                .collection[] | select(.fileName == $filename) | .key
+              elif type == "array" then
+                .[] | select(.fileName == $filename) | .key
+              else
+                empty
+              end' 2>/dev/null || echo "")
+          fi
+
+          # Debug: show what we found
+          echo "Extracted file key: '$FILE_KEY'"
+          
+          if [ -z "$FILE_KEY" ] || [ "$FILE_KEY" = "null" ]; then
+            echo "❌ File not found on the server with matching criteria."
+            echo "Available files:"
+            echo "$get_body" | jq -r '
+              if type == "object" and has("collection") then
+                .collection[] | "  - \(.fileName) (folder: \(.folderName // "root"))"
+              elif type == "array" then
+                .[] | "  - \(.fileName) (folder: \(.folderName // "root"))"
+              else
+                "Could not parse file list"
+              end' 2>/dev/null || echo "Could not parse response"
+            
+            echo "{\"status\": \"failed\", \"error\": \"File not found on server\"}" > update_response.json
+            exit 1
+          fi
+
+          echo "✅ Found a match! Using file key: $FILE_KEY"
+          
+          # 4. Use the retrieved key to perform the PUT request (update)
+          echo "🔄 Starting file update..."
+          
+          response_put=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+            -X 'PUT' \
+            "${API_BASE_URL}/files/${FILE_KEY}" \
+            -H 'accept: application/json' \
+            -u "${API_USERNAME}:${API_PASSWORD}" \
+            -H 'Content-Type: multipart/form-data' \
+            -F "file=@${FILE_PATH};type=${CONTENT_TYPE}")
+
+          # Extract and check HTTP status code for the PUT request
+          http_code=$(echo "$response_put" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          body_put=$(echo "$response_put" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          
+          echo "================== UPDATE RESULT =================="
+          echo "HTTP Status Code: $http_code"
+          
+          if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 204 ]; then
+            echo "✅ File update successful!"
+            if [ -n "$body_put" ] && [ "$body_put" != "" ]; then
+              echo "$body_put" > update_response.json
+            else
+              echo "{\"status\": \"success\", \"message\": \"File updated successfully\", \"file_key\": \"$FILE_KEY\"}" > update_response.json
+            fi
+          else
+            echo "❌ File update failed!"
+            echo "📄 Response: $body_put"
+            echo "{\"status\": \"failed\", \"error\": \"Update failed\", \"http_code\": $http_code, \"response\": \"$body_put\"}" > update_response.json
+            exit 1
+          fi
+          echo "================================================="
+
+      - name: Upload response as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: update-response-${{ github.run_number }}
+          path: |
+            update_response.json
+            ${{ github.event.inputs.file_path }}
+          retention-days: 28
