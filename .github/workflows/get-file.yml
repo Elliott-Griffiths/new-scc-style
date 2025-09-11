@@ -66,72 +66,10 @@ jobs:
         # Check if the request was successful
         if [ $http_code -eq 200 ]; then
           echo "✅ API call successful!"
+          echo "Response saved to api_response.json"
           echo "$body" > api_response.json
-          
-          # Parse and display the response in a readable format
-          echo ""
-          echo "================== API RESPONSE =================="
-          
-          # Extract summary information
-          start=$(echo "$body" | jq -r '.start // "N/A"')
-          pageSize=$(echo "$body" | jq -r '.pageSize // "N/A"')
-          total=$(echo "$body" | jq -r '.total // "N/A"')
-          
-          echo "📊 Summary:"
-          echo "   Start: $start"
-          echo "   Page Size: $pageSize"
-          echo "   Total Results: $total"
-          echo ""
-          
-          # Check if there are any files in the collection
-          file_count=$(echo "$body" | jq '.collection | length')
-          
-          if [ "$file_count" -gt 0 ]; then
-            echo "📁 Files Found ($file_count):"
-            echo ""
-            
-            # Loop through each file and display details
-            for i in $(seq 0 $((file_count - 1))); do
-              fileName=$(echo "$body" | jq -r ".collection[$i].fileName // \"N/A\"")
-              folderName=$(echo "$body" | jq -r ".collection[$i].folderName // \"N/A\"")
-              fileType=$(echo "$body" | jq -r ".collection[$i].fileType // \"N/A\"")
-              size=$(echo "$body" | jq -r ".collection[$i].size // \"N/A\"")
-              distributionLink=$(echo "$body" | jq -r ".collection[$i].distributionLink // \"N/A\"")
-              key=$(echo "$body" | jq -r ".collection[$i].key // \"N/A\"")
-              
-              # Convert size to human readable format
-              if [ "$size" != "N/A" ] && [ "$size" -gt 0 ]; then
-                if [ "$size" -gt 1048576 ]; then
-                  size_display=$(echo "scale=2; $size / 1048576" | bc)"MB"
-                elif [ "$size" -gt 1024 ]; then
-                  size_display=$(echo "scale=2; $size / 1024" | bc)"KB"
-                else
-                  size_display="${size}B"
-                fi
-              else
-                size_display="N/A"
-              fi
-              
-              echo "   File $((i + 1)):"
-              echo "   ├── Name: $fileName"
-              echo "   ├── Folder: $folderName"
-              echo "   ├── Type: $fileType"
-              echo "   ├── Size: $size_display"
-              echo "   ├── Key: $key"
-              echo "   └── Distribution Link: $distributionLink"
-              echo ""
-            done
-          else
-            echo "📂 No files found in the collection"
-            echo ""
-          fi
-          
-          echo "================================================="
-          echo "💾 Full response saved to api_response.json"
-          
         else
           echo "❌ API call failed with status code: $http_code"
-          echo "Response body: $body"
           exit 1
         fi
     
