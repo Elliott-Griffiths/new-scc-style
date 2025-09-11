@@ -72,21 +72,30 @@ jobs:
           echo "🎯 Target folder: ${{ github.event.inputs.folder_name }}"
           echo "🌍 Environment: ${{ github.event.inputs.environment }}"
       
+      - name: Set API Base URL
+        id: set-url
+        run: |
+          case "${{ github.event.inputs.environment }}" in
+            "dev")
+              echo "API_BASE_URL=${{ secrets.VERINT_API_URL_DEV }}" >> $GITHUB_ENV
+              ;;
+            "qa")
+              echo "API_BASE_URL=${{ secrets.VERINT_BASE_URL_QA }}" >> $GITHUB_ENV
+              ;;
+            "prod")
+              echo "API_BASE_URL=${{ secrets.VERINT_BASE_URL_PROD }}" >> $GITHUB_ENV
+              ;;
+          esac
+      
       - name: Upload file to Verint API
         env:
-          # Use the correct secret names based on your environment
-          API_BASE_URL: ${{ 
-            (github.event.inputs.environment == 'dev' && secrets.VERINT_API_URL_DEV) ||
-            (github.event.inputs.environment == 'qa' && secrets.VERINT_BASE_URL_QA) ||
-            (github.event.inputs.environment == 'prod' && secrets.VERINT_BASE_URL_PROD)
-          }}
           API_USERNAME: ${{ secrets.VERINT_USERNAME }}
           API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
           FILE_PATH: ${{ github.event.inputs.file_path }}
           FOLDER_NAME: ${{ github.event.inputs.folder_name }}
           CONTENT_TYPE: ${{ github.event.inputs.content_type }}
         run: |
-          echo "🚀 Starting file upload to the ${{ inputs.environment }} environment..."
+          echo "🚀 Starting file upload to the ${{ github.event.inputs.environment }} environment..."
           echo "File: $FILE_PATH"
           echo "Destination Folder: $FOLDER_NAME"
           echo "Content Type: $CONTENT_TYPE"
@@ -209,7 +218,7 @@ jobs:
             echo "🔍 Troubleshooting tips:"
             echo "- Check if the folder name '$FOLDER_NAME' exists or is valid"
             echo "- Verify the content type '$CONTENT_TYPE' matches the file"
-            echo "- Ensure you have upload permissions for environment '${{ inputs.environment }}'"
+            echo "- Ensure you have upload permissions for environment '${{ github.event.inputs.environment }}'"
             echo "- Check if the file size is within limits"
             echo "- Verify API credentials are correct"
             
