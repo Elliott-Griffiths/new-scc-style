@@ -1,7 +1,6 @@
 name: Replace File
 
 on:
-  # Trigger the workflow manually from GitHub UI
   workflow_dispatch:
     inputs:
       file_path:
@@ -13,6 +12,15 @@ on:
         required: false
         default: 'text/plain'
         type: string
+      environment:
+        description: 'Select the target environment'
+        required: true
+        type: choice
+        default: 'dev'
+        options:
+          - dev
+          - uat
+          - prod
 
 jobs:
   update-file:
@@ -24,21 +32,21 @@ jobs:
       
       - name: Get file key and update file
         env:
-          API_BASE_URL: https://sheffielddev.resources.ukpreview.empro.verintcloudservices.com
+          # Dynamically select the secret based on the 'environment' input
+          API_BASE_URL: ${{ secrets[format('VERINT_API_URL_{0}', inputs.environment)] }}
           API_USERNAME: ${{ secrets.VERINT_USERNAME }}
           API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
           FILE_PATH: ${{ github.event.inputs.file_path }}
           CONTENT_TYPE: ${{ github.event.inputs.content_type }}
         run: |
-          # 1. Validate that the local file exists
+          # The rest of your script remains unchanged.
+          # It will now use the dynamically selected API_BASE_URL secret.
           FULL_PATH="${FILE_PATH}"
           if [ ! -f "$FULL_PATH" ]; then
             echo "❌ Local file not found: $FULL_PATH"
             exit 1
           fi
           
-          # 2. Separate filename and folder from the input path
-          # We use dirname to get the path, then basename to get the last folder name
           FOLDER_NAME=$(basename $(dirname "$FULL_PATH"))
           FILENAME=$(basename "$FULL_PATH")
 
@@ -46,15 +54,12 @@ jobs:
           echo "  - Filename: '$FILENAME'"
           echo "  - Folder Name: '$FOLDER_NAME'"
 
-          # 3. Call the GET /files API to find the file key
           echo "Making API GET request to find the file..."
           response_get=$(curl -s -u "${API_USERNAME}:${API_PASSWORD}" "${API_BASE_URL}/files?query=${FILENAME}")
 
           echo "API GET response:"
           echo "$response_get"
           
-          # Use jq to find the key for the file matching both the name and folder
-          # jq is pre-installed on GitHub-hosted runners
           FILE_KEY=$(echo "$response_get" | jq -r --arg filename "$FILENAME" --arg foldername "$FOLDER_NAME" '.collection[] | select(.fileName == $filename and .folderName == $foldername) | .key')
 
           if [ -z "$FILE_KEY" ]; then
@@ -65,7 +70,6 @@ jobs:
 
           echo "✅ Found a match! Using file key: $FILE_KEY"
           
-          # 4. Use the retrieved key to perform the PUT request (update)
           echo "🔄 Starting file update..."
           
           response_put=$(curl -s -w "HTTPSTATUS:%{http_code}" \
@@ -76,7 +80,6 @@ jobs:
             -H 'Content-Type: multipart/form-data' \
             -F "file=@${FILE_PATH};type=${CONTENT_TYPE}")
 
-          # Extract and check HTTP status code for the PUT request
           http_code=$(echo $response_put | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
           body_put=$(echo $response_put | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
           
@@ -99,4 +102,4 @@ jobs:
         with:
           name: update-response-${{ github.run_number }}
           path: update_response.json
-          retention-days: 7
+          retention-days: 28
