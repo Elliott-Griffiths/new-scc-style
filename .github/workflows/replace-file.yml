@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       content_type:
-        description: 'File content type'
+        description: 'Select the file content type'
         required: true
         type: choice
         default: 'text/plain'
