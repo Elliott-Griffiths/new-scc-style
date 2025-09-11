@@ -1,0 +1,89 @@
+name: Update File
+
+on:
+  # Trigger the workflow manually from GitHub UI
+  workflow_dispatch:
+    inputs:
+      file_path:
+        description: 'Path to file in repository to update (e.g., src/main.js)'
+        required: true
+        type: string
+      file_key:
+        description: 'Base64-encoded key of the file to update (e.g., c2NyaXB0cy9tYWluLmpz)'
+        required: true
+        type: string
+      content_type:
+        description: 'File content type (e.g., text/javascript, text/css)'
+        required: false
+        default: 'text/plain'
+        type: string
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Validate file exists
+        run: |
+          FILE_PATH="${{ github.event.inputs.file_path }}"
+          if [ ! -f "$FILE_PATH" ]; then
+            echo "❌ File not found: $FILE_PATH"
+            echo "Available files in repository:"
+            find . -type f | head -n 20
+            exit 1
+          fi
+          echo "✅ File found: $FILE_PATH"
+
+      - name: Update file via Verint API
+        env:
+          API_BASE_URL: https://sheffielddev.resources.ukpreview.empro.verintcloudservices.com
+          # Store credentials in GitHub Secrets (recommended)
+          API_USERNAME: ${{ secrets.VERINT_USERNAME }}
+          API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
+          FILE_PATH: ${{ github.event.inputs.file_path }}
+          FILE_KEY: ${{ github.event.inputs.file_key }}
+          CONTENT_TYPE: ${{ github.event.inputs.content_type }}
+        run: |
+          echo "🔄 Starting file update..."
+          echo "File Path: $FILE_PATH"
+          echo "File Key: $FILE_KEY"
+          echo "Content Type: $CONTENT_TYPE"
+          
+          # Make the API call using a PUT request with multipart/form-data
+          response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+            -X 'PUT' \
+            "${API_BASE_URL}/files/${FILE_KEY}" \
+            -H 'accept: application/json' \
+            -u "${API_USERNAME}:${API_PASSWORD}" \
+            -H 'Content-Type: multipart/form-data' \
+            -F "file=@${FILE_PATH};type=${CONTENT_TYPE}")
+
+          # Extract HTTP status code
+          http_code=$(echo $response | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          
+          # Extract response body
+          body=$(echo $response | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          
+          echo "================== UPDATE RESULT =================="
+          echo "HTTP Status Code: $http_code"
+          
+          if [ $http_code -eq 200 ] || [ $http_code -eq 204 ]; then
+            echo "✅ File update successful!"
+            echo "$body" > update_response.json
+          else
+            echo "❌ File update failed!"
+            echo "📄 Response: $body"
+            exit 1
+          fi
+          echo "================================================="
+
+      - name: Upload response as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: update-response-${{ github.run_number }}
+          path: update_response.json
+          retention-days: 7
