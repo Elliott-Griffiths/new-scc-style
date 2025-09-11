@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       content_type:
-        description: 'File content type (e.g., text/javascript, text/css)'
+        description: 'File content type (e.g., text/css, image/svg, image/png)'
         required: false
         default: 'text/plain'
         type: string
@@ -19,7 +19,7 @@ on:
         default: 'dev'
         options:
           - dev
-          - uat
+          - qa
           - prod
 
 jobs:
