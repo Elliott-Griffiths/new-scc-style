@@ -227,4 +227,4 @@ jobs:
           path: |
             upload_response.json
             ${{ github.event.inputs.file_path }}
-          retention-days: 30
+          retention-days: 7
