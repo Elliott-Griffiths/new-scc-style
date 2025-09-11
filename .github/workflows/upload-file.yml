@@ -18,7 +18,7 @@ on:
           - images
           - icons
       content_type:
-        description: 'Select the fFile content type'
+        description: 'Select the file content type'
         required: true
         type: choice
         default: 'image/svg+xml'
