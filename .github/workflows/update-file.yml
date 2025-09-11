@@ -1,15 +1,11 @@
-name: Update File
+name: Update File (Dynamic Key)
 
 on:
   # Trigger the workflow manually from GitHub UI
   workflow_dispatch:
     inputs:
       file_path:
-        description: 'Path to file in repository to update (e.g., src/main.js)'
-        required: true
-        type: string
-      file_key:
-        description: 'Base64-encoded key of the file to update (e.g., c2NyaXB0cy9tYWluLmpz)'
+        description: 'Path to file in repository (e.g., scripts/main.js)'
         required: true
         type: string
       content_type:
@@ -26,34 +22,45 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Validate file exists
-        run: |
-          FILE_PATH="${{ github.event.inputs.file_path }}"
-          if [ ! -f "$FILE_PATH" ]; then
-            echo "❌ File not found: $FILE_PATH"
-            echo "Available files in repository:"
-            find . -type f | head -n 20
-            exit 1
-          fi
-          echo "✅ File found: $FILE_PATH"
-
-      - name: Update file via Verint API
+      - name: Get file key and update file
         env:
           API_BASE_URL: https://sheffielddev.resources.ukpreview.empro.verintcloudservices.com
-          # Store credentials in GitHub Secrets (recommended)
           API_USERNAME: ${{ secrets.VERINT_USERNAME }}
-          API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
+          API_PASSWORD: ${{ secrets.secrets.VERINT_PASSWORD }}
           FILE_PATH: ${{ github.event.inputs.file_path }}
-          FILE_KEY: ${{ github.event.inputs.file_key }}
           CONTENT_TYPE: ${{ github.event.inputs.content_type }}
         run: |
-          echo "🔄 Starting file update..."
-          echo "File Path: $FILE_PATH"
-          echo "File Key: $FILE_KEY"
-          echo "Content Type: $CONTENT_TYPE"
+          # 1. Separate filename and folder from the input path
+          FULL_PATH="${FILE_PATH}"
+          FOLDER_NAME=$(dirname "$FULL_PATH")
+          FILENAME=$(basename "$FULL_PATH")
           
-          # Make the API call using a PUT request with multipart/form-data
-          response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+          echo "Looking for file: '$FILENAME' in folder: '$FOLDER_NAME'"
+
+          # 2. Call the GET /files API to find the file key
+          response_get=$(curl -s -u "${API_USERNAME}:${API_PASSWORD}" \
+            "${API_BASE_URL}/files?query=${FILENAME}")
+
+          FILE_KEY=""
+          
+          # Use jq to find the key for the file matching both the name and folder
+          # jq is pre-installed on GitHub-hosted runners
+          if echo "$response_get" | jq -e .collection > /dev/null; then
+            FILE_KEY=$(echo "$response_get" | jq -r --arg filename "$FILENAME" --arg foldername "$FOLDER_NAME" '.collection[] | select(.fileName == $filename and .folderName == $foldername) | .key')
+          fi
+
+          if [ -z "$FILE_KEY" ]; then
+            echo "❌ File not found on the server or multiple matches found that didn't match the folder."
+            echo "Response: $response_get"
+            exit 1
+          fi
+
+          echo "✅ Found file key: $FILE_KEY"
+          
+          # 3. Use the retrieved key to perform the PUT request (update)
+          echo "🔄 Starting file update with key: $FILE_KEY"
+          
+          response_put=$(curl -s -w "HTTPSTATUS:%{http_code}" \
             -X 'PUT' \
             "${API_BASE_URL}/files/${FILE_KEY}" \
             -H 'accept: application/json' \
@@ -61,21 +68,19 @@ jobs:
             -H 'Content-Type: multipart/form-data' \
             -F "file=@${FILE_PATH};type=${CONTENT_TYPE}")
 
-          # Extract HTTP status code
-          http_code=$(echo $response | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
-          
-          # Extract response body
-          body=$(echo $response | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          # Extract and check HTTP status code for the PUT request
+          http_code=$(echo $response_put | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          body_put=$(echo $response_put | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
           
           echo "================== UPDATE RESULT =================="
           echo "HTTP Status Code: $http_code"
           
-          if [ $http_code -eq 200 ] || [ $http_code -eq 204 ]; then
+          if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 204 ]; then
             echo "✅ File update successful!"
-            echo "$body" > update_response.json
+            echo "$body_put" > update_response.json
           else
             echo "❌ File update failed!"
-            echo "📄 Response: $body"
+            echo "📄 Response: $body_put"
             exit 1
           fi
           echo "================================================="
