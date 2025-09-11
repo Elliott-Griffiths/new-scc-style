@@ -94,8 +94,8 @@ jobs:
           
           # Validate environment variables
           if [ -z "$API_BASE_URL" ]; then
-            echo "❌ API_BASE_URL is not set for environment ${{ inputs.environment }}"
-            case "${{ inputs.environment }}" in
+            echo "❌ API_BASE_URL is not set for environment ${{ github.event.inputs.environment }}"
+            case "${{ github.event.inputs.environment }}" in
               "dev") echo "   Expected secret: VERINT_API_URL_DEV" ;;
               "qa")  echo "   Expected secret: VERINT_BASE_URL_QA" ;;
               "prod") echo "   Expected secret: VERINT_BASE_URL_PROD" ;;
@@ -227,4 +227,4 @@ jobs:
           path: |
             upload_response.json
             ${{ github.event.inputs.file_path }}
-          retention-days: 7
+          retention-days: 30
