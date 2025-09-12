@@ -16,8 +16,10 @@ div.content {
   background: var(--c-greys-chalk);
 }
 
+#account div.navigation,
+#account div.content,
 #form div.navigation,
-#form div.content{
+#form div.content {
   background: var(--c-greys-white);
 }
 
