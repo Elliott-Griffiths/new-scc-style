@@ -3136,7 +3136,7 @@ function getAndSetReviewPageData() {
   const reviewPageIsVisible = $("#dform_page_page_review:visible").length > 0;
 
   if (reviewPageIsVisible) {
-    showCurrentProgress();
+    // showCurrentProgress();
 
     // Find all active form pages, excluding the review, declaration, and complete pages
     const excludedPages = '#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete, #dform_page_page_core_fields, #dform_page_page_core_confirm_fields';
