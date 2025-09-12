@@ -151,6 +151,7 @@ li.le-stat-closed li.le-request-status-text::after {
   background: var(--c-greys-white);
   border-radius: 0 0 1.5625rem 1.5625rem;
   margin-bottom: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
 }
 
 #pagination-container {
