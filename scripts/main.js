@@ -5800,15 +5800,13 @@ const createNotification = (content, type) => {
   const textContent = document.createElement('p');
   textContent.textContent = content.message;
   textContent.style.margin = '0';
-  contentWrapper.appendChild(textContent);
 
-  // Conditionally add a link if linkText and linkHref are provided
   if (content.linkText && content.linkHref) {
       const link = document.createElement('a');
       link.textContent = content.linkText;
       link.href = content.linkHref;
       link.classList.add('notification-link');
-      contentWrapper.appendChild(link);
+      textContent.appendChild(link);
   }
 
   const closeLink = document.createElement('a');
@@ -5820,8 +5818,10 @@ const createNotification = (content, type) => {
       notificationBar.remove();
   });
 
+  contentWrapper.appendChild(textContent);
+  contentWrapper.appendChild(closeLink);
+  
   notificationBar.appendChild(contentWrapper);
-  notificationBar.appendChild(closeLink);
   
   parentElement.appendChild(notificationBar);
   
