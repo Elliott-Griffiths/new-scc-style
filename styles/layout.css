@@ -86,7 +86,7 @@
   align-items: center;
   gap: var(--spacing-xl);
   background: var(--c-core-brand-primary-darken);
-  padding: 1vw 1.5vw 0.1vw;
+  padding: var(--spacing-sm) clamp(15px, 5vw, 131px) var(--spacing-xxs) !important;
 }
 
 #dform_container.dform_agent>.service-header-bar>div>a>img {
@@ -115,7 +115,7 @@
 }
 
 #dform_container.dform_agent #dform_control_buttons {
-  padding: 1vw 1.5vw !important;
+  padding: var(--spacing-sm) clamp(15px, 5vw, 131px) !important;
 }
 
 #dform_container.dform_agent form.dform .dform_widget_field,
