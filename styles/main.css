@@ -268,7 +268,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(2);
-  background: URL('./Sheffield-Preloader.gif');
+  background: URL('../Sheffield-Preloader.gif');
   background-repeat: no-repeat;
   border: 2px solid var(--c-greys-white);
   border-radius: 50px;
