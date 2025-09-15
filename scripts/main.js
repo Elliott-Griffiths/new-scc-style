@@ -429,42 +429,7 @@ function handleInitialisingEvent() {
     }
   })();
 
-  // --- HANDLE FILE UPLOAD ------------------------------------------------ \\
-
-  // $(document).ajaxComplete(function (event, xhr, settings) {
-  //   if (settings.url.startsWith(KDF.kdf().rest.attachFiles)) {
-  //     const { field, token, filename, mimetype } = xhr.responseJSON[0];
-  //     const deleteButton = getFileDeleteByInputId(field);
-  //     const fileNameField = field.replace("file_", "txt_file_name_");
-
-  //     $(`#${fileNameField}`).val(filename).trigger("change");
-
-  //     if (deleteButton) {
-  //       deleteButton.addEventListener("click", () => {
-  //         setTimeout(() => {
-  //           if (!KDF.kdf().form.filetokens.includes(token)) {
-  //             $(`#${fileNameField}`).val("").trigger("change");
-  //           }
-  //         }, 0);
-  //       });
-  //     }
-  //     checkPageProgress();
-  //   }
-  // });
-
-  // // Function to find file_delete element by input ID
-  // function getFileDeleteByInputId(fileUploadId) {
-  //   const fileUploadElement = document.getElementById(fileUploadId);
-  //   if (fileUploadElement) {
-  //     const fileDeleteElement = fileUploadElement
-  //       .closest(".container")
-  //       .querySelector(".file_delete");
-  //     if (fileDeleteElement) {
-  //       return fileDeleteElement;
-  //     }
-  //   }
-  //   return null;
-  // }
+  scrollToTop();
 }
 
 // --- HANDLE ON READY EVENT ----------------------------------------------- \\
@@ -1340,6 +1305,8 @@ function handleOnReadyEvent(_, kdf) {
   $('#dform_widget_button_but_view_my_requests').on('click', function () {
     window.location.href = `${PORTAL_URL}/requests`;
   });
+  
+  scrollToTop();
 }
 
 // --- HANDLE ON PAGE CHANGE EVENT ----------------------------------------- \\
@@ -1424,6 +1391,8 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   }
 
   getAndSetReviewPageData();
+
+  scrollToTop();
 
   // keep at the bottom
   checkPageProgress();
