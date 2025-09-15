@@ -72,7 +72,7 @@
 /* INTERNAL */
 
 #dform_container .dform_agent form.dform {
-  padding-inline: 8vw;
+  padding: 3vh 8vw;
 }
 
 #dform_container .dform_agent form.dform .dform_widget_field, 
