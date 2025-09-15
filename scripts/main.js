@@ -5788,7 +5788,7 @@ const createNotification = (content, type) => {
   // Check for an existing notification of the same type and remove it
   const existingNotification = document.querySelector(`.site-notification-bar--${type}`);
   if (existingNotification) {
-      existingNotification.remove();
+    existingNotification.remove();
   }
 
   const notificationBar = document.createElement('div');
@@ -5802,11 +5802,11 @@ const createNotification = (content, type) => {
   textContent.style.margin = '0';
 
   if (content.linkText && content.linkHref) {
-      const link = document.createElement('a');
-      link.textContent = content.linkText;
-      link.href = content.linkHref;
-      link.classList.add('notification-link');
-      textContent.appendChild(link);
+    const link = document.createElement('a');
+    link.textContent = content.linkText;
+    link.href = content.linkHref;
+    link.classList.add('notification-link');
+    textContent.appendChild(link);
   }
 
   const closeLink = document.createElement('a');
@@ -5814,17 +5814,17 @@ const createNotification = (content, type) => {
   closeLink.textContent = 'Close all notifications';
   closeLink.classList.add('close-notification-link');
   closeLink.addEventListener('click', (event) => {
-      event.preventDefault();
-      notificationBar.remove();
+    event.preventDefault();
+    notificationBar.remove();
   });
 
   contentWrapper.appendChild(textContent);
   contentWrapper.appendChild(closeLink);
-  
+
   notificationBar.appendChild(contentWrapper);
-  
+
   parentElement.appendChild(notificationBar);
-  
+
   scrollToTop();
 };
 
@@ -5854,7 +5854,7 @@ const closeAllNotifications = () => {
 
   // Iterate through the NodeList and remove each element
   notifications.forEach(notification => {
-      notification.remove();
+    notification.remove();
   });
 };
 
