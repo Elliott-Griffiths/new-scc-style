@@ -153,6 +153,7 @@ a.close-notification-link:focus {
   color: var(--c-greys-black) !important;
 }
 
+div.site-notification-bar--warning a.close-notification-link::before,
 a.close-notification-link:focus::before {
   content: url(../icons/close-x-black.svg);
 }
