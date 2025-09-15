@@ -5844,6 +5844,19 @@ function showErrorBanner(content) {
   createNotification(content, 'error');
 }
 
+/**
+ * Closes and removes all visible messages from the DOM.
+ * It targets all elements with the class 'site-notification-bar'.
+ */
+const closeAllNotifications = () => {
+  // Select all elements with the class 'site-notification-bar'
+  const notifications = document.querySelectorAll('.site-notification-bar');
+
+  // Iterate through the NodeList and remove each element
+  notifications.forEach(notification => {
+      notification.remove();
+  });
+};
 
 
 
