@@ -22,7 +22,7 @@
   padding-block: 0;
 }
 
-#dform_container .dform_message {
+#dform_container .message-wrapper {
   padding: var(--spacing-sm) clamp(15px, 5vw, 131px) !important;
 }
 

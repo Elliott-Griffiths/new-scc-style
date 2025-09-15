@@ -112,6 +112,10 @@ function logArguments(event, kdf, ...args) {
   console.groupEnd();
 }
 
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
+
 // --- GLOBAL CONSTS AND VARIABLES ----------------------------------------- \\
 
 const { protocol, hostname } = window.location;
