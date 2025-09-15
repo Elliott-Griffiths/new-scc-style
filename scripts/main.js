@@ -1305,7 +1305,7 @@ function handleOnReadyEvent(_, kdf) {
   $('#dform_widget_button_but_view_my_requests').on('click', function () {
     window.location.href = `${PORTAL_URL}/requests`;
   });
-  
+
   scrollToTop();
 }
 
@@ -5770,8 +5770,79 @@ function buildFormLink(id, formName, includeFormTitle = false) {
   linkElement.setAttribute('href', newHref);
 }
 
+// --- BUILD NOTIFICATION BANNERS ------------------------------------------- \\
 
+/**
+ * Creates and appends a notification bar to a specified parent element.
+ * If a notification of the same type already exists, it is replaced.
+ * @param {object} content The content of the notification.
+ * @param {string} content.message The main text content.
+ * @param {string} [content.linkText] The text for an optional link.
+ * @param {string} [content.linkHref] The URL for an optional link.
+ * @param {string} type The type of notification ('info', 'warning', 'error', 'success').
+ */
+const createNotification = (content, type) => {
+  const parentElement = document.querySelector('.header');
+  if (!parentElement) return;
 
+  // Check for an existing notification of the same type and remove it
+  const existingNotification = document.querySelector(`.site-notification-bar--${type}`);
+  if (existingNotification) {
+      existingNotification.remove();
+  }
+
+  const notificationBar = document.createElement('div');
+  notificationBar.classList.add('site-notification-bar', `site-notification-bar--${type}`);
+
+  const contentWrapper = document.createElement('div');
+  contentWrapper.classList.add('notification-content');
+
+  const textContent = document.createElement('p');
+  textContent.textContent = content.message;
+  textContent.style.margin = '0';
+  contentWrapper.appendChild(textContent);
+
+  // Conditionally add a link if linkText and linkHref are provided
+  if (content.linkText && content.linkHref) {
+      const link = document.createElement('a');
+      link.textContent = content.linkText;
+      link.href = content.linkHref;
+      link.classList.add('notification-link');
+      contentWrapper.appendChild(link);
+  }
+
+  const closeLink = document.createElement('a');
+  closeLink.href = '#';
+  closeLink.textContent = 'Close all notifications';
+  closeLink.classList.add('close-notification-link');
+  closeLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      notificationBar.remove();
+  });
+
+  notificationBar.appendChild(contentWrapper);
+  notificationBar.appendChild(closeLink);
+  
+  parentElement.appendChild(notificationBar);
+  
+  scrollToTop();
+};
+
+function showInformationBanner(content) {
+  createNotification(content, 'info');
+}
+
+function showSuccessBanner(content) {
+  createNotification(content, 'success');
+}
+
+function showWarningBanner(content) {
+  createNotification(content, 'warning');
+}
+
+function showErrorBanner(content) {
+  createNotification(content, 'error');
+}
 
 
 
