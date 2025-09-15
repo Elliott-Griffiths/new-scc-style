@@ -33,10 +33,10 @@
   background: var(--c-alerts-warning);
 }
 
-#dform_container .dform_success:before,
-#dform_container .dform_info:before,
-#dform_container .dform_warning:before,
-#dform_container .dform_error:before {
+#dform_container .dform_success::before,
+#dform_container .dform_info::before,
+#dform_container .dform_warning::before,
+#dform_container .dform_error::before {
   display: inline-block;
   margin-right: var(--spacing-sm);
   margin-bottom: var(--spacing-sm);
@@ -45,18 +45,94 @@
   transform: translateY(8px);
 }
 
-#dform_container .dform_success:before {
+#dform_container .dform_success::before {
   content: url(../icons/circle-check-success-white.svg);
 }
 
-#dform_container .dform_info:before {
+#dform_container .dform_info::before {
   content: url(../icons/circle-info-white.svg);
 }
 
-#dform_container .dform_error:before {
+#dform_container .dform_error::before {
   content: url(../icons/triangle-exclamation-danger-white.svg);
 }
 
-#dform_container .dform_warning:before {
+#dform_container .dform_warning::before {
   content: url(../icons/triangle-exclamation-danger-black.svg);
+}
+
+
+
+
+
+div.site-notification-bar--info {
+  background: var(--c-brand-accents-teal);
+}
+
+div.site-notification-bar--warning {
+  background: var(--c-alerts-warning);
+}
+
+div.site-notification-bar--error {
+  background: var(--c-alerts-danger);
+}
+
+div.site-notification-bar--success {
+  background: var(--c-alerts-success);
+}
+
+div.notification-content {
+  margin-inline: auto;
+  max-width: 87.5rem !important;
+  padding: var(--spacing-sm) clamp(15px, 5vw, 131px) !important;
+}
+
+div.notification-content p,
+div.notification-content a {
+  color: var(--c-greys-white);
+}
+
+div.site-notification-bar--warning div.notification-content p,
+div.site-notification-bar--warning div.notification-content a {
+  color: var(--c-greys-black);
+}
+
+div.notification-content p::before {
+  display: inline-block;
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  width: var(--font-size-xxxxl);
+  line-height: var(--line-height);
+  transform: translateY(8px);
+}
+
+div.site-notification-bar--success div.notification-content p::before  {
+  content: url(../icons/circle-check-success-white.svg);
+}
+
+div.site-notification-bar--info div.notification-content p::before  {
+  content: url(../icons/circle-info-white.svg);
+}
+
+div.site-notification-bar--error div.notification-content p::before  {
+  content: url(../icons/triangle-exclamation-danger-white.svg);
+}
+
+div.site-notification-bar--warning div.notification-content p::before {
+  content: url(../icons/triangle-exclamation-danger-black.svg);
+}
+
+a.close-notification-link {
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
+}
+
+a.close-notification-link::before {
+  content: url(../icons/close-x-white.svg);
+  display: inline-block;
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  width: var(--font-size-xxxxl);
+  line-height: var(--line-height);
+  transform: translateY(8px);
 }
