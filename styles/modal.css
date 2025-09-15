@@ -1,4 +1,8 @@
-/* Modal styles */
+
+#setAgentLocationModal body {
+  padding: 2vh 5vw;
+}
+
 .modal {
   display: none;
   position: fixed;
