@@ -100,11 +100,16 @@ div.notification-content a {
   color: var(--c-greys-white);
 }
 
+div.notification-content p a {
+  font-weight: var(--font-weight-bold);
+} 
+
 div.notification-content a {
   gap: var(--spacing-xs);
 }
 
 div.site-notification-bar--warning div.notification-content p,
+div.site-notification-bar--warning div.notification-content p a,
 div.site-notification-bar--warning div.notification-content a {
   color: var(--c-greys-black);
 }
