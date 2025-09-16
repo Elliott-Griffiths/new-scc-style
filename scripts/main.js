@@ -3406,7 +3406,7 @@ function checkAddressHasBeenSet(action = "next page") {
         let message = "Select the address";
 
         if (selectedValue !== '' && selectedValue !== 'Please select...') {
-          const message = "Click use this address";
+          message = "Click use this address";
         }
         if (validationMessage) {
           validationMessage.style.display = "block";
