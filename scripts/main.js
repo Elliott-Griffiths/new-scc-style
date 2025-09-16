@@ -3374,15 +3374,14 @@ function checkAddressHasBeenSet(action = "next page") {
     }
   } else {
     const mapElement = document.querySelector(`#${currentPageId} .map-container`);
+    const detailsElement = mapElement.querySelector('.details-accordion');
 
     // Check if the map element exists on the page
-    if (mapElement) {
-      const detailsElement = mapElement.querySelector('.details-accordion');
+    if (mapElement && detailsElement && detailsElement.hasAttribute('open')) {
 
       // Check if the map accordion is open
-      if (detailsElement && detailsElement.hasAttribute('open')) {
+      // if (detailsElement && detailsElement.hasAttribute('open')) {
 
-        // const isMapContainerVisible = $("#map_container").is(":visible");
         const errorMessage = acceptGMSites
           ? defaultSelectedAddressMessage
           : "Choose a location on the public highway";
@@ -3392,7 +3391,7 @@ function checkAddressHasBeenSet(action = "next page") {
           selectedAddressSpan.style.display = 'block';
         }
         $("#map_container").addClass("map_container_error");
-      }
+      // }
     } else {
       const searchResult = document.querySelector(
         `#${currentPageId} select[data-customalias="searchResult"]`
