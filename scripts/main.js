@@ -1394,6 +1394,7 @@ function handleMapClickEvent(
 // --- HANDLE ON MAP LAYRE SELECTED EVENT --------------------------------- \\
 
 function handleSelectedMapLayerEvent(event, kdf, layerName, layerAttributes) {
+  console.log('handleSelectedMapLayerEvent', event, kdf, layerName, layerAttributes)
   const { main_attribute: main, background_attribute: bg } = layerAttributes;
 
   const siteCode = bg.sitecode || "";
@@ -4547,6 +4548,7 @@ function do_KDF_Custom_esriMap(action, response) {
   }
 
   if (action === "feature_layer_request") {
+    console.log('feature_layer_request')
     var parseResult = JSON.parse(response.data.result.replace(/\\/g, ""));
     var parseFeature = parseResult.features;
     var nearestFeature, nearestDistance;
