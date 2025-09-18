@@ -1484,6 +1484,7 @@ function handleObjectIdLoaded(event, kdf, response, type, id) {
 // --- HANDLE ON SUCCESSFUL ACTION EVENT ---------------------------------- \\
 
 function handleSuccessfulAction(event, kdf, response, action, actionedby) {
+  console.log('handleSuccessfulAction', action)
   if (action === "check-for-existing-case-management-form") {
     if (response.data.existingForm === "true") {
       KDF.showInfo("This case manamgement form already exists");
@@ -4292,7 +4293,7 @@ function mapClick(evt) {
 }
 
 function retrieveAttribute() {
-  console.log('retrieveAttribute')
+  console.log('retrieveAttribute', store_layer_attr)
   $(`#dform_${KDF.kdf().form.name}`).trigger("_Selected_Layer", [
     null,
     "asset_layer",
