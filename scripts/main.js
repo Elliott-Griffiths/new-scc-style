@@ -4414,6 +4414,7 @@ function do_KDF_optionSelected_esriMap(field, label, val) {
 }
 
 function do_KDF_Custom_esriMap(action, response) {
+  console.log('do_KDF_Custom_esriMap')
   if (action === "reverse_geocode_osmap") {
     $("#map_container").removeClass("map_container_error");
     $("#map_error").remove();
