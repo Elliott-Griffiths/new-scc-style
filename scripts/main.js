@@ -4235,26 +4235,26 @@ function mapClick(evt) {
 
         if (foundFeatureGraphic) {
           // A specific feature (non-boundary) was clicked
-          // streetMapPositionLayer.removeAll();
-          // const layerAttributes = foundFeatureGraphic.graphic.attributes;
-          // const layerName = foundFeatureGraphic.layer.id.toString();
+          streetMapPositionLayer.removeAll();
+          const layerAttributes = foundFeatureGraphic.graphic.attributes;
+          const layerName = foundFeatureGraphic.layer.id.toString();
 
-          // mapX = convertPointP4.x.toString();
-          // mapY = convertPointP4.y.toString();
-          // KDF.setVal("le_gis_lon", mapX_4326);
-          // KDF.setVal("le_gis_lat", mapY_4326);
+          mapX = convertPointP4.x.toString();
+          mapY = convertPointP4.y.toString();
+          KDF.setVal("le_gis_lon", mapX_4326);
+          KDF.setVal("le_gis_lat", mapY_4326);
 
-          // store_layer_attr.main_attribute = {};
-          // store_layer_attr.main_attribute = layerAttributes;
-          // store_layer_attr.main_attribute.layername = layerName;
-          // setValuesToInputFields([
-          //   { alias: "easting", value: mapX },
-          //   { alias: "northing", value: mapY },
-          // ]);
-          // KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
-          //   longitude: mapX,
-          //   latitude: mapY,
-          // });
+          store_layer_attr.main_attribute = {};
+          store_layer_attr.main_attribute = layerAttributes;
+          store_layer_attr.main_attribute.layername = layerName;
+          setValuesToInputFields([
+            { alias: "easting", value: mapX },
+            { alias: "northing", value: mapY },
+          ]);
+          KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
+            longitude: mapX,
+            latitude: mapY,
+          });
 
         if (streetMapView.zoom >= 18) {
           streetMapView.goTo({
@@ -4306,6 +4306,7 @@ function mapClick(evt) {
           $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
             null,
           ]);
+        }
         } else {
           // Only the boundary or no feature was clicked, handle as a general location click
           // addPoint(streetMapView, evt.mapPoint, markerSymbol);
