@@ -4005,10 +4005,6 @@ function mapClick(evt) {
         }
         $("#map_container").addClass("map_container_error");
 
-
-
-
-
         //clear location information when out of our area
         selectedLocation = "";
         KDF.setVal("le_gis_lat", "");
@@ -4037,14 +4033,12 @@ function mapClick(evt) {
           });
         }
 
-        // ---------
         KDF.customdata("gis_background_layer", "mapClick", true, true, {
             url: vmap_config.consolidated_layer_url,
             longitude: mapX,
             latitude: mapY,
             distance: 20,
           });
-        // ---------
 
         let foundFeatureGraphic = null;
         let sccBoundaryClicked = false;
@@ -4085,7 +4079,6 @@ function mapClick(evt) {
             latitude: mapY,
           });
 
-          // ---------
           if (vmap_config.mapClickType == "Background") {
             KDF.customdata("feature_layer_request", "mapClick", true, true, {
               url: vmap_config.featureLayers[BG_layer].url,
@@ -4098,7 +4091,6 @@ function mapClick(evt) {
           $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
             null,
           ]);
-          // ---------
         } else {
           // Only the boundary or no feature was clicked, handle as a general location click
           addPoint(streetMapView, evt.mapPoint, markerSymbol);
@@ -4127,9 +4119,10 @@ function mapClick(evt) {
               distance: "5",
             });
           }
-          // $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
-          //   null,
-          // ]);
+
+          $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
+            null,
+          ]);
         }
       }
     });
@@ -4460,7 +4453,7 @@ function do_KDF_Custom_esriMap(action, response) {
     });
     addPoint(streetMapView, centerpoint, markerSymbol);
 
-    if (vmap_config.mapClickType == "Background") {
+    // if (vmap_config.mapClickType == "Background") {
       KDF.customdata(
         "feature_layer_request",
         "do_KDF_Custom_esriMap",
@@ -4473,7 +4466,7 @@ function do_KDF_Custom_esriMap(action, response) {
           distance: "5",
         }
       );
-    }
+    // }
 
     KDF.customdata(
       "reverse_geocode_osmap",
