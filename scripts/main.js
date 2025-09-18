@@ -4453,7 +4453,7 @@ function do_KDF_Custom_esriMap(action, response) {
     });
     addPoint(streetMapView, centerpoint, markerSymbol);
 
-    // if (vmap_config.mapClickType == "Background") {
+    if (vmap_config.mapClickType == "Background") {
       KDF.customdata(
         "feature_layer_request",
         "do_KDF_Custom_esriMap",
@@ -4466,7 +4466,7 @@ function do_KDF_Custom_esriMap(action, response) {
           distance: "5",
         }
       );
-    // }
+    }
 
     KDF.customdata(
       "reverse_geocode_osmap",
@@ -4480,7 +4480,6 @@ function do_KDF_Custom_esriMap(action, response) {
     );
 
     $(".esriPopup").hide();
-    // remove txt_selected_x
     KDF.setVal("txt_selected_x", centerpoint.x);
     KDF.setVal("txt_selected_y", centerpoint.y);
 
@@ -4495,7 +4494,6 @@ function do_KDF_Custom_esriMap(action, response) {
     KDF.setVal("txt_location_ward_code", response.data.WardRef);
     KDF.setVal("txt_location_ward_name", response.data.WardName);
 
-    // setSelectedAddress(response.data.address, "show");
     $(".popup").text(response.data.address);
     setRequiredStateByAlias("postcode", "not required");
     KDF.hideWidget("ahtm_map_location_error");
