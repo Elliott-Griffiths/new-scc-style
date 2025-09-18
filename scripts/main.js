@@ -4339,6 +4339,33 @@ function mapClick(evt) {
           //   null,
           // ]);
 
+                // streetMapPositionLayer.removeAll();
+                // var layerAttributes;
+                // var layerName;
+                // graphic.forEach(function (arrayItem) {
+                //   if (arrayItem.layer.id !== "scc_boundary") {
+                //     layerAttributes = arrayItem.graphic.attributes;
+                //     layerName = arrayItem.layer.id.toString();
+                //   }
+                // });
+
+                // mapX = convertPointP4.x.toString();
+                // mapY = convertPointP4.y.toString();
+                // KDF.setVal("le_gis_lon", mapX_4326);
+                // KDF.setVal("le_gis_lat", mapY_4326);
+
+                // store_layer_attr.main_attribute = {};
+                // store_layer_attr.main_attribute = layerAttributes;
+                // store_layer_attr.main_attribute.layername = layerName;
+                // setValuesToInputFields([
+                //   { alias: "easting", value: mapX },
+                //   { alias: "northing", value: mapY },
+                // ]);
+                // KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
+                //   longitude: mapX,
+                //   latitude: mapY,
+                // });
+
           streetMapPositionLayer.removeAll();
           var layerAttributes;
           var layerName;
@@ -4353,10 +4380,15 @@ function mapClick(evt) {
           mapY = convertPointP4.y.toString();
           KDF.setVal("le_gis_lon", mapX_4326);
           KDF.setVal("le_gis_lat", mapY_4326);
-
+          
           store_layer_attr.main_attribute = {};
-          store_layer_attr.main_attribute = layerAttributes;
-          store_layer_attr.main_attribute.layername = layerName;
+          
+          if (layerAttributes) {
+            // Only proceed if layerAttributes is defined
+            store_layer_attr.main_attribute = layerAttributes;
+            store_layer_attr.main_attribute.layername = layerName;
+          }
+          
           setValuesToInputFields([
             { alias: "easting", value: mapX },
             { alias: "northing", value: mapY },
