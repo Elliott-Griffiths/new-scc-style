@@ -4287,10 +4287,7 @@ function do_KDF_Custom_esriMap(action, response) {
             },
             { alias: "responsibility", value: "PWC" },
           ]);
-          // setSelectedAddress(
-          //   store_layer_attr.background_attribute.sitename,
-          //   "show"
-          // );
+          
           $(".popup").text(store_layer_attr.background_attribute.sitename);
           setRequiredStateByAlias("postcode", "not required");
           return;
@@ -4380,9 +4377,6 @@ function do_KDF_Custom_esriMap(action, response) {
       if (selectedAddressSpan) {
         selectedAddressSpan.textContent = fullAddress;
       }
-
-      // setSelectedAddress(fullAddress, "show");
-      // $(".popup").text(streetName);
       setRequiredStateByAlias("postcode", "not required");
     }
   }
