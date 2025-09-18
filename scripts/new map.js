@@ -313,6 +313,39 @@ var vmap_config = {
   ],
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 proj4.defs([
   [
     "EPSG:4326",
@@ -596,6 +629,12 @@ function mapClick(evt) {
       var convertPointP4 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
       var convertPoint4326 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
 
+      
+      
+      
+      
+      
+      
       proj4.transform(source, dest, convertPointP4);
       proj4.transform(source, dest4326, convertPoint4326);
       KDF.setVal("le_gis_lon", convertPoint4326.x.toString());
@@ -616,6 +655,11 @@ function mapClick(evt) {
           selectedAddressSpan.style.display = 'block';
         }
         $("#map_container").addClass("map_container_error");
+
+
+
+
+
         //clear location information when out of our area
         selectedLocation = "";
         KDF.setVal("le_gis_lat", "");
@@ -643,6 +687,15 @@ function mapClick(evt) {
             zoom: 18,
           });
         }
+
+        // ---------
+        KDF.customdata("gis_background_layer", "mapClick", true, true, {
+            url: vmap_config.consolidated_layer_url,
+            longitude: mapX,
+            latitude: mapY,
+            distance: 20,
+          });
+        // ---------
 
         let foundFeatureGraphic = null;
         let sccBoundaryClicked = false;
@@ -672,14 +725,31 @@ function mapClick(evt) {
           store_layer_attr.main_attribute = {};
           store_layer_attr.main_attribute = layerAttributes;
           store_layer_attr.main_attribute.layername = layerName;
+          
           setValuesToInputFields([
             { alias: "easting", value: mapX },
             { alias: "northing", value: mapY },
           ]);
+
           KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
             longitude: mapX,
             latitude: mapY,
           });
+
+          // ---------
+          if (vmap_config.mapClickType == "Background") {
+            KDF.customdata("feature_layer_request", "mapClick", true, true, {
+              url: vmap_config.featureLayers[BG_layer].url,
+              longitude: mapX,
+              latitude: mapY,
+              distance: "5",
+            });
+          }
+
+          $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
+            null,
+          ]);
+          // ---------
         } else {
           // Only the boundary or no feature was clicked, handle as a general location click
           addPoint(streetMapView, evt.mapPoint, markerSymbol);
@@ -708,9 +778,9 @@ function mapClick(evt) {
               distance: "5",
             });
           }
-          $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
-            null,
-          ]);
+          // $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
+          //   null,
+          // ]);
         }
       }
     });

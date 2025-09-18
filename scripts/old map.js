@@ -78,6 +78,85 @@ if (
 
   do_KDF_Custom_esriMap(action, response);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   var streetMapView,
   streetMapPositionLayer,
   mapPoint,
@@ -521,8 +600,13 @@ function mapClick(evt) {
     { alias: "siteName", value: "" },
     { alias: "siteCode", value: "" },
   ]);
+  
   setSelectedAddress("", "hide");
-
+  
+  
+  
+  
+  
   $(".esriPopup").hide();
   if (KDF.kdf().form.complete !== "Y" || KDF.kdf().viewmode === "U") {
     selectedLocation = "";
