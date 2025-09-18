@@ -3930,177 +3930,8 @@ function do_KDF_mapReady_esriMap(map, positionLayer) {
   }
 }
 
-// function mapClick(evt) {
-//   console.log('mapClick', evt)
-//   KDF.setVal("txt_site_name", "");
-//   KDF.setVal("txt_site_code", "");
-//   KDF.setVal("txt_feature_name", "");
-//   KDF.setVal("txt_feature_type", "");
-//   KDF.setVal("txt_responsibility", "");
-//   KDF.setVal("txt_prestige", "");
-//   setValuesToInputFields([
-//     { alias: "property", value: "" },
-//     { alias: "streetName", value: "" },
-//     { alias: "city", value: "" },
-//     { alias: "postCode", value: "" },
-//     { alias: "fullAddress", value: "" },
-//     { alias: "uprn", value: "" },
-//     { alias: "usrn", value: "" },
-//     { alias: "siteName", value: "" },
-//     { alias: "siteCode", value: "" },
-//   ]);
-  
-//   const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
-//   if (selectedAddressSpan) {
-//     selectedAddressSpan.textContent = defaultSelectedAddressMessage;
-//     selectedAddressSpan.classList.remove('dform_validationMessage');
-//   }
-
-//   $(".esriPopup").hide();
-//   if (KDF.kdf().form.complete !== "Y" || KDF.kdf().viewmode === "U") {
-//     selectedLocation = "";
-//     KDF.setVal("le_gis_lat", "");
-//     KDF.setVal("le_gis_lon", "");
-//     KDF.setVal("le_gis_latgeo", "");
-//     KDF.setVal("le_gis_longeo", "");
-//     KDF.setVal("txta_location_address", "");
-//     KDF.hideWidget("ahtm_map_location_error");
-//     var screenPoint = {
-//       x: evt.x,
-//       y: evt.y,
-//     };
-//     streetMapView.hitTest(screenPoint).then(function (response) {
-//       let graphic = response.results;
-//       selectedLocation = evt.mapPoint;
-//       var source = new proj4.Proj("SR-ORG:7483");
-//       var dest = new proj4.Proj("EPSG:27700");
-//       var dest4326 = new proj4.Proj("EPSG:4326");
-//       var convertPointP4 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
-//       var convertPoint4326 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
-
-//       proj4.transform(source, dest, convertPointP4);
-//       proj4.transform(source, dest4326, convertPoint4326);
-//       KDF.setVal("le_gis_lon", convertPoint4326.x.toString());
-//       KDF.setVal("le_gis_lat", convertPoint4326.y.toString());
-//       mapX = convertPointP4.x.toString();
-//       mapY = convertPointP4.y.toString();
-
-//       var mapX_4326 = convertPoint4326.x.toString();
-//       var mapY_4326 = convertPoint4326.y.toString();
-
-//       store_layer_attr.main_attribute = {};
-//       store_layer_attr.background_attribute = {};
-
-//       if (!withinSccCheck(convertPointP4)) {
-//         if (selectedAddressSpan) {
-//           selectedAddressSpan.textContent = "Choose a location inside the Sheffield area";
-//           selectedAddressSpan.classList.add('dform_validationMessage');
-//           selectedAddressSpan.style.display = 'block';
-//         }
-//         $("#map_container").addClass("map_container_error");
-//         //clear location information when out of our area
-//         selectedLocation = "";
-//         KDF.setVal("le_gis_lat", "");
-//         KDF.setVal("le_gis_lon", "");
-//         KDF.setVal("le_gis_latgeo", "");
-//         KDF.setVal("le_gis_longeo", "");
-//         KDF.setVal("txta_location", "");
-//         KDF.setVal("txt_site_name", "");
-//         KDF.setVal("txt_location_UPRN", "");
-//         KDF.setVal("txt_location_USRN", "");
-
-//         $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_mapOutsideBoundary", [
-//           null,
-//         ]);
-//       } else {
-//         $("#map_container").removeClass("map_container_error");
-
-//         if (streetMapView.zoom >= 18) {
-//           streetMapView.goTo({
-//             center: evt.mapPoint,
-//           });
-//         } else if (streetMapView.zoom < 18) {
-//           streetMapView.goTo({
-//             center: evt.mapPoint,
-//             zoom: 18,
-//           });
-//         }
-
-//         let foundFeatureGraphic = null;
-//         let sccBoundaryClicked = false;
-
-//         if (graphic && graphic.length > 0) {
-//           graphic.forEach(function (arrayItem) {
-//             if (arrayItem.layer && arrayItem.layer.id === "scc_boundary") {
-//               sccBoundaryClicked = true;
-//             } else if (arrayItem.layer && arrayItem.layer.id !== "scc_boundary" && !foundFeatureGraphic) {
-//               // Prioritize and save the first non-boundary graphic found
-//               foundFeatureGraphic = arrayItem;
-//             }
-//           });
-//         }
-
-//         if (foundFeatureGraphic) {
-//           // A specific feature (non-boundary) was clicked
-//           streetMapPositionLayer.removeAll();
-//           const layerAttributes = foundFeatureGraphic.graphic.attributes;
-//           const layerName = foundFeatureGraphic.layer.id.toString();
-
-//           mapX = convertPointP4.x.toString();
-//           mapY = convertPointP4.y.toString();
-//           KDF.setVal("le_gis_lon", mapX_4326);
-//           KDF.setVal("le_gis_lat", mapY_4326);
-
-//           store_layer_attr.main_attribute = {};
-//           store_layer_attr.main_attribute = layerAttributes;
-//           store_layer_attr.main_attribute.layername = layerName;
-//           setValuesToInputFields([
-//             { alias: "easting", value: mapX },
-//             { alias: "northing", value: mapY },
-//           ]);
-//           KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
-//             longitude: mapX,
-//             latitude: mapY,
-//           });
-//         } else {
-//           // Only the boundary or no feature was clicked, handle as a general location click
-//           addPoint(streetMapView, evt.mapPoint, markerSymbol);
-//           $(".esriPopup").hide();
-//           mapPoint = evt.mapPoint;
-//           addPoint(streetMapView, mapPoint, markerSymbol);
-
-//           mapX = convertPointP4.x.toString();
-//           mapY = convertPointP4.y.toString();
-//           KDF.setVal("le_gis_lon", mapX_4326);
-//           KDF.setVal("le_gis_lat", mapY_4326);
-//           setValuesToInputFields([
-//             { alias: "easting", value: mapX },
-//             { alias: "northing", value: mapY },
-//           ]);
-//           KDF.customdata("reverse_geocode_osmap", "mapClick", true, true, {
-//             longitude: mapX,
-//             latitude: mapY,
-//           });
-
-//           if (vmap_config.mapClickType == "Background") {
-//             KDF.customdata("feature_layer_request", "mapClick", true, true, {
-//               url: vmap_config.featureLayers[BG_layer].url,
-//               longitude: mapX,
-//               latitude: mapY,
-//               distance: "5",
-//             });
-//           }
-//           $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
-//             null,
-//           ]);
-//         }
-//       }
-//     });
-//   }
-// }
-
 function mapClick(evt) {
-  console.log('mapClick', evt);
+  console.log('mapClick', evt)
   KDF.setVal("txt_site_name", "");
   KDF.setVal("txt_site_code", "");
   KDF.setVal("txt_feature_name", "");
@@ -4147,6 +3978,12 @@ function mapClick(evt) {
       var convertPointP4 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
       var convertPoint4326 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
 
+      
+      
+      
+      
+      
+      
       proj4.transform(source, dest, convertPointP4);
       proj4.transform(source, dest4326, convertPoint4326);
       KDF.setVal("le_gis_lon", convertPoint4326.x.toString());
@@ -4167,6 +4004,11 @@ function mapClick(evt) {
           selectedAddressSpan.style.display = 'block';
         }
         $("#map_container").addClass("map_container_error");
+
+
+
+
+
         //clear location information when out of our area
         selectedLocation = "";
         KDF.setVal("le_gis_lat", "");
@@ -4194,6 +4036,15 @@ function mapClick(evt) {
             zoom: 18,
           });
         }
+
+        // ---------
+        KDF.customdata("gis_background_layer", "mapClick", true, true, {
+            url: vmap_config.consolidated_layer_url,
+            longitude: mapX,
+            latitude: mapY,
+            distance: 20,
+          });
+        // ---------
 
         let foundFeatureGraphic = null;
         let sccBoundaryClicked = false;
@@ -4223,14 +4074,31 @@ function mapClick(evt) {
           store_layer_attr.main_attribute = {};
           store_layer_attr.main_attribute = layerAttributes;
           store_layer_attr.main_attribute.layername = layerName;
+          
           setValuesToInputFields([
             { alias: "easting", value: mapX },
             { alias: "northing", value: mapY },
           ]);
+
           KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
             longitude: mapX,
             latitude: mapY,
           });
+
+          // ---------
+          if (vmap_config.mapClickType == "Background") {
+            KDF.customdata("feature_layer_request", "mapClick", true, true, {
+              url: vmap_config.featureLayers[BG_layer].url,
+              longitude: mapX,
+              latitude: mapY,
+              distance: "5",
+            });
+          }
+
+          $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
+            null,
+          ]);
+          // ---------
         } else {
           // Only the boundary or no feature was clicked, handle as a general location click
           addPoint(streetMapView, evt.mapPoint, markerSymbol);
@@ -4259,20 +4127,10 @@ function mapClick(evt) {
               distance: "5",
             });
           }
+          // $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
+          //   null,
+          // ]);
         }
-        
-        // This is the correct layer-loading logic that was missing.
-        // It should be called after both types of clicks (feature and general location).
-        KDF.customdata("feature_layer_request", "mapClick", true, true, {
-          url: vmap_config.featureLayers[BG_layer].url,
-          longitude: mapX,
-          latitude: mapY,
-          distance: "5",
-        });
-
-        $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
-          null,
-        ]);
       }
     });
   }
