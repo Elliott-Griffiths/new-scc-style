@@ -4231,8 +4231,6 @@ function mapClick(evt) {
             longitude: mapX,
             latitude: mapY,
           });
-          // Fix 1: Add the loadLayers call after a specific feature is clicked
-          loadLayers(mapX, mapY); 
         } else {
           // Only the boundary or no feature was clicked, handle as a general location click
           addPoint(streetMapView, evt.mapPoint, markerSymbol);
@@ -4261,13 +4259,20 @@ function mapClick(evt) {
               distance: "5",
             });
           }
-          // Fix 2: Add the loadLayers call after a general location is clicked
-          loadLayers(mapX, mapY);
-          
-          $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
-            null,
-          ]);
         }
+        
+        // This is the correct layer-loading logic that was missing.
+        // It should be called after both types of clicks (feature and general location).
+        KDF.customdata("feature_layer_request", "mapClick", true, true, {
+          url: vmap_config.featureLayers[BG_layer].url,
+          longitude: mapX,
+          latitude: mapY,
+          distance: "5",
+        });
+
+        $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
+          null,
+        ]);
       }
     });
   }
