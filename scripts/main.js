@@ -4142,7 +4142,7 @@ function mapClick(evt) {
     { alias: "siteName", value: "" },
     { alias: "siteCode", value: "" },
   ]);
-  // setSelectedAddress("", "hide");
+  
   const selectedAddressSpan = document.querySelector(`#${getCurrentPageId()} #selected-address`);
   if (selectedAddressSpan) {
     selectedAddressSpan.textContent = defaultSelectedAddressMessage;
@@ -4208,6 +4208,54 @@ function mapClick(evt) {
       } else {
         $("#map_container").removeClass("map_container_error");
 
+        // if (streetMapView.zoom >= 18) {
+        //   streetMapView.goTo({
+        //     center: evt.mapPoint,
+        //   });
+        // } else if (streetMapView.zoom < 18) {
+        //   streetMapView.goTo({
+        //     center: evt.mapPoint,
+        //     zoom: 18,
+        //   });
+        // }
+
+        // let foundFeatureGraphic = null;
+        // let sccBoundaryClicked = false;
+
+        // if (graphic && graphic.length > 0) {
+        //   graphic.forEach(function (arrayItem) {
+        //     if (arrayItem.layer && arrayItem.layer.id === "scc_boundary") {
+        //       sccBoundaryClicked = true;
+        //     } else if (arrayItem.layer && arrayItem.layer.id !== "scc_boundary" && !foundFeatureGraphic) {
+        //       // Prioritize and save the first non-boundary graphic found
+        //       foundFeatureGraphic = arrayItem;
+        //     }
+        //   });
+        // }
+
+        // if (foundFeatureGraphic) {
+        //   // A specific feature (non-boundary) was clicked
+        //   streetMapPositionLayer.removeAll();
+        //   const layerAttributes = foundFeatureGraphic.graphic.attributes;
+        //   const layerName = foundFeatureGraphic.layer.id.toString();
+
+        //   mapX = convertPointP4.x.toString();
+        //   mapY = convertPointP4.y.toString();
+        //   KDF.setVal("le_gis_lon", mapX_4326);
+        //   KDF.setVal("le_gis_lat", mapY_4326);
+
+        //   store_layer_attr.main_attribute = {};
+        //   store_layer_attr.main_attribute = layerAttributes;
+        //   store_layer_attr.main_attribute.layername = layerName;
+        //   setValuesToInputFields([
+        //     { alias: "easting", value: mapX },
+        //     { alias: "northing", value: mapY },
+        //   ]);
+        //   KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
+        //     longitude: mapX,
+        //     latitude: mapY,
+        //   });
+
         if (streetMapView.zoom >= 18) {
           streetMapView.goTo({
             center: evt.mapPoint,
@@ -4219,44 +4267,15 @@ function mapClick(evt) {
           });
         }
 
-        let foundFeatureGraphic = null;
-        let sccBoundaryClicked = false;
+        KDF.customdata("gis_background_layer", "mapClick", true, true, {
+          url: vmap_config.consolidated_layer_url,
+          longitude: mapX,
+          latitude: mapY,
+          distance: 20,
+        });
 
-        if (graphic && graphic.length > 0) {
-          graphic.forEach(function (arrayItem) {
-            if (arrayItem.layer && arrayItem.layer.id === "scc_boundary") {
-              sccBoundaryClicked = true;
-            } else if (arrayItem.layer && arrayItem.layer.id !== "scc_boundary" && !foundFeatureGraphic) {
-              // Prioritize and save the first non-boundary graphic found
-              foundFeatureGraphic = arrayItem;
-            }
-          });
-        }
-
-        if (foundFeatureGraphic) {
-          // A specific feature (non-boundary) was clicked
-          streetMapPositionLayer.removeAll();
-          const layerAttributes = foundFeatureGraphic.graphic.attributes;
-          const layerName = foundFeatureGraphic.layer.id.toString();
-
-          mapX = convertPointP4.x.toString();
-          mapY = convertPointP4.y.toString();
-          KDF.setVal("le_gis_lon", mapX_4326);
-          KDF.setVal("le_gis_lat", mapY_4326);
-
-          store_layer_attr.main_attribute = {};
-          store_layer_attr.main_attribute = layerAttributes;
-          store_layer_attr.main_attribute.layername = layerName;
-          setValuesToInputFields([
-            { alias: "easting", value: mapX },
-            { alias: "northing", value: mapY },
-          ]);
-          KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
-            longitude: mapX,
-            latitude: mapY,
-          });
-        } else {
-          // Only the boundary or no feature was clicked, handle as a general location click
+        $("#map_container").removeClass("map_container_error");
+        if (graphic[0].layer.id === "scc_boundary") {
           addPoint(streetMapView, evt.mapPoint, markerSymbol);
           $(".esriPopup").hide();
           mapPoint = evt.mapPoint;
@@ -4283,9 +4302,68 @@ function mapClick(evt) {
               distance: "5",
             });
           }
+
           $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
             null,
           ]);
+        } else {
+          // Only the boundary or no feature was clicked, handle as a general location click
+          // addPoint(streetMapView, evt.mapPoint, markerSymbol);
+          // $(".esriPopup").hide();
+          // mapPoint = evt.mapPoint;
+          // addPoint(streetMapView, mapPoint, markerSymbol);
+
+          // mapX = convertPointP4.x.toString();
+          // mapY = convertPointP4.y.toString();
+          // KDF.setVal("le_gis_lon", mapX_4326);
+          // KDF.setVal("le_gis_lat", mapY_4326);
+          // setValuesToInputFields([
+          //   { alias: "easting", value: mapX },
+          //   { alias: "northing", value: mapY },
+          // ]);
+          // KDF.customdata("reverse_geocode_osmap", "mapClick", true, true, {
+          //   longitude: mapX,
+          //   latitude: mapY,
+          // });
+
+          // if (vmap_config.mapClickType == "Background") {
+          //   KDF.customdata("feature_layer_request", "mapClick", true, true, {
+          //     url: vmap_config.featureLayers[BG_layer].url,
+          //     longitude: mapX,
+          //     latitude: mapY,
+          //     distance: "5",
+          //   });
+          // }
+          // $(`#dform_${KDF.kdf().form.name}`).trigger("_KDF_clearAttribute", [
+          //   null,
+          // ]);
+          
+          streetMapPositionLayer.removeAll();
+          var layerAttributes;
+          var layerName;
+          graphic.forEach(function (arrayItem) {
+            if (arrayItem.layer.id !== "scc_boundary") {
+              layerAttributes = arrayItem.graphic.attributes;
+              layerName = arrayItem.layer.id.toString();
+            }
+          });
+
+          mapX = convertPointP4.x.toString();
+          mapY = convertPointP4.y.toString();
+          KDF.setVal("le_gis_lon", mapX_4326);
+          KDF.setVal("le_gis_lat", mapY_4326);
+
+          store_layer_attr.main_attribute = {};
+          store_layer_attr.main_attribute = layerAttributes;
+          store_layer_attr.main_attribute.layername = layerName;
+          setValuesToInputFields([
+            { alias: "easting", value: mapX },
+            { alias: "northing", value: mapY },
+          ]);
+          KDF.customdata("reverse_geocode_osmap", "asset_code", true, true, {
+            longitude: mapX,
+            latitude: mapY,
+          });
         }
       }
     });
