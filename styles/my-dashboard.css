@@ -493,6 +493,7 @@
   border: none !important;
   padding-left: 0 !important;
   color: var(--c-core-brand-secondary);
+  line-height: var(--line-height-body);
 }
 
 #dform_container .dashboard-details-container .your-nearest-container .card .location {
@@ -509,12 +510,12 @@
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
-  line-height: var(--line-height);
 }
 
 #dform_container .dashboard-details-container .your-nearest-container .card .time-row .days {
   width: min-content;
   text-wrap: auto;
+  line-height: var(--line-height-body);
 }
 
 #dform_container .dashboard-details-container .your-nearest-container .card .location a,
