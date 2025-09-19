@@ -202,7 +202,7 @@
   text-decoration-line: underline;
   text-decoration-color: var(--c-core-brand-accent-1-darken);
   text-underline-offset: 6px;
-  /* border-bottom: 2px solid transparent; */
+  border-bottom: 2px solid transparent;
 }
 
 #dform_progressbar_sheffield {
