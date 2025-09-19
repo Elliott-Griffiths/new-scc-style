@@ -45,6 +45,11 @@
   border-radius: 0 1.5625rem 1.5625rem !important;
 }
 
+#dform_container #dform_widget_html_ahtm_location_results{
+  outline: none !important;
+  border-bottom: none !important;
+}
+
 /* QUICK LINKS */
 
 #dform_container #dform_widget_buttonset_bset_quick_links {
