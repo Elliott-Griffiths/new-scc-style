@@ -3,6 +3,12 @@
   padding: 0 !important;
 }
 
+#dform_container #dform_widget_html_ahtm_about_you:focus,
+#dform_container #dform_widget_html_ahtm_account_management:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 #profile #dform_container .container .area .box,
 #profile #dform_container .container>.three {
   width: 100%;
