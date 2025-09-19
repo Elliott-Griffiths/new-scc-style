@@ -53,6 +53,7 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   justify-content: space-between;
+  max-height: 3.4375rem;
 }
 
 #widget_Navigation>div>.menuButton,
