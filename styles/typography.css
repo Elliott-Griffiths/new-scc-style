@@ -52,7 +52,7 @@ h1,
 #dform_container .header1,
 #dform_container fieldset.area > legend,
 #dform_container div .header2 {
-  font-size: var(--font-size-xxxxl);
+  font-size: var(--font-size-responsive-header);
 }
 h2,
 .header2,

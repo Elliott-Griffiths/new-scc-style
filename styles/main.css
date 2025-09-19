@@ -80,6 +80,8 @@
   --font-size-xxxxl: 1.875rem;
   /* 30px */
 
+  --font-size-responsive-header: 2.125rem;
+  /* 34px */
   --font-size-confirmation-header: 2.125rem;
   /* 34px */
   --font-size-confirmation-text: 1.5rem;
@@ -213,6 +215,8 @@ body {
     --font-size-xxxxl: 2.375rem;
     /* 38px */
 
+    --font-size-responsive-header: 3.125rem;
+    /* 50px */
     --font-size-confirmation-header: 3.125rem;
     /* 50px */
     --font-size-confirmation-text: 2rem;
