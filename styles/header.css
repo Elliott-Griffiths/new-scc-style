@@ -18,6 +18,10 @@
   border-bottom: 2px solid var(--c-greys-white);
 }
 
+.header>.service-header-bar>div.logo-container:focus-within {
+  background: var(--c-focus-links) !important;
+}
+
 .header>.service-header-bar>div.logo-container:focus-within>a {
   background: var(--c-focus-links) !important;
   border-bottom: 2px solid var(--c-greys-black);
