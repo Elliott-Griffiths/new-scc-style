@@ -74,7 +74,7 @@
   color: var(--c-core-brand-primary-darken);
   border-color: var(--c-brand-accents-teal);
   min-width: max-content;
-  min-height: var(--field-height-sm);
+  min-height: var(--field-height-md);
   width: 100%;
 }
 
@@ -592,14 +592,14 @@
   #dform_container #dform_widget_buttonset_bset_quick_links {
     flex-direction: row;
   }
+
+  #dform_container #dform_widget_buttonset_bset_quick_links button {
+    border-radius: 40px !important;
+  }
 }
 
 @media screen and (min-width: 960px) {
   #dform_page_page_dashboard > div.container.area.dform_section_area_other_contacts {
     flex-direction: row;
-  }
-
-  #dform_container #dform_widget_buttonset_bset_quick_links button {
-    border-radius: 40px !important;
   }
 }
