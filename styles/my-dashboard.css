@@ -56,7 +56,7 @@
 #dform_container #dform_widget_buttonset_bset_quick_links {
   justify-content: space-between;
   margin-block: var(--spacing-xs);
-  gap: var(--spacing-xl);
+  gap: var(--spacing-md);
   flex-direction: column;
   flex-wrap: nowrap;
 }
@@ -70,6 +70,8 @@
   border-radius: 1.5625rem !important;
   flex: 1;
   text-align: start;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-500);
   background: var(--c-greys-white);
   color: var(--c-core-brand-primary-darken);
   border-color: var(--c-brand-accents-teal);
@@ -594,6 +596,7 @@
   }
 
   #dform_container #dform_widget_buttonset_bset_quick_links button {
+    font-size: var(--font-size-xl);
     border-radius: 40px !important;
   }
 }
