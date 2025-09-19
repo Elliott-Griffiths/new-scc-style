@@ -13,7 +13,11 @@
   width: 4.375rem;
 }
 
-.header>.service-header-bar>div.logo-container:hover {
+.header>.service-header-bar>div.logo-container>a {
+  line-height: inherit;
+}
+
+.header>.service-header-bar>div.logo-container:hover>a {
   border-bottom: 2px solid var(--c-greys-white);
 }
 
@@ -21,7 +25,7 @@
   background: var(--c-focus-links) !important;
 }
 
-.header>.service-header-bar>div.logo-container:focus-within {
+.header>.service-header-bar>div.logo-container:focus-within>a {
   background: var(--c-focus-links) !important;
   border-bottom: 2px solid var(--c-greys-black);
 }
