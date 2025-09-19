@@ -153,9 +153,10 @@
 
 #dform_container .dashboard-details-container .most-popular-container {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   gap: var(--spacing-smd);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 #dform_container .dashboard-details-container .card,
@@ -346,8 +347,9 @@
 
 #dform_container .dashboard-details-container .waste-recycling-container {
   display: flex;
+  flex-direction: column;
   gap: var(--spacing-smd);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card {
@@ -621,7 +623,9 @@
 }
 
 @media screen and (min-width: 784px) {
-  #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul {
+  #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul,
+  #dform_container .dashboard-details-container .most-popular-container,
+  #dform_container .dashboard-details-container .waste-recycling-container  {
     flex-direction: row;
   }
 
