@@ -13,16 +13,17 @@
   width: 4.375rem;
 }
 
-.header>.service-header-bar>div.logo-container>a:hover {
+.header>.service-header-bar>div.logo-container>a,
+.header>.service-header-bar>div.logo-container:hover>a {
   border-bottom: 2px solid var(--c-greys-white);
 }
 
-.header>.service-header-bar>div.logo-container:focus-within {
+.header>.service-header-bar>div.logo-container:focus-within>a {
   background: var(--c-focus-links) !important;
   border-bottom: 2px solid var(--c-greys-black);
 }
 
-.header>.service-header-bar>div.logo-container:focus-within>img {
+.header>.service-header-bar>div.logo-container:focus-within>a>img {
   filter: invert(1);
 }
 
