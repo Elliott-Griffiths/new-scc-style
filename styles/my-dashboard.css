@@ -303,7 +303,7 @@
 
 #dform_container .dashboard-details-container .status-banner {
   grid-row: 2 / 3;
-  margin-bottom: var(--spacing-smd);
+  margin-top: var(--spacing-smd);
   padding: var(--spacing-smd);
   display: flex;
   flex-direction: column;
@@ -635,6 +635,14 @@
   #dform_container #dform_widget_html_ahtm_waste_and_recycling {
     display: block;
   }
+
+  #dform_container .dashboard-details-container .your-nearest-container .card .time-row .days{
+    width: auto;
+  }
+
+  #dform_container .dashboard-details-container .status-banner {
+    margin-bottom: var(--spacing-smd);
+  }
 }
 
 @media screen and (min-width: 784px) {
@@ -651,6 +659,10 @@
 
   #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li a {
     font-size: var(--font-size-xl);
+  }
+
+  #dform_container .dashboard-details-container .your-nearest-container .card .time-row .days{
+    width: min-content;
   }
 }
 
