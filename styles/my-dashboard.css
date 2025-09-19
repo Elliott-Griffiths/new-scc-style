@@ -365,7 +365,7 @@
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card h2 {
-  color: var(--c-core-brand-secondary);
+  color: var(--c-core-brand-primary-darken);
   margin: 0;
 }
 
@@ -375,14 +375,8 @@
   gap: var(--spacing-smd);
   align-items: center;
   line-height: var(--line-height);
-  color: var(--c-core-brand-secondary);
-  font-weight: var(--font-weight-semibold);
-}
-
-#dform_container .dashboard-details-container .waste-recycling-container .card.today h2,
-#dform_container .dashboard-details-container .waste-recycling-container .card.today p
-#dform_container .dashboard-details-container .waste-recycling-container .card.next h2 {
   color: var(--c-core-brand-primary-darken);
+  font-weight: var(--font-weight-semibold);
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card.next p {
