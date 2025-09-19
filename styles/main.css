@@ -279,7 +279,7 @@ body {
   border-radius: 50px;
 }
 
-.remove-tab {
+#dform_container div.remove-tab {
   margin: 0 !important;
   border: none !important;
   outline: none !important;
