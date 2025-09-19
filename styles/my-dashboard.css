@@ -509,6 +509,11 @@
   line-height: var(--line-height);
 }
 
+#dform_container .dashboard-details-container .your-nearest-container .card .time-row .days {
+  width: min-content;
+  text-wrap: auto;
+}
+
 #dform_container .dashboard-details-container .your-nearest-container .card .location a,
 #dform_container .dashboard-details-container .your-nearest-container .card .opening-times p,
 #dform_container .dashboard-details-container .your-nearest-container .card .time-row .hours {
@@ -626,6 +631,10 @@
 @media screen and (min-width: 600px) {
   #dform_container #dform_widget_html_ahtm_waste_and_recycling {
     display: block;
+  }
+
+  #dform_container .dashboard-details-container .your-nearest-container .card .time-row .days{
+    width: 100%;
   }
 }
 
