@@ -183,6 +183,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
 }
 
 body {
@@ -198,6 +199,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  box-sizing: border-box;
 }
 
 /* Tablet and Desktop */
