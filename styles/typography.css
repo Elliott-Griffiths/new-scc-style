@@ -150,7 +150,7 @@ a.secondary-link:active,
   outline: none !important;
   color: var(--c-greys-black);
   background: var(--c-focus-links);
-  border-bottom: 2px solid var(--c-greys-black);
+  box-shadow: inset 0 -2px 0 0 var(--c-greys-black);
   text-decoration: none;
 }
 

@@ -53,9 +53,12 @@
 #dform_container #dform_widget_html_ahtm_other_links:focus {
   outline: none !important;
   border-bottom: none !important;
-  background: inherit;
 }
 
+#dform_container #dform_widget_html_ahtm_location_results:focus {
+  background: transparent !important;
+}
+ 
 /* QUICK LINKS */
 
 #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul {
