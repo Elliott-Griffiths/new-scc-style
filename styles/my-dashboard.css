@@ -507,6 +507,7 @@
 #dform_container .dashboard-details-container .your-nearest-container .card .time-row {
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
   width: 100%;
   line-height: var(--line-height);
 }
