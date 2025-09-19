@@ -83,30 +83,30 @@
   width: 100%;
 }
 
-#dform_container #dform_widget_buttonset_bset_quick_links button:hover {
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:hover {
   background: var(--c-brand-accents-teal);
   color: var(--c-greys-white);
   border-color: var(--c-core-brand-primary-darken);
 }
 
-#dform_container #dform_widget_buttonset_bset_quick_links button:focus {
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:focus {
   background: var(--c-focus-links);
   color: var(--c-greys-black);
   border-color: var(--c-focus-links);
 }
 
-#dform_container #dform_widget_buttonset_bset_quick_links button::after {
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li::after {
   content: url(../icons/arrow-right-primary-darkened.svg);
   width: var(--font-size-xl);
   height: var(--font-size-xl);
   line-height: var(--line-height);
 }
 
-#dform_container #dform_widget_buttonset_bset_quick_links button:hover::after {
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:hover::after {
   content: url(../icons/arrow-right-white.svg);
 }
 
-#dform_container #dform_widget_buttonset_bset_quick_links button:focus::after {
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:focus::after {
   content: url(../icons/arrow-right-black.svg) !important;
 }
 
@@ -594,11 +594,11 @@
 }
 
 @media screen and (min-width: 784px) {
-  #dform_container #dform_widget_buttonset_bset_quick_links {
+  #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul {
     flex-direction: row;
   }
 
-  #dform_container #dform_widget_buttonset_bset_quick_links button {
+  #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li {
     font-size: var(--font-size-xl);
     border-radius: 40px !important;
   }
