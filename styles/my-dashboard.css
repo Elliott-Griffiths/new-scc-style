@@ -45,7 +45,12 @@
   border-radius: 0 1.5625rem 1.5625rem !important;
 }
 
-#dform_container #dform_widget_html_ahtm_location_results:focus {
+#dform_container #dform_widget_html_ahtm_location_results:focus,
+#dform_container #dform_widget_html_ahtm_most_popular:focus,
+#dform_container #dform_widget_html_ahtm_waste_and_recycling:focus,
+#dform_container #dform_widget_html_ahtm_nearest_container:focus,
+#dform_container #dform_widget_html_ahtm_acre_contacts:focus,
+#dform_container #dform_widget_html_ahtm_other_links:focus {
   outline: none !important;
   border-bottom: none !important;
   background: transparent !important;
@@ -156,7 +161,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: var(--spacing-smd);
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 #dform_container .dashboard-details-container .card,
