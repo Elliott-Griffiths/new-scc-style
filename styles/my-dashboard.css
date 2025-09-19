@@ -53,15 +53,18 @@
 
 /* QUICK LINKS */
 
-#dform_container #dform_widget_buttonset_bset_quick_links {
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
   justify-content: space-between;
-  margin-block: var(--spacing-xs);
-  gap: var(--spacing-md);
   flex-direction: column;
   flex-wrap: nowrap;
+  gap: var(--spacing-md);
 }
 
-#dform_container #dform_widget_buttonset_bset_quick_links button {
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li {
   display: flex;
   align-items: center;
   justify-content: space-between;
