@@ -156,11 +156,11 @@
 #menuButton:hover,
 #nav_logout>button:hover {
   text-decoration-line: underline;
-  box-shadow: inset 0 -2px 0 0 var(--c-greys-white);
-  /* text-decoration-color: var(--c-greys-white);
+  /* box-shadow: inset 0 -2px 0 0 var(--c-greys-white); */
+  text-decoration-color: var(--c-greys-white);
   text-decoration-thickness: 2px;
   text-underline-offset: 6px;
-  box-shadow: none; */
+  box-shadow: none;
 }
 
 #nav_home:focus,
