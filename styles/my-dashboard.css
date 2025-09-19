@@ -57,12 +57,11 @@
   justify-content: space-between;
   margin-block: var(--spacing-xs);
   gap: var(--spacing-xl);
-
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button {
-  flex: 1 1 400px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -75,6 +74,8 @@
   color: var(--c-core-brand-primary-darken);
   border-color: var(--c-brand-accents-teal);
   min-width: max-content;
+  min-height: var(--field-height-sm);
+  width: 100%;
 }
 
 #dform_container #dform_widget_buttonset_bset_quick_links button:hover {
@@ -584,6 +585,12 @@
 @media screen and (min-width: 600px) {
   #dform_container #dform_widget_html_ahtm_waste_and_recycling {
     display: block;
+  }
+}
+
+@media screen and (min-width: 784px) {
+  #dform_container #dform_widget_buttonset_bset_quick_links {
+    flex-direction: row;
   }
 }
 
