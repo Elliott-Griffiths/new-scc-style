@@ -18,7 +18,7 @@
 }
 
 .header>.service-header-bar>div.logo-container:hover>a {
-  border-bottom: 2px solid var(--c-greys-white);
+  box-shadow: inset 0 -2px 0 0 var(--c-greys-white);
 }
 
 .header>.service-header-bar>div.logo-container:focus-within {
@@ -27,7 +27,7 @@
 
 .header>.service-header-bar>div.logo-container:focus-within>a {
   background: var(--c-focus-links) !important;
-  border-bottom: 2px solid var(--c-greys-black);
+  box-shadow: inset 0 -2px 0 0 var(--c-greys-black);
 }
 
 .header>.service-header-bar>div.logo-container:focus-within>a>img {
@@ -170,7 +170,7 @@
   outline: none !important;
   color: var(--c-greys-black) !important;
   background: var(--c-focus-links) !important;
-  border-bottom: 2px solid var(--c-greys-black) !important;
+  box-shadow: inset 0 -2px 0 0 var(--c-greys-black) !important;
   text-decoration: none !important;
 }
 
@@ -181,7 +181,7 @@
 #widget_Navigation>div>ul.menuList>li>a:focus,
 #menuButton:focus,
 #nav_logout>button:focus {
-  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 #menuButton:focus::after {
