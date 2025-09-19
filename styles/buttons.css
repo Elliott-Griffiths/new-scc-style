@@ -34,7 +34,6 @@
   min-height: var(--field-height-sm);
   height: var(--field-height-md);
   max-height: 8.75rem;
-  transition: all 0.2s ease;
 }
 
 #dform_container button {
