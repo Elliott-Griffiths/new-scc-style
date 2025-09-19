@@ -53,7 +53,6 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   justify-content: space-between;
-  /* max-height: 3.4375rem; */
 }
 
 #widget_Navigation>div>.menuButton,
@@ -160,6 +159,7 @@
   text-decoration-color: var(--c-greys-white);
   text-decoration-thickness: 2px;
   text-underline-offset: 6px;
+  border-bottom: 2px solid transparent;
 }
 
 #nav_home:focus,
