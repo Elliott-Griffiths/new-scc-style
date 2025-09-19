@@ -82,6 +82,8 @@
 }
 
 #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li a {
+  flex: 1;
+  margin: 0;
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-500);
@@ -94,9 +96,10 @@
 #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:hover {
   background: var(--c-brand-accents-teal);
   border-color: var(--c-core-brand-primary-darken);
+  cursor: pointer;
 }
 
-#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li a:hover
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li a:hover,
 #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:hover a {
   color: var(--c-greys-white);
 }
