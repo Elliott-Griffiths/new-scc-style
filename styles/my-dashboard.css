@@ -65,6 +65,7 @@
 }
 
 #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li {
+  padding: var(--spacing-xs) var(--spacing-md);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -73,11 +74,13 @@
   border-radius: 1.5625rem !important;
   flex: 1;
   text-align: start;
+  font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-500);
+  line-height: var(--line-height);
   background: var(--c-greys-white);
   color: var(--c-core-brand-primary-darken);
-  border-color: var(--c-brand-accents-teal);
+  border: 2px solid var(--c-brand-accents-teal);
   min-width: max-content;
   min-height: var(--field-height-md);
   width: 100%;
