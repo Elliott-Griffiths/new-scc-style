@@ -53,7 +53,7 @@
 #dform_container #dform_widget_html_ahtm_other_links:focus {
   outline: none !important;
   border-bottom: none !important;
-  background: transparent !important;
+  background: transparent inherit;
 }
 
 /* QUICK LINKS */
