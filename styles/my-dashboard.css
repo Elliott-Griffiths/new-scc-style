@@ -480,6 +480,7 @@
 #dform_container .dashboard-details-container .your-nearest-container .card * {
   margin: 0;
   color: var(--c-core-brand-secondary);
+  font-weight: var(--font-weight-normal);
 }
 
 #dform_container .dashboard-details-container .your-nearest-container .card h3 {
