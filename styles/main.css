@@ -278,3 +278,9 @@ body {
   border: 2px solid var(--c-greys-white);
   border-radius: 50px;
 }
+
+.remove-tab {
+  margin: 0 !important;
+  border: none !important;
+  outline: none !important;
+}
