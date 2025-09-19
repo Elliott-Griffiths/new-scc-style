@@ -6,7 +6,7 @@
 .header>.service-header-bar {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-md);
 }
 
 .header>.service-header-bar>div.logo-container>a>img {
@@ -128,7 +128,7 @@
   color: var(--c-greys-white);
   text-decoration-line: none;
   text-underline-offset: 6px;
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-semibold);
 }
 
 #menuButton::after {
