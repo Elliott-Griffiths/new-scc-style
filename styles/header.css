@@ -9,8 +9,21 @@
   gap: var(--spacing-xl);
 }
 
-.header>.service-header-bar>div>a>img {
+.header>.service-header-bar>div.logo-container>a>img {
   width: 4.375rem;
+}
+
+.header>.service-header-bar>div.logo-container>a:hover {
+  border-bottom: 2px solid var(--c-greys-white);
+}
+
+.header>.service-header-bar>div.logo-container:focus-within {
+  background: var(--c-focus-links) !important;
+  border-bottom: 2px solid var(--c-greys-black);
+}
+
+.header>.service-header-bar>div.logo-container:focus-within>img {
+  filter: invert(1);
 }
 
 .header>.service-header-bar>span {
