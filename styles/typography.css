@@ -31,7 +31,7 @@ h6,
   color: var(--c-core-brand-primary-darken);
   margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-sm);
-  line-height: var(--line-height);
+  line-height: var(--line-height-heading);
   font-weight: var(--font-weight-semibold);
 }
 
