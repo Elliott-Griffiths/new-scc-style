@@ -636,7 +636,8 @@
 @media screen and (min-width: 784px) {
   #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul,
   #dform_container .dashboard-details-container .most-popular-container,
-  #dform_container .dashboard-details-container .waste-recycling-container  {
+  #dform_container .dashboard-details-container .waste-recycling-container,
+  #dform_container .dashboard-details-container .your-nearest-container {
     flex-direction: row;
   }
 
