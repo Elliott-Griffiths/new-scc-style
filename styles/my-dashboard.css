@@ -92,11 +92,13 @@
   line-height: var(--line-height);
   color: var(--c-core-brand-primary-darken);
   text-decoration: none !important;
+  border-bottom: none !important;
   background: inherit;
 }
 
 #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li a:active {
   text-decoration: none !important;
+  border-bottom: none !important;
 }
 
 #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:hover {
