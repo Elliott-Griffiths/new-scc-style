@@ -185,6 +185,7 @@
 #dform_container .dashboard-details-container .card a.button {
   margin: 0 !important;
   color: var(--c-greys-white);
+  font-weight: var(--font-weight-semibold);
 }
 
 #dform_container .dashboard-details-container .card.school {
@@ -230,7 +231,7 @@
 
   width: var(--font-size-sm);
   height: var(--font-size-sm);
-  background-image: url(./icons/arrow-right-white.svg);
+  background-image: url(../icons/arrow-right-white.svg);
   background-size: contain;
   background-repeat: no-repeat;
 }
