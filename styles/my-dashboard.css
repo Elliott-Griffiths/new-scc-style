@@ -617,8 +617,11 @@
   }
 
   #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li {
-    font-size: var(--font-size-xl);
     border-radius: 40px !important;
+  }
+
+  #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li a {
+    font-size: var(--font-size-xl);
   }
 }
 
