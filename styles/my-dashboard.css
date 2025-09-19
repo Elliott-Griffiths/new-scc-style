@@ -84,6 +84,8 @@
 #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li a {
   flex: 1;
   margin: 0;
+  display: flex;
+  align-items: center;
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-500);
@@ -91,6 +93,10 @@
   color: var(--c-core-brand-primary-darken);
   text-decoration: none !important;
   background: inherit;
+}
+
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li a:active {
+  text-decoration: none !important;
 }
 
 #ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:hover {
