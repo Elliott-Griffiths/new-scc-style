@@ -166,9 +166,8 @@
 *:focus {
   background-color: var(--c-focus-links);
   color: var(--c-greys-black);
-  border-bottom: 2px solid var(--c-greys-black);
   outline: none !important;
-  box-shadow: none !important;
+  box-shadow: inset 0 -2px 0 0 var(--c-greys-black);
 }
 
 ::selection {
