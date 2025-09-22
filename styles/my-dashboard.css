@@ -230,19 +230,26 @@
   gap: var(--spacing-xs);
 }
 
+#dform_container .dashboard-details-container .card.recycling ul li:focus-within {
+  background: var(--c-focus-links);
+  box-shadow: inset 0 -2px 0 0 var(--c-greys-black);
+}
+
 #dform_container .dashboard-details-container .card.recycling ul li::before {
   content: '';
-
   position: unset;
   left: unset;
   top: unset;
   transform: unset;
-
   width: var(--font-size-sm);
   height: var(--font-size-sm);
   background-image: url(../icons/arrow-right-white.svg);
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+#dform_container .dashboard-details-container .card.recycling ul li:focus-within::before {
+  background-image: url(../icons/arrow-right-black.svg);
 }
 
 #dform_container .dashboard-details-container .card a.button {
@@ -452,6 +459,10 @@
   line-height: var(--line-height);
 }
 
+#dform_container .dashboard-details-container a.calendar-link::after {
+  content: url(../icons/arrow-right-black.svg);
+}
+
 /* YOUR NEAREST */
 
 .dform_section_box_your_nearest fieldset>legend::before {
@@ -542,6 +553,11 @@
   width: var(--font-size-base);
   height: var(--font-size-base);
   line-height: var(--line-height);
+  transform: translateY(-4px);
+}
+
+#dform_container .dashboard-details-container .your-nearest-container .card .location a.map-link:focus::before {
+  content: url(../icons/location-black.svg);
 }
 
 /* CONTACTS IN YOUR AREA */
@@ -628,6 +644,10 @@
   align-items: unset;
   width: var(--font-size-sm);
   transform: translateY(3px);
+}
+
+#dform_container .dashboard-details-container ul.other-links li a::before {
+  content: url(../icons/arrow-right-black.svg);
 }
 
 /* Media */

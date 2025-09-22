@@ -74,6 +74,10 @@
     transform: translateY(-4px);
 }
 
+#dform_container button.link-btn.locator-icon:focus::before {
+    content: url(../icons/location-black.svg);
+}
+
 #dform_container #dform_widget_button_but_use_current_location {
     font-size: var(--font-size-sm);
     text-decoration: underline;

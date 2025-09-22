@@ -138,6 +138,7 @@ div.site-notification-bar--warning div.notification-content p::before {
 }
 
 a.close-notification-link {
+  width: max-content;
   font-size: 14px;
   font-weight: var(--font-weight-bold);
 }

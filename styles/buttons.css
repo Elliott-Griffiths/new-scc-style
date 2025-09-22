@@ -194,7 +194,7 @@
 #dform_container .dform_widget_type_buttonset.action-link-btn-container:focus-within {
   width: max-content;
   background: var(--c-focus-links);
-  border-bottom: 2px solid var(--c-greys-black);
+  /* border-bottom: 2px solid var(--c-greys-black); */
 }
 
 #dform_container a.link-btn:focus,
@@ -206,7 +206,8 @@
   background: var(--c-focus-links);
   border-radius: unset !important;
   outline: none;
-  border-bottom: 2px solid var(--c-greys-black);
+  text-decoration: none !important;
+  /* border-bottom: 2px solid var(--c-greys-black); */
 }
 
 #dform_container button.action-link-btn:focus::before {
