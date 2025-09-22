@@ -429,7 +429,7 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
 
-  setTimeout(() => {
+  // setTimeout(() => {
     console.log(kdf.form, kdf.params)
     if (kdf.params.ref && kdf.params.token) {
       KDF.showPage("page_review");
@@ -470,7 +470,7 @@ function handleOnReadyEvent(_, kdf) {
         }
       }
     }
-  }, 0);
+  // }, 0);
 
   // --- HANDLE FORMAT TITLE CASE ------------------------------------------ \\
 
