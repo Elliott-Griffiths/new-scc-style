@@ -431,6 +431,12 @@ function handleOnReadyEvent(_, kdf) {
 
   setTimeout(() => {
     console.log(kdf.form, kdf.params)
+    if (kdf.params.ref && kdf.params.token) {
+      KDF.showPage("page_review");
+      KDF.gotoPage("page_review");
+      return;
+    }
+    
     if (kdf.form.complete === "Y") {
       KDF.showPage("page_review");
       KDF.gotoPage("page_review");
