@@ -140,7 +140,7 @@
   content: url(../icons/arrow-right-white.svg);
 }
 
-#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:focus::after {
+#ContentAreaInSingleColumnNoNavigationTemplate nav.quick-links-nav ul li:focus-within::after {
   content: url(../icons/arrow-right-black.svg) !important;
 }
 
@@ -435,6 +435,14 @@
   width: var(--font-size-base);
   height: var(--font-size-base);
   line-height: var(--line-height);
+}
+
+#dform_container .dashboard-details-container .status-banner a:focus::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card span:focus::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.date:focus::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.bin:focus::before,
+#dform_container .dashboard-details-container .waste-recycling-container .card .details p.type:focus::before {
+  content: url(../icons/arrow-right-black.svg);
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.date::before {
