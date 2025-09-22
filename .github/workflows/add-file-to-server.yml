@@ -117,9 +117,9 @@ jobs:
             echo "Attempting upload with parameter: '$method'..."
             
             if [ "$method" = "Folder" ]; then
-                param="Folder={\"folderName\":\"${FOLDER_NAME}\"}"
+                param="-F 'Folder={\"folderName\":\"${FOLDER_NAME}\"}'"
             else
-                param="${method}=${FOLDER_NAME}"
+                param="-F '${method}=${FOLDER_NAME}'"
             fi
 
             response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
@@ -128,8 +128,8 @@ jobs:
               -H 'accept: application/json' \
               -u "${API_USERNAME}:${API_PASSWORD}" \
               -H 'Content-Type: multipart/form-data' \
-              -F "file=@$FILE_PATH" \
-              -F "$param;type=$CONTENT_TYPE")
+              -F "file=@${FILE_PATH};type=${CONTENT_TYPE}" \
+              $param)
             
             http_code=$(echo "$response" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
             body=$(echo "$response" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
@@ -168,3 +168,28 @@ jobs:
             echo "🔍 Verification: Checking uploaded file..."
             filename_check=$(basename "$FILE_PATH")
             verify_response=$(curl -s -u "${API_USERNAME}:${API_PASSWORD}" "${API_BASE_URL}/files?query=${filename_check}")
+            
+            echo "Verification response:"
+            echo "$verify_response" | jq '.' 2>/dev/null || echo "$verify_response"
+            
+          else
+            echo "❌ All upload methods failed. The file was not uploaded."
+            echo ""
+            echo "Troubleshooting:"
+            echo "- Verify API credentials, folder existence, and permissions."
+            
+            echo '{"status": "failed", "error": "Upload failed or wrong folder"}' > upload_response.json
+            exit 1
+          fi
+          
+          echo "================================================="
+
+      - name: Upload response as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-response-${{ github.run_number }}
+          path: |
+            upload_response.json
+            ${{ github.event.inputs.file_path }}
+          retention-days: 30
