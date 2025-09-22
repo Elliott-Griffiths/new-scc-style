@@ -3169,8 +3169,8 @@ function getAndSetReviewPageData() {
               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
               fieldValue = `£${KDF.getVal(fieldName)}`;
             } else if (fieldClass.indexOf("address-search") !== -1) {
-              fieldLabel = "Selected address";
-              fieldValue = getValueFromAlias(pageId, "fullAddress");
+              fieldLabel = "Address";
+              fieldValue = formatAddress(getValueFromAlias(pageId, "fullAddress"));
             } else if (/\b(property|street-name|city|postcode)\b/.test(fieldClass)) {
               fieldLabel = false;
               fieldValue = "";
