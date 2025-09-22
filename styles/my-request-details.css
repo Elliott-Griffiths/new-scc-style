@@ -19,14 +19,14 @@
   text-decoration: none;
 }
 
-.le-request-list-link a:focus {
+/* .le-request-list-link a:focus {
   color: var(--c-greys-black) !important;
   background: var(--c-focus-links);
   text-decoration: none !important;
   border-radius: unset !important;
   outline: none;
   border-bottom: 2px solid var(--c-greys-black);
-}
+} */
 
 .le-request-list-link a span {
   text-decoration: underline;
@@ -204,4 +204,10 @@ div.le-request-note-created.datetime>time {
 #back-to-requests-link {
   position: relative;
   bottom: 50px;
+}
+
+#back-to-requests-link:focus {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  border-color: var(--c-focus-links) !important;
 }

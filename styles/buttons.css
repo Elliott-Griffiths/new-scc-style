@@ -148,11 +148,11 @@
 #dform_container a.button:active,
 #back-to-requests-link:focus,
 #back-to-requests-link:active {
-  color: var(--c-greys-black);
-  background: var(--c-focus-links);
-  border-color: var(--c-focus-links);
-  box-shadow: none;
-  outline: none;
+  color: var(--c-greys-black) !important;
+  background: var(--c-focus-links) !important;
+  border-color: var(--c-focus-links) !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 #dform_container button.teal-btn:hover{

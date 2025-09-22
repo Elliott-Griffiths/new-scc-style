@@ -26,6 +26,7 @@ button.tab-button {
   text-decoration-color: transparent;
   text-decoration-thickness: 4px;
   text-underline-offset: 6px;
+  box-shadow: none !important;
 }
 
 button.tab-button.active {
