@@ -176,6 +176,16 @@ document.addEventListener('DOMContentLoaded', function () {
        * certain elements and reformatting others.
        */
       if (isSridValid) {
+
+
+  // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
+
+  setTimeout(() => {
+    KDF.showPage("page_review");
+    KDF.gotoPage("page_review");
+  }, 0);
+
+
         const page = document.getElementById('requests');
         const content = document.getElementById('content');
         const navigation = document.querySelector('.navigation');
