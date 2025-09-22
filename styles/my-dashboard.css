@@ -415,6 +415,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
+  width: max-content;
 }
 
 #dform_container .dashboard-details-container .waste-recycling-container .card .details p.date,

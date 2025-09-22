@@ -32,13 +32,13 @@
     text-decoration-color: var(--c-greys-white);
   }
   
-  #FooterAreaInSingleColumnNoNavigationTemplate > ul > li > a:focus {
+  /* #FooterAreaInSingleColumnNoNavigationTemplate > ul > li > a:focus {
     color: var(--c-greys-black);
     background: var(--c-focus-links) !important;
     border: 1px solid var(--c-focus-links) !important;
     outline: none !important;
     text-decoration-color: var(--c-greys-black);
-  }
+  } */
   
   #FooterAreaInSingleColumnNoNavigationTemplate > ul > li > a:active {
     text-decoration-color: var(--c-core-brand-accent-1-darken);
