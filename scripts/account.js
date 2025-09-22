@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const loginRegisterLink = document.getElementById('nav_login');
     if (loginRegisterLink) {
       loginRegisterLink.textContent = 'Sign in / Register';
-      console.log("Login/Register link text changed to 'Sign in / Register'.");
     }
 
     const logoutButton = document.querySelector('#nav_logout button');
@@ -492,7 +491,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         if (KDF.getParams().a === 'drafts') {
-          console.log('click');
           setTimeout(() => {
             activateTab(draftsBtn, submittedBtn, widgetDrafts, widgetSubmitted);
           }, 0);

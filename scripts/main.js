@@ -61,7 +61,7 @@ function handleInitialisingEvent() {
   }
 
   // --- HANDLE SIGN IN PAGE ----------------------------------------------- \\
-  console.log(KDF.kdf().access, KDF.kdf().customerset, enableSave, KDF.kdf())
+ 
   if (KDF.kdf().access === "citizen"
     && KDF.kdf().customerset === "citizen_true") {
     KDF.hidePage("page_sign_in");
@@ -429,8 +429,6 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
 
-  // setTimeout(() => {
-    console.log(kdf.form, kdf.params)
     if (kdf.params.ref && kdf.params.token) {
       KDF.showPage("page_review");
       KDF.gotoPage("page_review");
@@ -470,7 +468,6 @@ function handleOnReadyEvent(_, kdf) {
         }
       }
     }
-  // }, 0);
 
   // --- HANDLE FORMAT TITLE CASE ------------------------------------------ \\
 
@@ -1405,7 +1402,6 @@ function handleMapClickEvent(
 // --- HANDLE ON MAP LAYRE SELECTED EVENT --------------------------------- \\
 
 function handleSelectedMapLayerEvent(event, kdf, layerName, layerAttributes) {
-  console.log('handleSelectedMapLayerEvent', event, kdf, layerName, layerAttributes)
   const { main_attribute: main, background_attribute: bg } = layerAttributes;
 
   const siteCode = bg.sitecode || "";
@@ -1495,7 +1491,6 @@ function handleObjectIdLoaded(event, kdf, response, type, id) {
 // --- HANDLE ON SUCCESSFUL ACTION EVENT ---------------------------------- \\
 
 function handleSuccessfulAction(event, kdf, response, action, actionedby) {
-  console.log('handleSuccessfulAction', action)
   if (action === "check-for-existing-case-management-form") {
     if (response.data.existingForm === "true") {
       KDF.showInfo("This case manamgement form already exists");
@@ -1505,48 +1500,6 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       }
     }
   }
-
-  // Check if the action is to check the map status
-  // if (action === "check-map-status") {
-  //   // Spread the data object
-  //   const { isMapAvailable } = response.data;
-
-  //   // Select all elements with the class "map-icon"
-  //   const mapIcon = $(".map-icon");
-
-  //   // Check if the response data indicates unavailable maps
-  //   if (isMapAvailable === "false") {
-  //     // (Optional) Disable elements using native method (comment out if not used)
-  //     mapIcon.prop("disabled", true);
-
-  //     // Set aria-disabled to true for accessibility
-  //     mapIcon.attr("aria-disabled", "true");
-
-  //     // Add the "disabled" class for styling
-  //     mapIcon.addClass("disabled");
-
-  //     // Show the "maps-unavailable-notice" element
-  //     $(".maps-unavailable-notice").show();
-  //   } else {
-  //     // (Optional) Enable elements using native method (comment out if not used)
-  //     mapIcon.prop("disabled", false);
-
-  //     // Set aria-disabled to false for accessibility
-  //     mapIcon.attr("aria-disabled", "false");
-
-  //     // Remove the "disabled" class
-  //     mapIcon.removeClass("disabled");
-
-  //     // Hide the "maps-unavailable-notice" element
-  //     $(".maps-unavailable-notice").hide();
-
-  //     if (KDF.kdf().access === "agent") {
-  //       $(
-  //         "#map_container > div.esri-view-root > div.esri-ui.calcite-theme-light > div.esri-ui-inner-container.esri-ui-corner-container > div.esri-ui-top-right.esri-ui-corner > div"
-  //       ).css("display", "inline-flex");
-  //     }
-  //   }
-  // }
 
   if (action === "set-raised-by") {
     const { customerid } = response.data;
@@ -1683,7 +1636,6 @@ function handleSuccessfulAction(event, kdf, response, action, actionedby) {
       officerContact,
     } = response.data;
 
-    console.log(action, response.data);
     const currentPageId = getCurrentPageId();
     const addressSelectionSection = document.querySelector(`#${currentPageId} .address-selection-section`);
     const selectedAddressSpan = document.querySelector(`#${currentPageId} #selected-address`);
@@ -2261,7 +2213,6 @@ function disabledButtonToggle(enable) {
 
 // Function to set value to fields based on data-customalias attributes of inputs on the current page
 function setValuesToInputFields(aliasesAndValues) {
-  console.log('setValuesToInputFields', aliasesAndValues)
   const currentPageId = getCurrentPageId(); // Get the current page ID
 
   // Iterate over each custom alias and value pair
@@ -2359,35 +2310,6 @@ function setRequiredStateByAlias(alias, requiredState) {
   }
 }
 
-// --- SET SELECTED ADDRESS ------------------------------------------------- \\
-
-// function setSelectedAddress(selectedAddress, action, targetPageId) {
-//   targetPageId = targetPageId ? targetPageId : getCurrentPageId();
-
-//   // Get the selected-address-container element on the current page
-//   const addressContainer = document.querySelector(
-//     `#${targetPageId} .selected-address-container`
-//   );
-
-//   if (addressContainer) {
-//     // Obtain the data-name attribute of the addressContainer
-//     const name = addressContainer.getAttribute("data-name");
-
-//     // Get the output element within the selected-address-container
-//     const outputElement = addressContainer.querySelector(".selected-address");
-
-//     // Set the selected address as the content of the output element
-//     outputElement.textContent = selectedAddress;
-
-//     // Show or hides the data-name attribute of the addressContainer
-//     if (action) {
-//       KDF.showWidget(name);
-//     } else {
-//       KDF.hideWidget(name);
-//     }
-//   }
-// }
-
 // --- RESER ADDRESS FIELDS ------------------------------------------------- \\
 
 function resetAddressSearch(hideFields = true) {
@@ -2410,28 +2332,7 @@ function resetAddressSearch(hideFields = true) {
     { alias: "northing", value: "" },
   ]);
   if (hideFields) {
-    // showHideInputFields([
-    //   { alias: "searchResult", display: false },
-    //   { alias: "property", display: false },
-    //   { alias: "streetName", display: false },
-    //   { alias: "city", display: false },
-    //   { alias: "postCode", display: false },
-    //   { alias: "fullAddress", display: false },
-    // ]);
   }
-  // setSelectedAddress("", false);
-}
-
-// --- SHOW ADDRESS FIELDS ------------------------------------------------- \\
-
-function showAddressFields() {
-  //   showHideInputFields([
-  //     { alias: "searchResult", display: false },
-  //     { alias: "property", display: true },
-  //     { alias: "streetName", display: true },
-  //     { alias: "city", display: true },
-  //     { alias: "postCode", display: true },
-  //   ]);
 }
 
 // --- RESER VEHICLE FIELDS ------------------------------------------------- \\
@@ -2985,11 +2886,6 @@ function handleSetReporter(date, address) {
     $("#dform_widget_num_date_of_birth_yy").val(date.getFullYear()).blur();
   }
 
-  // Set and show address
-  // if (!address.includes("undefined")) {
-  //   setSelectedAddress(address, "show", "dform_page_page_about_you");
-  // }
-
   // Hide submit anonymously option and info
   $(".anonymous").hide();
 }
@@ -3253,95 +3149,6 @@ function showCurrentProgress() {
     });
   }
 }
-
-// --- CONTACT TEAM PANEL --------------------------------------------------- \\
-
-// function showContactTeamPanel() {
-//   if (KDF.getVal("txt_contact_title")) {
-//     const contactInfo = document.createElement("aside");
-//     contactInfo.classList.add("contact-information");
-
-//     const header = document.createElement("header");
-//     const headerTitle = document.createElement("h2");
-//     headerTitle.textContent = KDF.getVal("txt_contact_title");
-//     header.appendChild(headerTitle);
-
-//     const main = document.createElement("main");
-//     main.classList.add("contact-details");
-
-//     if (KDF.getVal("txt_contact_link")) {
-//       const emailIcon = document.createElement("i");
-//       emailIcon.classList.add("icon");
-//       const emailIconSpan = document.createElement("span");
-//       emailIconSpan.classList.add("icon-email");
-//       emailIcon.appendChild(emailIconSpan);
-
-//       const emailLink = document.createElement("a");
-//       emailLink.href = KDF.getVal("txt_contact_link");
-//       emailLink.textContent = "Ask us a question";
-
-//       main.appendChild(emailIcon);
-//       main.appendChild(emailLink);
-//     }
-
-//     if (KDF.getVal("tel_contact_number")) {
-//       const phoneIcon = document.createElement("i");
-//       phoneIcon.classList.add("icon");
-//       const phoneIconSpan = document.createElement("span");
-//       phoneIconSpan.classList.add("icon-phone");
-//       phoneIcon.appendChild(phoneIconSpan);
-
-//       const phoneLink = document.createElement("a");
-//       phoneLink.href = `tel:${KDF.getVal("tel_contact_number")}`;
-//       phoneLink.textContent = `${KDF.getVal("tel_contact_number").slice(
-//         0,
-//         4
-//       )} ${KDF.getVal("tel_contact_number").slice(4, 7)} ${KDF.getVal(
-//         "tel_contact_number"
-//       ).slice(7, 11)}`;
-//       main.appendChild(phoneIcon);
-//       main.appendChild(phoneLink);
-//     }
-
-//     if (KDF.getVal("txt_contact_address")) {
-//       const locationIcon = document.createElement("i");
-//       locationIcon.classList.add("icon");
-//       locationIcon.classList.add("align-self");
-//       const locationIconSpan = document.createElement("span");
-//       locationIconSpan.classList.add("icon-location");
-//       locationIcon.appendChild(locationIconSpan);
-
-//       const address = document.createElement("p");
-//       const addressString = KDF.getVal("txt_contact_address").replace(
-//         /, /g,
-//         "<br/>"
-//       );
-//       address.innerHTML = addressString;
-//       main.appendChild(address);
-//       main.appendChild(locationIcon);
-//       main.appendChild(address);
-//     }
-
-//     const footer = document.createElement("footer");
-//     const footerImg = document.createElement("img");
-//     footerImg.src =
-//       "https://www.sheffield.gov.uk/themes/custom/bbd_localgov/images/council-tax.jpeg";
-//     footerImg.alt = "Footer Image";
-
-//     footer.appendChild(footerImg);
-
-//     contactInfo.appendChild(header);
-//     contactInfo.appendChild(main);
-//     contactInfo.appendChild(footer);
-
-//     const target = document.querySelector(".title-container");
-//     if (target) {
-//       target.after(contactInfo);
-//     } else {
-//       //   console.error("Element with class title-container not found");
-//     }
-//   }
-// }
 
 // --- CHECK CASE PROGRESS -------------------------------------------------- \\
 
@@ -3959,7 +3766,6 @@ function do_KDF_mapReady_esriMap(map, positionLayer) {
 }
 
 function mapClick(evt) {
-  console.log('mapClick', evt)
   KDF.setVal("txt_site_name", "");
   KDF.setVal("txt_site_code", "");
   KDF.setVal("txt_feature_name", "");
@@ -4152,7 +3958,6 @@ function mapClick(evt) {
 }
 
 function retrieveAttribute() {
-  console.log('retrieveAttribute', store_layer_attr)
   $(`#dform_${KDF.kdf().form.name}`).trigger("_Selected_Layer", [
     null,
     "asset_layer",
@@ -4274,7 +4079,6 @@ function do_KDF_optionSelected_esriMap(field, label, val) {
 }
 
 function do_KDF_Custom_esriMap(action, response) {
-  console.log('do_KDF_Custom_esriMap')
   if (action === "reverse_geocode_osmap") {
     $("#map_container").removeClass("map_container_error");
     $("#map_error").remove();
@@ -4404,7 +4208,6 @@ function do_KDF_Custom_esriMap(action, response) {
   }
 
   if (action === "feature_layer_request") {
-    console.log('feature_layer_request')
     var parseResult = JSON.parse(response.data.result.replace(/\\/g, ""));
     var parseFeature = parseResult.features;
     var nearestFeature, nearestDistance;
@@ -5609,15 +5412,3 @@ const closeAllNotifications = () => {
     notification.remove();
   });
 };
-
-
-
-
-
-
-
-
-
-
-
-
