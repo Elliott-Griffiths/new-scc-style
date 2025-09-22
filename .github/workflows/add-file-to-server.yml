@@ -44,30 +44,30 @@ jobs:
         run: |
           file_path="${{ github.event.inputs.file_path }}"
           extension="${file_path##*.}"
+          folder=$(dirname "$file_path")
           
+          # Handle the case where the file is in the root directory
+          if [ "$folder" = "." ]; then
+            folder=""
+          fi
+
           case "$extension" in
             "js")
-              folder="scripts"
               content_type="text/javascript"
               ;;
             "css")
-              folder="styles"
               content_type="text/css"
               ;;
             "png")
-              folder="images"
               content_type="image/png"
               ;;
             "jpg" | "jpeg")
-              folder="images"
               content_type="image/jpeg"
               ;;
             "svg")
-              folder="icons"
               content_type="image/svg+xml"
               ;;
-            "txt")
-              folder="knowledge"
+            "txt" | "md")
               content_type="text/plain"
               ;;
             *)
@@ -79,7 +79,7 @@ jobs:
           echo "FOLDER_NAME=$folder" >> $GITHUB_ENV
           echo "CONTENT_TYPE=$content_type" >> $GITHUB_ENV
           echo "File path: $file_path"
-          echo "Determined folder: $folder"
+          echo "Determined folder: '$folder'"
           echo "Determined content type: $content_type"
 
       - name: Validate file exists
@@ -108,7 +108,6 @@ jobs:
           filename=$(basename "$FILE_PATH")
           echo "🚀 Uploading $filename to folder: $FOLDER_NAME"
           
-          # Use a loop or a series of checks to try each method
           declare -a methods=("folderName" "Folder" "folder")
           success=false
           final_response=""
@@ -117,7 +116,6 @@ jobs:
           for method in "${methods[@]}"; do
             echo "Attempting upload with parameter: '$method'..."
             
-            # Special handling for JSON format
             if [ "$method" = "Folder" ]; then
                 param="Folder={\"folderName\":\"${FOLDER_NAME}\"}"
             else
@@ -140,7 +138,6 @@ jobs:
             echo "Method '$method' - Response: $body"
             echo ""
 
-            # Check for success (200, 201) or file already exists (409)
             if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 201 ]; then
                 folder_in_response=$(echo "$body" | jq -r '.folderName // empty' 2>/dev/null)
                 if [ "$folder_in_response" = "$FOLDER_NAME" ]; then
@@ -148,14 +145,14 @@ jobs:
                     success=true
                     final_response="$body"
                     final_code="$http_code"
-                    break # Exit the loop on first success
+                    break
                 fi
             elif [ "$http_code" -eq 409 ]; then
                 echo "⚠️ Method '$method': File already exists (HTTP 409). Considering this a success."
                 success=true
                 final_response='{"status": "success", "message": "File already exists"}'
                 final_code="$http_code"
-                break # Exit the loop as the desired state is met
+                break
             fi
           done
 
@@ -167,7 +164,6 @@ jobs:
             
             echo "$final_response" > upload_response.json
             
-            # Verify the upload by checking the file
             echo ""
             echo "🔍 Verification: Checking uploaded file..."
             filename_check=$(basename "$FILE_PATH")
