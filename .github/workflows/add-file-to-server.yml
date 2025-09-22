@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       file_path:
-        description: 'Path to file in repository (e.g., scripts/main.js)'
+        description: 'Path to file in repository (e.g., styles/main.css)'
         required: true
         type: string
       environment:
@@ -102,11 +102,16 @@ jobs:
           API_USERNAME: ${{ secrets.VERINT_USERNAME }}
           API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
           FILE_PATH: ${{ github.event.inputs.file_path }}
+          FOLDER_NAME: ${{ env.FOLDER_NAME }}
           CONTENT_TYPE: ${{ env.CONTENT_TYPE }}
         run: |
-          echo "🚀 Attempting upload by sending full path as filename..."
+          filename=$(basename "$FILE_PATH")
+          echo "🚀 Uploading $filename to folder: $FOLDER_NAME"
           
-          response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+          # This is the primary method that should work based on your API's behavior.
+          # It attempts to upload by sending the full path as the filename.
+          echo "Method 1: Testing full path as filename..."
+          response1=$(curl -s -w "HTTPSTATUS:%{http_code}" \
             -X 'POST' \
             "${API_BASE_URL}/files" \
             -H 'accept: application/json' \
@@ -114,12 +119,98 @@ jobs:
             -H 'Content-Type: multipart/form-data' \
             -F "file=@${FILE_PATH};filename=${FILE_PATH};type=${CONTENT_TYPE}")
           
-          http_code=$(echo "$response" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
-          body=$(echo "$response" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          http_code1=$(echo "$response1" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          body1=$(echo "$response1" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
           
-          echo "HTTP Status: $http_code"
-          echo "Response: $body"
+          echo "Method 1 - HTTP Status: $http_code1"
+          echo "Method 1 - Response: $body1"
           echo ""
 
           success=false
           final_response=""
+          final_code=""
+          
+          if [ "$http_code1" -eq 200 ] || [ "$http_code1" -eq 201 ]; then
+              echo "✅ Method 1 succeeded!"
+              success=true
+              final_response="$body1"
+              final_code="$http_code1"
+          elif [ "$http_code1" -eq 409 ]; then
+              echo "⚠️ Method 1: File already exists (HTTP 409). Considering this a success."
+              success=true
+              final_response='{"status": "success", "message": "File already exists"}'
+              final_code="$http_code1"
+          fi
+          
+          if [ "$success" = false ]; then
+            # Method 2: Fallback to folderName parameter
+            echo "Method 2: Testing folderName parameter..."
+            response2=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+              -X 'POST' \
+              "${API_BASE_URL}/files" \
+              -H 'accept: application/json' \
+              -u "${API_USERNAME}:${API_PASSWORD}" \
+              -H 'Content-Type: multipart/form-data' \
+              -F "file=@${FILE_PATH};type=${CONTENT_TYPE}" \
+              -F "folderName=${FOLDER_NAME}")
+            
+            http_code2=$(echo "$response2" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+            body2=$(echo "$response2" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+            
+            echo "Method 2 - HTTP Status: $http_code2"
+            echo "Method 2 - Response: $body2"
+            echo ""
+            
+            if [ "$http_code2" -eq 200 ] || [ "$http_code2" -eq 201 ]; then
+              folder_in_response=$(echo "$body2" | jq -r '.folderName // empty' 2>/dev/null)
+              if [ "$folder_in_response" = "$FOLDER_NAME" ]; then
+                echo "✅ Method 2 succeeded with correct folder!"
+                success=true
+                final_response="$body2"
+                final_code="$http_code2"
+              fi
+            elif [ "$http_code2" -eq 409 ]; then
+              echo "⚠️ Method 2: File already exists (HTTP 409). Considering this a success."
+              success=true
+              final_response='{"status": "success", "message": "File already exists"}'
+              final_code="$http_code2"
+            fi
+          fi
+
+          echo "================== FINAL RESULT =================="
+          
+          if [ "$success" = true ]; then
+            echo "✅ Upload successful or file already existed."
+            echo "Final response: $final_response"
+            
+            echo "$final_response" > upload_response.json
+            
+            echo ""
+            echo "🔍 Verification: Checking uploaded file..."
+            filename_check=$(basename "$FILE_PATH")
+            verify_response=$(curl -s -u "${API_USERNAME}:${API_PASSWORD}" "${API_BASE_URL}/files?query=${filename_check}")
+            
+            echo "Verification response:"
+            echo "$verify_response" | jq '.' 2>/dev/null || echo "$verify_response"
+            
+          else
+            echo "❌ All upload methods failed. The file was not uploaded."
+            echo ""
+            echo "Troubleshooting:"
+            echo "- Verify API credentials, folder existence, and permissions."
+            
+            echo '{"status": "failed", "error": "Upload failed or wrong folder"}' > upload_response.json
+            exit 1
+          fi
+          
+          echo "================================================="
+
+      - name: Upload response as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-response-${{ github.run_number }}
+          path: |
+            upload_response.json
+            ${{ github.event.inputs.file_path }}
+          retention-days: 30
