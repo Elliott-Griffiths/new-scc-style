@@ -426,7 +426,11 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- SET EQUALITIES LINK ----------------------------------------------- \\
 
-  //   buildFormLink("equalities-information", "equalities_monitoring", true);
+  buildFormLink("equalities-information", "equalities_monitoring", true);
+
+  // --- SET SURVEY LINK --------------------------------------------------- \\
+
+  buildFormLink("survey-btn", "customer_satisfaction", true);
 
   storeDefaultValidationMessages();
 
