@@ -4,30 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       file_path:
-        description: 'Path to file in repository (e.g., styles/main.css)'
+        description: 'Path to file in repository (e.g., scripts/main.js)'
         required: true
         type: string
-      folder_name:
-        description: 'Select the destination folder name'
-        required: true
-        type: choice
-        default: 'scripts'
-        options:
-          - styles
-          - scripts
-          - images
-          - icons
-          - JS
-      content_type:
-        description: 'Select the file content type'
-        required: true
-        type: choice
-        default: 'image/svg+xml'
-        options:
-          - text/plain
-          - text/css
-          - image/svg+xml
-          - image/png
       environment:
         description: 'Select the target environment'
         required: true
@@ -59,7 +38,50 @@ jobs:
               echo "API_BASE_URL=${{ secrets.VERINT_BASE_URL_PROD }}" >> $GITHUB_ENV
               ;;
           esac
-      
+
+      - name: Determine Folder and Content Type
+        id: file-info
+        run: |
+          file_path="${{ github.event.inputs.file_path }}"
+          extension="${file_path##*.}"
+          
+          case "$extension" in
+            "js")
+              folder="scripts"
+              content_type="text/javascript"
+              ;;
+            "css")
+              folder="styles"
+              content_type="text/css"
+              ;;
+            "png")
+              folder="images"
+              content_type="image/png"
+              ;;
+            "jpg" | "jpeg")
+              folder="images"
+              content_type="image/jpeg"
+              ;;
+            "svg")
+              folder="icons"
+              content_type="image/svg+xml"
+              ;;
+            "txt")
+              folder="knowledge"
+              content_type="text/plain"
+              ;;
+            *)
+              echo "Error: Unknown file extension for path '$file_path'."
+              exit 1
+              ;;
+          esac
+          
+          echo "FOLDER_NAME=$folder" >> $GITHUB_ENV
+          echo "CONTENT_TYPE=$content_type" >> $GITHUB_ENV
+          echo "File path: $file_path"
+          echo "Determined folder: $folder"
+          echo "Determined content type: $content_type"
+
       - name: Validate file exists
         run: |
           echo '{"status": "failed", "error": "Unknown error"}' > upload_response.json
@@ -80,8 +102,9 @@ jobs:
           API_USERNAME: ${{ secrets.VERINT_USERNAME }}
           API_PASSWORD: ${{ secrets.VERINT_PASSWORD }}
           FILE_PATH: ${{ github.event.inputs.file_path }}
-          FOLDER_NAME: ${{ github.event.inputs.folder_name }}
-          CONTENT_TYPE: ${{ github.event.inputs.content_type }}
+          # The following variables are now set automatically
+          FOLDER_NAME: ${{ env.FOLDER_NAME }}
+          CONTENT_TYPE: ${{ env.CONTENT_TYPE }}
         run: |
           filename=$(basename "$FILE_PATH")
           echo "🚀 Uploading $filename to folder: $FOLDER_NAME"
@@ -231,4 +254,4 @@ jobs:
           path: |
             upload_response.json
             ${{ github.event.inputs.file_path }}
-          retention-days: 30
+          retention-days: 7
