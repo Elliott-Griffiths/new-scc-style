@@ -179,13 +179,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
-
-  setTimeout(() => {
-    KDF.showPage("page_review");
-    KDF.gotoPage("page_review");
-  }, 0);
-
-
         const page = document.getElementById('requests');
         const content = document.getElementById('content');
         const navigation = document.querySelector('.navigation');

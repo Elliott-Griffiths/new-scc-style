@@ -430,7 +430,7 @@ function handleOnReadyEvent(_, kdf) {
   // --- HANDLE LOAD COMPLETED FORM ---------------------------------------- \\
 
   setTimeout(() => {
-    console.log(kdf.form)
+    console.log(kdf.form, kdf.params)
     if (kdf.form.complete === "Y") {
       KDF.showPage("page_review");
       KDF.gotoPage("page_review");
