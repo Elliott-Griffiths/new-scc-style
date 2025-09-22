@@ -104,8 +104,38 @@ jobs:
           filename=$(basename "$FILE_PATH")
           echo "🚀 Uploading $filename to folder: $FOLDER_NAME"
           
-          # The rest of the `curl` logic remains the same.
-          # The rest of the logic has been removed for brevity.
+          # Use a single, explicit method for consistency
+          # Method 2 is generally more robust for structured data like 'Folder'
+          response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+            -X 'POST' \
+            "${API_BASE_URL}/files" \
+            -H 'accept: application/json' \
+            -u "${API_USERNAME}:${API_PASSWORD}" \
+            -H 'Content-Type: multipart/form-data' \
+            -F "file=@${FILE_PATH};type=${CONTENT_TYPE}" \
+            -F "Folder={\"folderName\":\"${FOLDER_NAME}\"}")
+            
+          http_code=$(echo "$response" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          body=$(echo "$response" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+          
+          echo "HTTP Status: $http_code"
+          echo "Response: $body"
+          
+          if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 201 ]; then
+            folder_in_response=$(echo "$body" | jq -r '.folderName // empty' 2>/dev/null)
+            if [ "$folder_in_response" = "$FOLDER_NAME" ]; then
+              echo "✅ Upload succeeded with correct folder!"
+              echo "$body" > upload_response.json
+            else
+              echo "❌ Upload succeeded, but folder is wrong: '$folder_in_response' (expected '$FOLDER_NAME')"
+              echo '{"status": "failed", "error": "Uploaded to wrong folder"}' > upload_response.json
+              exit 1
+            fi
+          else
+            echo "❌ Upload failed. HTTP Status: $http_code"
+            echo '{"status": "failed", "error": "Upload failed"}' > upload_response.json
+            exit 1
+          fi
 
       - name: Upload response as artifact
         if: always()
