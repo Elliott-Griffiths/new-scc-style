@@ -3010,7 +3010,16 @@ function getAndSetReviewPageData() {
     // showCurrentProgress();
 
     // Find all active form pages, excluding the review, declaration, and complete pages
-    const excludedPages = '#dform_page_page_review, #dform_page_page_declaration, #dform_page_complete, #dform_page_page_core_fields, #dform_page_page_core_confirm_fields';
+    // Note: save and complete are ment to only have page_ listed once
+    const excludedPages = `
+      #dform_page_page_sign_in, 
+      #dform_page_page_review, 
+      #dform_page_page_declaration, 
+      #dform_page_save,
+      #dform_page_complete, 
+      #dform_page_page_core_fields, 
+      #dform_page_page_core_confirm_fields
+    `;
     const activeFormPages = $('.dform_page[data-active="true"]').not(excludedPages);
 
     // Build an array of page numbers from the active pages
@@ -3978,12 +3987,6 @@ function mapClick(evt) {
       var convertPointP4 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
       var convertPoint4326 = proj4.toPoint([selectedLocation.x, selectedLocation.y]);
 
-      
-      
-      
-      
-      
-      
       proj4.transform(source, dest, convertPointP4);
       proj4.transform(source, dest4326, convertPoint4326);
       KDF.setVal("le_gis_lon", convertPoint4326.x.toString());
