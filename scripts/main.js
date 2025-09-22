@@ -2983,6 +2983,40 @@ function handleSetReporter(date, address) {
   $(".anonymous").hide();
 }
 
+// --- FORMAT ADDRESS ------------------------------------------------------- \\
+
+function formatAddress(address) {
+  // Clean and de-duplicate the address
+  const cleanedAddress = address.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ' ');
+  const words = cleanedAddress.split(/\s+/).filter(word => word.length > 0);
+  const uniqueWords = new Set(words);
+  const uniqueAddress = Array.from(uniqueWords).join(' ');
+
+  // Regular expression to match UK postcodes
+  const postcodeRegex = /[a-z]{1,2}[0-9][a-z0-9]?\s*[0-9][a-z]{2}/;
+
+  // Apply the specific capitalization rules
+  const formattedWords = uniqueAddress.split(' ').map((word, index, arr) => {
+    // Check for a postcode
+    if (postcodeRegex.test(word)) {
+      return word.toUpperCase();
+    }
+    
+    // Heuristic: Check if the word is likely a city/town
+    // This assumes the city/town name is one of the last few words before the postcode, and it's not a number.
+    const lastThreeWords = arr.slice(-3);
+    const isCity = lastThreeWords.includes(word) && isNaN(word);
+    
+    if (isCity) {
+      return word.toUpperCase();
+    }
+
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  });
+
+  return formattedWords.join(' ');
+}
+
 // --- CREATE REVIEW PAGE --------------------------------------------------- \\
 
 function getValueFromAlias(pageId, alias) {
@@ -3108,8 +3142,8 @@ function getAndSetReviewPageData() {
 
           if (fieldType === "select") {
             if (fieldName.startsWith("sel_search_results_")) {
-              fieldLabel = "Selected address";
-              fieldValue = getValueFromAlias(pageId, "fullAddress");
+              fieldLabel = "Address";
+              fieldValue = formatAddress(getValueFromAlias(pageId, "fullAddress"));
             } else {
               fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
               fieldValue = KDF.kdf()?.form?.data?.[fieldName] ?? KDF.getVal(fieldName);
