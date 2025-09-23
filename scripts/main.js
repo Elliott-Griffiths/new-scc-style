@@ -3194,7 +3194,7 @@ function checkAddressHasBeenSet(action = "next page") {
   const siteCode = document.querySelector(
     `#${currentPageId} input[data-customalias="siteCode"]`
   );
-  console.log(fullAddressHasValue, KDF.getVal(fullAddress.name))
+
   if (fullAddressHasValue) {
     if (siteName && siteCode) {
       const siteNameHasValue = KDF.getVal(siteName.name) ? true : false;
@@ -3230,7 +3230,10 @@ function checkAddressHasBeenSet(action = "next page") {
     }
   } else {
     const mapElement = document.querySelector(`#${currentPageId} .map-container`);
-    const detailsElement = mapElement.querySelector('.details-accordion');
+    let detailsElement
+    if (mapElement) {
+      detailsElement = mapElement.querySelector('.details-accordion');
+    }
 
     // Check if the map element exists on the page
     if (mapElement && detailsElement && detailsElement.hasAttribute('open')) {
