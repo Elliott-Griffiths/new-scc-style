@@ -169,7 +169,7 @@ function handleInitialisingEvent() {
     `;
       coreCaseFields.insertAdjacentHTML("beforeend", hiddenBackButtonHTML);
     } else {
-      console.error(".dform_section_box_core_case_fields element not found.");
+      console.warn(".dform_section_box_core_case_fields element not found.");
     }
 
     const targetElement = KDF.kdf().form.name === "cpe_my_profile" ? "NavigationAreaInSingleColumnTemplate" : "dform_control_buttons";
@@ -190,7 +190,7 @@ function handleInitialisingEvent() {
     `;
       controlButtons.insertAdjacentHTML("afterbegin", visibleBackButtonHTML);
     } else {
-      console.error("#dform_control_buttons element not found.");
+      console.warn("#dform_control_buttons element not found.");
     }
   })();
 
@@ -431,6 +431,8 @@ function handleOnReadyEvent(_, kdf) {
   // --- SET SURVEY LINK --------------------------------------------------- \\
 
   buildFormLink("survey-btn", "customer_satisfaction", true);
+
+  // --- ADD VALIDATION MESSAGES TO STORAGE -------------------------------- \\
 
   storeDefaultValidationMessages();
 
@@ -1251,8 +1253,8 @@ function handlePageChangeEvent(event, kdf, currentpageid, targetpageid) {
   }
 
   if (
-    pageName === "page_review" ||
-    pageName === "page_declaration" ||
+    // pageName === "page_review" ||
+    // pageName === "page_declaration" ||
     pageName === "save" ||
     pageName === "complete"
   ) {
@@ -1976,7 +1978,7 @@ function displayBackButton(show) {
       backButton.style.display = "none";
     }
   } else {
-    console.error("Element with ID 'dform_widget_button_but_back' not found.");
+    console.warn("Element with ID 'dform_widget_button_but_back' not found.");
   }
 }
 
@@ -4854,7 +4856,7 @@ async function addWorkingDays(date, workingDaysToAdd) {
 async function updateMinMaxDates(dateElementId, attribute, value) {
   const $dateElement = $(`#${dateElementId}`);
   if ($dateElement.length === 0) {
-    console.error(`Element with ID "${dateElementId}" not found.`);
+    console.warn(`Element with ID "${dateElementId}" not found.`);
     return;
   }
   const now = new Date();
@@ -5016,7 +5018,7 @@ function buildTypeAhead(inputName, listItems, listItemsOnly = true) {
   const inputId = `dform_widget_${inputName}`;
   const inputElement = document.getElementById(inputId);
   if (!inputElement) {
-    console.error(`Input element with ID "${inputId}" not found.`);
+    console.warn(`Input element with ID "${inputId}" not found.`);
     return;
   }
 
@@ -5126,7 +5128,7 @@ function buildRelatedServiceCards(servicesData, containerId) {
   const container = document.getElementById(containerId);
 
   if (!container) {
-    console.error(`Container with ID '${containerId}' not found.`);
+    console.warn(`Container with ID '${containerId}' not found.`);
     return;
   }
 
@@ -5269,7 +5271,7 @@ function createAndInsertReferenceDisplay(referenceValue) {
 
   // Safely proceed only if both elements exist and a value is provided
   if (!controlButtons || !skipElement || !referenceValue) {
-    console.error("Could not find required DOM elements or the reference value is missing.");
+    console.warn("Could not find required DOM elements or the reference value is missing.");
     return;
   }
 
@@ -5307,7 +5309,7 @@ function buildMyAccountLink(referenceNumber) {
   const linkElement = document.getElementById("my-account-request");
 
   if (!linkElement) {
-    console.error("The link element with id 'my-account-request' could not be found.");
+    console.warn("The link element with id 'my-account-request' could not be found.");
     return;
   }
 
@@ -5329,7 +5331,7 @@ function buildFormLink(id, formName, includeFormTitle = false) {
   const linkElement = document.getElementById(id);
 
   if (!linkElement) {
-    console.error(`The link element with id '${id}' could not be found.`);
+    console.warn(`The link element with id '${id}' could not be found.`);
     return;
   }
 
