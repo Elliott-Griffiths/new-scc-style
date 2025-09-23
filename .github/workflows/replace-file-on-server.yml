@@ -66,8 +66,8 @@ jobs:
           echo "📄 Determined Content-Type: $CONTENT_TYPE"
           echo "content_type=$CONTENT_TYPE" >> $GITHUB_OUTPUT
 
-      - name: Debug Environment and Validate File
-        id: validate_file
+      - name: Extract file properties
+        id: file_props
         run: |
           echo "🔍 DEBUG: Starting validation and environment check..."
           
@@ -84,8 +84,8 @@ jobs:
           DIR_PATH=$(dirname "$FILE_PATH")
           
           if [ "$DIR_PATH" = "." ]; then
-            FOLDER_NAME=""
-            echo "DEBUG: File is in root directory"
+            FOLDER_NAME="root"
+            echo "DEBUG: File is in root directory, setting folder name to 'root'"
           else
             FOLDER_NAME=$(basename "$DIR_PATH")
             echo "DEBUG: Extracted folder name: '$FOLDER_NAME'"
@@ -115,11 +115,18 @@ jobs:
           fi
 
           # Use a more robust jq query to find the key based on filename and folder
-          FILE_KEY=$(echo "$get_body" | jq -r --arg FILENAME "$FILENAME" --arg FOLDER_NAME "$FOLDER_NAME" \
-            '.[] | select(.fileName == $FILENAME and .folderName == $FOLDER_NAME) | .fileKey // empty')
-          
+          if [ "$FOLDER_NAME" = "root" ]; then
+            # Handle files in the root folder, which may have a null or empty folderName
+            FILE_KEY=$(echo "$get_body" | jq -r --arg FILENAME "$FILENAME" \
+              '.collection[] | select(.fileName == $FILENAME and (.folderName == null or .folderName == "")) | .key // empty')
+          else
+            # Handle files in a subfolder
+            FILE_KEY=$(echo "$get_body" | jq -r --arg FILENAME "$FILENAME" --arg FOLDER_NAME "$FOLDER_NAME" \
+              '.collection[] | select(.fileName == $FILENAME and .folderName == $FOLDER_NAME) | .key // empty')
+          fi
+
           if [ -z "$FILE_KEY" ]; then
-            echo "❌ File key not found for $FILENAME in folder $FOLDER_NAME. Cannot update file."
+            echo "❌ File key not found for '$FILENAME' in folder '$FOLDER_NAME'. Cannot update file."
             echo '{"status": "failed", "error": "File to update not found on server"}' > update_response.json
             exit 1
           else
@@ -147,7 +154,6 @@ jobs:
           echo "  - Content Type: $CONTENT_TYPE"
           echo "  - API Base URL: $API_BASE_URL"
           
-          # Perform the PUT request to update the file
           response_put=$(curl -s -w "HTTPSTATUS:%{http_code}" \
             -X 'PUT' \
             "${API_BASE_URL}/files/${FILE_KEY}" \
