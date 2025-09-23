@@ -3282,19 +3282,28 @@ function checkAddressHasBeenSet(action = "next page") {
           `#${currentPageId} input[data-customalias="postcode"]`
         );
         const postcodeContainer = postcode?.closest('.dform_widget_field');
+        const isPostcodeRequired = postcodeContainer?.classList.contains('dform_required') || postcode?.hasAttribute('required');
         const validationMessage = postcodeContainer?.querySelector('.dform_validationMessage');
         const postcodeHasValue = postcode ? KDF.getVal(postcode.name) : false;
         let message = "Enter the postcode";
         if (postcodeHasValue) {
           message = "Click find address";
         }
-        if (validationMessage) {
-          validationMessage.style.display = "block";
-          validationMessage.textContent = message;
-        }
-        postcode?.classList.add('dform_fielderror');
-      }
 
+        if (!isPostcodeRequired && !postcodeHasValue) {
+          if (action === "submit") {
+            KDF.gotoPage("complete", true, true, false);
+          } else {
+            KDF.gotoNextPage();
+          }
+        } else {
+          if (validationMessage) {
+            validationMessage.style.display = "block";
+            validationMessage.textContent = message;
+          }
+          postcode?.classList.add('dform_fielderror');
+        }
+      }
     }
   }
 }
