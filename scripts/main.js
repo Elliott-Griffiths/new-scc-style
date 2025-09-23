@@ -3052,7 +3052,13 @@ function getAndSetReviewPageData() {
             fieldValue = KDF.getVal(fieldName);
           } else if (fieldType === "multicheckbox") {
             fieldLabel = getLegendText("checkboxgroup");
-            fieldValue = `<br/>${KDF.getVal(fieldName).join("<br>")}`;
+            const values = KDF.getVal(fieldName);
+          
+            if (values && values.length > 0) {
+              fieldValue = values.join("<br>");
+            } else {
+              fieldValue = ""; 
+            }
           } else if (fieldType === "date") {
             fieldLabel = $(`#dform_widget_label_${fieldName}`).text();
             fieldValue = formatDateTime(KDF.getVal(fieldName)).uk.date;
