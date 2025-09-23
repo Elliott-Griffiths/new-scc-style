@@ -15,7 +15,7 @@ function scrollToTop() {
 // --- GLOBAL CONSTS AND VARIABLES ----------------------------------------- \\
 
 const { protocol, hostname } = window.location;
-const PORTAL_URL = `${protocol}//${hostname}/site/sheffield_dev`;
+const PORTAL_URL = `${protocol}//${hostname}/site/portal`;
 
 let formattedTitle = "";
 

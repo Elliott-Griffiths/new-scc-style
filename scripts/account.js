@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const navigationDiv = document.querySelector('.navigation');
     const usernameLink = document.createElement('a');
 
-    usernameLink.href = '/site/sheffield_dev/profile';
+    usernameLink.href = '/site/portal/profile';
     usernameLink.tabIndex = 0;
 
     usernameLink.textContent = userName;
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (formDetailsDiv) {
           const backLink = document.createElement('a');
-          backLink.href = '/site/sheffield_dev/requests';
+          backLink.href = '/site/portal/requests';
           backLink.textContent = 'Back to My Requests';
           backLink.id = 'back-to-requests-link';
           formDetailsDiv.after(backLink);
