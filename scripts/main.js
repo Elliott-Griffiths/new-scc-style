@@ -430,7 +430,7 @@ function handleOnReadyEvent(_, kdf) {
 
   // --- SET SURVEY LINK --------------------------------------------------- \\
 
-  buildFormLink("survey-btn", "customer_satisfaction", true);
+  buildFormLink("satisfaction-survey", "customer_satisfaction", true);
 
   // --- ADD VALIDATION MESSAGES TO STORAGE -------------------------------- \\
 
@@ -3243,20 +3243,15 @@ function checkAddressHasBeenSet(action = "next page") {
 
     // Check if the map element exists on the page
     if (mapElement && detailsElement && detailsElement.hasAttribute('open')) {
-
-      // Check if the map accordion is open
-      // if (detailsElement && detailsElement.hasAttribute('open')) {
-
-        const errorMessage = acceptGMSites
-          ? defaultSelectedAddressMessage
-          : "Choose a location on the public highway";
-        if (selectedAddressSpan) {
-          selectedAddressSpan.textContent = errorMessage;
-          selectedAddressSpan.classList.add('dform_validationMessage');
-          selectedAddressSpan.style.display = 'block';
-        }
-        $("#map_container").addClass("map_container_error");
-      // }
+      const errorMessage = acceptGMSites
+        ? defaultSelectedAddressMessage
+        : "Choose a location on the public highway";
+      if (selectedAddressSpan) {
+        selectedAddressSpan.textContent = errorMessage;
+        selectedAddressSpan.classList.add('dform_validationMessage');
+        selectedAddressSpan.style.display = 'block';
+      }
+      $("#map_container").addClass("map_container_error");
     } else {
       const searchResult = document.querySelector(
         `#${currentPageId} select[data-customalias="searchResult"]`
