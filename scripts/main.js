@@ -3055,7 +3055,7 @@ function getAndSetReviewPageData() {
             const values = KDF.getVal(fieldName);
           
             if (values && values.length > 0) {
-              fieldValue = values.join("<br>");
+              fieldValue = values.join(",<br>");
             } else {
               fieldValue = ""; 
             }
