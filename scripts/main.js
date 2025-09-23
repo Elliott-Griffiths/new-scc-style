@@ -3230,7 +3230,7 @@ function checkAddressHasBeenSet(action = "next page") {
     }
   } else {
     const mapElement = document.querySelector(`#${currentPageId} .map-container`);
-    let detailsElement = false;
+    let detailsElement = undefined;
     if (mapElement) {
       detailsElement = mapElement.querySelector('.details-accordion');
     }
